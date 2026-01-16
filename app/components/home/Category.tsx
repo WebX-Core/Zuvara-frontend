@@ -1,16 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Button from "../common-ui/Button";
-import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  LucideView,
-  Mail,
-  View,
-  ViewIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Category = () => {
@@ -51,7 +42,7 @@ const Category = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-4 lg:py-8 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
         {/* Section Header */}
         <motion.div
@@ -59,10 +50,10 @@ const Category = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-8"
         >
           <h2 className="text-3xl lg:text-4xl font-semibold text-foreground font-poppins mb-4">
-            Explore our <span className="text-[#8cd700]">Categories</span>
+            Explore our <span className="text-[#8cd700] italic">Categories</span>
           </h2>
           <p className="text-md text-zinc-600 max-w-2xl">
             Discover our curated selection of premium baby products designed to
@@ -71,7 +62,7 @@ const Category = () => {
         </motion.div>
 
         {/* Categories Grid - 2x2 Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           {categories.map((category, index) => (
             <motion.div
               key={category.id}
@@ -79,7 +70,7 @@ const Category = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group rounded-xl overflow-hidden border border-zinc-200 transition-all duration-300 hover:shadow-lg hover:border-foreground/30 bg-zinc-50"
+              className="group rounded-xl overflow-hidden border border-zinc-200 transition-all duration-300 hover:shadow-md hover:border-[#8cd700] bg-zinc-50"
             >
               {/* Image Container */}
               <div className="relative h-64 md:h-72 lg:h-64 overflow-hidden bg-zinc-100">

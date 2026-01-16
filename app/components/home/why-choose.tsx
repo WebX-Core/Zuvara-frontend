@@ -32,7 +32,7 @@ const WhyChoose = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-linear-to-b from-white to-zinc-50">
+    <section className="py-4 lg:py-8 bg-linear-to-b from-white to-zinc-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-5xl">
         {/* Header */}
         <motion.div
@@ -43,7 +43,7 @@ const WhyChoose = () => {
           className="mb-10"
         >
           <h2 className="text-3xl lg:text-4xl font-semibold text-foreground font-poppins mb-4">
-            Why Choose <span className="text-[#8cd700]">Zuvara</span>
+            Why Choose <span className="text-[#8cd700] italic">Zuvara</span>
           </h2>
           <p className="text-md text-zinc-600 max-w-2xl">
             Discover the core values that make Zuvara the trusted choice for

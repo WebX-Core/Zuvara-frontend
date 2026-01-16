@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Facebook, Instagram, Music, MessageCircle } from "lucide-react";
 import Image from "next/image";
+import Button from "./common-ui/Button";
+import { Icon } from "@iconify-icon/react";
 
 export default function Footer() {
   const footerSections = [
@@ -55,13 +57,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white text-zinc-900 border-t border-zinc-200">
+    <footer className="bg-white border-t border-zinc-200">
       <div className="container mx-auto px-6 max-w-5xl">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 py-8">
           {footerSections.map((section, index) => (
             <div key={index}>
-              <h3 className="text-sm font-semibold mb-4 text-foreground">
+              <h3 className="text-sm font-semibold mb-4 text-[#8cd700]!">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -80,8 +82,21 @@ export default function Footer() {
           ))}
         </div>
 
+        <div className="flex items-center justify-between bg-linear-to-l from-foreground to-[#8cd700] text-white rounded-full p-2">
+          <h3 className="text-xl pl-4">
+            Only woman and children are loved unconditionally.
+          </h3>
+          <Link
+            href="/shop"
+            className="bg-white text-foreground! px-4 py-2 rounded-full font-semibold hover:bg-[#8cd700] hover:text-white! transition flex items-center gap-2"
+          >
+            <Icon icon="bitcoin-icons:cart-filled" width="24" height="24" />
+            Shop Now
+          </Link>
+        </div>
+
         {/* Newsletter & Contact Section */}
-        <div className="border-t border-zinc-200 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Newsletter */}
           <div>
             <Link href="/" className="flex items-center shrink-0 mb-4">
@@ -116,25 +131,25 @@ export default function Footer() {
 
           {/* Visit Us */}
           <div>
-            <h3 className="text-sm font-semibold mb-4 text-zinc-900">
+            <h3 className="text-sm font-semibold mb-4 text-[#8cd700]!">
               Visit Us
             </h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs font-semibold text-zinc-900 mb-1">
+                <p className="text-xs font-semibold text-foreground mb-1">
                   Head Office
                 </p>
-                <p className="text-sm text-zinc-700">
+                <p className="text-sm text-zinc-500">
                   4F, Mahabir Plaza, Hospital Chowk
                   <br />
                   Biratnagar, Nepal 56613
                 </p>
               </div>
               <div>
-                <p className="text-xs font-semibold text-zinc-900 mb-1">
+                <p className="text-xs font-semibold text-foreground mb-1">
                   Corporate Office
                 </p>
-                <p className="text-sm text-zinc-700">
+                <p className="text-sm text-zinc-500">
                   2f, Bishal Nagar Marg, Hadigaun
                   <br />
                   Kathmandu-5, Nepal
@@ -145,10 +160,10 @@ export default function Footer() {
 
           {/* Social Media */}
           <div>
-            <h3 className="text-sm font-semibold mb-4 text-zinc-900">
+            <h3 className="text-sm font-semibold mb-4 text-[#8cd700]!">
               Follow Us
             </h3>
-            <p className="text-sm text-zinc-700 mb-4">
+            <p className="text-sm text-zinc-500 mb-4">
               Connect with us on social media for exclusive updates and offers.
             </p>
             <div className="flex gap-4">
@@ -186,12 +201,22 @@ export default function Footer() {
 
         {/* Bottom Footer */}
         <div className="border-t border-zinc-200 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-zinc-700 group">
-          <p>&copy; Copyright © 2025 Zuvara.com.np. All rights reserved.</p>{" "}
+          <p>
+            &copy; Copyright {new Date().getFullYear()}{" "}
+            <span className="font-semibold text-foreground">ZUVARA</span> All
+            rights reserved.
+          </p>{" "}
           <div className="flex gap-4">
-            <Link href="#" className="hover:text-foreground! transition text-zinc-400!">
+            <Link
+              href="#"
+              className="hover:text-foreground! transition text-zinc-400!"
+            >
               Terms & Conditions
             </Link>
-            <Link href="#" className="hover:text-foreground! transition text-zinc-400!">
+            <Link
+              href="#"
+              className="hover:text-foreground! transition text-zinc-400!"
+            >
               Privacy Policy
             </Link>
           </div>

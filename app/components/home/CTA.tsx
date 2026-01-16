@@ -18,7 +18,7 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-12 lg:py-16 bg-white">
+    <section className="py-4 lg:py-8 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-5xl">
         <div className="bg-linear-to-r from-zinc-50 to-zinc-100 rounded-4xl overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -29,7 +29,7 @@ const CTA = () => {
               </p>
               <h2 className="text-3xl lg:text-4xl font-semibold text-foreground mb-3 font-poppins">
                 Get notified about latest{" "}
-                <span className="text-[#8cd700]">offers & updates</span>
+                <span className="text-[#8cd700] italic">offers & updates</span>
               </h2>
               <p className="text-zinc-700 text-sm lg:text-base mb-6 leading-relaxed">
                 Be aware of all discounts and bargains! Don&apos;t miss your

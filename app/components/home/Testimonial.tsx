@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify-icon/react";
 import { motion } from "framer-motion";
+import Button from "../common-ui/Button";
 
 const Testimonial = () => {
   const testimonials = [
@@ -41,7 +42,7 @@ const Testimonial = () => {
   };
 
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-4 lg:py-8 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-5xl">
         {/* Header */}
         <motion.div
@@ -49,11 +50,11 @@ const Testimonial = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-10 flex justify-between items-center gap-4 flex-col lg:flex-row"
+          className="mb-8 flex justify-between items-center gap-4 flex-col lg:flex-row"
         >
           <div className="">
             <h2 className="text-3xl lg:text-4xl font-semibold text-foreground font-poppins mb-2">
-              What <span className="text-[#8cd700]">Nepali Mothers </span>Say
+              What <span className="text-[#8cd700] italic">Nepali Mothers </span>Say
             </h2>
             <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
               Real reviews from real mothers who trust Zuvara
@@ -61,25 +62,16 @@ const Testimonial = () => {
           </div>
           {/* Google Review Button */}
           <div className="flex justify-center">
-            <a
-              href="https://www.google.com/search?q=zuvara"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-white border-2 border-[#8cd700] text-foreground font-semibold hover:bg-[#8cd700]/5 transition-colors duration-300"
-            >
-              <Icon
-                icon="mdi:google"
-                width="20"
-                height="20"
-                className="text-[#8cd700]"
-              />
-              Read Reviews on Google
-            </a>
+            <Button
+              content="Read Reviews on Google"
+              link="https://www.google.com/search?q=zuvara"
+              icon="mdi:google"
+            />
           </div>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -87,7 +79,7 @@ const Testimonial = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="p-6 rounded-lg border border-zinc-200 bg-zinc-50 hover:shadow-md transition-shadow duration-300"
+              className="p-6 rounded-xl border border-zinc-200 hover:border-[#8cd700] bg-zinc-50 hover:shadow-md transition-shadow duration-300"
             >
               {/* Stars */}
               <div className="flex gap-1 mb-4">

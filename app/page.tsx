@@ -15,7 +15,7 @@ export default function Home() {
       <BigImage src="/baby/happy-baby.png" alt="Happy Baby" />
       <Product />
       <BigImage src="/baby/strollerr.png" alt="Sleeping Baby" />
-      <Testimonial />
+      <Testimonial /> 
       <CTA />
     </main>
   );

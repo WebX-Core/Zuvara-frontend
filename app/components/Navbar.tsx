@@ -25,7 +25,7 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="hidden lg:block fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-zinc-200">
+      <nav className="hidden lg:block fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-zinc-200">
         <div className="px-4 sm:px-6 lg:px-6 max-w-5xl mx-auto">
           <div className="flex justify-between items-center h-16 gap-16">
             {/* Logo - Left */}
