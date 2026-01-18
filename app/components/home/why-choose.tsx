@@ -44,8 +44,7 @@ const WhyChoose = () => {
           className="mb-10 text-center"
         >
           <h2 className="text-2xl lg:text-4xl font-semibold text-foreground font-poppins mb-2 md:mb-4">
-            Why Parents Choose{" "}
-            <span className="text-[#8cd700]">Zuvara</span>
+            Why Parents Choose <span className="text-[#8cd700]">Zuvara</span>
           </h2>
           <p className="text-md text-zinc-600 max-w-2xl mx-auto">
             Discover the core values that make Zuvara the trusted choice for

@@ -21,6 +21,7 @@ export default function HomePage() {
         {/* Gradient Overlay */}
         {/* <div className="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-white " /> */}
       </div>
+
       {/* Content - Left Side */}
       <div className="relative z-10 w-full flex flex-col justify-end mb-16 md:mb-0 md:justify-center mx-auto! px-4 sm:px-6 lg:px-6 max-w-7xl text-left">
         <motion.h1
@@ -32,7 +33,7 @@ export default function HomePage() {
         >
           Because your child
           <br />
-          <span className="text-[#8cd700]"> need comfort & safety.</span>
+          <span className="text-[#8cd700]">need comfort & safety.</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
