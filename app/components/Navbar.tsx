@@ -89,8 +89,9 @@ export default function Navbar() {
           <div className="flex flex-col justify-between items-center h-auto gap-4 py-3">
             {/* Logo - Left */}
             <div className="flex items-center justify-between w-full">
-              <div className="flex">
-                <h3 className="font-medium">Customer Support</h3>
+              <div className="flex gap-2 items-center">
+                <Icon icon="mdi:headset" width={20} height={20} />
+                <h3 className="font-medium text-sm">Customer Support</h3>
               </div>
               <Link href="/" className="flex items-center shrink-0">
                 <Image

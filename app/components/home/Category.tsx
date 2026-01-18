@@ -42,7 +42,7 @@ const Category = () => {
         <SectionHeading
           title="We started zuvara with"
           highlight="purpose."
-          description="Discover our curated selection of premium baby products designed to support every stage of your parenting journey."
+          description="Because parenting is hard enough and diapers should be easy."
           align="center"
         />
 
@@ -55,7 +55,7 @@ const Category = () => {
           className="mb-4 lg:mb-8"
         >
           {/* Video Container */}
-          <div className="relative w-full h-150 bg-linear-to-br from-foreground to-[#8cd700] rounded-lg overflow-hidden">
+          <div className="relative w-full h-150 bg-linear-to-br from-foreground to-[#8cd700] rounded-2xl overflow-hidden">
             <video
               ref={videoRef}
               autoPlay

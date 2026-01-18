@@ -17,8 +17,8 @@ const BigImage = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top center",
-          end: "center center",
+          start: "center bottom",
+          end: "bottom center",
           scrub: 1.2,
           markers: false,
         },
@@ -36,9 +36,9 @@ const BigImage = () => {
           {
             opacity: 0,
             y: 20,
-            duration: 0.8,
+            duration: 1,
           },
-          1 // Delay equal to image animation duration
+          1, // Delay equal to image animation duration
         );
     });
 

@@ -23,9 +23,9 @@ const LeftRight = () => {
     gsap.to(leftImageRef.current, {
       scrollTrigger: {
         trigger: containerRef.current,
-        start: "top center",
+        start: "center bottom",
         end: "bottom center",
-        scrub: 2,
+        scrub: 1.2,
         markers: false,
       },
       x: 0,
@@ -36,9 +36,9 @@ const LeftRight = () => {
     gsap.to(rightImageRef.current, {
       scrollTrigger: {
         trigger: containerRef.current,
-        start: "top center",
+        start: "center bottom",
         end: "bottom center",
-        scrub: 2,
+        scrub: 1.2,
         markers: false,
       },
       x: 0,
@@ -68,33 +68,37 @@ const LeftRight = () => {
       className="w-full py-8 overflow-hidden hidden md:block "
     >
       <div className="w-full mx-auto">
-        <div className="flex items-center justify-center h-[110vh] gap-0 relative">
+        <div className="flex items-center justify-center h-[70vh] gap-0 relative">
           {/* Left Image - starts from screen left corner */}
           <div
             ref={leftImageRef}
-            className="w-1/2 shrink-0 -mr-px flex items-center justify-center"
+            className="w-1/3 shrink-0 -mr-px flex items-center justify-end"
           >
-            <Image
-              src="/images/left.png"
-              alt="Left Section"
-              width={1000}
-              height={1000}
-              className="w-full object-cover"
-            />
+            <div className="h-full flex items-end justify-end">
+              <Image
+                src="/images/baby1.png"
+                alt="Left Section"
+                width={1000}
+                height={1000}
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
 
           {/* Right Image - starts from screen right corner */}
           <div
             ref={rightImageRef}
-            className="w-1/2 shrink-0 -ml-px flex items-center justify-center"
+            className="w-1/2 shrink-0 -ml-px flex items-center justify-start"
           >
-            <Image
-              src="/images/right.png"
-              alt="Right Section"
-              width={1000}
-              height={1000}
-              className="w-full object-cover"
-            />
+            <div className="flex">
+              <Image
+                src="/images/parents.png"
+                alt="Right Section"
+                width={1100}
+                height={1000}
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>

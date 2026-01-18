@@ -5,7 +5,7 @@ import HomePage from "./components/home/HomePage";
 import LeftRight from "./components/home/LeftRight";
 import Product from "./components/home/Product";
 // import Blog from "./components/home/Blog";
-// import Testimonial from "./components/home/Testimonial";
+import Testimonial from "./components/home/Testimonial";
 // import VideoSection from "./components/home/VideoSection";
 import WhyChoose from "./components/home/why-choose";
 
@@ -20,7 +20,7 @@ export default function Home() {
       {/* <BigImage src="/baby/happy-baby.png" alt="Happy Baby" /> */}
       <BigImage/>
       <Product />
-      {/* <Testimonial /> */}
+      <Testimonial />
       {/* <Blog /> */}
       <CTA />
     </main>

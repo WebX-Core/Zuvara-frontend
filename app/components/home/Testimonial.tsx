@@ -51,7 +51,7 @@ const Testimonial = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-4 md:mb-8 flex justify-between items-start md:items-center gap-4 flex-col lg:flex-row"
+          className="mb-4 md:mb-8 flex justify-center items-start md:items-center gap-4 flex-col lg:flex-row"
         >
           <SectionHeading
             title="What"
@@ -59,13 +59,13 @@ const Testimonial = () => {
             description="Real reviews from real mothers who trust Zuvara"
           />
           {/* Google Review Button */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Button
               content="Read Reviews on Google"
               link="https://www.google.com/search?q=zuvara"
               icon="mdi:google"
             />
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Testimonials Grid */}
