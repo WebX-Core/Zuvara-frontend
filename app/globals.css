@@ -6,8 +6,8 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #456A5C;
-  --secondary:#8cd700!important;
+  --foreground: #456a5c;
+  --secondary: #8cd700;
   --font-geist-sans: "Poppins", sans-serif;
   --montserrat: "Montserrat", sans-serif;
 
@@ -17,13 +17,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-montserrat: var(--montserrat);
 }
 
 * {
-
   box-sizing: border-box;
 }
 
@@ -45,7 +45,7 @@ html.lenis body {
   height: auto;
 }
 
-.baby{
+.baby {
   font-family: "BabyFont", sans-serif;
 }
 
@@ -67,3 +67,30 @@ button {
   transition-duration: 200ms;
 }
 
+.curvy-border {
+  --mask:
+    radial-gradient(268.33px at 50% 360px, #000 99%, #0000 101%)
+      calc(50% - 240px) 0/480px 51% repeat-x,
+    radial-gradient(268.33px at 50% -240px, #0000 99%, #000 101%) 50%
+      120px/480px calc(51% - 120px) repeat-x,
+    radial-gradient(268.33px at 50% calc(100% - 360px), #000 99%, #0000 101%)
+      calc(50% - 240px) 100%/480px 51% repeat-x,
+    radial-gradient(268.33px at 50% calc(100% + 240px), #0000 99%, #000 101%)
+      50% calc(100% - 120px)/480px calc(51% - 120px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
+
+.curvy-border-mob {
+  --mask:
+    radial-gradient(100.62px at 50% 135px, #000 99%, #0000 101%)
+      calc(50% - 90px) 0/180px 51% repeat-x,
+    radial-gradient(100.62px at 50% -90px, #0000 99%, #000 101%) 50% 45px/180px
+      calc(51% - 45px) repeat-x,
+    radial-gradient(100.62px at 50% calc(100% - 135px), #000 99%, #0000 101%)
+      calc(50% - 90px) 100%/180px 51% repeat-x,
+    radial-gradient(100.62px at 50% calc(100% + 90px), #0000 99%, #000 101%) 50%
+      calc(100% - 45px)/180px calc(51% - 45px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}

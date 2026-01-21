@@ -76,6 +76,7 @@ const Testimonial = () => {
             title="What"
             highlight="Nepali Mothers Say"
             description="Real reviews from real mothers who trust Zuvara"
+            align="center"
           />
           {/* Google Review Button */}
           {/* <div className="flex justify-center">
@@ -88,7 +89,7 @@ const Testimonial = () => {
         </motion.div>
 
         {/* Testimonials Carousel */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center">
           {/* Left Side - Image */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -103,7 +104,7 @@ const Testimonial = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="w-full h-92 rounded-2xl overflow-hidden border border-zinc-200"
+              className="w-full h-60 md:h-70 lg:h-92 rounded-2xl overflow-hidden border border-zinc-200"
               style={{
                 backgroundImage: `url(${currentTestimonial.image})`,
                 backgroundSize: "cover",
@@ -119,7 +120,7 @@ const Testimonial = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="space-y-4"
+            className="space-y-2 lg:space-y-4"
           >
             {/* Author Info */}
             <div>
@@ -137,7 +138,7 @@ const Testimonial = () => {
             </div>
 
             {/* Testimonial Text */}
-            <p className="text-zinc-600 leading-relaxed text-lg italic">
+            <p className="text-zinc-600 leading-relaxed lg:text-lg italic">
               &quot;{currentTestimonial.text}&quot;
             </p>
 

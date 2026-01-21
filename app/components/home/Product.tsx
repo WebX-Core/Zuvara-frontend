@@ -147,16 +147,17 @@ const Product = () => {
     activeTab === "baby" ? babyCareProducts : personalCareProducts;
 
   return (
-    <section className="py-4 lg:py-8 bg-white">
+    <section className="bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
         {/* Section Header */}
-        <div className="flex flex-col gap-2 justify-between md:items-center">
+        {/* <div className="flex flex-col gap-2 justify-between items-center">
           <SectionHeading
             title="Featured"
             highlight="Products"
             description="Discover our best-selling items"
+            align="center"
           />
-        </div>
+        </div> */}
 
         {/* Tabs */}
         <div className="flex gap-4 mb-8 justify-center">
@@ -188,7 +189,7 @@ const Product = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-2"
+          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-2"
         >
           {products.map((product, index) => (
             <motion.div
@@ -215,7 +216,7 @@ const Product = () => {
                 </div>
 
                 {/* Product Image Container */}
-                <div className="relative bg-zinc-100 aspect-square overflow-hidden h-72 shrink-0">
+                <div className="relative bg-zinc-200 aspect-square overflow-hidden h-40 md:h-60 lg:h-72 shrink-0">
                   <Image
                     src={selectedVariant[product.id]?.image || product.image}
                     alt={product.name}
@@ -234,8 +235,8 @@ const Product = () => {
                 </div>
 
                 {/* Variant Thumbnails - Below Image */}
-                <div className="px-3 py-2 bg-zinc-50 border-t border-zinc-100  w-full">
-                  <div className="flex gap-4 items-center justify-center overflow-x-auto  w-full">
+                <div className="px-3 py-2 bg-zinc-100 border-t border-zinc-100  w-full">
+                  <div className="flex gap-4 items-center justify-center overflow-x-auto w-full">
                     {product.variants && product.variants.length > 0 && (
                       <div className="p-2 flex gap-2 items-center">
                         {product.variants.slice(0, 6).map((variant) => (
@@ -248,7 +249,7 @@ const Product = () => {
                                 [product.id]: variant,
                               }));
                             }}
-                            className={`shrink-0 w-12 h-12 rounded border-2 overflow-hidden transition-all ${
+                            className={`shrink-0 size-10 lg:size-12 rounded border-2 overflow-hidden transition-all ${
                               selectedVariant[product.id]?.id === variant.id
                                 ? `border-zinc-500 ring-2 ${
                                     activeTab === "baby"
@@ -286,9 +287,9 @@ const Product = () => {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-zinc-600 mb-3 line-clamp-2">
+                  {/* <p className="text-xs text-zinc-600 mb-3 line-clamp-2">
                     {product.category} - Premium Quality
-                  </p>
+                  </p> */}
 
                   {/* Link - Minimal Style */}
                   <Link

@@ -24,7 +24,7 @@ const CTA = () => {
         <div className="bg-[#eeeeee] overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Content */}
-            <div className="p-8 lg:py-24 pl-36">
+            <div className="p-8 lg:py-24 lg:pl-36">
               <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
                 Discover Amazing
               </p>
@@ -39,18 +39,18 @@ const CTA = () => {
               </p>
 
               {/* Email Input */}
-              <form onSubmit={handleSubscribe} className="flex gap-2">
+              <form onSubmit={handleSubscribe} className="relative">
                 <input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-zinc-300 rounded-full text-sm focus:outline-none focus:border-teal-600 focus:ring-1 focus:ring-teal-600"
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-full text-sm focus:outline-none focus:border-zinc-600"
                   required
                 />
                 <button
                   type="submit"
-                  className="bg-white border border-zinc-300 hover:bg-zinc-50 text-zinc-900 hover:text-[#8cd700] font-semibold px-6 py-2 rounded-full transition-all text-sm flex items-center gap-2"
+                  className="absolute top-1/2 -translate-y-1/2 right-1 bg-white border border-zinc-300 hover:bg-zinc-50 text-zinc-900 hover:text-[#8cd700] font-semibold px-6 py-1.5 rounded-full transition-all text-sm flex items-center gap-2"
                 >
                   <Mail size={16} />
                   Subscribe
