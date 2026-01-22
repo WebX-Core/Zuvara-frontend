@@ -9,6 +9,7 @@
   --foreground: #456a5c;
   --secondary: #8cd700;
   --divider: #cadaa9;
+  --personalCare: #8200db;
   --font-geist-sans: "Poppins", sans-serif;
   --montserrat: "Montserrat", sans-serif;
 
@@ -20,6 +21,7 @@
   --color-foreground: var(--foreground);
   --color-secondary: var(--secondary);
   --color-divider: var(--divider);
+  --color-personalCare: var(--personalCare);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-montserrat: var(--montserrat);
@@ -67,38 +69,6 @@ button {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
-}
-
-@utility curvy-border {
-  --mask:
-    radial-gradient(268.33px at 50% 360px, #000 99%, #0000 101%)
-      calc(50% - 240px) 0/480px 51% repeat-x,
-    radial-gradient(268.33px at 50% -240px, #0000 99%, #000 101%) 50%
-      120px/480px calc(51% - 120px) repeat-x,
-    radial-gradient(268.33px at 50% calc(100% - 360px), #000 99%, #0000 101%)
-      calc(50% - 240px) 100%/480px 51% repeat-x,
-    radial-gradient(268.33px at 50% calc(100% + 240px), #0000 99%, #000 101%)
-      50% calc(100% - 120px)/480px calc(51% - 120px) repeat-x;
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
-}
-
-@utility curvy-clip {
-  clip-path: ellipse(150% 100% at 50% 0%);
-}
-
-@utility curvy-border-mob {
-  --mask:
-    radial-gradient(100.62px at 50% 135px, #000 99%, #0000 101%)
-      calc(50% - 90px) 0/180px 51% repeat-x,
-    radial-gradient(100.62px at 50% -90px, #0000 99%, #000 101%) 50% 45px/180px
-      calc(51% - 45px) repeat-x,
-    radial-gradient(100.62px at 50% calc(100% - 135px), #000 99%, #0000 101%)
-      calc(50% - 90px) 100%/180px 51% repeat-x,
-    radial-gradient(100.62px at 50% calc(100% + 90px), #0000 99%, #000 101%) 50%
-      calc(100% - 45px)/180px calc(51% - 45px) repeat-x;
-  -webkit-mask: var(--mask);
-  mask: var(--mask);
 }
 
 .custom-shape-divider-top {

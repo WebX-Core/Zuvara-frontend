@@ -80,8 +80,8 @@ export default function Navbar() {
     { label: "Home", href: "/", icon: "material-symbols:home-rounded" },
     // { label: "Search", href: "#", icon: "iconamoon:search-light" },
     {
-      label: "Shop",
-      href: "/shop",
+      label: "Product",
+      href: "/product",
       icon: "fluent:cart-20-filled",
       badge: 1,
     },
@@ -202,11 +202,11 @@ export default function Navbar() {
                 >
                   {item.label}
                 </span>
-                {item.badge !== undefined && item.badge > 0 && (
+                {/* {item.badge !== undefined && item.badge > 0 && (
                   <span className="absolute top-0 right-0 w-5 h-5 text-xs rounded-full flex items-center justify-center">
                     {item.badge}
                   </span>
-                )}
+                )} */}
               </Link>
             );
           })}

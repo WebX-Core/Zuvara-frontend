@@ -7,22 +7,12 @@ import { motion } from "framer-motion";
 import Button from "../common-ui/Button";
 import SectionHeading from "../common-ui/SectionHeading";
 
-interface Variant {
-  id: number;
-  image: string;
-  color: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  rating: number;
-  reviews: number;
-  image: string;
-  category: string;
-  inStock: boolean;
-  variants: Variant[];
-}
+import { babyCareProducts } from "@/constant/babyCareProduct";
+import { personalCareProducts } from "@/constant/personalCareProduct";
+import type {
+  Product as ProductType,
+  Variant,
+} from "@/type/babyCareProductType";
 
 const Product = () => {
   const [selectedVariant, setSelectedVariant] = useState<
@@ -30,121 +20,10 @@ const Product = () => {
   >({});
   const [activeTab, setActiveTab] = useState<"baby" | "personal">("baby");
 
-  const babyCareProducts: Product[] = [
-    {
-      id: 1,
-      name: "Premium Baby Lotion",
-      rating: 4.8,
-      reviews: 245,
-      image: "/diaper/diaper2.png",
-      category: "Baby Lotion",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper2.png", color: "White" },
-        { id: 2, image: "/diaper/diaper.png", color: "Cream" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Ultra Soft Baby Diapers",
-      rating: 4.9,
-      reviews: 512,
-      image: "/diaper/diaper.png",
-      category: "Baby Diaper",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper.png", color: "Size S" },
-        { id: 2, image: "/diaper/diaper2.png", color: "Size M" },
-        { id: 3, image: "/diaper/diaper.png", color: "Size L" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Lightweight Baby Stroller",
-      rating: 4.7,
-      reviews: 189,
-      image: "/diaper/diaper2.png",
-      category: "Baby Stroller",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper2.png", color: "Black" },
-        { id: 2, image: "/diaper/diaper.png", color: "Gray" },
-      ],
-    },
-    {
-      id: 4,
-      name: "Organic Baby T-Shirts",
-      rating: 4.6,
-      reviews: 156,
-      image: "/diaper/diaper.png",
-      category: "Baby T-Shirt",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper.png", color: "White" },
-        { id: 2, image: "/diaper/diaper2.png", color: "Blue" },
-        { id: 3, image: "/diaper/diaper.png", color: "Pink" },
-      ],
-    },
-  ];
-
-  const personalCareProducts: Product[] = [
-    {
-      id: 5,
-      name: "Premium Sanitary Pads",
-      rating: 4.8,
-      reviews: 423,
-      image: "/diaper/diaper2.png",
-      category: "Sanitary Pads",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper2.png", color: "Regular" },
-        { id: 2, image: "/diaper/diaper.png", color: "Heavy" },
-        { id: 3, image: "/diaper/diaper2.png", color: "Overnight" },
-      ],
-    },
-    {
-      id: 6,
-      name: "Gentle Face Moisturizer",
-      rating: 4.8,
-      reviews: 245,
-      image: "/diaper/diaper.png",
-      category: "Face Care",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper.png", color: "Cream" },
-        { id: 2, image: "/diaper/diaper2.png", color: "Gel" },
-      ],
-    },
-    {
-      id: 7,
-      name: "Organic Body Lotion",
-      rating: 4.6,
-      reviews: 189,
-      image: "/diaper/diaper2.png",
-      category: "Body Care",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper2.png", color: "Lavender" },
-        { id: 2, image: "/diaper/diaper.png", color: "Rose" },
-      ],
-    },
-    {
-      id: 8,
-      name: "Natural Hair Care Oil",
-      rating: 4.7,
-      reviews: 312,
-      image: "/diaper/diaper.png",
-      category: "Hair Care",
-      inStock: true,
-      variants: [
-        { id: 1, image: "/diaper/diaper.png", color: "Pure" },
-        { id: 2, image: "/diaper/diaper2.png", color: "Herbal" },
-      ],
-    },
-  ];
-
   const products =
-    activeTab === "baby" ? babyCareProducts : personalCareProducts;
+    activeTab === "baby"
+      ? (babyCareProducts as unknown as ProductType[])
+      : (personalCareProducts as unknown as ProductType[]);
 
   return (
     <section className="bg-white">
@@ -175,8 +54,8 @@ const Product = () => {
             onClick={() => setActiveTab("personal")}
             className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
               activeTab === "personal"
-                ? "bg-purple-700 text-white shadow-lg"
-                : "bg-zinc-100 text-purple-700 hover:bg-zinc-200"
+                ? "bg-personalCare text-white shadow-lg"
+                : "bg-zinc-100 text-personalCare hover:bg-zinc-200"
             }`}
           >
             Personal Care
@@ -203,13 +82,15 @@ const Product = () => {
                 className={`group h-full flex flex-col bg-white rounded-lg border border-transparent overflow-hidden transition-all duration-400 relative ${
                   activeTab === "baby"
                     ? "hover:border-foreground"
-                    : "hover:border-purple-600"
+                    : "hover:border-personalCare"
                 }`}
               >
                 {/* Best Seller Badge */}
                 <div
                   className={`absolute top-3 left-3 z-10 bg-white px-2 py-1 rounded text-xs font-medium shadow-sm ${
-                    activeTab === "baby" ? "text-foreground" : "text-purple-600"
+                    activeTab === "baby"
+                      ? "text-foreground"
+                      : "text-personalCare"
                   }`}
                 >
                   Best Seller
@@ -254,7 +135,7 @@ const Product = () => {
                                 ? `border-zinc-500 ring-2 ${
                                     activeTab === "baby"
                                       ? "ring-foreground"
-                                      : "ring-purple-600"
+                                      : "ring-personalCare"
                                   }`
                                 : "border-zinc-300 hover:border-zinc-500"
                             }`}
