@@ -1,36 +1,18 @@
-import AboutSection from "./components/home/AboutSection";
-import BigImage from "./components/home/BigImage";
-import Category from "./components/home/Category";
-import ChildCareStepSection from "./components/home/ChildCareStepSection";
-import CTA from "./components/home/CTA";
-import HomePage from "./components/home/HomePage";
-import ImageGrid from "./components/home/ImageGrid";
-import LeftRight from "./components/home/LeftRight";
-import Product from "./components/home/Product";
-import Testimonial from "./components/home/Testimonial";
-import WhyChoose from "./components/home/why-choose";
-import ZuvyBabyModel from "./components/home/ZuvyBabyModel";
-// import Blog from "./components/home/Blog";
-// import VideoSection from "./components/home/VideoSection";
+// import Image from "next/image";
+// import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <main>
-      <HomePage />
-      <AboutSection />
-      {/* <ZuvyBabyModel /> */}
-      <WhyChoose />
-      {/* <ImageGrid /> */}
-      <LeftRight />
-      <Category />
-      {/* <VideoSection /> */}
-      {/* <BigImage src="/baby/happy-baby.png" alt="Happy Baby" /> */}
-      <BigImage />
-      <Product />
-      <Testimonial />
-      {/* <ChildCareStepSection /> */}
-      {/* <Blog /> */}
-      <CTA />
-    </main>
-  );
+  return redirect("/babyCare");
 }
+// <main className="h-screen w-screen relative">
+//   <nav className="fixed top-0 w-full py-4 flex items-center justify-center">
+//     <Link href="/">
+//       <Image src="/logo.png" alt="Zuvara Logo" width={90} height={90} />
+//     </Link>
+//   </nav>
+//   <section className="h-screen flex justify-center items-center">
+//     <Link href="/babyCare">baby Care</Link>
+//     <Link href="/personalCare">Personal Care</Link>
+//   </section>
+// </main>

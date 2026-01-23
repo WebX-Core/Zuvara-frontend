@@ -15,7 +15,7 @@ const Testimonial = () => {
       location: "Kathmandu",
       text: "Zuvara products have been a game-changer for my baby's sensitive skin. I've tried many brands, but nothing compares to the natural ingredients and gentle care.",
       rating: 5,
-      image: "/parent/parent2.png",
+      image: "/images/parent/parent2.png",
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ const Testimonial = () => {
       location: "Pokhara",
       text: "My daughter has extremely sensitive skin, and Zuvara is the only brand that doesn't cause any irritation. Highly recommended for all Nepali mothers!",
       rating: 5,
-      image: "/parent/parent.png",
+      image: "/images/parent/parent.png",
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ const Testimonial = () => {
       location: "Bhaktapur",
       text: "Affordable, trustworthy, and effective. I love that Zuvara is a Nepali brand that understands our needs and delivers quality products.",
       rating: 5,
-      image: "/parent/parent2.png",
+      image: "/images/parent/parent2.png",
     },
   ];
 

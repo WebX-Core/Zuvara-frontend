@@ -5,32 +5,32 @@ const childCareStepLists = [
   {
     id: 1,
     title: "Respond quickly to the baby's needs and cries",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
   {
     id: 2,
     title: "Support proper nutrition and hydration",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
   {
     id: 3,
     title: "Practice good hygiene at all times",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
   {
     id: 4,
     title: "Provide emotional comfort and bonding time",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
   {
     id: 5,
     title: "Follow the immunization schedule",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
   {
     id: 6,
     title: "Watch for any signs of illness or discomfort",
-    image: "/baby/baby19.png",
+    image: "/images/baby/baby19.png",
   },
 ];
 const ChildCareStepSection = () => {

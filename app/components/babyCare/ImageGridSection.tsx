@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,18 +11,61 @@ const ImageGridSection = () => {
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const images = [
-    { image: "/baby/baby17.png", top: "0%", left: "22%", rotate: "-7deg" },
-    { image: "/baby/baby13.png", top: "6%", left: "45%", rotate: "5deg" },
+    {
+      image: "/images/baby/baby17.png",
+      top: "0%",
+      left: "22%",
+      rotate: "-7deg",
+    },
+    // {
+    //   image: "/images/baby/baby13.png",
+    //   top: "6%",
+    //   left: "45%",
+    //   rotate: "5deg",
+    // },
 
-    { image: "/baby/baby25.png", top: "30%", left: "0%", rotate: "6deg" },
-    { image: "/baby/baby23.png", top: "32%", left: "32%", rotate: "-4deg" },
-    { image: "/baby/baby3.png", top: "34%", left: "65%", rotate: "3deg" },
-
-    { image: "/baby/baby24.png", top: "60%", left: "2%", rotate: "5deg" },
-    { image: "/baby/baby19.png", top: "58%", left: "35%", rotate: "-6deg" },
-    { image: "/baby/baby12.png", top: "64%", left: "62%", rotate: "7deg" },
-
-    { image: "/baby/baby18.png", top: "80%", left: "40%", rotate: "-5deg" },
+    {
+      image: "/images/baby/baby25.png",
+      top: "20%",
+      left: "2%",
+      rotate: "6deg",
+    },
+    {
+      image: "/images/baby/baby23.png",
+      top: "15%",
+      left: "42%",
+      rotate: "-4deg",
+    },
+    // {
+    //   image: "/images/baby/baby3.png",
+    //   top: "34%",
+    //   left: "65%",
+    //   rotate: "3deg",
+    // },
+    {
+      image: "/images/baby/baby24.png",
+      top: "40%",
+      left: "10%",
+      rotate: "5deg",
+    },
+    {
+      image: "/images/baby/baby19.png",
+      top: "40%",
+      left: "35%",
+      rotate: "6deg",
+    },
+    // {
+    //   image: "/images/baby/baby12.png",
+    //   top: "64%",
+    //   left: "62%",
+    //   rotate: "7deg",
+    // },
+    {
+      image: "/images/baby/baby18.png",
+      top: "60%",
+      left: "20%",
+      rotate: "-5deg",
+    },
   ];
 
   useEffect(() => {

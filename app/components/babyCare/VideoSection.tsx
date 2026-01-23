@@ -6,7 +6,7 @@ import SectionHeading from "../common-ui/SectionHeading";
 import { Icon } from "@iconify-icon/react";
 import { useMediaQuery } from "react-responsive";
 
-const Category = () => {
+const VideoSection = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
@@ -64,7 +64,7 @@ const Category = () => {
               muted
               loop
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
             >
               <source src="/videos/zuvara-vdo.mp4" type="video/mp4" />
               Your browser does not support the video tag.
@@ -157,4 +157,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default VideoSection;

@@ -27,6 +27,12 @@
   --font-montserrat: var(--montserrat);
 }
 
+/* @layer utilities {
+  section {
+    @apply container h-auto mx-auto py-8 px-4 sm:px-6 lg:px-6 max-w-7xl;
+  }
+} */
+
 * {
   box-sizing: border-box;
 }

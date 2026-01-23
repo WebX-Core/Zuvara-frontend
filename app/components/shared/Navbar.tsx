@@ -69,8 +69,9 @@ export default function Navbar() {
     },
   };
   const menuItems = [
-    { label: "Baby Care", href: "#" },
-    { label: "Personal Care", href: "#" },
+    { label: "Baby Care", href: "/babyCareProduct" },
+    { label: "Personal Care", href: "/personalCareProduct" },
+    { label: "Clothing", href: "/clothing" },
     { label: "Blogs", href: "#" },
     { label: "About", href: "#" },
     { label: "Contact Us", href: "#" },

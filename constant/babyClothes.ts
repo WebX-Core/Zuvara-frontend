@@ -1,0 +1,150 @@
+import { Product } from "@/type/babyClothesType";
+
+export const clothingProducts: Product[] = [
+  {
+    id: 1,
+    name: "Co-Ord Sets",
+    rating: 4.6,
+    reviews: 156,
+    image: "/images/diaper/diaper.png",
+    category: "Baby Clothing",
+    inStock: true,
+    variants: [
+      {
+        id: 1,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton Full Sleeve Co-Ord Set",
+        color: "Sunshine Punch",
+      },
+      {
+        id: 2,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton Full Sleeve Co-Ord Set",
+        color: "Fruit Punch",
+      },
+      {
+        id: 3,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton Full Sleeve Co-Ord Set",
+        color: "Cool Sunshine",
+      },
+      {
+        id: 4,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton Full Sleeve Co-Ord Set",
+        color: "Cool Fruit",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Hoodies & Joggers",
+    rating: 4.6,
+    reviews: 156,
+    image: "/images/diaper/diaper.png",
+    category: "Baby Clothing",
+    inStock: true,
+    variants: [
+      {
+        id: 1,
+        image: "/images/diaper/diaper.png",
+        name: "Hoodies & Joggers",
+        color: "Fossil Finder",
+      },
+      {
+        id: 2,
+        image: "/images/diaper/diaper.png",
+        name: "Hoodies & Joggers",
+        color: "Little King",
+      },
+      {
+        id: 3,
+        image: "/images/diaper/diaper.png",
+        name: "Hoodies & Joggers",
+        color: "Rainbow",
+      },
+      {
+        id: 4,
+        image: "/images/diaper/diaper.png",
+        name: "Hoodies & Joggers",
+        color: "Space Ride",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "POLO T-Shirt",
+    rating: 4.6,
+    reviews: 156,
+    image: "/images/diaper/diaper.png",
+    category: "Baby Clothing",
+    inStock: true,
+    variants: [
+      {
+        id: 1,
+        image: "/images/diaper/diaper.png",
+        name: "POLO T-Shirt",
+        color: "Orange",
+      },
+      {
+        id: 2,
+        image: "/images/diaper/diaper.png",
+        name: "POLO T-Shirt",
+        color: "Brown",
+      },
+      {
+        id: 3,
+        image: "/images/diaper/diaper.png",
+        name: "POLO T-Shirt",
+        color: "Blue",
+      },
+      {
+        id: 4,
+        image: "/images/diaper/diaper.png",
+        name: "POLO T-Shirt",
+        color: "Caribbean Green",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "T-Shirt & Shorts",
+    rating: 4.6,
+    reviews: 156,
+    image: "/images/diaper/diaper.png",
+    category: "Baby Clothing",
+    inStock: true,
+    variants: [
+      {
+        id: 1,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton T-Shirt & Pant",
+        color: "Oh Bear",
+      },
+      {
+        id: 2,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton T-Shirt & Pant",
+        color: "Astronaut",
+      },
+      {
+        id: 3,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton T-Shirt & Pant",
+        color: "Rocking Giraffe",
+      },
+      {
+        id: 4,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton T-Shirt & Pant",
+        color: "Criss Cross",
+      },
+      {
+        id: 5,
+        image: "/images/diaper/diaper.png",
+        name: "Cotton T-Shirt & Pant",
+        color: "Space",
+      },
+    ],
+  },
+];

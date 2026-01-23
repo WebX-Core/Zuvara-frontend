@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/shared/Navbar";
-import Footer from "./components/shared/Footer";
 import { LenisProvider } from "./providers/LenisProvider";
 
 const geistSans = Geist({
@@ -26,6 +24,8 @@ export const metadata: Metadata = {
     "Premium quality baby care, kids fashion, and household products for families in Nepal",
 };
 
+import CrawlingBaby from "./components/shared/CrawlingBaby";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,9 +37,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#BCDDC4] text-zinc-900 overflow-x-hidden ${montserrat.variable}`}
       >
         <LenisProvider>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          {children}
+          <CrawlingBaby />
         </LenisProvider>
       </body>
     </html>

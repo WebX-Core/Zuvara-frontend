@@ -18,7 +18,7 @@ const AboutSection = () => {
           />
         </div>
         <div className="lg:w-1/2">
-          <SectionHeading title="About Us" />
+          <SectionHeading title="Why Us" />
           <p className="lg:text-lg">
             Zuvara is a Nepali family-care brand committed to providing safe,
             high-quality, and affordable essentials for everyday life. From baby

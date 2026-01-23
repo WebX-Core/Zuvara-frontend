@@ -1,9 +1,10 @@
 export interface Variant {
   id: number;
   image: string;
+  name: string;
   color?: string;
   size?: string;
-  weight?: string;
+  // weight?: string;
 }
 
 export interface Product {

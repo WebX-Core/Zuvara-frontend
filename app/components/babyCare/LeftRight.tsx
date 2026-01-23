@@ -65,7 +65,7 @@ const LeftRight = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full py-8 overflow-hidden hidden md:block "
+      className="w-full py-8 overflow-hidden hidden lg:block"
     >
       <div className="w-full mx-auto">
         <div className="flex items-center justify-center h-[90vh] gap-0 relative">
@@ -75,7 +75,7 @@ const LeftRight = () => {
             className="w-1/2 shrink-0  flex items-center justify-end"
           >
             <Image
-              src="/baby/l-baby.png"
+              src="/images/baby/l-baby.png"
               alt="Left Section"
               width={1000}
               height={1000}
@@ -89,7 +89,7 @@ const LeftRight = () => {
             className="w-1/2 shrink-0  flex items-center justify-start"
           >
             <Image
-              src="/baby/r-baby.png"
+              src="/images/baby/r-baby.png"
               alt="Right Section"
               width={1000}
               height={1000}
