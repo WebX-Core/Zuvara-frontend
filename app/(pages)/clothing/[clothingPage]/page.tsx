@@ -9,7 +9,7 @@ import { clothingProducts } from "@/constants/babyClothes";
 import type { Product, Variant } from "@/type/babyClothesType";
 import { ChevronRight, Star, Check, ArrowLeft } from "lucide-react";
 import { useMediaQuery } from "react-responsive";
-import FaqSection from "@/app/components/babyCareProduct/FaqSection";
+import FaqSection from "@/app/components/common-ui/FaqSection";
 
 const ClothingProductDetailPage = () => {
   const params = useParams();
@@ -58,12 +58,12 @@ const ClothingProductDetailPage = () => {
   }
 
   return (
-    <div className="bg-babyCare min-h-screen pt-4 lg:pt-24 pb-16">
+    <div className="min-h-screen pt-4 lg:pt-16 pb-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 bg-white text-zinc-500 hover:text-zinc-900 transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
+          className="lg;hidden group flex items-center gap-2 text-zinc-500 hover:text-white hover:bg-foreground transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
         >
           <div className="rounded-full transition-colors">
             <ArrowLeft size={16} />
@@ -89,7 +89,7 @@ const ClothingProductDetailPage = () => {
 
         <div className="flex gap-4 lg:gap-8">
           {/* Left Column: Image Area */}
-          <div className="w-1/2 lg:w-1/3">
+          <div className="w-1/2">
             <motion.div
               layoutId={`product-image-${product.id}`}
               className="relative aspect-square bg-zinc-100 rounded-3xl overflow-hidden border border-zinc-200"
@@ -114,14 +114,14 @@ const ClothingProductDetailPage = () => {
           </div>
 
           {/* Right Column: Product Info */}
-          <div className="w-1/2 lg:w-2/3 flex flex-col justify-center lg:justify-start">
+          <div className="w-1/2 flex flex-col justify-center lg:justify-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <div className="flex items-center gap-3 mb-2 lg:mb-4 text-[8px] lg:text-xs font-bold uppercase lg:tracking-wider whitespace-nowrap">
-                <span className="px-3 py-1 bg-zinc-100 text-zinc-600  rounded-full">
+                <span className="px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full">
                   {product.category}
                 </span>
                 {product.inStock && (
@@ -132,7 +132,7 @@ const ClothingProductDetailPage = () => {
                 )}
               </div>
 
-              <h1 className="text-xl md:text-4xl lg:text-6xl font-black text-zinc-900 mb-3 lg:mb-6 leading-tight tracking-tight">
+              <h1 className="text-xl md:text-4xl lg:text-6xl font-black mb-3 lg:mb-6 leading-tight tracking-tight">
                 {selectedVariant?.name || product.name}
               </h1>
 
@@ -145,7 +145,7 @@ const ClothingProductDetailPage = () => {
               </div>
 
               {!isSmallerDevice && (
-                <hr className="text-white h-px w-full my-4 lg:my-8" />
+                <hr className="text-zinc-500 h-px w-full my-4 lg:my-8" />
               )}
 
               {/* Variant Selection (Desktop) */}
@@ -153,7 +153,7 @@ const ClothingProductDetailPage = () => {
                 product.variants &&
                 product.variants.length > 0 && (
                   <div className="mb-10">
-                    <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4">
                       {product.variants[0].color
                         ? "Select Color"
                         : "Select Size"}
@@ -216,7 +216,7 @@ const ClothingProductDetailPage = () => {
                 onClick={() => setActiveTab(tab.toLowerCase())}
                 className={`pb-4 font-black text-xs lg:text-sm tracking-widest uppercase transition-all relative ${
                   activeTab === tab.toLowerCase()
-                    ? "text-zinc-900"
+                    ? "text-foreground"
                     : "text-zinc-500 hover:text-zinc-700"
                 }`}
               >
@@ -224,7 +224,7 @@ const ClothingProductDetailPage = () => {
                 {activeTab === tab.toLowerCase() && (
                   <motion.div
                     layoutId="activeTabUnderlineClothing"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-900 rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-foreground rounded-full"
                   />
                 )}
               </button>
@@ -242,7 +242,7 @@ const ClothingProductDetailPage = () => {
               >
                 {activeTab === "description" && (
                   <div className="space-y-4 lg:space-y-8">
-                    <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-zinc-900 leading-tight">
+                    <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-foreground leading-tight">
                       Designed for play, built for comfort.
                     </h2>
                     <p className="text-zinc-600 text-xs md:text-sm lg:text-xl lg:leading-relaxed font-medium">

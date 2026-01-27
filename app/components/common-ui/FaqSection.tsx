@@ -9,7 +9,11 @@ interface FaqSectionProps {
   answerColor?: string;
 }
 
-const FaqSection = ({ faqs = [], questionColor = "text-zinc-900", answerColor = "text-zinc-600" }: FaqSectionProps) => {
+const FaqSection = ({
+  faqs = [],
+  questionColor = "text-zinc-900",
+  answerColor = "text-zinc-600",
+}: FaqSectionProps) => {
   if (faqs.length === 0) return null;
 
   // Split into two columns for the grid
@@ -20,7 +24,9 @@ const FaqSection = ({ faqs = [], questionColor = "text-zinc-900", answerColor = 
   return (
     <section className="">
       <div className="mb-4 lg:mb-8">
-        <h2 className={`text-lg lg:text-3xl font-semibold lg:font-black mb-2 lg:mb-4 tracking-tight ${questionColor}`}>
+        <h2
+          className={`text-lg lg:text-3xl font-semibold lg:font-black mb-2 lg:mb-4 tracking-tight ${questionColor}`}
+        >
           Frequently Asked Questions
         </h2>
         <p className={`${answerColor} font-medium`}>
@@ -42,7 +48,9 @@ const FaqSection = ({ faqs = [], questionColor = "text-zinc-900", answerColor = 
                 className="border-b border-zinc-100 lg:last:border-0"
                 triggerClassName={questionColor}
               >
-                <p className={`${answerColor} text-sm lg:text-base lg:leading-relaxed whitespace-pre-line`}>
+                <p
+                  className={`${answerColor} text-sm lg:text-base lg:leading-relaxed whitespace-pre-line`}
+                >
                   {faq.answer}
                 </p>
               </Accordion>
@@ -62,7 +70,9 @@ const FaqSection = ({ faqs = [], questionColor = "text-zinc-900", answerColor = 
                 className="border-b border-zinc-100 last:border-0"
                 triggerClassName={questionColor}
               >
-                <p className={`${answerColor} leading-relaxed whitespace-pre-line`}>
+                <p
+                  className={`${answerColor} leading-relaxed whitespace-pre-line`}
+                >
                   {faq.answer}
                 </p>
               </Accordion>
@@ -73,6 +83,5 @@ const FaqSection = ({ faqs = [], questionColor = "text-zinc-900", answerColor = 
     </section>
   );
 };
-
 
 export default FaqSection;

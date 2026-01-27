@@ -10,7 +10,7 @@ const HeroSection = () => {
   return (
     <div
       className={cn(
-        "min-h-[40vh] flex items-center justify-center transition-colors duration-500",
+        "min-h-[30vh] lg:min-h-[40vh] flex items-center justify-center transition-colors duration-500",
       )}
     >
       <section className="container mx-auto px-4 lg:px-6 max-w-7xl">
@@ -19,10 +19,15 @@ const HeroSection = () => {
             <h1
               className={cn(
                 "text-3xl lg:text-6xl font-bold transition-colors duration-500",
-                isPersonal ? "text-white" : "text-foreground",
+                isPersonal ? "text-black" : "text-foreground",
               )}
             >
-              Let's Connect
+              Let's{" "}
+              <span
+                className={cn(isPersonal ? "text-ternary" : "text-secondary")}
+              >
+                Connect
+              </span>
             </h1>
             <p className="text-lg">
               Have questions or need support? We're here to help—reach out to

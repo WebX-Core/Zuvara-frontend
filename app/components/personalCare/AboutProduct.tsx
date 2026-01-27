@@ -1,71 +1,125 @@
 import React from "react";
 import SectionHeading from "../common-ui/SectionHeading";
-import Button from "../common-ui/Button";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const products = [
+  {
+    id: 1,
+    name: "Period Panties",
+    tagline: "Ultra-Comfortable, Pant Style",
+    slug: "period-panties",
+    description:
+      "Experience ultimate freedom with our high-absorbency period panties. Designed to feel like regular underwear while providing maximum leak protection.",
+    image: "/images/personalCare/period-panties.png",
+    packImage: "/images/personalCare/period-panties-pack.png",
+    bgColor: "bg-[#7c3aed]/10",
+    accentColor: "text-[#7c3aed]",
+    borderColor: "border-[#7c3aed]/20",
+  },
+  {
+    id: 2,
+    name: "Sanitary Pads",
+    tagline: "Thinner, Softer, Simply Better",
+    slug: "sanitary-pads",
+    description:
+      "Premium sanitary pads engineered for superior comfort and rapid absorption. Stay dry, fresh, and confident throughout your day and night.",
+    image: "/images/personalCare/sanitary-pad.png",
+    packImage: "/images/personalCare/sanitary-pads-pack.png",
+    bgColor: "bg-[#7c3aed]/10",
+    accentColor: "text-[#7c3aed]",
+    borderColor: "border-[#7c3aed]/20",
+  },
+];
 
 const AboutProduct = () => {
   return (
-    <section className="bg-white min-h-screen relative">
-      <div className="container mx-auto pt-16 px-4 sm:px-6 lg:px-6 max-w-7xl min-h-screen flex flex-col justify-center">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-          {/* left section */}
-          <div className="lg:w-1/2 flex flex-col gap-8">
-            <div className="">
-              <SectionHeading
-                title="Our"
-                highlight="Products"
-                titleClassName="text-personalCare!"
-                highlighterColor="text-personalCare"
-              />
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Eveniet porro omnis tempora, fugit asperiores nesciunt dolorum
-                eos fugiat nulla sapiente unde recusandae ducimus error,
-                assumenda at esse. Asperiores, veniam iusto.
-              </p>
-            </div>
-            <Link
-              href="/personalCareProduct/period-panties"
-              className="py-4 flex flex-col justify-between gap-4 translate-y-0 hover:-translate-y-2 transition-all duration-400! will-change-transform"
-            >
-              <div className="w-full h-full flex justify-center bg-personalCare py-8">
-                <img
-                  src="/images/personalCare/period-panties.png"
-                  alt="period panties"
-                  className="w-100 h-60"
-                />
-              </div>
-              <div className="">
-                <p className="text-2xl font-semibold">Period Panties</p>
-                <p className="flex flex-col italic">
-                  <span>Period Pads - Pant Style</span>
-                </p>
-              </div>
-            </Link>
-          </div>
+    <section className="bg-white py-24 relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          {/* <SectionHeading
+            title="Essential"
+            highlight="Sanitary Solutions"
+            description="Innovative personal care products designed for your comfort, health, and peace of mind. Discover the future of menstrual hygiene."
+            titleClassName="text-4xl lg:text-5xl font-bold text-black!"
+            highlighterColor="text-personalCare"
+            align="center"
+          /> */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-personalCare">
+            Essential Sanitary Solutions
+          </h2>
+        </div>
 
-          {/* right section */}
-          <div className="lg:w-1/2 flex flex-col justify-between translate-y-0 hover:-translate-y-2 transition-all duration-400! will-change-transform">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8">
+          {products.map((product, index) => (
             <Link
-              href="/personalCareProduct/period-panties"
-              className="py-4 flex flex-col justify-between gap-4 translate-y-0 hover:-translate-y-2 transition-all duration-400! will-change-transform"
+              key={product.id}
+              href={`/personalCareProduct/${product.slug}`}
+              className={cn(
+                "group relative flex flex-col rounded-[2.5rem] overflow-hidden border p-2 transition-all duration-500 hover:shadow-2xl hover:shadow-personalCare/10",
+                product.borderColor,
+                index === 1 ? "lg:translate-y-12" : "", // Staggered look
+              )}
             >
-              <div className="w-full h-full flex justify-center items-center bg-personalCare py-8">
+              {/* Image Container */}
+              <div
+                className={cn(
+                  "relative aspect-4/3 rounded-4xl overflow-hidden flex items-center justify-center p-8 transition-transform duration-700",
+                  product.bgColor,
+                )}
+              >
+                {/* Product Main Image */}
                 <img
-                  src="/images/personalCare/sanitary-pad.png"
-                  alt="sanitary pad"
-                  className="w-80 h-90"
+                  src={product.image}
+                  alt={product.name}
+                  className="relative z-10 w-full h-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-700"
                 />
+
+                {/* Pack Image - Floating overlay */}
+                <div className="absolute bottom-4 right-4 w-1/3 aspect-square z-20 transition-all duration-700 group-hover:translate-x-2 group-hover:-translate-y-2">
+                  <img
+                    src={product.packImage}
+                    alt={`${product.name} pack`}
+                    className="w-full h-full object-contain drop-shadow-xl rotate-6"
+                  />
+                </div>
               </div>
-              <div className="">
-                <p className="text-2xl font-semibold">Sanitary Pads</p>
-                <p className="flex flex-col italic">
-                  <span>The Incredible Sanitary Pads</span>
-                  <span>Thinner, Softer, Simply Better</span>
+
+              {/* Content Container */}
+              <div className="p-8 flex flex-col gap-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-1">
+                      {product.name}
+                    </h3>
+                    <p
+                      className={cn("font-medium italic", product.accentColor)}
+                    >
+                      {product.tagline}
+                    </p>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex items-center justify-center size-12 rounded-full border transition-all duration-500 group-hover:bg-personalCare group-hover:text-white group-hover:border-personalCare",
+                      product.borderColor,
+                    )}
+                  >
+                    <ArrowUpRight className="size-6 transition-transform duration-500 group-hover:rotate-45" />
+                  </div>
+                </div>
+
+                <p className="text-gray-600 leading-relaxed max-w-lg">
+                  {product.description}
                 </p>
+
+                <div className="mt-4 flex items-center gap-2 font-bold text-sm tracking-widest uppercase">
+                  <span>Explore Product</span>
+                  <div className="h-px flex-1 bg-gray-100 group-hover:bg-personalCare/30 transition-colors" />
+                </div>
               </div>
             </Link>
-          </div>
+          ))}
         </div>
       </div>
     </section>

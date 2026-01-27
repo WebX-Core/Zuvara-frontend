@@ -9,7 +9,7 @@ import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product, Variant } from "@/type/personalCareProductType";
 import { ChevronRight, Star, Check, ArrowLeft } from "lucide-react";
 import { useMediaQuery } from "react-responsive";
-import FaqSection from "@/app/components/babyCareProduct/FaqSection";
+import FaqSection from "@/app/components/common-ui/FaqSection";
 
 const PersonalCareProductDetailPage = () => {
   const params = useParams();
@@ -60,12 +60,12 @@ const PersonalCareProductDetailPage = () => {
   }
 
   return (
-    <div className="bg-personalCare/40 min-h-screen pt-4 lg:pt-24 pb-16">
+    <div className="min-h-screen pt-4 lg:pt-12 pb-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 bg-white text-zinc-500 hover:text-zinc-900 transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
+          className="group flex items-center gap-2 text-zinc-500 hover:text-white hover:bg-ternary transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
         >
           <div className="rounded-full transition-colors">
             <ArrowLeft size={16} />
@@ -86,12 +86,12 @@ const PersonalCareProductDetailPage = () => {
             Personal Care
           </Link>
           <ChevronRight size={14} />
-          <span className="text-white font-medium">{product.name}</span>
+          <span className="text-ternary font-medium">{product.name}</span>
         </nav>
 
         <div className="flex gap-4 lg:gap-8">
           {/* Left Column: Image Area */}
-          <div className="w-1/2 lg:w-1/3">
+          <div className="w-1/2">
             <motion.div
               layoutId={`product-image-${product.id}`}
               className="relative aspect-square bg-zinc-50 rounded-3xl overflow-hidden border border-zinc-100"
@@ -116,14 +116,14 @@ const PersonalCareProductDetailPage = () => {
           </div>
 
           {/* Right Column: Product Info */}
-          <div className="w-1/2 lg:w-2/3 flex flex-col justify-center lg:justify-start">
+          <div className="w-1/2 flex flex-col justify-center lg:justify-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <div className="flex items-center gap-3 mb-2 lg:mb-4 text-[8px] lg:text-xs font-bold uppercase lg:tracking-wider whitespace-nowrap">
-                <span className="px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full">
+                <span className="px-3 py-1 bg-ternary text-zinc-100 rounded-full">
                   {product.category}
                 </span>
                 {product.inStock && (
@@ -147,7 +147,7 @@ const PersonalCareProductDetailPage = () => {
               </div>
 
               {!isSmallerDevice && (
-                <hr className="text-white h-px w-full my-4 lg:my-8" />
+                <hr className="text-ternary h-px w-full my-4 lg:my-8" />
               )}
 
               {/* Variant Selection (Desktop) */}
@@ -155,8 +155,8 @@ const PersonalCareProductDetailPage = () => {
                 product.variants &&
                 product.variants.length > 0 && (
                   <div className="mb-10">
-                    <h3 className="text-xs font-black text-white uppercase tracking-[0.2em] mb-4">
-                      Select Size
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4">
+                      Available Size
                     </h3>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                       {product.variants.map((v) => (
@@ -231,7 +231,7 @@ const PersonalCareProductDetailPage = () => {
                 className={`pb-4 font-black text-xs lg:text-sm tracking-widest uppercase transition-all relative ${
                   activeTab === tab.toLowerCase()
                     ? "text-personalCare"
-                    : "text-zinc-200 hover:text-personalCare"
+                    : "text-zinc-400 hover:text-personalCare"
                 }`}
               >
                 {tab}
@@ -256,10 +256,10 @@ const PersonalCareProductDetailPage = () => {
               >
                 {activeTab === "description" && (
                   <div className="space-y-4 lg:space-y-8">
-                    <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-zinc-900 leading-tight">
+                    <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-ternary leading-tight">
                       {product.description}
                     </h2>
-                    <p className="text-zinc-200 text-xs md:text-sm lg:text-xl lg:leading-relaxed font-medium">
+                    <p className="text-zinc-500 text-xs md:text-sm lg:text-xl lg:leading-relaxed font-medium">
                       {product.subDesc1}
                     </p>
                     {product.highlights && product.highlights.length > 0 && (
@@ -285,7 +285,7 @@ const PersonalCareProductDetailPage = () => {
                   <div className="space-y-6 lg:space-y-12">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                       <div>
-                        <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-zinc-900">
+                        <h2 className="text-lg lg:text-3xl font-semibold lg:font-black text-ternary">
                           Verified Experiences
                         </h2>
                         <p className="text-zinc-500 mt-1 lg:mt-2 font-medium">
@@ -345,8 +345,8 @@ const PersonalCareProductDetailPage = () => {
                 {activeTab === "faq" && (
                   <FaqSection
                     faqs={product.faqs}
-                    questionColor="text-white"
-                    answerColor="text-zinc-200"
+                    questionColor="text-ternary"
+                    answerColor="text-zinc-500"
                   />
                 )}
               </motion.div>

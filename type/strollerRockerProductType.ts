@@ -2,10 +2,11 @@ export interface Variant {
   id: number;
   image: string;
   color: string;
-  weight?:string;
-  width?:string;
-  height?:string;
-  depth?:string;
+  weight?: string;
+  width?: string;
+  height?: string;
+  depth?: string;
+  features?: string[];
 }
 
 export interface Product {
@@ -18,6 +19,5 @@ export interface Product {
   reviews?: number;
   inStock?: boolean;
   variants: Variant[];
-  features?: string[];
   description?: string;
 }

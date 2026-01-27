@@ -105,7 +105,7 @@ export default function Navbar() {
     { label: "Baby Care", href: "/babyCareProduct" },
     { label: "Personal Care", href: "/personalCareProduct" },
     { label: "Baby Gear", href: "/clothing" },
-    { label: "Blogs", href: "/blogs" },
+    // { label: "Blogs", href: "/blogs" },
     // { label: "About", href: "/about" },
     { label: "Contact Us", href: "/contact" },
   ];
@@ -122,6 +122,12 @@ export default function Navbar() {
 
   const checkIsActive = (href: string) => {
     if (!href || href === "#") return false;
+
+    // Special case for Baby Gear (Clothing) to include Stroller/Rocker products
+    if (href === "/clothing" && pathname.startsWith("/strollerRockerProduct")) {
+      return true;
+    }
+
     if (pathname === href) return true;
     if (href === "/") return pathname === "/";
     // Ensure we are matching a full path segment to avoid partial matches
@@ -423,7 +429,7 @@ export default function Navbar() {
                   }`}
                 />
                 <span
-                  className={`text-sm font-medium relative ${
+                  className={`text-sm whitespace-nowrap font-medium relative ${
                     finalIsActive
                       ? isPersonalSection
                         ? "text-personalCare"

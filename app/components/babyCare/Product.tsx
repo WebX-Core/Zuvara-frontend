@@ -9,14 +9,25 @@ import SectionHeading from "../common-ui/SectionHeading";
 
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import ProductCard from "../common-ui/ProductCard";
+import { clothingProducts } from "@/constants/babyClothes";
+import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
 
 const Product = () => {
-  const [activeTab, setActiveTab] = useState<"baby" | "personal">("baby");
+  const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
+    "baby",
+  );
+
+  const products =
+    activeTab === "baby"
+      ? babyCareProducts
+      : activeTab === "clothing"
+        ? clothingProducts
+        : strollerRockerProducts;
 
   return (
     <>
       {/* <BigImage /> */}
-      <section className="h-auto md:h-[40vh] lg:h-[80vh] xl:h-[70vh] bg-divider flex items-center relative">
+      <section className="h-auto md:h-[40vh] lg:h-[80vh] xl:h-[70vh] bg-babyCare flex items-center relative">
         {/* top curve border */}
         <div className="custom-shape-divider-top">
           <svg
@@ -96,7 +107,7 @@ const Product = () => {
         </div> */}
 
           {/* Tabs */}
-          {/* <div className="flex gap-4 mb-8 pt-8 justify-center">
+          <div className="flex gap-4 mb-8 pt-8 lg:justify-center overflow-x-auto whitespace-nowrap">
             <button
               onClick={() => setActiveTab("baby")}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
@@ -108,16 +119,26 @@ const Product = () => {
               Baby Care
             </button>
             <button
-              onClick={() => setActiveTab("personal")}
+              onClick={() => setActiveTab("clothing")}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeTab === "personal"
-                  ? "bg-personalCare text-white shadow-lg"
-                  : "bg-zinc-100 text-personalCare hover:bg-zinc-200"
+                activeTab === "clothing"
+                  ? "bg-foreground text-white shadow-lg"
+                  : "bg-zinc-100 text-foreground hover:bg-zinc-200"
               }`}
             >
-              Personal Care
+              Clothing
             </button>
-          </div> */}
+            <button
+              onClick={() => setActiveTab("stroller")}
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                activeTab === "stroller"
+                  ? "bg-foreground text-white shadow-lg"
+                  : "bg-zinc-100 text-foreground hover:bg-zinc-200"
+              }`}
+            >
+              Strollers & Rockers
+            </button>
+          </div>
 
           {/* Products Grid */}
           <motion.div
@@ -127,7 +148,7 @@ const Product = () => {
             transition={{ duration: 0.3 }}
             className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-2"
           >
-            {babyCareProducts.map((product, index) => (
+            {products.map((product, index) => (
               <ProductCard
                 key={product.id}
                 product={product}

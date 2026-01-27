@@ -3,12 +3,11 @@ import ProductList from "@/app/components/babyCareProduct/ProductList";
 
 const page = () => {
   return (
-    <div className="bg-babyCare">
+    <div className="">
       <HeroSection />
       <ProductList />
     </div>
   );
 };
-
 
 export default page;

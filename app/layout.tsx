@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: "Zuvara - Premium Baby & Kids Care Products",
   description:
     "Premium quality baby care, kids fashion, and household products for families in Nepal",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 import CrawlingBaby from "./components/shared/CrawlingBaby";

@@ -121,7 +121,7 @@ button {
 }
 
 .custom-shape-divider-top .shape-fill {
-  fill: var(--color-babyCare);
+  fill: #ffffff;
 }
 
 /** For tablet devices **/
@@ -157,7 +157,7 @@ button {
 }
 
 .custom-shape-divider-bottom .shape-fill {
-  fill: var(--color-babyCare);
+  fill: #ffffff;
 }
 
 /** For tablet devices **/
@@ -174,4 +174,34 @@ button {
     width: calc(100% + 1.3px);
     height: 33px;
   }
+}
+
+/* Floating animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes floatNormal {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.float-animation {
+  animation: float 5s ease-in-out infinite;
+}
+
+.float-animation-delayed {
+  animation: floatNormal 5s ease-in-out infinite;
+  animation-delay: 0.3s;
 }

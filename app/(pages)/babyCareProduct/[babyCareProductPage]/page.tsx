@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import type { Product, Variant } from "@/type/babyCareProductType";
 import { ChevronRight, Star, Check, ArrowLeft } from "lucide-react";
-import FaqSection from "@/app/components/babyCareProduct/FaqSection";
+import FaqSection from "@/app/components/common-ui/FaqSection";
 import { useMediaQuery } from "react-responsive";
 
 const ProductDetailPage = () => {
@@ -58,12 +58,12 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen pt-4 lg:pt-24 pb-16 bg-babyCare">
+    <div className="min-h-screen pt-4 lg:pt-16 pb-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 bg-white text-zinc-500 hover:text-zinc-900 transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
+          className="lg:hidden group flex items-center gap-2 text-zinc-500 hover:text-white hover:bg-foreground transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
         >
           <div className="rounded-full transition-colors">
             <ArrowLeft size={16} />
@@ -90,7 +90,7 @@ const ProductDetailPage = () => {
         {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"> */}
         <div className="flex gap-4 lg:gap-8">
           {/* Left Column: Image Gallery */}
-          <div className="w-1/2 lg:w-1/3">
+          <div className="w-1/2">
             <motion.div
               layoutId={`product-image-${product.id}`}
               className="relative aspect-square bg-white rounded-3xl overflow-hidden border border-zinc-200"
@@ -115,7 +115,7 @@ const ProductDetailPage = () => {
           </div>
 
           {/* Right Column: Product Info */}
-          <div className="w-1/2 lg:w-2/3 flex flex-col justify-center lg:justify-start">
+          <div className="w-1/2 flex flex-col justify-center lg:justify-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -133,7 +133,7 @@ const ProductDetailPage = () => {
                 )}
               </div>
 
-              <h1 className="text-xl md:text-4xl lg:text-6xl font-bold text-zinc-900 mb-3 lg:mb-6 leading-tight tracking-tight">
+              <h1 className="text-xl md:text-4xl lg:text-6xl font-bold mb-3 lg:mb-6 leading-tight tracking-tight">
                 {product.name}
               </h1>
 
@@ -146,7 +146,7 @@ const ProductDetailPage = () => {
               </div>
 
               {!isSmallerDevice && (
-                <hr className="text-white h-px w-full my-4 lg:my-8" />
+                <hr className="text-zinc-500 h-px w-full my-4 lg:my-8" />
               )}
 
               {/* Variant Selection */}
@@ -159,7 +159,7 @@ const ProductDetailPage = () => {
                         ? "Select Variant"
                         : "Select Size"}
                     </h3>
-                    <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                       {product.variants.map((v) => (
                         <button
                           key={v.id}
@@ -256,7 +256,7 @@ const ProductDetailPage = () => {
                 onClick={() => setActiveTab(tab.toLowerCase())}
                 className={`pb-4 font-black text-xs lg:text-sm tracking-widest uppercase transition-all relative ${
                   activeTab === tab.toLowerCase()
-                    ? "text-zinc-900"
+                    ? "text-foreground"
                     : "text-zinc-500 hover:text-zinc-700"
                 }`}
               >
@@ -264,7 +264,7 @@ const ProductDetailPage = () => {
                 {activeTab === tab.toLowerCase() && (
                   <motion.div
                     layoutId="activeTabUnderline"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-900 rounded-full"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-foreground rounded-full"
                   />
                 )}
               </button>
@@ -372,7 +372,12 @@ const ProductDetailPage = () => {
                     </div>
                   </div>
                 )}
-                {activeTab === "faq" && <FaqSection faqs={product.faqs} />}
+                {activeTab === "faq" && (
+                  <FaqSection
+                    questionColor="text-zinc-900"
+                    faqs={product.faqs}
+                  />
+                )}
               </motion.div>
             </AnimatePresence>
           </div>

@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const router = useRouter();
   const [selectedVariant, setSelectedVariant] = useState<UnifiedVariant | null>(
-    null
+    null,
   );
   const { variants } = product;
 
@@ -74,7 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       <div
         onClick={handleCardClick}
-        className={`group h-full flex flex-col bg-white rounded-lg border border-transparent overflow-hidden transition-all duration-400 relative cursor-pointer ${
+        className={`group h-full flex flex-col bg-white rounded-2xl border border-transparent overflow-hidden transition-all duration-400 relative cursor-pointer ${
           activeTab === "baby"
             ? "hover:border-foreground"
             : activeTab === "personal"
@@ -113,8 +113,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Variant Thumbnails - Below Image */}
         {variants && variants.length > 0 && (
           <div className="px-3 py-2 bg-zinc-100 border-t border-zinc-100 w-full">
-            <div className="flex gap-2 items-center justify-center overflow-x-auto w-full">
-              <div className="flex items-center justify-center pt-2">
+            <div className="flex gap-2 items-center justify-start lg:justify-center overflow-x-auto w-full">
+              <div className="hidden lg:flex items-center justify-center pt-2">
                 {variants && variants.length > 0 && (
                   <p className="text-sm font-medium text-zinc-500 uppercase tracking-widest">
                     {(variants[0] as any).color ? "Color: " : "Size: "}

@@ -20,7 +20,9 @@ const StrollerProductDetailPage = () => {
 
   useEffect(() => {
     const productSlug = params.strollerRockerProductPage;
-    const foundProduct = strollerRockerProducts.find((p) => p.slug === productSlug);
+    const foundProduct = strollerRockerProducts.find(
+      (p) => p.slug === productSlug,
+    );
 
     if (foundProduct) {
       setProduct(foundProduct);
@@ -57,12 +59,12 @@ const StrollerProductDetailPage = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen pt-4 lg:pt-24 pb-16">
+    <div className="bg-white min-h-screen pt-4 lg:pt-16 pb-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 bg-white text-zinc-500 hover:text-zinc-900 transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
+          className="lg:hidden group flex items-center gap-2 bg-white text-zinc-500 hover:text-white hover:bg-foreground transition-colors mb-3 lg:mb-6 px-2 py-1 rounded-full font-bold text-sm lg:tracking-widest"
         >
           <div className="rounded-full transition-colors">
             <ArrowLeft size={16} />
@@ -99,7 +101,7 @@ const StrollerProductDetailPage = () => {
                 }
                 alt={product.name}
                 fill
-                className="object-contain p-4 md:p-12 transition-all duration-500"
+                className="object-contain p-12 lg:p-16 transition-all duration-500"
                 priority
               />
               {!product.inStock && (
@@ -120,7 +122,7 @@ const StrollerProductDetailPage = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="flex items-center gap-3 mb-2 lg:mb-4 text-[8px] lg:text-xs font-bold uppercase lg:tracking-wider whitespace-nowrap">
-                <span className="px-3 py-1 bg-zinc-100 text-zinc-600  rounded-full">
+                <span className="px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full">
                   {product.category}
                 </span>
                 {product.inStock && (
@@ -131,8 +133,8 @@ const StrollerProductDetailPage = () => {
                 )}
               </div>
 
-              <h1 className="text-xl md:text-3xl lg:text-4xl font-black text-zinc-900 mb-3 lg:mb-6 leading-tight tracking-tight">
-                {product.name}
+              <h1 className="text-xl md:text-3xl lg:text-4xl font-black mb-3 lg:mb-6 leading-tight tracking-tight">
+                {product.name} - {selectedVariant?.color}
               </h1>
 
               {/* Rating & Reviews */}
@@ -141,81 +143,100 @@ const StrollerProductDetailPage = () => {
                   <span>{product.rating || 4.8}</span>
                   <Star size={isSmallerDevice ? 10 : 14} fill="white" />
                 </div>
-                 <span className="text-zinc-500 text-xs lg:text-sm font-medium">
+                <span className="text-zinc-500 text-xs lg:text-sm font-medium">
                   {product.reviews || 42} Reviews
-                 </span>
+                </span>
               </div>
 
               {!isSmallerDevice && (
-                <hr className="text-zinc-200 h-px w-full my-4 lg:my-8" />
+                <hr className="text-zinc-500 h-px w-full my-4 lg:my-8" />
               )}
 
               {/* Specs Grid */}
-              {selectedVariant && (selectedVariant.weight || selectedVariant.width) && (
-                 <div className="grid grid-cols-2 gap-4 mb-8">
+              {selectedVariant &&
+                (selectedVariant.weight || selectedVariant.width) && (
+                  <div className="grid grid-cols-2 gap-4 mb-8">
                     {selectedVariant.weight && (
-                        <div className="p-4 bg-zinc-50 rounded-xl">
-                            <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">Weight</p>
-                            <p className="font-bold text-zinc-900">{selectedVariant.weight}</p>
-                        </div>
+                      <div className="p-4 bg-zinc-50 rounded-xl">
+                        <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">
+                          Weight
+                        </p>
+                        <p className="font-bold text-zinc-900">
+                          {selectedVariant.weight}
+                        </p>
+                      </div>
                     )}
-                     {selectedVariant.width && (
-                        <div className="p-4 bg-zinc-50 rounded-xl">
-                            <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">Dimensions</p>
-                            <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">(Width x Height x Depth)</p>
-                            <p className="font-bold text-zinc-900 text-xs">
-                                {selectedVariant.width} x {selectedVariant.height} x {selectedVariant.depth}
-                            </p>
-                        </div>
+                    {selectedVariant.width && (
+                      <div className="p-4 bg-zinc-50 rounded-xl">
+                        <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">
+                          Dimensions
+                        </p>
+                        <p className="text-xs text-zinc-400 uppercase font-bold tracking-wider mb-1">
+                          (Width x Height x Depth)
+                        </p>
+                        <p className="font-bold text-zinc-900 text-xs">
+                          {selectedVariant.width} x {selectedVariant.height} x{" "}
+                          {selectedVariant.depth}
+                        </p>
+                      </div>
                     )}
-                 </div>
-              )}
-
-
-              {/* Variant Selection (Desktop) */}
-              {product.variants &&
-                product.variants.length > 0 && (
-                  <div className="mb-10">
-                    <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">
-                      {product.variants.some(v => v.color)
-                        ? "Select Color"
-                        : "Select Variant"}
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                      {product.variants.map((v) => (
-                        <button
-                          key={v.id}
-                          onClick={() => setSelectedVariant(v)}
-                          className={`group relative px-4 py-2 rounded-xl border-2 transition-all duration-300 flex items-center gap-2 ${
-                            selectedVariant?.id === v.id
-                              ? "border-zinc-900 bg-zinc-900 text-white shadow-lg"
-                              : "border-zinc-100 hover:border-zinc-300 text-zinc-600 bg-zinc-50"
-                          }`}
-                        >
-                           {v.color && <div className="w-4 h-4 rounded-full border border-white/20" style={{backgroundColor: v.color.toLowerCase() }} />}
-                          <span className="font-bold text-sm leading-none">
-                            {v.color || `Variant ${v.id}`}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 )}
 
+              {/* Variant Selection (Desktop) */}
+              {product.variants && product.variants.length > 0 && (
+                <div className="mb-10">
+                  <h3 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] mb-4">
+                    {product.variants.some((v) => v.color) && "Select Variant"}
+                  </h3>
+                  <div className="flex flex-wrap gap-3">
+                    {product.variants.map((v) => (
+                      <button
+                        key={v.id}
+                        onClick={() => setSelectedVariant(v)}
+                        className={`group relative px-4 py-2 rounded-xl border-2 transition-all duration-300 flex items-center gap-2 ${
+                          selectedVariant?.id === v.id
+                            ? "border-zinc-900 bg-zinc-900 text-white shadow-lg"
+                            : "border-zinc-100 hover:border-zinc-300 text-zinc-600 bg-zinc-50"
+                        }`}
+                      >
+                        {v.color && (
+                          // <div
+                          //   className="w-4 h-4 rounded-full border border-white/20"
+                          //   style={{ backgroundColor: v.color.toLowerCase() }}
+                          // />
+                          <img
+                            src={v.image}
+                            alt={`${product.name} - ${v.color}`}
+                            className="size-8"
+                          />
+                        )}
+                        <span className="font-bold text-sm leading-none">
+                          {v.color || `Variant ${v.id}`}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Description / Features Tab */}
-                <div className="mt-8">
-                     <h3 className="text-lg font-bold text-zinc-900 mb-4">Key Features</h3>
-                    <ul className="space-y-3">
-                        {product.features?.map((feature, idx) => (
-                             <li key={idx} className="flex items-start gap-3 text-zinc-600">
-                                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                                <span className="leading-snug">{feature}</span>
-                             </li>
-                        ))}
-                    </ul>
-                </div>
-
+              <div className="mt-8">
+                <h3 className="text-lg font-bold text-zinc-900 mb-4">
+                  Key Features
+                </h3>
+                <ul className="space-y-3">
+                  {selectedVariant?.features?.map((feature, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-start gap-3 text-zinc-600"
+                    >
+                      <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                      <span className="leading-snug">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
           </div>
         </div>

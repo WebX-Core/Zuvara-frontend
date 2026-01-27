@@ -47,7 +47,7 @@ const ContactSection = () => {
                       placeholder="Your Name"
                       className={cn(
                         "w-full p-4 rounded-2xl text-lg focus:outline-none placeholder:text-foreground/50",
-                        isPersonal ? "bg-personalCare/10" : "bg-foreground/20",
+                        isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
                       )}
                       required
                     />
@@ -60,7 +60,7 @@ const ContactSection = () => {
                       placeholder="Your phone number"
                       className={cn(
                         "w-full p-4 rounded-2xl text-lg focus:outline-none placeholder:text-foreground/50",
-                        isPersonal ? "bg-personalCare/10" : "bg-foreground/20",
+                        isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
                       )}
                       required
                     />
@@ -73,7 +73,7 @@ const ContactSection = () => {
                       placeholder="Your email address"
                       className={cn(
                         "w-full p-4 rounded-2xl text-lg focus:outline-none placeholder:text-foreground/50",
-                        isPersonal ? "bg-personalCare/10" : "bg-foreground/20",
+                        isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
                       )}
                       required
                     />
@@ -87,7 +87,7 @@ const ContactSection = () => {
                     placeholder="Write your message here..."
                     className={cn(
                       "w-full h-60 p-4 rounded-2xl text-lg focus:outline-none placeholder:text-foreground/50",
-                      isPersonal ? "bg-personalCare/10" : "bg-foreground/20",
+                      isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
                     )}
                     required
                   />

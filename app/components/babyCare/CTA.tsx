@@ -101,7 +101,7 @@ const CTA = () => {
           className="w-full h-full object-contain"
         />
       </div> */}
-      <div className="relative bg-divider h-auto md:h-[45vh] lg:h-[80vh] py-4 lg:py-8">
+      <div className="relative bg-babyCare h-auto md:h-[45vh] lg:h-[60vh] py-4 lg:py-8">
         {/* top curve border */}
         <div className="custom-shape-divider-top">
           <svg
@@ -182,7 +182,7 @@ const CTA = () => {
         </div>
 
         {/* bottom curve border */}
-        <div className="custom-shape-divider-bottom">
+        {/* <div className="custom-shape-divider-bottom">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ const CTA = () => {
               className="shape-fill"
             ></path>
           </svg>
-        </div>
+        </div> */}
       </div>
     </section>
   );
