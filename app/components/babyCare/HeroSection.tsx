@@ -143,21 +143,21 @@ export default function HeroSection() {
         )}
 
         <div className="">
-          {!isSmallerDevice && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <Button
-                content="Explore Baby Care Products"
-                link="/babyCareProduct"
-                icon="vaadin:globe"
-                buttonClassName="w-full lg:w-fit"
-              />
-            </motion.div>
-          )}
+          {/* {!isSmallerDevice && ( */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <Button
+              content="Explore Baby Care Products"
+              link="/babyCareProduct"
+              icon="vaadin:globe"
+              buttonClassName="w-full lg:w-fit"
+            />
+          </motion.div>
+          {/* )} */}
 
           {/* Trust Section */}
           <motion.div

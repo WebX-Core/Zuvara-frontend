@@ -101,9 +101,9 @@ const CTA = () => {
           className="w-full h-full object-contain"
         />
       </div> */}
-      <div className="relative bg-babyCare h-auto md:h-[45vh] lg:h-[60vh] py-4 lg:py-8">
+      <div className="relative bg-babyCare h-auto md:h-[45vh] lg:h-[60vh] lg:py-8">
         {/* top curve border */}
-        <div className="custom-shape-divider-top">
+        <div className="custom-shape-divider-top hidden lg:block">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@ const CTA = () => {
           <div className="overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Content */}
-              <div className="p-8 lg:py-24 lg:pl-36">
+              <div className="p-4 lg:py-24 lg:pl-36">
                 <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
                   Discover Amazing
                 </p>

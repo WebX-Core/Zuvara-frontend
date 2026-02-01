@@ -4,6 +4,7 @@ import { Icon } from "@iconify-icon/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import SectionHeading from "../common-ui/SectionHeading";
+import { useMediaQuery } from "react-responsive";
 
 const Testimonial = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,6 +62,8 @@ const Testimonial = () => {
 
   const currentTestimonial = testimonials[currentIndex];
 
+  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
+
   return (
     <section className="py-4 lg:py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
@@ -76,7 +79,8 @@ const Testimonial = () => {
             title="What"
             highlight="Nepali Mothers Say"
             description="Real reviews from real mothers who trust Zuvara"
-            align="center"
+            align={isSmallerDevice ? "left" : "center"}
+            descClassName="text-left lg:text-center"
           />
           {/* Google Review Button */}
           {/* <div className="flex justify-center">

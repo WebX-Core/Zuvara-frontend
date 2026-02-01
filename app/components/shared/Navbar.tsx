@@ -162,11 +162,8 @@ export default function Navbar() {
   const menuItems = [
     { label: "Home", href: homeHref },
     {
-      label: "Baby Products",
-      href:
-        isMounted && isSmallerDevice
-          ? "/babyCareProductMobile"
-          : "/babyCareProduct",
+      label: "Baby Care",
+      href: "/babyCareProduct",
     },
     { label: "Personal Care", href: "/personalCareProduct" },
     { label: "Baby Gear", href: "/clothing" },
@@ -176,12 +173,25 @@ export default function Navbar() {
   ];
 
   const filteredMenuItems = menuItems.filter((item) => {
-    if (isBabySection && item.label === "Personal Care") return false;
+    // Prevent flash of all links on neutral pages during hydration
     if (
-      isPersonalSection &&
-      (item.label === "Baby Care" || item.label === "Baby Gear")
-    )
-      return false;
+      !isMounted &&
+      (pathname === "/blogs" || pathname === "/contact" || pathname === "/")
+    ) {
+      const globalLinks = ["Home", "Blogs", "Contact Us"];
+      return globalLinks.includes(item.label);
+    }
+
+    if (activeSection === "baby") {
+      if (item.label === "Personal Care" || item.label === "Baby Gear")
+        return false;
+    }
+
+    if (activeSection === "personal") {
+      if (item.label === "Baby Care" || item.label === "Baby Gear")
+        return false;
+    }
+
     return true;
   });
 
@@ -195,7 +205,7 @@ export default function Navbar() {
 
     // Special case for mobile 'Product' tab to remain active on detail pages
     if (
-      href === "/babyCareProductMobile" &&
+      href === "/babyCareProduct" &&
       pathname.startsWith("/babyCareProduct")
     ) {
       return true;
@@ -216,11 +226,7 @@ export default function Navbar() {
     },
     {
       label: "Product",
-      href: isPersonalSection
-        ? "/personalCareProduct"
-        : isMounted && isSmallerDevice
-          ? "/babyCareProductMobile"
-          : "/babyCareProduct",
+      href: isPersonalSection ? "/personalCareProduct" : "/babyCareProduct",
       icon: "fluent:cart-20-filled",
     },
     // ...(isBabySection
@@ -571,7 +577,7 @@ export default function Navbar() {
         initial="visible"
         className="lg:hidden fixed bottom-0 w-full z-50 bg-transparent border-t border-zinc-200"
       >
-        <div className="flex justify-between items-center w-full bg-white">
+        <div className="grid grid-cols-3 w-full bg-white">
           {mobileMenuItems.map((item) => {
             const isActive = checkIsActive(item.href);
             // Handle Home specially if it matches multiple candidates
@@ -606,7 +612,7 @@ export default function Navbar() {
                       : "text-zinc-400"
                   }`}
                 />
-                {isActive && (
+                {/* {isActive && (
                   <motion.div
                     layoutId="activeTab"
                     className={cn(
@@ -614,7 +620,7 @@ export default function Navbar() {
                       isPersonalSection ? "bg-personalCare" : "bg-foreground",
                     )}
                   />
-                )}
+                )} */}
                 {isActive && (
                   <span
                     className={`text-sm whitespace-nowrap font-medium relative ${
@@ -628,11 +634,6 @@ export default function Navbar() {
                     {item.label}
                   </span>
                 )}
-                {/* {item.badge !== undefined && item.badge > 0 && (
-                  <span className="absolute top-0 right-0 w-5 h-5 text-xs rounded-full flex items-center justify-center">
-                    {item.badge}
-                  </span>
-                )} */}
               </Link>
             );
           })}

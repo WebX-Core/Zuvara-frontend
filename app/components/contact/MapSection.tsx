@@ -20,7 +20,7 @@ const MapSection = () => {
             <div className="w-full h-[30vh] space-y-2">
               <p
                 className={cn(
-                  "font-semibold",
+                  "text-xl font-semibold",
                   isPersonal ? "text-personalCare" : "text-foreground",
                 )}
               >
@@ -37,7 +37,7 @@ const MapSection = () => {
             <div className="w-full h-[30vh] space-y-2">
               <p
                 className={cn(
-                  "font-semibold",
+                  "text-xl font-semibold",
                   isPersonal ? "text-personalCare" : "text-foreground",
                 )}
               >

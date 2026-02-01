@@ -12,7 +12,7 @@ const VideoSection = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(1234);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const isSmallerDevice = useMediaQuery({ maxWidth: 768 });
+  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   const handleToggleMute = () => {
     if (videoRef.current) {
@@ -45,7 +45,8 @@ const VideoSection = () => {
           title="We started zuvara with"
           highlight="purpose."
           description="Because parenting is hard enough and diapers should be easy."
-          align="center"
+          align={isSmallerDevice ? "left" : "center"}
+          descClassName="text-left lg:text-center"
         />
 
         {/* Video Section */}

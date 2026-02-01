@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Facebook, Instagram, Music, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
@@ -11,6 +12,7 @@ import { use, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 export default function Footer() {
+  const pathname = usePathname();
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
@@ -21,81 +23,28 @@ export default function Footer() {
   }, []);
 
   const footerSections = [
-    // {
-    //   title: "Shop & Learn",
-    //   links: ["Store", "Men", "Women", "Kids", "Collections", "New Arrivals"],
-    // },
-    // {
-    //   title: "Shopping",
-    //   links: [
-    //     "Size Charts",
-    //     "Retail Store",
-    //     "Track Order",
-    //     "Returns",
-    //     "Shipping Info",
-    //   ],
-    // },
-    // {
-    //   title: "Account",
-    //   links: [
-    //     "Manage Account",
-    //     "My Orders",
-    //     "Wishlist",
-    //     "Gift Cards",
-    //     "Loyalty Program",
-    //   ],
-    // },
-    // {
-    //   title: "About Zuvara",
-    //   links: [
-    //     "Our Story",
-    //     "Our Difference",
-    //     "Sustainability",
-    //     "Newsroom",
-    //     "Careers",
-    //   ],
-    // },
-    // {
-    //   title: "Customer Care",
-    //   links: ["Contact Us", "FAQ", "Live Chat", "Email Support", "Call Us"],
-    // },
-    // {
-    //   title: "Company",
-    //   links: [
-    //     "About Us",
-    //     "Blog",
-    //     "Privacy Policy",
-    //     "Terms & Conditions",
-    //     "Contact",
-    //   ],
-    // },
     {
       title: "Links",
       links: [
-        {
-          label: "Home",
-          href: "/",
-        },
-        {
-          label: "Baby Products",
-          href:
-            isMounted && isSmallerDevice
-              ? "/babyCareProductMobile"
-              : "/babyCareProduct",
-        },
-        {
-          label: "Baby Gear",
-          href: "/clothing",
-        },
-        // {
-        //   label: "Blogs",
-        //   href: "/blogs",
-        // },
-        {
-          label: "Contact Us",
-          href: "/contact",
-        },
-      ],
+        { label: "Home", href: "/" },
+        { label: "Baby Products", href: "/babyCareProduct" },
+        { label: "Baby Gear", href: "/clothing" },
+        { label: "Personal Care", href: "/personalCareProduct" },
+        { label: "Contact Us", href: "/contact" },
+      ].filter((link) => {
+        // Handle hydration flash for neutral pages
+        if (!isMounted && (pathname === "/blogs" || pathname === "/contact")) {
+          return ["Home", "Contact Us"].includes(link.label);
+        }
+
+        if (activeSection === "baby") {
+          return link.label !== "Personal Care";
+        }
+        if (activeSection === "personal") {
+          return link.label !== "Baby Products" && link.label !== "Baby Gear";
+        }
+        return true;
+      }),
     },
   ];
 
@@ -226,47 +175,6 @@ export default function Footer() {
               ))}
             </div>
           </div>
-          {/* </div> */}
-
-          {/* Social Media */}
-          {/* <div>
-            <h3 className="text-sm font-semibold mb-2 lg:mb-4 text-[#8cd700]!">
-              Follow Us
-            </h3>
-            <p className="text-sm text-zinc-500 mb-4">
-              Connect with us on social media for exclusive updates and offers.
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="text-zinc-600 hover:text-teal-600 transition"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-zinc-600 hover:text-teal-600 transition"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-zinc-600 hover:text-teal-600 transition"
-                aria-label="TikTok"
-              >
-                <Music size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-zinc-600 hover:text-teal-600 transition"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={20} />
-              </a>
-            </div>
-          </div> */}
 
           {/* Newsletter */}
           <div className="col-span-2 lg:col-span-1 flex flex-col gap-4">

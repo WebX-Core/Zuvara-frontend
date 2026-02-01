@@ -7,7 +7,7 @@ const HeroSection = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   return (
-    <section className="h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-4 pb-8">
+    <section className="h-[70vh] lg:h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
       <div className="relative w-full h-full max-w-7xl mx-auto overflow-hidden rounded-2xl lg:rounded-4xl">
         {/* Background Image Container */}
         <div className="absolute inset-0 w-full h-full z-0">
@@ -21,16 +21,17 @@ const HeroSection = () => {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 h-full w-full flex flex-col justify-center lg:justify-end p-8 md:p-16 text-white">
-          <div className="max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 inline-block border border-white/30">
-                Featured Article
-              </span>
+        <div className="relative z-10 h-full w-full flex flex-col lg:justify-end p-4 lg:p-16 text-white">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="max-w-2xl h-full flex flex-col justify-between"
+          >
+            <span className="w-fit px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 inline-block border border-white/30">
+              Featured Article
+            </span>
+            <div className="">
               <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-[1.1]">
                 Discover the Best <br /> for Your Little One
               </h1>
@@ -42,8 +43,8 @@ const HeroSection = () => {
               <button className="bg-white text-black px-8 py-3 rounded-full font-bold text-sm tracking-wide hover:bg-zinc-100 transition-colors shadow-lg">
                 Read Full Article
               </button>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

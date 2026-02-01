@@ -29,14 +29,18 @@ export const SectionProvider = ({ children }: { children: React.ReactNode }) => 
     const currentSection = getSectionFromPath(pathname);
     if (currentSection !== "none") {
       setActiveSection(currentSection);
-      sessionStorage.setItem("zuvara-section", currentSection);
+      document.cookie = `zuvara-section=${currentSection}; path=/; max-age=31536000`;
     } else if (pathname === "/") {
       setActiveSection("none");
-      sessionStorage.removeItem("zuvara-section");
+      document.cookie = "zuvara-section=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     } else {
-      // Rehydrate from session storage for neutral pages
-      const saved = sessionStorage.getItem("zuvara-section") as Section;
-      if (saved) setActiveSection(saved);
+      // Rehydrate from cookies for neutral pages
+      const cookies = document.cookie.split("; ");
+      const sectionCookie = cookies.find((c) => c.startsWith("zuvara-section="));
+      if (sectionCookie) {
+        const saved = sectionCookie.split("=")[1] as Section;
+        if (saved) setActiveSection(saved);
+      }
     }
   }, [pathname]);
 
