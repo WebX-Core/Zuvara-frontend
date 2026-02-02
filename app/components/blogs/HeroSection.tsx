@@ -32,7 +32,7 @@ const HeroSection = () => {
               Featured Article
             </span>
             <div className="">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-[1.1]">
                 Discover the Best <br /> for Your Little One
               </h1>
               <p className="text-base md:text-lg text-white/80 font-medium mb-8 max-w-xl leading-relaxed">

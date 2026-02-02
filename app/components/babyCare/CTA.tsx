@@ -101,7 +101,7 @@ const CTA = () => {
           className="w-full h-full object-contain"
         />
       </div> */}
-      <div className="relative bg-babyCare h-auto md:h-[45vh] lg:h-[60vh] lg:py-8">
+      <div className="relative lg:bg-babyCare h-auto md:h-[45vh] lg:h-[60vh] lg:py-8 flex items-center">
         {/* top curve border */}
         <div className="custom-shape-divider-top hidden lg:block">
           <svg
@@ -118,7 +118,7 @@ const CTA = () => {
         </div>
         <div
           ref={contentRef}
-          className="container w-full h-full flex items-center"
+          className="container w-full h-full flex items-center bg-babyCare mx-4 lg:mx-0 rounded-xl lg:rounded-none"
         >
           <div className="overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">

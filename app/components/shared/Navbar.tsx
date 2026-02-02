@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -25,6 +25,7 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -183,8 +184,13 @@ export default function Navbar() {
     }
 
     if (activeSection === "baby") {
-      if (item.label === "Personal Care" || item.label === "Baby Gear")
-        return false;
+      if (item.label === "Personal Care") return false;
+    }
+
+    if (activeSection === "baby") {
+      if (isSmallerDevice) {
+        if (item.label === "Baby Gear") return false;
+      }
     }
 
     if (activeSection === "personal") {
@@ -259,7 +265,13 @@ export default function Navbar() {
             {/* Logo - Left */}
             <div className="flex items-center justify-between w-full relative">
               <div className="flex-1 flex items-center justify-start gap-2">
-                <Icon icon="mdi:headset" width={20} height={20} />
+                <Icon
+                  icon="mdi:headset"
+                  className={cn(
+                    "size-5",
+                    isPersonalSection ? "text-personalCare" : "text-foreground",
+                  )}
+                />
                 <h3 className="font-medium text-sm">Customer Support</h3>
               </div>
               <Link href="/" className="flex items-center shrink-0">
@@ -307,8 +319,12 @@ export default function Navbar() {
                           ? "material-symbols:close-rounded"
                           : "mingcute:search-line"
                       }
-                      width="24"
-                      height="24"
+                      className={cn(
+                        "size-6",
+                        isPersonalSection
+                          ? "text-personalCare"
+                          : "text-foreground",
+                      )}
                     />
                   </button>
 
@@ -355,8 +371,61 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
+                {/* section switcher */}
+                <div className="relative group">
+                  <Link
+                    href={!isPersonalSection ? "/personalCare" : "/babyCare"}
+                    onMouseEnter={() => setIsTooltipVisible(true)}
+                    onMouseLeave={() => setIsTooltipVisible(false)}
+                    className="flex items-center"
+                  >
+                    <Icon
+                      icon="ri:exchange-line"
+                      className={cn(
+                        "size-6",
+                        isPersonalSection
+                          ? "text-personalCare"
+                          : "text-foreground",
+                      )}
+                    />
+                  </Link>
+
+                  <AnimatePresence>
+                    {isTooltipVisible && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        className={cn(
+                          "absolute top-full right-0 mt-3 px-3 py-1.5 text-white text-sm font-bold rounded-lg shadow-xl whitespace-nowrap z-70 pointer-events-none",
+                          isPersonalSection ? "bg-personalCare" : "bg-babyCare",
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "absolute -top-1 right-3 size-2 rotate-45",
+                            isPersonalSection
+                              ? "bg-personalCare"
+                              : "bg-babyCare",
+                          )}
+                        />
+                        Switch to{" "}
+                        {isPersonalSection ? "Baby Care" : "Personal Care"}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
                 <button className="hover:text-zinc-900 transition relative">
-                  <Icon icon="logos:whatsapp-icon" width="24" height="24" />
+                  <Icon
+                    icon="uil:whatsapp"
+                    className={cn(
+                      "size-6",
+                      isPersonalSection
+                        ? "text-personalCare"
+                        : "text-foreground",
+                    )}
+                  />
                 </button>
               </div>
             </div>

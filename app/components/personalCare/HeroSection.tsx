@@ -7,6 +7,7 @@ import Button from "../common-ui/Button";
 // import StatsDivider from "../personalCare/StatsDivider";
 import { useMediaQuery } from "react-responsive";
 import { cn } from "@/lib/utils";
+import Title from "../shared/Title";
 
 const featureLists = [
   { id: 1, title: "Ultra-soft, pillow-like comfort" },
@@ -22,7 +23,7 @@ const HeroSection = () => {
 
   return (
     <main className="relative bg-personalCare/5 min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between">
-      <section className="container mx-auto px-6 lg:px-12 max-w-7xl flex-1 flex flex-col lg:flex-row items-center justify-between py-8 lg:py-12 lg:py-0 gap-12 lg:gap-0 relative z-10">
+      <section className="container mx-auto px-6 lg:px-6 max-w-7xl flex-1 flex flex-col lg:flex-row items-center justify-between py-8 lg:py-0 gap-12 lg:gap-0 relative z-10">
         {/* Left Content: Text & CTA */}
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-20 space-y-6">
           {/* <motion.div
@@ -35,48 +36,12 @@ const HeroSection = () => {
               100% Cotton Feel
             </span>
           </motion.div> */}
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900"
-          >
-            Ultimate Comfort <br />
-            <span className="text-personalCare">Zero Leakage.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed"
-          >
-            Experience our ultra-thin sanitary pads and period panties designed
-            for maximum absorption and breathable softness.
-          </motion.p>
-
-          {/* <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="pt-8 flex items-center gap-6"
-          >
-             <div className="flex flex-col">
-                <span className="font-bold text-2xl text-zinc-800">12h</span>
-                <span className="text-xs font-medium text-zinc-500 uppercase">Protection</span>
-             </div>
-             <div className="w-px h-10 bg-zinc-300"></div>
-             <div className="flex flex-col">
-                <span className="font-bold text-2xl text-zinc-800">100%</span>
-                <span className="text-xs font-medium text-zinc-500 uppercase">Rash Free</span>
-             </div>
-             <div className="w-px h-10 bg-zinc-300"></div>
-             <div className="flex flex-col">
-                 <span className="font-bold text-2xl text-zinc-800">Eco</span>
-                 <span className="text-xs font-medium text-zinc-500 uppercase">Friendly</span>
-             </div>
-          </motion.div> */}
+          <Title
+            title="Ultimate Comfort"
+            highligher="Zero Leakage."
+            desc="Experience our ultra-thin sanitary pads and period panties designed
+            for maximum absorption and breathable softness."
+          />
         </div>
 
         {/* Right Content: Product Composition */}
@@ -116,7 +81,7 @@ const HeroSection = () => {
                     className="absolute top-1/2 left-1/2"
                   >
                     <div
-                      className="absolute top-0 left-0 h-px bg-gradient-to-r from-personalCare/40 to-transparent origin-left hidden xl:block"
+                      className="absolute top-0 left-0 h-px bg-linear-to-r from-personalCare/40 to-transparent origin-left hidden xl:block"
                       style={{
                         width: `${radius - innerRadius - 20}px`,
                         transform: `rotate(${angle}deg) translateX(${innerRadius}px)`,

@@ -96,7 +96,7 @@ const PersonalCareProductDetailPage = () => {
           <div className="w-1/2">
             <motion.div
               layoutId={`product-image-${product.id}`}
-              className="relative aspect-square bg-zinc-50 rounded-3xl overflow-hidden border border-zinc-100"
+              className="relative aspect-square flex items-center justify-center bg-zinc-50 rounded-3xl overflow-hidden border border-zinc-100"
             >
               <Image
                 src={
@@ -104,7 +104,7 @@ const PersonalCareProductDetailPage = () => {
                 }
                 alt={product.name}
                 fill
-                className="object-contain p-4 md:p-12 transition-all duration-500"
+                className="object-contain transition-all duration-500"
                 priority
               />
             </motion.div>

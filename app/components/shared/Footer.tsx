@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
 import { use, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import FooterLogo from "./FooterLogo";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -30,6 +31,7 @@ export default function Footer() {
         { label: "Baby Products", href: "/babyCareProduct" },
         { label: "Baby Gear", href: "/clothing" },
         { label: "Personal Care", href: "/personalCareProduct" },
+        { label: "Blogs", href: "/blogs" },
         { label: "Contact Us", href: "/contact" },
       ].filter((link) => {
         // Handle hydration flash for neutral pages
@@ -218,6 +220,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* zuvara logo text */}
+        {/* <FooterLogo />` */}
 
         {/* Bottom Footer */}
         <div className="border-t border-zinc-200 py-3 lg:py-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-zinc-700 group">

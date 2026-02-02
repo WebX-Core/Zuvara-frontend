@@ -5,86 +5,20 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Button from "../common-ui/Button";
+import Title from "../shared/Title";
 
 const HeroSection = () => {
   return (
     <section className="lg:min-h-screen w-screen relative lg:flex lg:items-center">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-0 lg:gap-16 pt-4 lg:pt-0">
         {/* Left Content */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-4 lg:gap-8 z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* <span className="inline-block py-1 px-3 rounded-full bg-foreground text-white text-sm font-semibold tracking-wide backdrop-blur-sm border border-white/20 mb-4">
-              NEW COLLECTION 2026
-            </span> */}
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight">
-              Cozy Comfort <br />
-              <span className="text-secondary drop-shadow-sm">
-                Stylish Look
-              </span>
-            </h1>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-zinc-700/80 max-w-lg font-medium"
-          >
-            Soft, breathable, and durable clothing designed for your baby's
-            every move. From playtime to naptime, we've got them covered.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
-            {/* <Button
-              content="Shop Collection"
-              link="/clothing"
-              className="bg-foreground text-white hover:bg-white hover:text-foreground"
-            /> */}
-            {/* <Button 
-              content="View Lookbook" 
-              link="#lookbook" 
-              className="bg-transparent border border-foreground text-foreground hover:bg-foreground hover:text-white"
-            /> */}
-          </motion.div>
-
-          {/* Trust Badge */}
-          {/* <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex items-center gap-4 pt-4"
-          >
-            <div className="flex -space-x-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="size-10 rounded-full border-2 border-babyCare bg-zinc-200 overflow-hidden">
-                  <Image 
-                    src={`/images/mom/mom${i} (1).png`} 
-                    alt="User" 
-                    width={40} 
-                    height={40} 
-                    className="object-cover w-full h-full"
-                    // Fallback to a placeholder if specific image fails, but using generic naming for now
-                    onError={(e) => {
-                       // @ts-ignore
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="text-sm font-semibold text-foreground">
-              Loved by <span className="underline decoration-wavy">5,000+</span> Moms
-            </div>
-          </motion.div> */}
+        <div className="w-full lg:w-1/2 z-10">
+          <Title
+            title="Cozy Comfort"
+            highligher="Stylish Look"
+            desc="Soft, breathable, and durable clothing designed for your baby's
+            every move. From playtime to naptime, we've got them covered."
+          />
         </div>
 
         {/* Right Image */}

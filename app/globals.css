@@ -6,6 +6,11 @@
   src: url("/font/baby-font.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "CinemaCartoon";
+  src: url("/font/CinemaCartoon.otf") format("opentype");
+}
+
 :root {
   --background: #ffffff;
   --foreground: #456a5c;
@@ -81,6 +86,9 @@ html.lenis body {
 
 .baby {
   font-family: "BabyFont", sans-serif;
+}
+.CinemaCartoon {
+  font-family: "CinemaCartoon", sans-serif;
 }
 
 a {

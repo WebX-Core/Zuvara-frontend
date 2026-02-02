@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
 import { cn } from "@/lib/utils";

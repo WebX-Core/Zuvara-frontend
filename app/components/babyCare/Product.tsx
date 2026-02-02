@@ -36,7 +36,7 @@ const Product = () => {
   return (
     <>
       {/* <BigImage /> */}
-      <section className="h-fit pr-4 md:pr-0 md:h-[40vh] lg:h-[80vh] xl:h-[70vh] bg-babyCare flex items-center relative">
+      <section className="h-fit md:h-[40vh] lg:h-[80vh] xl:h-[70vh] lg:bg-babyCare flex items-center relative">
         {/* top curve border */}
         {!isMobile && (
           <div className="custom-shape-divider-top">
@@ -53,12 +53,12 @@ const Product = () => {
             </svg>
           </div>
         )}
-        <div className="container w-full">
+        <div className="container w-full mx-4 lg:mx-0 bg-babyCare px-4 lg:px-0 rounded-xl lg:rounded-none">
           <div className="overflow-hidden">
             {/* <div className="grid grid-cols-2 md:grid-cols-2 gap-8 lg:gap-12 items-center"> */}
             <div className="flex items-center">
               {/* Left Side - Text Content */}
-              <div className="w-2/3 lg:w-1/2 pl-8 lg:pl-36 lg:py-24 flex flex-col items-start justify-center">
+              <div className="w-2/3 lg:w-1/2 lg:pl-36 lg:py-24 flex flex-col items-start justify-center">
                 <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
                   Premium Collection
                 </p>

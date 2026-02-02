@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import SectionHeading from "../common-ui/SectionHeading";

@@ -65,7 +65,20 @@ const ContactSection = () => {
                       required
                     />
                   </div>
-                  <div className="flex flex-col col-span-2 gap-2 lg:gap-4">
+                  <div className="flex flex-col gap-2 lg:gap-4">
+                    <label htmlFor="address">Address*</label>
+                    <input
+                      id="address"
+                      type="text"
+                      placeholder="Your address"
+                      className={cn(
+                        "w-full p-2 lg:p-4 rounded-lg lg:rounded-2xl text-lg focus:outline-none placeholder:text-foreground/50",
+                        isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                      )}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 lg:gap-4">
                     <label htmlFor="email">Email*</label>
                     <input
                       id="email"

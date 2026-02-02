@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "../common-ui/SectionHeading";
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import { useMediaQuery } from "react-responsive";
 
 const VideoSection = () => {

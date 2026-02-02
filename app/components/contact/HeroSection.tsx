@@ -4,6 +4,8 @@ import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { TypingAnimation } from "../shared/TypingAnimation";
+import Title from "../shared/Title";
 
 const HeroSection = () => {
   const { activeSection } = useSection();
@@ -12,68 +14,68 @@ const HeroSection = () => {
   return (
     <div
       className={cn(
-        "lg:min-h-screen flex lg:items-center justify-center transition-colors duration-500 pt-4 lg:pt-0",
+        "h-[75vh] lg:min-h-screen flex lg:items-center justify-center transition-colors duration-500 pt-4 lg:pt-0",
       )}
     >
       <section className="container mx-auto px-4 lg:px-6 max-w-7xl">
-        <div className="flex flex-col lg:flex-row items-center justify-center relative">
-          {/* <div className="lg:w-1/2 z-10 lg:text-center space-y-8">
-            <h1
-              className={cn(
-                "text-3xl lg:text-6xl font-bold transition-colors duration-500",
-                isPersonal ? "text-black" : "text-foreground",
-              )}
-            >
-              Let's{" "}
-              <span
-                className={cn(isPersonal ? "text-ternary" : "text-secondary")}
-              >
-                Connect
-              </span>
-            </h1>
-            <p className="text-lg">
-              Have questions or need support? We're here to help—reach out to
-              Arola anytime, and we'll be happy to assist you.
-            </p>
-          </div> */}
-
-          {/* clip-path: polygon(0% 0%, 70% 0%, 70% 20%, 100% 20%, 70% 35%, 70% 100%, 0% 100%); */}
-
+        <div className="h-full flex flex-col lg:flex-row lg:items-center justify-between lg:justify-center relative">
           <div className="lg:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <h1 className="text-4xl lg:text-7xl font-black mb-8 leading-[1.1] tracking-tight text-foreground">
-                Let's{" "}
-                <span className="text-secondary whitespace-nowrap">
-                  Connect
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl font-medium max-w-2xl">
-                Diapers, wipes, and gentle care products meticulously designed
-                to keep your baby clean, comfortable, and remarkably happy.
-              </p>
-            </motion.div>
+            <Title
+              title="Let's"
+              highligher="Connect"
+              desc="Diapers, wipes, and gentle care products meticulously designed
+                to keep your baby clean, comfortable, and remarkably happy."
+            />
           </div>
 
           <div className="lg:w-1/2 flex justify-end relative">
-            <div
-              className="bg-blue-500 absolute top-0 left-1/3 w-60 h-40"
-              // style={{
-              //   clipPath:
-              //     "polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)",
-              // }}
+            {/* Premium Rounded Message Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: 20, y: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+              transition={{ delay: 1, duration: 0.8, ease: "backOut" }}
+              style={{ originX: 1, originY: 1 }}
+              className={cn(
+                "absolute -top-16 md:top-0 lg:-top-16 left-0 md:left-[35%] lg:left-[20%] z-10 p-4 w-full max-w-55 md:max-w-70 h-36 md:h-28 rounded-2xl",
+                isPersonal
+                  ? "bg-personalCare/50 text-white"
+                  : "bg-babyCare/70 text-foreground",
+              )}
             >
-              <p>nsiodvjindiovn</p>
+              <TypingAnimation
+                text="Hello! Looking for gentle, comfy diapers for your baby?"
+                className="text-xl font-semibold"
+                duration={75}
+                delay={1500}
+              />
+
+              {/* The Rounded Tail */}
+              <div
+                className={cn(
+                  "absolute -bottom-10 right-12 size-10",
+                  isPersonal ? "bg-personalCare/50" : "bg-babyCare/70",
+                )}
+                style={{
+                  clipPath: "polygon(0 0, 100% 0, 100% 100%)",
+                }}
+              />
+            </motion.div>
+
+            <div className="relative">
+              <div
+                className={cn(
+                  "absolute inset-0 blur-3xl opacity-20 rounded-full",
+                  isPersonal ? "bg-ternary" : "bg-blue-400",
+                )}
+              />
+              <Image
+                src="/images/baby/baby-calling.png"
+                alt="baby calling"
+                width={200}
+                height={200}
+                className="relative z-0 object-contain drop-shadow-2xl"
+              />
             </div>
-            <Image
-              src="/images/baby/baby-calling.png"
-              alt="baby calling"
-              width={200}
-              height={200}
-            />
           </div>
         </div>
       </section>

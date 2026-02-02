@@ -1,13 +1,13 @@
 "use client";
 
 import Button from "../common-ui/Button";
-import SectionHeading from "../common-ui/SectionHeading";
 import { motion, useAnimation } from "framer-motion";
-import { Icon } from "@iconify-icon/react";
+import { Icon } from "@iconify/react";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
+import Title from "../shared/Title";
 
 gsap.registerPlugin(MotionPathPlugin);
 export default function HeroSection() {
@@ -79,7 +79,15 @@ export default function HeroSection() {
     <section className="relative w-screen lg:h-screen overflow-hidden flex flex-col lg:flex-row px-4 sm:px-6 lg:px-6 mx-auto! max-w-7xl">
       {/* Content - Left Side */}
       <div className="relative w-full h-full lg:w-1/2 flex flex-col justify-between lg:justify-center gap-4 lg:gap-16 pt-4 md:pt-0 text-left">
-        <div className="">
+        <Title
+          title="Gentle Care for Your Baby's Delicate Skin with"
+          highligher="zuvara"
+          desc="Trusted by newly married couples around the world, focusing on
+            comfort and safety for your heart and healthy baby."
+          titleClassName="text-3xl md:text-4xl lg:text-5xl"
+          showBreak={false}
+        />
+        {/* <div className="">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -100,22 +108,15 @@ export default function HeroSection() {
             Trusted by newly married couples around the world, focusing on
             comfort and safety for your heart and healthy baby.
           </motion.p>
-        </div>
+        </div> */}
 
         {isSmallerDevice && (
           <div className="w-full flex items-center">
-            <video
-              autoPlay
-              muted
-              playsInline
-              loop
-              controls={false}
-              className="pointer-events-none select-none size-[95%] transform-gpu"
-            >
-              <source src="/videos/babyPlaying.mp4" />
-              {/* <source src="/videos/babyPlayingIOS.mov" type="video/quicktime" /> */}
-              {/* <source src="/videos/babyPlaying.webm" type="video/webm" /> */}
-            </video>
+            <img
+              src="/videos/babyPlaying.gif"
+              alt="baby Playing"
+              className="pointer-events-none select-none size-[95%]"
+            />
 
             <div className="absolute left-0 w-full h-full pointer-events-auto top-0 lg:-top-20">
               <img
@@ -194,17 +195,11 @@ export default function HeroSection() {
       {/* baby playing video */}
       {!isSmallerDevice && (
         <div className="w-full lg:w-[50%] flex items-center relative">
-          <video
-            autoPlay
-            muted
-            playsInline
-            loop
-            controls={false}
-            className="pointer-events-none select-none size-[95%] outline-none border-none ring-0 appearance-none transform-gpu mix-blend-screen lg:mix-blend-normal"
-          >
-            <source src="/videos/babyPlaying.mov" type="video/quicktime" />
-            <source src="/videos/babyPlaying.webm" type="video/webm" />
-          </video>
+          <img
+            src="/videos/babyPlaying.gif"
+            alt="baby Playing"
+            className="pointer-events-none select-none h-80"
+          />
 
           <div className="absolute left-0 w-full h-full pointer-events-auto -top-20">
             <img

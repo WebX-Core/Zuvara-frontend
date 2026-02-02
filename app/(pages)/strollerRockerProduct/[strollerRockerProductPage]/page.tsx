@@ -114,7 +114,7 @@ const StrollerProductDetailPage = () => {
             </div>
 
             {/* Basic Info (Category, Title, Rating) - Only visible on mobile here */}
-            <div className="w-1/2 lg:hidden flex flex-col justify-center">
+            <div className="w-1/2 lg:hidden flex flex-col lg:justify-center">
               <div className="flex items-center gap-2 mb-2 text-[8px] font-bold uppercase whitespace-nowrap">
                 <span className="px-2 py-0.5 bg-zinc-100 text-zinc-600 rounded-full">
                   {product.category}
