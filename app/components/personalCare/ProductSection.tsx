@@ -31,7 +31,7 @@ const ProductSection = () => {
                 </span>
               </motion.div> */}
 
-              <p className="text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900 leading-tight">
+              <p className="text-4xl md:text-5xl lg:text-7xl font-semibold text-zinc-900 leading-tight">
                 {product.name}
               </p>
               <p className="text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed">
