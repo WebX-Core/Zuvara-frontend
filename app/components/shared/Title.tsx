@@ -7,6 +7,7 @@ export interface TitleProps {
   highligher?: string;
   titleClassName?: string;
   desc?: string;
+  descClassName?: string;
   showBreak?: boolean;
 }
 const Title = ({
@@ -14,6 +15,7 @@ const Title = ({
   highligher,
   titleClassName,
   desc,
+  descClassName,
   showBreak = true,
 }: TitleProps) => {
   const { activeSection } = useSection();
@@ -25,7 +27,7 @@ const Title = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
         className={cn(
-          "text-4xl md:text-5xl lg:text-7xl font-semibold",
+          "text-3xl md:text-4xl lg:text-5xl font-semibold",
           isPersonal ? "text-zinc-900" : "text-foreground",
           titleClassName,
         )}
@@ -44,7 +46,10 @@ const Title = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed"
+        className={cn(
+          "text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed",
+          descClassName,
+        )}
       >
         {desc}
       </motion.p>

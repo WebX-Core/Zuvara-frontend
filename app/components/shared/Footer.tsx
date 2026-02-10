@@ -51,14 +51,16 @@ export default function Footer() {
   ];
 
   return (
-    <footer>
-      <div className="container mx-auto px-4 lg:px-6 max-w-7xl pt-8 pb-16 lg:pb-0 lg:pt-16">
+    <footer
+      className={cn(isPersonal ? "bg-personalCare/10" : "bg-babyCare/20")}
+    >
+      <div className="container mx-auto px-4 lg:px-6 max-w-7xl pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
         <div className="flex justify-center my-4 lg:my-8 w-full">
           <Link
             href={!isPersonal ? "/personalCare" : "/babyCare"}
             className={cn(
-              "group flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 border bg-white/60 backdrop-blur-sm hover:bg-white/80 hover:shadow-lg hover:-translate-y-1 w-full lg:w-fit",
+              "group flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 border bg-white/60 backdrop-blur-sm hover:bg-white/80 w-full lg:w-fit",
               isPersonal ? "border-personalCare/50" : "border-babyCare/50",
             )}
           >

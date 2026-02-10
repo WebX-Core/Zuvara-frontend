@@ -13,7 +13,7 @@ const ImageGridSection = () => {
   const images = [
     {
       image: "/images/baby/baby17.png",
-      top: "0%",
+      top: "15%",
       left: "22%",
       rotate: "-7deg",
     },
@@ -26,14 +26,14 @@ const ImageGridSection = () => {
 
     {
       image: "/images/baby/baby25.png",
-      top: "20%",
-      left: "2%",
+      top: "23%",
+      left: "5%",
       rotate: "6deg",
     },
     {
       image: "/images/baby/baby23.png",
-      top: "15%",
-      left: "42%",
+      top: "25%",
+      left: "45%",
       rotate: "-4deg",
     },
     // {
@@ -62,7 +62,7 @@ const ImageGridSection = () => {
     // },
     {
       image: "/images/baby/baby18.png",
-      top: "60%",
+      top: "50%",
       left: "20%",
       rotate: "-5deg",
     },
@@ -165,14 +165,14 @@ const ImageGridSection = () => {
           ref={(el) => {
             imagesRef.current[index] = el;
           }}
-          className="absolute cursor-pointer w-[100px] lg:w-[200px]"
+          className="absolute cursor-pointer w-[100px] lg:w-[150px]"
           style={{
             top: item.top,
             left: item.left,
             transform: `rotate(${item.rotate})`,
           }}
         >
-          <div className="bg-white p-1 lg:p-2 shadow-xl">
+          <div className="bg-white p-1 shadow-xl">
             <img
               src={item.image}
               alt={`Baby ${index + 1}`}

@@ -36,7 +36,7 @@ const Product = () => {
   return (
     <>
       {/* <BigImage /> */}
-      <section className="h-fit md:h-[40vh] lg:h-[80vh] xl:h-[70vh] lg:bg-babyCare flex items-center relative">
+      <section className="h-fit md:h-[40vh] lg:h-[60vh] xl:h-[50vh] lg:bg-babyCare/40 flex items-end relative">
         {/* top curve border */}
         {!isMobile && (
           <div className="custom-shape-divider-top">
@@ -53,12 +53,12 @@ const Product = () => {
             </svg>
           </div>
         )}
-        <div className="container w-full mx-4 lg:mx-0 bg-babyCare px-4 lg:px-0 rounded-xl lg:rounded-none">
+        <div className="container w-full mx-4 lg:mx-0 px-4 lg:px-0 rounded-xl lg:rounded-none">
           <div className="overflow-hidden">
             {/* <div className="grid grid-cols-2 md:grid-cols-2 gap-8 lg:gap-12 items-center"> */}
-            <div className="flex items-center">
+            <div className="flex items-end">
               {/* Left Side - Text Content */}
-              <div className="w-2/3 lg:w-1/2 lg:pl-36 lg:py-24 flex flex-col items-start justify-center">
+              <div className="w-2/3 lg:w-1/2 lg:pl-36 lg:py-24 flex flex-col items-start justify-end">
                 <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
                   Premium Collection
                 </p>
@@ -72,7 +72,7 @@ const Product = () => {
                 </p>
               </div>
 
-              {/* Right Side - Animated Image */}
+              {/* Right Side Image */}
               <div
                 // ref={imageRef}
                 className="w-1/3 lg:w-1/2 relative h-40 md:h-full md:min-h-64"
@@ -90,7 +90,7 @@ const Product = () => {
         </div>
 
         {/* bottom curve border */}
-        {!isMobile && (
+        {/* {!isMobile && (
           <div className="custom-shape-divider-bottom">
             <svg
               data-name="Layer 1"
@@ -104,11 +104,11 @@ const Product = () => {
               ></path>
             </svg>
           </div>
-        )}
+        )} */}
       </section>
 
       <section className="">
-        <div className="container lg:mt-8 mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
           {/* Section Header */}
           {/* <div className="flex flex-col gap-2 justify-between items-center">
           <SectionHeading
@@ -120,7 +120,7 @@ const Product = () => {
         </div> */}
 
           {/* Tabs */}
-          <div className="flex gap-4 py-8 lg:justify-center overflow-x-auto whitespace-nowrap">
+          <div className="flex gap-4 py-4 lg:justify-center overflow-x-auto whitespace-nowrap">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -160,7 +160,7 @@ const Product = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
           >
             {products.map((product, index) => (
               <ProductCard

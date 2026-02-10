@@ -37,12 +37,14 @@ interface ProductCardProps {
   product: ProductType;
   index: number;
   activeTab: "baby" | "personal" | "clothing" | "stroller";
+  className?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   index,
   activeTab,
+  className,
 }) => {
   const router = useRouter();
   const [selectedVariant, setSelectedVariant] = useState<UnifiedVariant | null>(
@@ -78,11 +80,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         onClick={handleCardClick}
         className={`group h-full flex flex-col rounded-lg lg:rounded-2xl border border-zinc-100 overflow-hidden transition-all duration-400 relative cursor-pointer p-1 md:p-1.5 lg:p-2 ${
           activeTab === "baby"
-            ? "hover:border-foreground"
+            ? "hover:border-foreground/50"
             : activeTab === "personal"
               ? "hover:border-personalCare"
-              : "hover:border-foreground"
-        }`}
+              : "hover:border-foreground/10"
+        } ${className}`}
       >
         {/* Best Seller Badge */}
         <div

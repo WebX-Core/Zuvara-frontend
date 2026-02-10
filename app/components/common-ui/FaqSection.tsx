@@ -23,7 +23,7 @@ const FaqSection = ({
 
   return (
     <section className="">
-      <div className="mb-4 lg:mb-8">
+      <div className="mb-4">
         <h2
           className={`text-lg lg:text-3xl font-semibold lg:font-black mb-2 lg:mb-4 tracking-tight ${questionColor}`}
         >
@@ -34,7 +34,7 @@ const FaqSection = ({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-0">
+      <div className="grid grid-cols-1">
         <div className="flex flex-col">
           <Accordions
             type="single"

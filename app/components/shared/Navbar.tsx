@@ -468,7 +468,7 @@ export default function Navbar() {
           variants={navbarVariants}
           animate={isVisible ? "visible" : "hidden"}
           initial="visible"
-          className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200"
+          className="fixed top-0 w-full z-120 bg-white/80 backdrop-blur-md border-b border-zinc-200"
         >
           <div
             className="flex justify-between items-center h-full px-4"
@@ -514,7 +514,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 top-[50px]"
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 top-0"
             />
 
             {/* Menu Content */}
@@ -523,7 +523,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-[50px] right-0 bottom-0 w-[70%] max-w-sm bg-white z-110 shadow-xl p-4 flex flex-col border-r border-zinc-100"
+              className="fixed top-0 right-0 bottom-0 w-[70%] pt-12 max-w-sm bg-white z-110 shadow-xl p-4 flex flex-col border-r border-zinc-100"
             >
               <div className="flex flex-col gap-0">
                 {filteredMenuItems.map((item, index) => {
@@ -572,7 +572,7 @@ export default function Navbar() {
                         "group flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 border",
                         isPersonalSection
                           ? "bg-personalCare/5 border-personalCare/10 hover:bg-personalCare/10"
-                          : "bg-babyCare/10 border-babyCare/20 hover:bg-babyCare/20",
+                          : "bg-babyCare/10 border-babyCare/20 hover:bg-babyCare/40",
                       )}
                     >
                       <div

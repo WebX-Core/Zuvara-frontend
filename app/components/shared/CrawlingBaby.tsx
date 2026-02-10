@@ -38,7 +38,7 @@ const CrawlingBaby = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none z-999 overflow-hidden">
+    <div className="absolute inset-0 w-full h-full pointer-events-none z-999 overflow-hidden">
       <AnimatePresence>
         {isVisible && (
           <motion.div
@@ -53,7 +53,7 @@ const CrawlingBaby = () => {
             className="absolute bottom-0 h-20 lg:h-44 w-auto pointer-events-none"
           >
             <video
-              src="/videos/babyCrawling3.webm"
+              src="/videos/babyCrawling.mp4"
               autoPlay
               muted
               loop

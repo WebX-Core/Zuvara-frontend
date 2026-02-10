@@ -65,7 +65,12 @@ const Testimonial = () => {
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   return (
-    <section className="py-4 lg:py-8">
+    <section
+      className="relative bg-babyCare/40 py-4 lg:py-8 min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        clipPath: "ellipse(100% 100% at 50% 100%)",
+      }}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
         {/* Header */}
         <motion.div
