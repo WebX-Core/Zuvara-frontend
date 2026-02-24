@@ -87,7 +87,9 @@ const PersonalCareProductDetailPage = () => {
               Personal Care
             </Link>
             <ChevronRight size={14} />
-            <span className="text-personalCare font-medium">{product.name}</span>
+            <span className="text-personalCare font-medium">
+              {product.name}
+            </span>
           </nav>
         )}
 
@@ -99,7 +101,9 @@ const PersonalCareProductDetailPage = () => {
               className="relative aspect-square bg-white rounded-3xl overflow-hidden border border-zinc-200"
             >
               <Image
-                src={selectedVariant?.image || product.image || "/placeholder.png"}
+                src={
+                  selectedVariant?.image || product.image || "/placeholder.png"
+                }
                 alt={product.name}
                 fill
                 className="object-contain p-4 lg:p-16 transition-all duration-500"
@@ -151,7 +155,8 @@ const PersonalCareProductDetailPage = () => {
                               Verified Experiences
                             </h2>
                             <p className="text-zinc-500 mt-1 lg:mt-2 font-medium">
-                              Hear from our community of personal care enthusiasts.
+                              Hear from our community of personal care
+                              enthusiasts.
                             </p>
                           </div>
                           <div className="grid grid-cols-1 gap-4 lg:gap-8">
@@ -189,7 +194,8 @@ const PersonalCareProductDetailPage = () => {
                                 </p>
                               </div>
                             ))}
-                            {(!product.reviewsData || product.reviewsData.length === 0) && (
+                            {(!product.reviewsData ||
+                              product.reviewsData.length === 0) && (
                               <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
                                 <p className="text-zinc-400 font-bold">
                                   No reviews yet for this product.
@@ -199,13 +205,13 @@ const PersonalCareProductDetailPage = () => {
                           </div>
                         </div>
                       )}
-                      {activeTab === "faq" && (
+                      {/* {activeTab === "faq" && (
                         <FaqSection
                           faqs={product.faqs}
                           questionColor="text-personalCare"
                           answerColor="text-zinc-500"
                         />
-                      )}
+                      )} */}
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -260,9 +266,13 @@ const PersonalCareProductDetailPage = () => {
                               {v.size}
                             </span>
                             {v.weight && (
-                              <span className={`text-xs font-bold uppercase tracking-wider ${
-                                selectedVariant?.id === v.id ? "text-zinc-100" : "text-zinc-400"
-                              }`}>
+                              <span
+                                className={`text-xs font-bold uppercase tracking-wider ${
+                                  selectedVariant?.id === v.id
+                                    ? "text-zinc-100"
+                                    : "text-zinc-400"
+                                }`}
+                              >
                                 {v.weight} cm
                               </span>
                             )}
@@ -293,11 +303,16 @@ const PersonalCareProductDetailPage = () => {
                         >
                           <div className="grid grid-cols-1 gap-2">
                             {product.highlights.map((feat) => (
-                              <div key={feat} className="flex items-center gap-2">
+                              <div
+                                key={feat}
+                                className="flex items-center gap-2"
+                              >
                                 <div className="p-0.5 bg-personalCare text-white rounded-full">
                                   <Check size={12} />
                                 </div>
-                                <span className="text-zinc-700 text-sm font-medium">{feat}</span>
+                                <span className="text-zinc-700 text-sm font-medium">
+                                  {feat}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -307,11 +322,15 @@ const PersonalCareProductDetailPage = () => {
 
                     {product.highlights && product.highlights.length > 0 && (
                       <button
-                        onClick={() => setShowFullDescription(!showFullDescription)}
+                        onClick={() =>
+                          setShowFullDescription(!showFullDescription)
+                        }
                         className="flex items-center gap-1 text-personalCare font-bold hover:gap-2 transition-all duration-300 mt-2"
                       >
                         {showFullDescription ? "Read Less" : "Read More"}
-                        <ChevronRight className={`size-4 transition-transform ${showFullDescription ? "-rotate-90" : "rotate-90"}`} />
+                        <ChevronRight
+                          className={`size-4 transition-transform ${showFullDescription ? "-rotate-90" : "rotate-90"}`}
+                        />
                       </button>
                     )}
                   </div>
@@ -410,26 +429,36 @@ const PersonalCareProductDetailPage = () => {
                             >
                               <div className="grid grid-cols-1 gap-2 pt-2">
                                 {product.highlights.map((feat) => (
-                                  <div key={feat} className="flex items-center gap-2">
+                                  <div
+                                    key={feat}
+                                    className="flex items-center gap-2"
+                                  >
                                     <div className="p-0.5 bg-personalCare text-white rounded-full">
                                       <Check size={10} />
                                     </div>
-                                    <span className="text-zinc-700 text-sm font-medium">{feat}</span>
+                                    <span className="text-zinc-700 text-sm font-medium">
+                                      {feat}
+                                    </span>
                                   </div>
                                 ))}
                               </div>
                             </motion.div>
                           )}
                         </AnimatePresence>
-                        {product.highlights && product.highlights.length > 0 && (
-                          <button
-                            onClick={() => setShowFullDescription(!showFullDescription)}
-                            className="flex items-center gap-1 text-personalCare font-bold mt-2"
-                          >
-                            {showFullDescription ? "Read Less" : "Read More"}
-                            <ChevronRight className={`size-4 transition-transform ${showFullDescription ? "-rotate-90" : "rotate-90"}`} />
-                          </button>
-                        )}
+                        {product.highlights &&
+                          product.highlights.length > 0 && (
+                            <button
+                              onClick={() =>
+                                setShowFullDescription(!showFullDescription)
+                              }
+                              className="flex items-center gap-1 text-personalCare font-bold mt-2"
+                            >
+                              {showFullDescription ? "Read Less" : "Read More"}
+                              <ChevronRight
+                                className={`size-4 transition-transform ${showFullDescription ? "-rotate-90" : "rotate-90"}`}
+                              />
+                            </button>
+                          )}
                       </div>
                     </div>
                   )}
@@ -463,7 +492,9 @@ const PersonalCareProductDetailPage = () => {
                                       key={i}
                                       size={10}
                                       fill={
-                                        i < review.rating ? "currentColor" : "none"
+                                        i < review.rating
+                                          ? "currentColor"
+                                          : "none"
                                       }
                                       stroke="currentColor"
                                     />
@@ -476,7 +507,8 @@ const PersonalCareProductDetailPage = () => {
                             </p>
                           </div>
                         ))}
-                        {(!product.reviewsData || product.reviewsData.length === 0) && (
+                        {(!product.reviewsData ||
+                          product.reviewsData.length === 0) && (
                           <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
                             <p className="text-zinc-400 font-bold">
                               No reviews yet for this product.
@@ -486,13 +518,13 @@ const PersonalCareProductDetailPage = () => {
                       </div>
                     </div>
                   )}
-                  {activeTab === "faq" && (
+                  {/* {activeTab === "faq" && (
                     <FaqSection
                       faqs={product.faqs}
                       questionColor="text-personalCare"
                       answerColor="text-zinc-500"
                     />
-                  )}
+                  )} */}
                 </motion.div>
               </AnimatePresence>
             </div>
