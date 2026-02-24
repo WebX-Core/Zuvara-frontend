@@ -11,6 +11,9 @@ interface ButtonProps {
   icon?: string;
   for?: "babyCare" | "personalCare";
   className?: string;
+  onClick?: (e: React.MouseEvent) => void;
+  bgColor?: string;
+  textColor?: string;
 }
 
 const Button = ({
@@ -20,20 +23,31 @@ const Button = ({
   icon,
   for: variant = "babyCare",
   className,
+  onClick,
+  bgColor,
+  textColor,
 }: ButtonProps) => {
   const isSmallerDevice = useMediaQuery({ maxWidth: 480 });
-  const variantStyles =
-    variant === "personalCare"
-      ? "bg-personalCare text-zinc-100! ring ring-zinc-400"
-      : "bg-foreground text-zinc-100!";
-  // : "bg-linear-to-l from-foreground to-[#8cd700] text-background! hover:bg-linear-to-r hover:bg-foreground hover:text-background!";
+  
+  const variantBg = variant === "personalCare" 
+    ? "bg-personalCare ring ring-zinc-400" 
+    : "bg-foreground";
+    
+  const variantText = "text-white"; // Default text color
+
   return (
     <div className={cn("w-fit", buttonClassName)}>
       <Link
         href={link || "#"}
+        onClick={onClick}
+        style={{
+          backgroundColor: bgColor,
+          color: textColor,
+        }}
         className={cn(
           "flex items-center justify-center lg:justify-start gap-2 font-medium px-4 lg:px-6 py-3 transition-all duration-300 rounded-lg md:rounded-full text-sm lg:text-base",
-          variantStyles,
+          !bgColor && variantBg,
+          !textColor && variantText,
           className,
         )}
       >

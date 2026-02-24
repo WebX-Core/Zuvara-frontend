@@ -96,14 +96,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Product Image Container */}
-        <div className="relative aspect-square overflow-hidden h-40 md:h-60 lg:h-72 shrink-0 bg-zinc-100 rounded-md lg:rounded-lg">
+        <motion.div
+          layoutId={`product-image-${product.id}`}
+          className="relative aspect-square overflow-hidden h-40 md:h-60 lg:h-72 shrink-0 bg-zinc-100 rounded-md lg:rounded-lg"
+        >
           <Image
             src={selectedVariant?.image || product.image}
             alt={product.name}
             fill
             className="object-contain transition-transform duration-300 p-4"
           />
-        </div>
+        </motion.div>
 
         {/* Variant Thumbnails for desktop - Below Image */}
         {!isSmallerDevice && variants && variants.length > 0 && (

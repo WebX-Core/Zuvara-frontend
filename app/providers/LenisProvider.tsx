@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, ReactNode } from "react";
+import { useEffect, ReactNode, useRef } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
+import { usePathname } from "next/navigation";
 
 interface LenisProviderProps {
   children: ReactNode;
 }
 
 export function LenisProvider({ children }: LenisProviderProps) {
+  const pathname = usePathname();
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
     // Initialize Lenis with optimized configuration
     const lenis = new Lenis({
@@ -20,6 +24,8 @@ export function LenisProvider({ children }: LenisProviderProps) {
       syncTouchLerp: 0.075, // Touch lerp smoothness
       duration: 1.2, // Animation duration for scroll-to
     });
+
+    lenisRef.current = lenis;
 
     // Integrate Lenis with GSAP for smooth animations
     gsap.ticker.add((time) => {
@@ -43,8 +49,19 @@ export function LenisProvider({ children }: LenisProviderProps) {
       gsap.ticker.remove((time) => {
         lenis.raf(time * 1000);
       });
+      lenisRef.current = null;
     };
   }, []);
+
+  // Handle auto-scroll to top on route change
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      // Fallback to native scroll if lenis isn't ready
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 }

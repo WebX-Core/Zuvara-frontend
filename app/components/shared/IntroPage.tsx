@@ -66,7 +66,7 @@ export default function IntroPage() {
       id: "personal",
       title: "Personal Care",
       subtitle: "Self-Care Reimagined",
-      image: "/images/baby/baby32.png",
+      image: "/images/personalCare/happy-lady.png",
       href: "/personalCare",
       color: "var(--personalCare)",
       icon: "/icons/sanitary-napkin.png",
@@ -285,12 +285,12 @@ export default function IntroPage() {
                 initial={{
                   scale: 0,
                   opacity: 0,
-                  rotate: section.id === "baby" ? -20 : 20,
+                  rotate: section.id === "baby" ? -10 : 10,
                 }}
                 animate={{
                   scale: hoveredSection === section.id ? 1 : 0,
                   opacity: hoveredSection === section.id ? 1 : 0,
-                  rotate: section.id === "baby" ? -20 : 20,
+                  rotate: section.id === "baby" ? -10 : 10,
                 }}
                 transition={{
                   type: "spring",
@@ -298,8 +298,10 @@ export default function IntroPage() {
                   damping: 20,
                 }}
                 style={{ originX: 0.5, originY: 1 }}
-                className={`absolute bottom-4 w-75 z-0 pointer-events-none ${
-                  section.id === "baby" ? "-left-12" : "-right-12"
+                className={`absolute z-0 pointer-events-none ${
+                  section.id === "baby"
+                    ? "bottom-6 -left-12 w-70"
+                    : "bottom-4 -right-12 w-50"
                 }`}
               />
             )}

@@ -1,18 +1,20 @@
 "use client";
 
-import { FAQ } from "@/type/babyCareProductType";
+import { FAQ, Product } from "@/type/babyCareProductType";
 import { Accordion, Accordions } from "../ui/accordion";
 
 interface FaqSectionProps {
   faqs?: FAQ[];
   questionColor?: string;
   answerColor?: string;
+  product: Product;
 }
 
 const FaqSection = ({
   faqs = [],
   questionColor = "text-zinc-900",
   answerColor = "text-zinc-600",
+  product,
 }: FaqSectionProps) => {
   if (faqs.length === 0) return null;
 
@@ -22,19 +24,22 @@ const FaqSection = ({
   const rightColumn = faqs.slice(half);
 
   return (
-    <section className="">
-      <div className="mb-4">
+    <section className="py-4 lg:py-8">
+      <div className="flex flex-col gap-2 items-center mb-4">
         <h2
-          className={`text-lg lg:text-3xl font-semibold lg:font-black mb-2 lg:mb-4 tracking-tight ${questionColor}`}
+          style={{
+            color: product.background || "#000000",
+          }}
+          className={`text-lg lg:text-3xl font-semibold ${questionColor}`}
         >
           Frequently Asked Questions
         </h2>
-        <p className={`${answerColor} font-medium`}>
+        <p className={`${answerColor} lg:text-lg leading-relaxed`}>
           Everything you need to know about this product.
         </p>
       </div>
 
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
         <div className="flex flex-col">
           <Accordions
             type="single"

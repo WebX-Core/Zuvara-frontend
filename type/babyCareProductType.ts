@@ -21,12 +21,23 @@ export interface FAQ {
   answer: string;
 }
 
+export interface ProductCloseView {
+  icon: string;
+  label: string;
+}
+
 export interface Product {
   id: number;
   name: string;
+  background?: string;
+  foreground?: string;
+  disableInvert?: boolean;
   rating: number;
   reviews: number;
+  heroImage: string;
+  heroImage2?: string;
   image: string;
+  video?: string;
   category: string;
   slug: string;
   variants?: Variant[];
@@ -38,4 +49,12 @@ export interface Product {
   highlights?: string[];
   reviewsData?: Review[];
   faqs?: FAQ[];
+  featureImage?: string;
+  featureImageTitle1?: string;
+  featureImageTitle2?: string;
+  featureImageDesc?: string;
+  featureTitle?: string;
+  featureDesc?: string;
+  features?: string[];
+  productCloseView?: ProductCloseView[];
 }
