@@ -12,7 +12,7 @@ const BlogList = () => {
   const isPersonal = activeSection === "personal";
 
   return (
-    <section className="container mx-auto py-4 lg:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <section className="container mx-auto py-4 lg:py-8 px-4 sm:px-6 lg:px-8 w-[90%]">
       <div className="mb-4 lg:mb-8">
         <h2 className="text-3xl font-bold text-zinc-900 tracking-tight">
           Recent blog posts

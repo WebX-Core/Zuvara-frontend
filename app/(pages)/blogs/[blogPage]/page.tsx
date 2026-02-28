@@ -45,7 +45,7 @@ const BlogDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen lg:mt-6">
+    <div className="min-h-screen lg:mt-24">
       {/* Hero Section */}
       <section className="relative w-full h-[60vh] lg:h-[70vh] overflow-hidden">
         <motion.div
@@ -58,7 +58,7 @@ const BlogDetailPage = () => {
             src={blog.image}
             alt={blog.title}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
           />
           <div className="absolute inset-0 bg-black/50" />

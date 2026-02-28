@@ -26,7 +26,7 @@ const CrawlingBaby = () => {
       timeoutId = setTimeout(showBaby, nextInterval + 25000);
     };
 
-    const initialTimeout = setTimeout(showBaby, 500);
+    const initialTimeout = setTimeout(showBaby, 1000);
 
     return () => {
       clearTimeout(initialTimeout);
@@ -44,8 +44,8 @@ const CrawlingBaby = () => {
           <motion.div
             key="crawling-baby"
             initial={{ left: "-100px" }}
-            animate={{ left: "100%" }}
-            transition={{ duration: 30, ease: "linear" }}
+            animate={{ left: "300%" }}
+            transition={{ duration: 50, ease: "linear" }}
             viewport={{ once: true }}
             style={{
               minWidth: "max-content",

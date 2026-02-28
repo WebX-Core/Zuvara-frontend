@@ -66,7 +66,7 @@ export default function IntroPage() {
       id: "personal",
       title: "Personal Care",
       subtitle: "Self-Care Reimagined",
-      image: "/images/personalCare/happy-lady.png",
+      image: "/new/momnobg.png",
       href: "/personalCare",
       color: "var(--personalCare)",
       icon: "/icons/sanitary-napkin.png",
@@ -95,57 +95,6 @@ export default function IntroPage() {
         <div className="w-12 h-1 bg-zinc-900 mx-auto rounded-full opacity-20" />
       </div>
 
-      {/* curly arrows */}
-      {/* {!isSmallerDevice && (
-        <div className="relative w-full container mx-auto px-6">
-          <div className="absolute -top-24 left-1/4 lg:left-[15%] z-20 pointer-events-none transform -rotate-12">
-          <svg
-            width="180"
-            height="180"
-            viewBox="-5.0 -10.0 110.0 135.0"
-            className="text-zinc-800 scale-x-[-1] rotate-75"
-          >
-            <path
-              ref={leftArrowPathRef}
-              d="m13.602 75c0 0.5 0.19922 0.89844 0.60156 1.1992l14 10.102c0.30078 0.19922 0.60156 0.30078 0.89844 0.30078 0.5 0 0.89844-0.19922 1.1992-0.60156 0.5-0.69922 0.30078-1.6016-0.30078-2.1016l-10-7.1992c2.3008 0.19922 4.3984 0.19922 6.5 0.19922 17.199 0 26.398-5.3008 31.398-10.898 4.1016 0.19922 8.6992-0.89844 13-3.3008 5.5-3 22.602-15.5 12.602-48.102-0.19922-0.80078-1.1016-1.1992-1.8984-1-0.80078 0.19922-1.1992 1.1016-1 1.8984 9.3008 30.5-6.1992 41.898-11.199 44.602-3 1.6992-6.1992 2.6016-9.1992 2.8008 1.5-2.3984 2.3984-4.6016 2.8984-6.3008 2-7.3008 0.10156-15.199-4.3008-17.398-1.1992-0.60156-4.3984-1.6016-7.6016 2.6992-8.6016 11.301-5.1016 17.699-3.1992 19.898 1.5 1.8008 3.6992 3 6.1992 3.6992-5.6016 5.1016-15.801 9.6016-34.801 8.1016l10.102-7.8984c0.69922-0.5 0.80078-1.5 0.30078-2.1016-0.5-0.69922-1.5-0.80078-2.1016-0.30078l-13.5 10.504c-0.39844 0.30078-0.59766 0.69922-0.59766 1.1992zm36.5-15.199c-3-3.5-1.8008-9.3984 3.3008-16.102 0.69922-1 1.8008-2 3-2 0.30078 0 0.60156 0.10156 0.89844 0.19922 2.3984 1.1992 4.6016 7.1016 2.6992 13.898-0.5 1.8984-1.6016 4.3984-3.6016 7-2.5977-0.29688-4.7969-1.2969-6.2969-2.9961z"
-              fill="white"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="opacity-0"
-            />
-          </svg>
-          <span className="absolute top-0 -left-4 text-[10px] font-bold text-zinc-600 rotate-[-15deg] uppercase tracking-widest whitespace-nowrap">
-            Purely for Baby
-          </span>
-        </div>
-
-          <div className="absolute -top-24 right-1/4 lg:right-[15%] z-20 pointer-events-none transform -rotate-12">
-            <svg
-              width="180"
-              height="180"
-              viewBox="-5.0 -10.0 110.0 135.0"
-              className="text-zinc-800 -rotate-60"
-            >
-              <path
-                ref={rightArrowPathRef}
-                d="m13.602 75c0 0.5 0.19922 0.89844 0.60156 1.1992l14 10.102c0.30078 0.19922 0.60156 0.30078 0.89844 0.30078 0.5 0 0.89844-0.19922 1.1992-0.60156 0.5-0.69922 0.30078-1.6016-0.30078-2.1016l-10-7.1992c2.3008 0.19922 4.3984 0.19922 6.5 0.19922 17.199 0 26.398-5.3008 31.398-10.898 4.1016 0.19922 8.6992-0.89844 13-3.3008 5.5-3 22.602-15.5 12.602-48.102-0.19922-0.80078-1.1016-1.1992-1.8984-1-0.80078 0.19922-1.1992 1.1016-1 1.8984 9.3008 30.5-6.1992 41.898-11.199 44.602-3 1.6992-6.1992 2.6016-9.1992 2.8008 1.5-2.3984 2.3984-4.6016 2.8984-6.3008 2-7.3008 0.10156-15.199-4.3008-17.398-1.1992-0.60156-4.3984-1.6016-7.6016 2.6992-8.6016 11.301-5.1016 17.699-3.1992 19.898 1.5 1.8008 3.6992 3 6.1992 3.6992-5.6016 5.1016-15.801 9.6016-34.801 8.1016l10.102-7.8984c0.69922-0.5 0.80078-1.5 0.30078-2.1016-0.5-0.69922-1.5-0.80078-2.1016-0.30078l-13.5 10.504c-0.39844 0.30078-0.59766 0.69922-0.59766 1.1992zm36.5-15.199c-3-3.5-1.8008-9.3984 3.3008-16.102 0.69922-1 1.8008-2 3-2 0.30078 0 0.60156 0.10156 0.89844 0.19922 2.3984 1.1992 4.6016 7.1016 2.6992 13.898-0.5 1.8984-1.6016 4.3984-3.6016 7-2.5977-0.29688-4.7969-1.2969-6.2969-2.9961z"
-                fill="white"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="opacity-0"
-              />
-            </svg>
-            <span className="absolute top-0 -right-4 text-[10px] font-bold text-zinc-600 rotate-[30deg] uppercase tracking-widest whitespace-nowrap">
-              Purely for Mother
-            </span>
-          </div>
-        </div>
-      )} */}
-
       {/* Hero Section Split */}
       <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-center gap-8 relative z-10 pb-16">
         {sections.map((section) => (
@@ -153,7 +102,7 @@ export default function IntroPage() {
             key={section.id}
             href={section.href}
             className="w-full lg:w-100 group relative"
-            onMouseEnter={() => setHoveredSection(section.id as any)}
+            onMouseEnter={() => setHoveredSection(section.id as any )}
             onMouseLeave={() => setHoveredSection(null)}
           >
             <motion.div
@@ -301,7 +250,7 @@ export default function IntroPage() {
                 className={`absolute z-0 pointer-events-none ${
                   section.id === "baby"
                     ? "bottom-6 -left-12 w-70"
-                    : "bottom-4 -right-12 w-50"
+                    : "bottom-4 -right-12 w-160 h-120"
                 }`}
               />
             )}

@@ -8,57 +8,46 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const LeftRight = () => {
-  const containerRef = useRef(null);
-  const leftImageRef = useRef(null);
-  const rightImageRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const leftImageRef = useRef<HTMLDivElement>(null);
+  const rightImageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!leftImageRef.current || !rightImageRef.current) return;
+    const leftEl = leftImageRef.current;
+    const rightEl = rightImageRef.current;
+    const container = containerRef.current;
 
-    // Set initial positions
-    gsap.set(leftImageRef.current, { x: "-100vw" });
-    gsap.set(rightImageRef.current, { x: "100vw" });
+    if (!leftEl || !rightEl || !container) return;
 
-    // Animate left image moving from left screen edge to middle on scroll
-    gsap.to(leftImageRef.current, {
+    // ⭐ Start overlapping (center position)
+    gsap.set(leftEl, { x: "0%" });
+    gsap.set(rightEl, { x: "0%" });
+
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: containerRef.current,
-        start: "center bottom",
-        end: "bottom center",
-        scrub: 1.2,
-        markers: false,
-      },
-      x: 0,
-      ease: "power2.out",
-    });
-
-    // Animate right image moving from right screen edge to middle on scroll
-    gsap.to(rightImageRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "center bottom",
-        end: "bottom center",
-        scrub: 1.2,
-        markers: false,
-      },
-      x: 0,
-      ease: "power2.out",
-    });
-
-    // Pin the container
-    gsap.to(containerRef.current, {
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "center center",
-        end: "bottom center",
+        trigger: container,
+        start: "top top",
+        end: "+=1200",
+        scrub: 1,
         pin: true,
-        markers: false,
       },
     });
 
-    // Cleanup
+    tl.to(leftEl, {
+      x: "-100%",
+      ease: "power2.out",
+    }).to(
+      rightEl,
+      {
+        x: "100%",
+        ease: "power2.out",
+      },
+      "<",
+    );
+
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
@@ -67,35 +56,31 @@ const LeftRight = () => {
       ref={containerRef}
       className="w-full py-8 overflow-hidden hidden lg:block"
     >
-      <div className="w-full mx-auto">
-        <div className="flex items-center justify-center h-[90vh] gap-0 relative">
-          {/* Left Image - starts from screen left corner */}
-          <div
-            ref={leftImageRef}
-            className="w-1/2 shrink-0  flex items-center justify-end"
-          >
-            <Image
-              src="/images/baby/leftSideBabies.jpeg"
-              alt="Left Section"
-              width={1000}
-              height={1000}
-              className="w-full h-full object-contain"
-            />
-          </div>
+      <div className="flex items-center justify-center h-[90vh] relative">
+        <div
+          ref={leftImageRef}
+          className="w-1/2 flex justify-end items-center"
+        >
+          <Image
+            src="/images/baby/leftSideBabies.jpeg"
+            alt="Left Section"
+            width={1000}
+            height={1000}
+            className="w-full h-full object-contain"
+          />
+        </div>
 
-          {/* Right Image - starts from screen right corner */}
-          <div
-            ref={rightImageRef}
-            className="w-1/2 shrink-0  flex items-center justify-start"
-          >
-            <Image
-              src="/images/baby/rightSideBabies.jpeg"
-              alt="Right Section"
-              width={1000}
-              height={1000}
-              className="w-full h-full object-contain"
-            />
-          </div>
+        <div
+          ref={rightImageRef}
+          className="w-1/2 flex justify-start items-center"
+        >
+          <Image
+            src="/images/baby/rightSideBabies.jpeg"
+            alt="Right Section"
+            width={1000}
+            height={1000}
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
     </div>

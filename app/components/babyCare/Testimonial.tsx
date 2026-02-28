@@ -2,19 +2,16 @@
 
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import SectionHeading from "../common-ui/SectionHeading";
-import { useMediaQuery } from "react-responsive";
+import CrawlingBaby from "../shared/CrawlingBaby";
 
-const Testimonial = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
       name: "Priya Sharma",
       location: "Kathmandu",
-      text: "Zuvara products have been a game-changer for my baby's sensitive skin. I've tried many brands, but nothing compares to the natural ingredients and gentle care.",
+      text: "Zuvara products have been a game-changer for my baby's sensitive skin. I've tried many brands, but nothing compares to the natural ingredients.",
       rating: 5,
       image: "/images/parent/parent2.png",
     },
@@ -36,166 +33,109 @@ const Testimonial = () => {
     },
   ];
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }).map((_, i) => (
-      <Icon
-        key={i}
-        icon="mdi:star"
-        width="16"
-        height="16"
-        className={i < rating ? "text-[#8cd700]" : "text-zinc-300"}
-      />
-    ));
+  // Container variants for staggering the entrance of cards
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1,
-    );
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
-
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
-
-  const currentTestimonial = testimonials[currentIndex];
-
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   return (
-    <section
-      className="relative bg-babyCare/20 py-4 lg:py-8 min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        clipPath: "ellipse(100% 100% at 50% 100%)",
-      }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mb-4 md:mb-8 flex justify-center items-start md:items-center gap-4 flex-col lg:flex-row"
-        >
+    <section className="relative min-h-screen bg-linear-to-b from-babyCare/90 via-babyCare/80 to-babyCare/60 py-20 overflow-hidden">
+      {/* Background Accents */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#8cd700]/10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/2" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <header className="mb-16">
           <SectionHeading
             title="What"
-            highlight="Nepali Mothers Say"
-            description="Real reviews from real mothers who trust Zuvara"
-            align={isSmallerDevice ? "left" : "center"}
-            descClassName="text-left lg:text-center"
+            highlight=" Mothers Say"
+            description="Real reviews from real mothers who trust Zuvara for their little ones."
+            align="center"
           />
-          {/* Google Review Button */}
-          {/* <div className="flex justify-center">
-            <Button
-              content="Read Reviews on Google"
-              link="https://www.google.com/search?q=zuvara"
-              icon="mdi:google"
-            />
-          </div> */}
+        </header>
+
+        {/* The Grid */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {testimonials.map((item) => (
+            <motion.div
+              key={item.id}
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+              className="group bg-white/95 backdrop-blur-sm rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col border border-white/50"
+            >
+              {/* Header: Image & Info */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative size-16 shrink-0">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="size-full object-cover rounded-2xl ring-2 ring-[#8cd700]/20"
+                  />
+                  <div className="absolute -bottom-1 -right-1 bg-[#8cd700] rounded-full p-1 border-2 border-white">
+                    <Icon icon="mdi:check-decagram" className="text-white" width={14} />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 text-lg leading-tight">{item.name}</h4>
+                  <p className="text-sm text-zinc-500 font-medium">{item.location}</p>
+                </div>
+              </div>
+
+              {/* Rating */}
+              <div className="flex gap-0.5 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Icon
+                    key={i}
+                    icon="mdi:star"
+                    className={i < item.rating ? "text-[#8cd700]" : "text-zinc-200"}
+                    width={18}
+                  />
+                ))}
+              </div>
+
+              {/* Body */}
+              <div className="relative grow">
+                <Icon 
+                  icon="ri:double-quotes-l" 
+                  className="absolute -top-2 -left-2 text-[#8cd700]/10" 
+                  width={40} 
+                />
+                <p className="text-zinc-700 leading-relaxed italic relative z-10">
+                  {item.text}
+                </p>
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-zinc-100">
+                <span className="text-[10px] uppercase tracking-widest font-bold text-[#8cd700]">Verified Purchase</span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* Testimonials Carousel */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-center">
-          {/* Left Side - Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="flex justify-center"
-          >
-            <motion.div
-              key={currentTestimonial.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="w-full h-60 md:h-70 lg:h-92 rounded-2xl overflow-hidden border border-zinc-200"
-              style={{
-                backgroundImage: `url(${currentTestimonial.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></motion.div>
-          </motion.div>
-
-          {/* Right Side - Testimonial Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="space-y-2 lg:space-y-4"
-          >
-            {/* Author Info */}
-            <div>
-              <h4 className="font-semibold text-foreground text-lg">
-                {currentTestimonial.name}
-              </h4>
-              <p className="text-sm text-zinc-600">
-                {currentTestimonial.location}
-              </p>
-            </div>
-
-            {/* Stars */}
-            <div className="flex gap-1">
-              {renderStars(currentTestimonial.rating)}
-            </div>
-
-            {/* Testimonial Text */}
-            <p className="text-zinc-600 leading-relaxed lg:text-lg italic">
-              &quot;{currentTestimonial.text}&quot;
-            </p>
-
-            {/* Carousel Controls */}
-            <div className="flex items-center justify-between gap-4 pt-4">
-              <div className="flex items-center gap-4 justify-center">
-                <button
-                  onClick={goToPrevious}
-                  className="lg:p-3 rounded-full border border-[#8cd700] hover:bg-[#8cd700] hover:text-white transition-all duration-300 flex items-center justify-center"
-                  aria-label="Previous testimonial"
-                >
-                  <Icon icon="mdi:chevron-left" width="20" height="20" />
-                </button>
-
-                {/* Dots Indicator */}
-                <div className="flex gap-2">
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        index === currentIndex
-                          ? "bg-[#8cd700] w-8"
-                          : "bg-zinc-300 w-2"
-                      }`}
-                      aria-label={`Go to testimonial ${index + 1}`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={goToNext}
-                  className="p-3 rounded-full border border-[#8cd700] hover:bg-[#8cd700] hover:text-white transition-all duration-300 flex items-center justify-center"
-                  aria-label="Next testimonial"
-                >
-                  <Icon icon="mdi:chevron-right" width="20" height="20" />
-                </button>
-              </div>
-              {/* Counter */}
-              <p className="text-sm text-zinc-500">
-                {currentIndex + 1} / {testimonials.length}
-              </p>
-            </div>
-          </motion.div>
+        <div className=" ">
+          <CrawlingBaby />
         </div>
       </div>
+      
     </section>
   );
 };
 
-export default Testimonial;
+export default Testimonials;

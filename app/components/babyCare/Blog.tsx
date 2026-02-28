@@ -3,157 +3,104 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Button from "../common-ui/Button";
 import SectionHeading from "../common-ui/SectionHeading";
 
 const Blog = () => {
   const blogPosts = [
     {
-      id: 1,
-      title:
-        "Understanding Women's Menstrual Health: Period Problems & Solutions",
-      excerpt:
-        "Learn about common period problems, their impact on daily life, and how proper care and products can make a difference.",
-      category: "Women's Health",
-      image: "/blogs/period.png",
-      date: "January 15, 2026",
-      author: "Health Expert",
-      readTime: "5 min read",
-      link: "/blog/menstrual-health",
-    },
-    {
       id: 2,
       title: "Baby Care Essentials: What Every New Parent Should Know",
-      excerpt:
-        "Discover the complete guide to baby care, from skincare routines to diaper selection and maintaining your baby's comfort.",
+      excerpt: "A complete guide to baby care, from skincare routines to diaper selection and maintaining your baby's comfort.",
       category: "Baby Care",
       image: "/blogs/period.png",
-      date: "January 12, 2026",
-      author: "Pediatrician",
+      date: "Jan 12, 2026",
       readTime: "7 min read",
       link: "/blog/baby-care-guide",
     },
     {
       id: 3,
       title: "Neglecting Baby Care: Long-term Consequences & Prevention",
-      excerpt:
-        "Understanding what happens when baby care is overlooked and how it affects physical and emotional development.",
+      excerpt: "Understanding what happens when baby care is overlooked and how it affects physical and emotional development.",
       category: "Awareness",
       image: "/blogs/period2.png",
-      date: "January 10, 2026",
-      author: "Child Development Expert",
+      date: "Jan 10, 2026",
       readTime: "8 min read",
       link: "/blog/care-consequences",
     },
     {
       id: 4,
-      title: "Postpartum Care for Mothers: Health, Hygiene & Recovery",
-      excerpt:
-        "Essential guide for postpartum mothers covering physical recovery, hygiene practices, and emotional wellbeing.",
-      category: "Postpartum Health",
+      title: "Postpartum Care: Health, Hygiene & Recovery",
+      excerpt: "Essential guide for mothers covering physical recovery, hygiene practices, and emotional wellbeing.",
+      category: "Postpartum",
       image: "/blogs/baby.png",
-      date: "January 8, 2026",
-      author: "Midwife",
+      date: "Jan 8, 2026",
       readTime: "6 min read",
       link: "/blog/postpartum-guide",
     },
   ];
 
-  const categoryColors: Record<string, string> = {
-    "Women's Health": "bg-pink-100 text-pink-700",
-    "Baby Care": "bg-blue-100 text-blue-700",
-    Awareness: "bg-red-100 text-red-700",
-    "Postpartum Health": "bg-purple-100 text-purple-700",
-    "Baby Skincare": "bg-green-100 text-green-700",
-  };
-
   return (
-    <section className="py-4 lg:py-8 bg-white">
-      <div className="container mx-auto px-4 sm:px-4 lg:px-6 max-w-7xl">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row gap-4 mb-4 md:mb-0 justify-between item-start md:items-center ">
-          <SectionHeading
-            title="Expert Insights on"
-            highlight="Health & Care"
-            description="Stay informed about women's health, baby care essentials, and the importance of proper hygiene and care practices."
-          />
-          {/* View All Button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <Button link="/blog" content="View All Posts" />
-          </motion.div>
+    <section className="py-24 bg-white">
+      <div className="container mx-auto max-w-[90%]">
+        {/* Header - Aligned for clean visual flow */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-2xl">
+            <SectionHeading
+              title="Insights for"
+              highlight="Modern Parents"
+              description="Expert-led advice on health, hygiene, and daily care."
+            />
+          </div>
+          <Button link="/blogs" content="Read All Articles" className="text-white!" />
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          {blogPosts.slice(1).map((post, index) => (
+        {/* Blog Grid - Using a modern 3-column layout */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {blogPosts.map((post, index) => (
             <motion.div
               key={post.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="group rounded-xl overflow-hidden border border-transparent hover:border-[#8cd700] transition-all duration-300 flex flex-col h-full bg-white"
+              className="group flex flex-col bg-white rounded-3xl border border-zinc-100 hover:border-emerald-200 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden"
             >
-              {/* Post Image */}
-              <div className="relative h-48 overflow-hidden bg-zinc-100">
+              {/* Image Container */}
+              <div className="relative h-64 overflow-hidden">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover hover:transition-all hover:duration-500"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
-              {/* Post Content */}
-              <div className="p-6 flex flex-col grow">
-                {/* Category Badge */}
-                <span
-                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 w-fit ${
-                    categoryColors[post.category] || "bg-zinc-100 text-zinc-700"
-                  }`}
-                >
+              {/* Content */}
+              <div className="p-8 flex flex-col grow">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 mb-4 block">
                   {post.category}
                 </span>
-
-                {/* Title */}
-                <h3 className="text-lg font-semibold text-foreground mb-3 line-clamp-2 group-hover:text-[#8cd700] transition-colors">
+                
+                <h3 className="text-xl font-semibold text-zinc-900 mb-4 leading-tight group-hover:text-emerald-900 transition-colors">
                   {post.title}
                 </h3>
-
-                {/* Excerpt */}
-                <p className="text-sm text-zinc-600 mb-4 line-clamp-2 grow">
+                
+                <p className="text-zinc-500 text-sm mb-8 line-clamp-3 leading-relaxed flex-grow">
                   {post.excerpt}
                 </p>
 
-                {/* Meta Info */}
-                <div className="flex flex-wrap items-center gap-3 mb-4 text-xs text-zinc-500 border-t border-zinc-100 pt-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar size={14} className="text-[#8cd700]" />
-                    <span>
-                      {post.date.split(" ")[1]} {post.date.split(" ")[2]}
-                    </span>
+                {/* Footer Meta */}
+                <div className="mt-auto flex items-center justify-between pt-6 border-t border-zinc-100">
+                  <div className="flex items-center gap-4 text-[11px] text-zinc-400">
+                    <div className="flex items-center gap-1"><Calendar size={14} /> {post.date}</div>
+                    <div className="flex items-center gap-1"><Clock size={14} /> {post.readTime}</div>
                   </div>
-                  <span className="text-zinc-300">•</span>
-                  <span>{post.readTime}</span>
+                  <Link href={post.link} className="size-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-emerald-900 group-hover:text-white transition-all">
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
-
-                {/* Read More Link */}
-                <Link href={post.link}>
-                  <div className="inline-flex items-center gap-2 text-[#8cd700] font-semibold hover:gap-3 transition-all cursor-pointer group/link">
-                    Read More
-                    <ArrowRight
-                      size={16}
-                      className="group-hover/link:translate-x-1 transition-transform"
-                    />
-                  </div>
-                </Link>
               </div>
             </motion.div>
           ))}

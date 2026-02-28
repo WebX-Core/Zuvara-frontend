@@ -7,11 +7,10 @@ import { babyCareProducts } from "@/constants/babyCareProduct";
 import ProductCard from "../common-ui/ProductCard";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
-import { useMediaQuery } from "react-responsive";
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
-    "baby",
+    "baby"
   );
 
   const products =
@@ -31,103 +30,62 @@ const Product = () => {
     },
   ] as const;
 
-  const isMobile = useMediaQuery({ maxWidth: 480 });
-
   return (
     <>
-      {/* <BigImage /> */}
-      <section className="h-fit md:h-[40vh] lg:h-[60vh] xl:h-[50vh] lg:bg-babyCare/20 flex items-end relative">
-        {/* top curve border */}
-        {!isMobile && (
-          <div className="custom-shape-divider-top">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-                className="shape-fill"
-              ></path>
-            </svg>
-          </div>
-        )}
-        <div className="container w-full mx-4 lg:mx-0 px-4 lg:px-0 rounded-xl lg:rounded-none">
-          <div className="overflow-hidden">
-            {/* <div className="grid grid-cols-2 md:grid-cols-2 gap-8 lg:gap-12 items-center"> */}
-            <div className="flex items-end">
-              {/* Left Side - Text Content */}
-              <div className="w-2/3 lg:w-1/2 lg:pl-36 lg:py-24 flex flex-col items-start justify-end">
-                <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-                  Premium Collection
-                </p>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-3 font-poppins leading-[0.9] lg:leading-none">
-                  Discover our{" "}
-                  <span className="text-[#8cd700] italic">complete range</span>{" "}
-                  of products
-                </h2>
-                <p className="hidden md:block text-zinc-700 text-sm lg:text-base leading-relaxed">
-                  Quality baby products designed for comfort and safety.
-                </p>
-              </div>
+      {/* ================= HERO SECTION ================= */}
+      <section className="h-auto md:h-[60vh] bg-babyCare flex flex-col lg:flex-row items-center justify-between relative px-4 lg:px-0  lg:pt-0">
 
-              {/* Right Side Image */}
-              <div
-                // ref={imageRef}
-                className="w-1/3 lg:w-1/2 relative h-40 md:h-full md:min-h-64"
-              >
-                <Image
-                  src="/images/baby/baby-with-product.png"
-                  alt="Baby with product"
-                  fill
-                  className="object-contain object-center"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
+        {/* Left Content */}
+        <div className="w-full lg:w-2/3 mx-auto px-4 lg:pl-36 py-12 lg:py-24 flex flex-col items-start justify-end relative z-10">
+
+          <p className="text-xs font-semibold text-zinc-600 uppercase tracking-wider mb-3">
+            Premium Collection
+          </p>
+
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-[#45685e] mb-3 leading-tight lg:leading-none font-poppins">
+            Discover our complete range of products
+          </h2>
+
+          <p className="hidden md:block text-zinc-600 text-sm lg:text-base leading-relaxed max-w-md">
+            Quality baby products designed for comfort and safety.
+          </p>
         </div>
 
-        {/* bottom curve border */}
-        {/* {!isMobile && (
-          <div className="custom-shape-divider-bottom">
-            <svg
-              data-name="Layer 1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1200 120"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                className="shape-fill"
-              ></path>
-            </svg>
-          </div>
-        )} */}
+        {/* Right Image */}
+        <div className="w-full lg:w-1/3 relative h-64 lg:h-full min-h-[280px] flex justify-center items-end z-20">
+          <Image
+            src="/images/baby/baby-with-product.png"
+            alt="Baby with product"
+            fill
+            className="object-contain object-center"
+            priority
+          />
+        </div>
+
+        {/* Background Brand Text */}
+        <div className="hidden lg:block absolute right-0 -top-32 z-0 pointer-events-none text-[#45685e] font-extrabold">
+          <h2 className="text-[140px] xl:text-[180px] uppercase leading-none opacity-60">
+            zuvara
+          </h2>
+        </div>
+
       </section>
 
-      <section className="">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
-          {/* Section Header */}
-          {/* <div className="flex flex-col gap-2 justify-between items-center">
-          <SectionHeading
-            title="Featured"
-            highlight="Products"
-            description="Discover our best-selling items"
-            align="center"
-          />
-        </div> */}
+      {/* ================= PRODUCT SECTION ================= */}
+      <section className="relative py-8 lg:py-12">
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-6 w-full lg:w-[90%]">
 
           {/* Tabs */}
-          <div className="flex gap-4 py-4 lg:justify-center overflow-x-auto whitespace-nowrap">
+          <div className="flex gap-3 py-4 lg:justify-center overflow-x-auto whitespace-nowrap">
+
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 lg:px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${
+                className={`px-4 lg:px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 shrink-0 ${
                   activeTab === tab.id
-                    ? "bg-foreground text-white shadow-lg"
+                    ? "bg-babyCare text-zinc-600 shadow-lg"
                     : "bg-zinc-100 text-foreground hover:bg-zinc-200"
                 }`}
               >
@@ -141,6 +99,7 @@ const Product = () => {
                     }`}
                   />
                 </div>
+
                 {activeTab === tab.id && (
                   <motion.span
                     initial={{ opacity: 0, width: 0 }}
@@ -160,7 +119,7 @@ const Product = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4"
+            className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-4 mt-10 pb-10"
           >
             {products.map((product, index) => (
               <ProductCard
@@ -171,6 +130,7 @@ const Product = () => {
               />
             ))}
           </motion.div>
+
         </div>
       </section>
     </>

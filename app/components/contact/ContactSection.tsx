@@ -16,7 +16,7 @@ const ContactSection = () => {
         <div className="lg:text-center mb-4">
           <Title
             title="Let's"
-            highligher="Connect"
+            highlighter="Connect"
             desc="Diapers, wipes, and gentle care products meticulously designed to keep your baby clean, comfortable, and remarkably happy."
             showBreak={false}
             titleClassName="text-left"
@@ -99,7 +99,7 @@ const ContactSection = () => {
                 <Button
                   content="Submit"
                   buttonClassName="w-full lg:w-fit"
-                  className="px-6 lg:px-10"
+                  className="px-6 lg:px-10 text-white! hover:bg-[#45685e]/90 "
                   for={isPersonal ? "personalCare" : "babyCare"}
                 />
               </div>

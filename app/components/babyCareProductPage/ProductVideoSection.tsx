@@ -6,16 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface ProductVideoSectionProps {
-  product: Product;
-}
 
-const ProductVideoSection = ({ product }: ProductVideoSectionProps) => {
+const ProductVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  if (!product.video) return null;
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -45,10 +41,10 @@ const ProductVideoSection = ({ product }: ProductVideoSectionProps) => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              style={{ color: product.background || "#000000" }}
+             
               className="text-lg lg:text-3xl font-semibold tracking-tight"
             >
-              Watch {product.name} in Action
+              Watch  in Action
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -74,12 +70,12 @@ const ProductVideoSection = ({ product }: ProductVideoSectionProps) => {
               muted={isMuted}
               playsInline
               loop
+              src="/videos/diaper-vdo.mp4"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onClick={togglePlay}
             >
-              <source src={product.video} type="video/mp4" />
-              Your browser does not support the video tag.
+            
             </video>
 
             {/* Overlay Gradient */}

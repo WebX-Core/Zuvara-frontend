@@ -1,77 +1,55 @@
+"use client";
+
 import React from "react";
-import SectionHeading from "../common-ui/SectionHeading";
+import { motion } from "framer-motion";
 
 const childCareStepLists = [
-  {
-    id: 1,
-    title: "Respond quickly to the baby's needs and cries",
-    image: "/images/baby/baby19.png",
-  },
-  {
-    id: 2,
-    title: "Support proper nutrition and hydration",
-    image: "/images/baby/baby19.png",
-  },
-  {
-    id: 3,
-    title: "Practice good hygiene at all times",
-    image: "/images/baby/baby19.png",
-  },
-  {
-    id: 4,
-    title: "Provide emotional comfort and bonding time",
-    image: "/images/baby/baby19.png",
-  },
-  {
-    id: 5,
-    title: "Follow the immunization schedule",
-    image: "/images/baby/baby19.png",
-  },
-  {
-    id: 6,
-    title: "Watch for any signs of illness or discomfort",
-    image: "/images/baby/baby19.png",
-  },
+  { id: 1, title: "Respond to cries", desc: "Building trust and comfort.", imageUrl:"/images/baby/baby19.png" },
+  { id: 2, title: "Proper nutrition", desc: "Fueling healthy growth.", imageUrl:"/new/babyNutrition.png" },
+  { id: 3, title: "Practice hygiene", desc: "Protecting sensitive skin." , imageUrl:"/new/hygiene.png"},
+  { id: 4, title: "Emotional bonding", desc: "Nurturing through presence.", imageUrl:"/new/bonding.png" },
+  { id: 5, title: "Follow immunization", desc: "Prioritizing wellness.", imageUrl:"/new/immunization.png" },
+  { id: 6, title: "Monitor health", desc: "Stay observant of needs.", imageUrl:"/new/monitorhealth.png" },
 ];
+
 const ChildCareStepSection = () => {
   return (
-    <section className="container mx-auto py-4 lg:py-8 px-4 sm:px-6 lg:px-6 max-w-7xl">
-      <SectionHeading
-        title="Essential Baby"
-        highlight="Care Tips"
-        description="Simple and practical care practices to keep your baby healthy, safe, and happy every day"
-        align="center"
-      />
-      <div className="lg:mt-32">
-        {childCareStepLists.map((list) => (
-          <div
-            key={list.id}
-            className={`flex items-center justify-between lg:-mt-32 ${list.id % 2 === 0 ? "flex-row-reverse" : ""}`}
-          >
-            <div
-              className={`w-full ${list.id % 2 === 0 ? "text-left" : "text-right"}`}
-            >
-              <p
-                className={`text-xl lg:text-3xl ${list.id % 2 === 0 ? "w-full lg:w-1/2" : "w-full lg:w-1/2 ml-auto"}`}
-              >
-                {list.title}
-              </p>
-            </div>
-            <div
-              className="w-60 lg:w-100 h-40 lg:h-80"
-              style={{
-                clipPath:
-                  "shape(from 85.52% 30.28%,curve to 93.18% 45.30% with 90.13% 36.96%,curve to 94.51% 62.72% with 96.24% 53.64%,curve to 84.17% 75.86% with 92.79% 71.80%,curve to 69.39% 85.32% with 75.55% 79.92%,curve to 54.81% 93.38% with 63.23% 90.73%,curve to 36.98% 95.02% with 46.38% 96.03%,curve to 23.89% 84.73% with 27.58% 94.00%,curve to 11.52% 70.39% with 20.20% 75.45%,curve to 4.20% 55.91% with 2.83% 65.33%,curve to 10.89% 39.65% with 5.56% 46.50%,curve to 20.04% 26.09% with 16.22% 32.79%,curve to 30.48% 14.84% with 23.86% 19.39%,curve to 45.31% 7.69% with 37.09% 10.28%,curve to 62.02% 7.43% with 53.53% 5.09%,curve to 75.71% 16.68% with 70.50% 9.77%,curve to 85.52% 30.28% with 80.92% 23.59%)",
-              }}
+    <section className="py-16 bg-zinc-50">
+      <div className="container mx-auto max-w-[90%]">
+        <div className="text-center mb-12">
+          <h2 className="text-sm font-bold tracking-[0.2em] text-emerald-600 uppercase mb-3">Essential Care</h2>
+          <p className="text-3xl font-serif text-zinc-900">Expert Tips for Your Baby</p>
+        </div>
+
+        {/* Compact, High-Impact Editorial Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {childCareStepLists.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              className="group relative h-[350px] lg:h-[400px] overflow-hidden rounded-2xl cursor-pointer"
             >
               <img
-                src={list.image}
-                alt={list.title}
-                className="w-full h-full object-cover"
+                src={item.imageUrl}
+                alt={item.title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-            </div>
-          </div>
-        ))}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+              
+              {/* Content anchored to the bottom */}
+              <div className="absolute bottom-0 left-0 p-5 text-white">
+                <span className="text-emerald-400 font-bold text-xs uppercase block mb-1">0{item.id}</span>
+                <h4 className="font-semibold text-sm leading-snug">{item.title}</h4>
+                <p className="text-[10px] text-zinc-200 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

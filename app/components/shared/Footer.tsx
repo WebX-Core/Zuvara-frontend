@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Facebook, Instagram, Music, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import FooterLogo from "./FooterLogo";
 import CrawlingBaby from "./CrawlingBaby";
 
 export default function Footer() {
@@ -18,11 +16,7 @@ export default function Footer() {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const [isMounted, setIsMounted] = useState(true);
 
   const footerSections = [
     {
@@ -52,10 +46,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer
-      className={cn(isPersonal ? "bg-personalCare/10" : "bg-babyCare/20")}
-    >
-      <div className="container mx-auto px-4 lg:px-6 max-w-7xl pt-8 pb-16 lg:pb-0">
+    <footer className={cn(isPersonal ? "bg-personalCare/10" : "")}>
+      <div className="container mx-auto px-4 lg:px-0 w-[60%] pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
         <div className="flex justify-center my-4 lg:my-8 w-full">
           <Link
@@ -115,7 +107,7 @@ export default function Footer() {
               "bg-white px-4 py-2 rounded-full font-semibold hover:text-white! transition flex items-center gap-2",
               isPersonal
                 ? "text-personalCare! hover:bg-personalCare"
-                : "text-foreground! hover:bg-secondary",
+                : "text-foreground! hover:bg-[#45685e] hover:text-white",
             )}
           >
             <Icon icon="bitcoin-icons:cart-filled" width="24" height="24" />
@@ -174,7 +166,7 @@ export default function Footer() {
                     {contact.title}
                   </p>
                   <Link href={contact.link}>
-                    <p className="text-sm hover:underline">{contact.desc}</p>
+                    <p className="text-sm hover:underline w-60">{contact.desc}</p>
                   </Link>
                 </div>
               ))}
@@ -223,19 +215,27 @@ export default function Footer() {
             </div>
           </div>
         </div>
+      </div>
+      {/*  Image Div */}
 
-        {/* zuvara logo text */}
-        {/* <FooterLogo />` */}
+    <div className="relative  h-[50vh]   flex items-center justify-center overflow-hidden">
 
-        {/* Bottom Footer */}
-        <div className="border-t border-zinc-200 py-3 lg:py-6 flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-zinc-700 group">
-          <p>
-            &copy; Copyright {new Date().getFullYear()}{" "}
-            <span className="font-semibold text-foreground">ZUVARA</span>
-            <span className="ml-2">All rights reserved.</span>
-          </p>
-
-          <div className="flex items-center gap-2">
+  {/* Background Image */}
+  <div className="absolute mx-auto">
+ <Image
+    src="/new/babiesplural.png"
+    width={1080}
+    height={400}
+    alt="Happy babies"
+    className="object-cover object-top"
+  />
+  </div>
+      {/* Bottom Copyright */}
+      <div className="absolute bottom-0 w-full mt-10 pt-2  text-sm text-[#45685e] py-4 px-6 flex flex-col md:flex-row justify-between gap-4">
+        <p>
+          © {new Date().getFullYear()} <span className="font-semibold">ZUVARA</span> — All rights reserved.
+        </p>
+         <div className="flex items-center gap-2">
             Design and Developed by
             <Link
               href="https://webxnepal.com/"
@@ -251,8 +251,43 @@ export default function Footer() {
               />
             </Link>
           </div>
-        </div>
       </div>
+
+    </div>
+  {/* </div> */}
+
+  {/* Content */}
+  {/* // <div className="relative z-10 text-center px-6 max-w-xl">
+
+  //   <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
+  //     Subscribe to our newsletter
+  //   </h2>
+
+  //   <p className="text-white/80 mb-8">
+  //     Get updates about new products, offers and parenting tips.
+  //   </p>
+
+  //   <form>
+  //     <div className="flex items-center bg-white/20 backdrop-blur-xl rounded-full p-2 shadow-xl border border-white/30">
+
+  //       <input */}
+  {/* //         type="email"
+  //         placeholder="Enter your email"
+  //         className="flex-1 bg-transparent px-4 py-3 text-white placeholder-white/70 outline-none"
+  //       />
+
+  //       <button
+  //         type="submit"
+  //         className="bg-[#45685e] hover:bg-[#35544b] transition px-6 py-3 rounded-full text-white font-medium"
+  //       >
+  //         Subscribe
+  //       </button>
+
+  //     </div>
+  //   </form> */}
+
     </footer>
   );
 }
+
+

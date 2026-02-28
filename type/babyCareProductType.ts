@@ -1,3 +1,8 @@
+export interface Money {
+  amount: number;
+  currency: "USD" | "NPR" | "EUR" | "GBP" | "INR";
+}
+
 export interface Variant {
   id: number;
   image: string;
@@ -5,7 +10,9 @@ export interface Variant {
   color?: string;
   size?: string;
   weight?: string;
+  price?: Money; // optional variant-level price
 }
+
 
 export interface Review {
   id: number;
@@ -29,6 +36,7 @@ export interface ProductCloseView {
 export interface Product {
   id: number;
   name: string;
+  price?: Money; // new price field for product
   background?: string;
   foreground?: string;
   disableInvert?: boolean;

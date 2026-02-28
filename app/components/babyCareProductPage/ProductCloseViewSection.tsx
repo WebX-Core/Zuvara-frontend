@@ -14,7 +14,7 @@ const ProductCloseViewSection = ({ product }: ProductCloseViewProps) => {
   const rightFeatures = product.productCloseView.slice(midIndex);
 
   return (
-    <section className="py-4 lg:py-8">
+    <section className="py-4 lg:py-8 bg-babyCare/40">
       <div className="">
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Features */}

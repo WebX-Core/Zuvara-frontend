@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import { Product } from "@/type/babyCareProductType";
 import Button from "../common-ui/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HeroSectionProps {
   product: Product;
@@ -16,52 +18,26 @@ const HeroSection = ({ product }: HeroSectionProps) => {
   };
 
   return (
-    // <div className="relative h-dvh">
-    //   <div className="absolute top-4 left-1/2 -translate-x-1/2">
-    //     <div className="flex flex-col items-center gap-4">
-    //       <span className="text-[10px] lg:text-xs font-bold uppercase lg:tracking-wider whitespace-nowrap px-3 py-1 bg-(--product-bg) text-(--product-fg) rounded-full">
-    //         {product.category}
-    //       </span>
-    //       <p className="text-3xl lg:text-5xl font-semibold text-(--product-bg)">
-    //         {product.name}
-    //       </p>
-    //     </div>
-    //   </div>
-    //   <div className="absolute bottom-1/2 translate-y-1/2 left-1/2 -translate-x-1/2">
-    //     <img
-    //       src={product.heroImage}
-    //       alt={`${product.name} - "Hero Image"`}
-    //       className="w-200"
-    //     />
-    //   </div>
-    // </div>
-    <div className="relative h-dvh flex items-center justify-between">
-      <div className="w-1/2">
+    <div className="relative h-dvh flex items-center justify-between w-full mx-auto ">
+      {product.heroImage && (
+        <Image
+          src={product.heroImage}
+          alt={`${product.name} - "Hero Image"`}
+          width={300}
+          height={300}
+          className=""
+        />
+      )}
+      <div className="w-1/3">
         <div className="flex flex-col gap-4">
-          <p className="text-3xl lg:text-5xl font-semibold">{product.name}</p>
+          <p className="text-3xl lg:text-[120px] text-zinc-800 font-bold leading-30">
+            {product.name}
+          </p>
 
-          <div className="flex flex-col gap-3 my-4">
-            {product.highlights?.map((highlight, index) => (
-              <div key={index} className="flex items-start gap-4 group">
-                <div className="shrink-0 size-6 rounded-full flex items-center justify-center mt-1 group-hover:scale-110 transition-transform bg-(--product-bg)/10">
-                  <div className="size-2 rounded-full bg-(--product-bg)" />
-                </div>
-                <span className="text-zinc-600 font-medium lg:text-lg leading-snug">
-                  {highlight}
-                </span>
-              </div>
-            ))}
-          </div>
-          <Button
-            content="View Product"
-            onClick={handleScroll}
-            link="#product-info"
-            bgColor={product.background}
-            textColor={product.foreground || "#ffffff"}
-          />
+          <div className="flex flex-col gap-3 my-4">{product.subDesc1}</div>
         </div>
       </div>
-      <div className="w-1/2 h-full relative">
+      {/* <div className="w-1/2 h-full relative">
         <svg
           viewBox="0 0 200 200"
           xmlns="http://www.w3.org/2000/svg"
@@ -73,17 +49,19 @@ const HeroSection = ({ product }: HeroSectionProps) => {
             transform="translate(100 100)"
           />
         </svg>
-        <img
-          src={product.heroImage}
-          alt={`${product.name} - "Hero Image"`}
-          className="w-80 absolute mt-12 top-1/2 -translate-y-1/2 left-0 z-10"
-        />
-        <img
-          src={product.heroImage2}
-          alt={`${product.name} - "Hero Image"`}
-          className="w-80 absolute top-1/2 -translate-y-1/2 right-0"
-        />
-      </div>
+      
+       
+      </div> */}
+      {product.heroImage2 && 
+       <Image
+        src={product.heroImage2}
+        alt={`${product.name} - "Hero Image"`}
+        width={350}
+        height={300}
+        className=""
+      ></Image>
+      }
+     
     </div>
   );
 };

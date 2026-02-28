@@ -3,69 +3,192 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "react-responsive";
-import { useRef } from "react";
+import gsap from "gsap";
+
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
+
+/* ───────────────────────── Types (NO any) ───────────────────────── */
+
+type SearchItemType = "baby-care" | "clothing" | "stroller";
+
+type SearchItem = {
+  id: string | number;
+  name: string;
+  category: string;
+  image: string;
+  type: SearchItemType;
+  href: string;
+};
+
+/* ───────────────────────── Component ───────────────────────── */
 
 export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [, startTransition] = useTransition();
+
   const { activeSection } = useSection();
   const pathname = usePathname();
-  const [isMounted, setIsMounted] = useState(false);
+
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
   const searchRef = useRef<HTMLDivElement>(null);
 
+  const topBarRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const handRef = useRef<HTMLImageElement>(null);
+  const logoTlRef = useRef<gsap.core.Timeline | null>(null);
+  const randomTimerRef = useRef<number | null>(null);
+  const isPlayingRef = useRef<boolean>(false);
+
+  const isBabySection = activeSection === "baby";
+  const isPersonalSection = activeSection === "personal";
+
+  const homeHref = isBabySection
+    ? "/babyCare"
+    : isPersonalSection
+      ? "/personalCare"
+      : "/";
+
+  /* ───────────────────────── Hand animation (ONLY logo) ───────────────────────── */
+
+  const playLogoHand = () => {
+    const hand = handRef.current;
+    const bar = topBarRef.current;
+    const logo = logoRef.current;
+    if (!hand || !bar || !logo) return;
+
+    if (isPlayingRef.current) return;
+    isPlayingRef.current = true;
+
+    const barRect = bar.getBoundingClientRect();
+    const logoRect = logo.getBoundingClientRect();
+
+    const x = logoRect.left - barRect.left + logoRect.width / 2 - 30;
+
+    gsap.set(hand, {
+      display: "block",
+      autoAlpha: 1,
+      x,
+      y: -80,
+      rotate: 180,
+      scale: 1,
+    });
+
+    gsap
+      .timeline({
+        onComplete: () => {
+          gsap.set(hand, { display: "none", autoAlpha: 1 });
+          isPlayingRef.current = false;
+        },
+      })
+      .to(hand, {
+        y: -35,
+        duration: 0.5,
+        ease: "power3.out",
+      })
+      .to(hand, {
+        scale: 0.9,
+        duration: 0.15,
+        ease: "power2.inOut",
+      })
+      .to(hand, {
+        scale: 1.05,
+        duration: 0.18,
+        ease: "power2.inOut",
+      })
+      .to(hand, {
+        y: -100,
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: "power3.in",
+      });
+  };
+
   useEffect(() => {
-    setIsMounted(true);
+    const startRandomLoop = () => {
+      // random between 8–16 seconds
+      const delay = 8000 + Math.random() * 8000;
+
+      randomTimerRef.current = window.setTimeout(() => {
+        playLogoHand();
+        startRandomLoop(); // schedule next
+      }, delay);
+    };
+
+    startRandomLoop();
+
+    return () => {
+      if (randomTimerRef.current) {
+        clearTimeout(randomTimerRef.current);
+      }
+    };
   }, []);
 
-  // Search logic
-  useEffect(() => {
-    if (searchQuery.trim().length > 0) {
-      const allProducts = [
-        ...babyCareProducts.map((p) => ({
-          ...p,
-          type: "baby-care",
-          href: `/babyCareProduct/${p.slug}`,
-        })),
-        ...clothingProducts.map((p) => ({
-          ...p,
-          type: "clothing",
-          href: `/clothing/${p.slug}`,
-        })),
-        ...strollerRockerProducts.map((p) => ({
-          ...p,
-          type: "stroller",
-          href: `/strollerRockerProduct/${p.slug}`,
-        })),
-      ];
+  /* ───────────────────────── Search logic (NO any) ───────────────────────── */
 
-      const filtered = allProducts
-        .filter(
-          (product) =>
-            product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.category.toLowerCase().includes(searchQuery.toLowerCase()),
-        )
-        .slice(0, 5);
+  const allProducts: SearchItem[] = useMemo(() => {
+    const baby = babyCareProducts.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category ?? "Baby Care",
+      image: (p.variants?.[0]?.image ??
+        p.image ??
+        "/placeholder.png") as string,
+      type: "baby-care" as const,
+      href: `/babyCareProduct/${p.slug}`,
+    }));
 
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts([]);
-    }
-  }, [searchQuery]);
+    const cloth = clothingProducts.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category ?? "Baby Gear",
+      image: (p.variants?.[0]?.image ??
+        p.image ??
+        "/placeholder.png") as string,
+      type: "clothing" as const,
+      href: `/clothing/${p.slug}`,
+    }));
+
+    const stroller = strollerRockerProducts.map((p) => ({
+      id: p.id,
+      name: p.name,
+      category: p.category ?? "Stroller",
+      image: (p.variants?.[0]?.image ??
+        p.image ??
+        "/placeholder.png") as string,
+      type: "stroller" as const,
+      href: `/strollerRockerProduct/${p.slug}`,
+    }));
+
+    return [...baby, ...cloth, ...stroller];
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return q
+      ? allProducts
+          .filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              p.category.toLowerCase().includes(q),
+          )
+          .slice(0, 5)
+      : [];
+  }, [searchQuery, allProducts]);
 
   // Outside click to close search
   useEffect(() => {
@@ -83,30 +206,24 @@ export default function Navbar() {
 
   // Close menu when route changes
   useEffect(() => {
-    setIsMenuOpen(false);
+    startTransition(() => {
+      setIsMenuOpen(false);
+    });
   }, [pathname]);
 
   // Lock scroll when menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
   }, [isMenuOpen]);
 
+  // Hide/show navbar on scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Show navbar when scrolling up, hide when scrolling down
-      if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down (only hide after scrolling past 100px)
+      if (currentScrollY < lastScrollY) setIsVisible(true);
+      else if (currentScrollY > lastScrollY && currentScrollY > 100)
         setIsVisible(false);
-      }
 
       setLastScrollY(currentScrollY);
     };
@@ -137,60 +254,25 @@ export default function Navbar() {
       },
     },
   };
-  const tabNavVariants = {
-    visible: {
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-    hidden: {
-      y: 100,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-  const isBabySection = activeSection === "baby";
-  const isPersonalSection = activeSection === "personal";
 
-  const homeHref = isBabySection
-    ? "/babyCare"
-    : isPersonalSection
-      ? "/personalCare"
-      : "/";
+  const tabNavVariants = {
+    visible: { y: 0, transition: { duration: 0.6 } },
+    hidden: { y: 100, transition: { duration: 0.6 } },
+  };
 
   const menuItems = [
     { label: "Home", href: homeHref },
-    {
-      label: "Baby Care",
-      href: "/babyCareProduct",
-    },
+    { label: "Baby Care", href: "/babyCareProduct" },
     { label: "Personal Care", href: "/personalCareProduct" },
     { label: "Baby Gear", href: "/clothing" },
     { label: "Blogs", href: "/blogs" },
-    // { label: "About", href: "/about" },
     { label: "Contact Us", href: "/contact" },
   ];
 
   const filteredMenuItems = menuItems.filter((item) => {
-    // Prevent flash of all links on neutral pages during hydration
-    if (
-      !isMounted &&
-      (pathname === "/blogs" || pathname === "/contact" || pathname === "/")
-    ) {
-      const globalLinks = ["Home", "Blogs", "Contact Us"];
-      return globalLinks.includes(item.label);
-    }
-
     if (activeSection === "baby") {
       if (item.label === "Personal Care") return false;
-    }
-
-    if (activeSection === "baby") {
-      if (isSmallerDevice) {
-        if (item.label === "Baby Gear") return false;
-      }
+      if (isSmallerDevice && item.label === "Baby Gear") return false;
     }
 
     if (activeSection === "personal") {
@@ -204,46 +286,24 @@ export default function Navbar() {
   const checkIsActive = (href: string) => {
     if (!href || href === "#") return false;
 
-    // Special case for Baby Gear (Clothing) to include Stroller/Rocker products
-    if (href === "/clothing" && pathname.startsWith("/strollerRockerProduct")) {
+    if (href === "/clothing" && pathname.startsWith("/strollerRockerProduct"))
       return true;
-    }
 
-    // Special case for mobile 'Product' tab to remain active on detail pages
-    if (
-      href === "/babyCareProduct" &&
-      pathname.startsWith("/babyCareProduct")
-    ) {
+    if (href === "/babyCareProduct" && pathname.startsWith("/babyCareProduct"))
       return true;
-    }
 
     if (pathname === href) return true;
     if (href === "/") return pathname === "/";
-    // Ensure we are matching a full path segment to avoid partial matches
-    // e.g., /babyCare should not match /babyCareProduct
     return pathname.startsWith(href + "/");
   };
 
   const mobileMenuItems = [
-    {
-      label: "Home",
-      href: homeHref,
-      icon: "material-symbols:home-rounded",
-    },
+    { label: "Home", href: homeHref, icon: "material-symbols:home-rounded" },
     {
       label: "Product",
       href: isPersonalSection ? "/personalCareProduct" : "/babyCareProduct",
       icon: "fluent:cart-20-filled",
     },
-    // ...(isBabySection
-    //   ? [
-    //       {
-    //         label: "Baby Gear",
-    //         href: "/clothing",
-    //         icon: "material-symbols-light:apparel",
-    //       },
-    //     ]
-    //   : []),
     {
       label: "Whatsapp",
       href: "https://wa.me/9801018656",
@@ -258,12 +318,24 @@ export default function Navbar() {
         variants={navbarVariants}
         animate={isVisible ? "visible" : "hidden"}
         initial="visible"
-        className="hidden lg:block fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-zinc-200 "
+        className="hidden lg:block fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-zinc-200"
       >
-        <div className="px-4 sm:px-6 lg:px-6 max-w-7xl mx-auto">
+        <div className="px-4 sm:px-6 lg:px-6 max-w-[90%] mx-auto">
           <div className="flex flex-col justify-between items-center h-auto gap-4 py-3">
-            {/* Logo - Left */}
-            <div className="flex items-center justify-between w-full relative">
+            {/* TOP BAR */}
+            <div
+              ref={topBarRef}
+              className="flex items-center justify-between w-full relative"
+            >
+              {/* ✅ Hand image (ONLY for logo) */}
+              <Image
+                ref={handRef}
+                src="/babyHand.png"
+                alt="baby hand"
+                width={60}
+                height={60}
+                className="absolute top-0 left-0 hidden pointer-events-none z-50"
+              />
               <div className="flex-1 flex items-center justify-start gap-2">
                 <Icon
                   icon="mdi:headset"
@@ -274,7 +346,15 @@ export default function Navbar() {
                 />
                 <h3 className="font-medium text-sm">Customer Support</h3>
               </div>
-              <Link href="/" className="flex items-center shrink-0">
+
+              {/* ✅ Logo (hand anim here only) */}
+              <Link
+                ref={logoRef}
+                href="/"
+                onMouseEnter={playLogoHand}
+                onClick={playLogoHand}
+                className="flex items-center shrink-0"
+              >
                 <Image
                   src="/logo.png"
                   alt="Zuvara Logo"
@@ -284,6 +364,8 @@ export default function Navbar() {
                   priority
                 />
               </Link>
+
+              {/* Right side */}
               <div
                 className="flex-1 flex items-center justify-end gap-4"
                 ref={!isSmallerDevice ? searchRef : null}
@@ -308,6 +390,7 @@ export default function Navbar() {
                       </motion.div>
                     )}
                   </AnimatePresence>
+
                   <button
                     onClick={() => setIsSearchOpen(!isSearchOpen)}
                     className="hover:text-zinc-900 transition flex items-center"
@@ -416,7 +499,10 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                <button className="hover:text-zinc-900 transition relative">
+                <button
+                  className="hover:text-zinc-900 transition relative"
+                  aria-label="Whatsapp"
+                >
                   <Icon
                     icon="uil:whatsapp"
                     className={cn(
@@ -448,12 +534,6 @@ export default function Navbar() {
                     )}
                   >
                     {item.label}
-                    {/* {isActive && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="h-0.5 bg-black w-full rounded-full mt-0.5"
-                      />
-                    )} */}
                   </Link>
                 );
               })}
@@ -474,7 +554,6 @@ export default function Navbar() {
             className="flex justify-between items-center h-full px-4"
             ref={isSmallerDevice ? searchRef : null}
           >
-            {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
                 src="/logo.png"
@@ -485,7 +564,7 @@ export default function Navbar() {
                 priority
               />
             </Link>
-            {/* Humburger */}
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="py-2 hover:bg-zinc-100 rounded-full transition"
@@ -508,7 +587,6 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <div className="lg:hidden">
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -517,7 +595,6 @@ export default function Navbar() {
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-100 top-0"
             />
 
-            {/* Menu Content */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -538,16 +615,16 @@ export default function Navbar() {
                       <Link
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className={`transition flex items-center justify-between p-2 rounded-lg ${
+                        className={cn(
+                          "transition flex items-center justify-between p-2 rounded-lg",
                           isActive
                             ? isPersonalSection
                               ? "bg-personalCare/50 text-white!"
                               : "bg-babyCare"
-                            : "text-zinc-800 hover:bg-zinc-50"
-                        }`}
+                            : "text-zinc-800 hover:bg-zinc-50",
+                        )}
                       >
                         {item.label}
-                        {/* <Icon icon="material-symbols:chevron-right-rounded" /> */}
                       </Link>
                     </motion.div>
                   );
@@ -557,9 +634,7 @@ export default function Navbar() {
                   <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: 0.1 + filteredMenuItems.length * 0.1,
-                    }}
+                    transition={{ delay: 0.1 + filteredMenuItems.length * 0.1 }}
                     className="pt-4 mt-2 border-t border-zinc-100"
                   >
                     <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-3 px-2">
@@ -639,7 +714,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Bottom Navigation - App Style */}
+      {/* Mobile Bottom Navigation */}
       <motion.nav
         variants={tabNavVariants}
         animate={isVisible ? "visible" : "hidden"}
@@ -649,13 +724,13 @@ export default function Navbar() {
         <div className="grid grid-cols-3 w-full bg-white">
           {mobileMenuItems.map((item) => {
             const isActive = checkIsActive(item.href);
-            // Handle Home specially if it matches multiple candidates
             const isHomeActive =
               item.label === "Home" &&
               (pathname === "/" ||
                 pathname === "/babyCare" ||
                 pathname === "/personalCare");
             const finalIsActive = isActive || isHomeActive;
+
             return (
               <Link
                 key={item.label}
@@ -673,32 +748,26 @@ export default function Navbar() {
                   icon={item.icon}
                   width="28"
                   height="28"
-                  className={`text-2xl ${
+                  className={cn(
+                    "text-2xl",
                     finalIsActive
                       ? isPersonalSection
                         ? "text-personalCare"
                         : "text-foreground"
-                      : "text-zinc-400"
-                  }`}
+                      : "text-zinc-400",
+                  )}
                 />
-                {/* {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className={cn(
-                      "h-0.5 w-[60%] rounded-full",
-                      isPersonalSection ? "bg-personalCare" : "bg-foreground",
-                    )}
-                  />
-                )} */}
+
                 {isActive && (
                   <span
-                    className={`text-sm whitespace-nowrap font-medium relative ${
+                    className={cn(
+                      "text-sm whitespace-nowrap font-medium relative",
                       finalIsActive
                         ? isPersonalSection
                           ? "text-personalCare"
                           : "text-foreground"
-                        : ""
-                    }`}
+                        : "",
+                    )}
                   >
                     {item.label}
                   </span>
@@ -709,7 +778,6 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Spacers for fixed navbars */}
       <div className="h-14 lg:h-16" />
     </>
   );

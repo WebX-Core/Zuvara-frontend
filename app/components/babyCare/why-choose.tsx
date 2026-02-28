@@ -7,128 +7,101 @@ import { useMediaQuery } from "react-responsive";
 import ImageGridSection from "./ImageGridSection";
 
 const WhyChoose = () => {
-  const isSmallerDevice = useMediaQuery({ maxWidth: 768 });
-
   const values = [
     {
       id: 1,
       icon: "/icons/premium.png",
       title: "Premium Quality",
       description:
-        "Gentle, premium-quality materials that protect delicate baby skin",
+        "Gentle materials specifically designed to protect delicate baby skin.",
     },
     {
       id: 2,
       icon: "/icons/nature.png",
       title: "100% Natural",
-      description: "Superior absorption for longer dryness and fewer changes",
+      description:
+        "Hypoallergenic and toxin-free components for long-lasting dryness.",
     },
     {
       id: 3,
       icon: "/icons/trusted.png",
-      title: "Trusted by Dermatologists",
-      description: "Dermatologist-tested & toxin-free for safer everyday use",
+      title: "Dermatologist Tested",
+      description:
+        "Clinically validated safety standards for your baby’s daily routine.",
     },
     {
       id: 4,
       icon: "/icons/comfortable.png",
-      title: "Comfortable Fit",
-      description: "Easy-fit design for comfort, movement, and leak protection",
+      title: "Ergonomic Fit",
+      description:
+        "Advanced design ensuring comfort, ease of movement, and leak protection.",
     },
   ];
 
   return (
-    <section className="flex items-center justify-center py-20 lg:py-0 h-auto md:h-[65vh] lg:h-[140vh] bg-divider relative">
-      {/* top curve border */}
-      <div className="custom-shape-divider-top">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-            className="shape-fill"
-          ></path>
-        </svg>
+    <section className="flex flex-col justify-center  lg:py-0 h-auto md:h-[65vh] min-h-screen   relative  bg-babyCare ">
+      {/* ─── TOP WAVE ─── */}
+      <div className="absolute -top-46 left-0 w-full z-20000 pointer-events-none">
+        <Image
+          src="/new/wave.svg"
+          alt=""
+          width={1920}
+          height={100}
+          className="w-full h-auto object-cover"
+          priority
+        />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
-        {/* Header */}
+      <div className="container mx-auto px-6 max-w-7xl z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="lg:mb-16 text-center"
+          className="mb-16 text-center"
         >
           <SectionHeading
-            title="Why Parents Choose"
+            title="Why Choose"
             highlight="Zuvara"
-            description="Trusted by Nepali families for our commitment to quality, safety, and care"
+            description="Our commitment to uncompromising quality, safety, and comfort for every stage of your baby's growth."
             align="center"
           />
         </motion.div>
 
-        <div className="w-full flex flex-col md:flex-row items-center gap-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Values Grid */}
-          <div className="lg:w-1/2">
-            <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
-              {values.map((value, index) => {
-                return (
-                  <motion.div
-                    key={value.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex flex-col items-center text-center"
-                  >
-                    {/* Icon */}
-                    <div className="mb-4 size-16 lg:size-24 rounded-full border-2 border-dashed border-secondary flex items-center justify-center">
-                      <Image
-                        src={value.icon}
-                        alt={value.title}
-                        width={isSmallerDevice ? 34 : 48}
-                        height={isSmallerDevice ? 34 : 48}
-                        className="object-contain"
-                      />
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="md:text-lg font-semibold text-foreground mb-1 lg:mb-2 font-poppins">
-                      {value.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-xs md:text-sm text-zinc-600 leading-relaxed">
-                      {value.description}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="mb-4 size-14 rounded-full bg-secondary/10 flex items-center justify-center">
+                  <Image
+                    src={value.icon}
+                    alt={value.title}
+                    width={32}
+                    height={32}
+                  />
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-2">
+                  {value.title}
+                </h3>
+                <p className="text-sm text-zinc-600 leading-relaxed">
+                  {value.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
-          <div className="w-full md:w-1/2">
+
+          {/* Visual Grid */}
+          <div className="w-full">
             <ImageGridSection />
           </div>
         </div>
-      </div>
-
-      {/* bottom curve border */}
-      <div className="custom-shape-divider-bottom">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-            className="shape-fill"
-          ></path>
-        </svg>
       </div>
     </section>
   );

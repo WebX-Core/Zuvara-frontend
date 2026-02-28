@@ -2,13 +2,14 @@
 
 import { useSection } from "@/app/providers/SectionProvider";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const HeroSection = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   return (
-    <section className="h-[70vh] lg:h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
-      <div className="relative w-full h-full max-w-7xl mx-auto overflow-hidden rounded-2xl lg:rounded-4xl">
+    <section className="mt-20 lg:h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4 lg:py-8 ">
+      <div className="relative  h-full w-[90%] mx-auto overflow-hidden rounded-2xl lg:rounded-4xl">
         {/* Background Image Container */}
         <div className="absolute inset-0 w-full h-full z-0">
           <img
@@ -40,9 +41,11 @@ const HeroSection = () => {
                 care and clothing to help you navigate the beautiful journey of
                 parenthood.
               </p>
+              <Link href="/blogs/safe-and-smooth-travel-with-your-infant">
               <button className="bg-white text-black px-8 py-3 rounded-full font-bold text-sm tracking-wide hover:bg-zinc-100 transition-colors shadow-lg">
                 Read Full Article
               </button>
+              </Link>
             </div>
           </motion.div>
         </div>

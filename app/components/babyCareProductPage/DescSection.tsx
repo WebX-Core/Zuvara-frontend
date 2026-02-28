@@ -7,7 +7,7 @@ interface DescSectionProps {
 
 const DescSection = ({ product }: DescSectionProps) => {
   return (
-    <div className="py-4 lg:py-8 text-center">
+    <div className="py-4 lg:py-8 text-center bg-babyCare/40">
       <p
         style={{
           color: product.background || "#000000",

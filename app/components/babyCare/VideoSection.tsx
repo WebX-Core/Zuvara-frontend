@@ -38,8 +38,8 @@ const VideoSection = () => {
   };
 
   return (
-    <section className="py-4 lg:py-8">
-      <div className="container mx-auto px-4 sm:px-4 lg:px-6 max-w-7xl">
+    <section className="py-4 lg:py-8 md:mt-24">
+      <div className="container mx-auto px-4 sm:px-4 lg:px-6 w[90%]">
         {/* Section Header */}
         <SectionHeading
           title="We started zuvara with"
@@ -58,7 +58,7 @@ const VideoSection = () => {
           className="mb-4 lg:mb-8"
         >
           {/* Video Container */}
-          <div className="relative w-full h-[30vh] md:h-[50vh] lg:h-130 bg-linear-to-br from-foreground to-[#8cd700] rounded-2xl overflow-hidden">
+          <div className="relative w-full h-[30vh] md:h-[50vh] lg:h-160 bg-linear-to-br from-foreground to-[#8cd700] rounded-2xl overflow-hidden">
             <video
               ref={videoRef}
               autoPlay

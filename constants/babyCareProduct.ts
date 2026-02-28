@@ -4,6 +4,7 @@ export const babyCareProducts: Product[] = [
   {
     id: 1,
     name: "Supreme Diapers",
+    price: { amount: 299, currency: "NPR" },
     slug: "supreme-diapers",
     background: "#456a5c",
     foreground: "#ffffff",
@@ -153,6 +154,7 @@ export const babyCareProducts: Product[] = [
   {
     id: 2,
     name: "Premium Diapers & Pants",
+    price: { amount: 249, currency: "NPR" },
     slug: "premium-diapers-pants",
     background: "#6abbb8",
     foreground: "#ffffff",
@@ -160,6 +162,7 @@ export const babyCareProducts: Product[] = [
     reviews: 245,
     heroImage: "/images/diaper/supreme-diaper/diapers.png",
     image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+     video: "/videos/diaper-video2.mp4",
     category: "Baby Diaper",
     variants: [
       {
@@ -262,6 +265,8 @@ export const babyCareProducts: Product[] = [
           "Yes, our Zuvara Diapers do have an expiry date. You can keep our baby diapers for up to 3 years without worry. We strongly recommend storing Feather diapers in a cool and dry environment for hygienic reasons.",
       },
     ],
+      description:
+      "Feather Diaper Tape technology provides a lightweight yet secure fit for newborns.",
     featureImage: "/images/diaper/supreme-diaper/feature.png",
     featureTitle: "Absorbs 15x its weight in liquid",
     featureDesc:
@@ -277,11 +282,13 @@ export const babyCareProducts: Product[] = [
   {
     id: 3,
     name: "Feather Diaper Tape",
+    price: { amount: 199, currency: "NPR" },
     slug: "feather-diaper-tape",
     background: "#f7d214",
     foreground: "#000000",
     rating: 4.8,
     reviews: 245,
+     video: "/videos/diaper-video2.mp4",
     heroImage: "/images/diaper/supreme-diaper/diapers.png",
     image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
     category: "Baby Diaper",
@@ -300,9 +307,10 @@ export const babyCareProducts: Product[] = [
         size: "S",
         weight: "3-6",
       },
+      
     ],
     description:
-      "Feather Diaper Tape technology provides a lightweight yet secure fit for newborns. The unique tape system allows for easy adjustments while keeping the diaper snugly in place.",
+      "Feather Diaper Tape technology provides a lightweight yet secure fit for newborns.",
     highlights: [
       "Feather-light materials",
       "Magic tape re-fastening system",
@@ -334,6 +342,7 @@ export const babyCareProducts: Product[] = [
   {
     id: 4,
     name: "Value Diapers & Pants",
+    price: { amount: 179, currency: "NPR" },
     slug: "value-diapers-pants",
     background: "#f7d214",
     // foreground: "#52525c",
@@ -342,6 +351,7 @@ export const babyCareProducts: Product[] = [
     reviews: 245,
     heroImage: "/images/diaper/value-diaper/diapers.png",
     heroImage2: "/images/diaper/value-diaper/value-diaper-pants-nb.png",
+     video: "/videos/diaper-video2.mp4",
     image: "/images/diaper/value-diaper/diaper.png",
     category: "Baby Diaper",
     variants: [
@@ -450,14 +460,16 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
   {
     id: 5,
     name: "Moisturising Tissue",
+    price: { amount: 49, currency: "NPR" },
     slug: "moisturising-tissue",
     rating: 4.6,
     reviews: 156,
     heroImage: "/images/diaper/supreme-diaper/diapers.png",
+     video: "/videos/diaper-video2.mp4",
     image: "/images/diaper/supreme-diaper/diaper.png",
     category: "Cotton Tissue",
     description:
-      "Our Moisturising Tissue is infused with natural aloe and vitamin E to soothe even the most sensitive skin. Ultra-strong and exceptionally soft, these tissues are perfect for delicate faces and hands.",
+      "Our Moisturising Tissue is infused with natural aloe and vitamin E to soothe even the most sensitive skin. ",
     highlights: [
       "Each wipe is made with a touch of cotton for softness",
       "Hypoallergenic and fragrance free",
@@ -514,10 +526,12 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
   {
     id: 6,
     name: "Value Wet Wipes",
+    price: { amount: 35, currency: "NPR" },
     slug: "value-wet-wipes",
     rating: 4.6,
     reviews: 156,
     heroImage: "/images/diaper/supreme-diaper/diapers.png",
+     video: "/videos/diaper-video2.mp4",
     image: "/images/wipes/water-wipes.png",
     category: "Wipes",
     description: "Wipes that are skin friendly !!",
