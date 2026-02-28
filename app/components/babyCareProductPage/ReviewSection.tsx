@@ -120,14 +120,14 @@ export default function ReviewSection({
   }, [product.reviewsData]);
 
   return (
-    <section className={className ?? "px-24"}>
+    <section className={className ?? ""}>
       {/* Header */}
       <div className="space-y-2">
         <h2
           className="text-xl md:text-3xl font-extrabold tracking-tight"
           style={{ color: headingColor }}
         >
-          Reviews
+          The Zuvara Community
         </h2>
         <p className="text-sm md:text-base" style={{ color: subtleText }}>
           Real stories from parents like you.
@@ -257,7 +257,7 @@ export default function ReviewSection({
         <div className="mt-4 flex justify-center">
           <button
             type="button"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-babyCare backdrop-blur text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-white/60 backdrop-blur text-sm font-semibold hover:opacity-90 transition"
             style={{ borderColor: divider, color: pageText }}
           >
             Show more <ChevronDown size={16} />
