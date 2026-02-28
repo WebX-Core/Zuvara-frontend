@@ -15,7 +15,7 @@ import ReviewSection from "@/app/components/babyCareProductPage/ReviewSection";
 import FaqSection from "@/app/components/common-ui/FaqSection";
 
 /* ───────────────────────── Theme ───────────────────────── */
-
+//
 type Theme = {
   bg: string;
   headingColor: string;
