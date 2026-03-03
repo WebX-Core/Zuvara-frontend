@@ -7,6 +7,7 @@ import { babyCareProducts } from "@/constants/babyCareProduct";
 import ProductCard from "../common-ui/ProductCard";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
+import SectionHeading from "../common-ui/SectionHeading";
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
@@ -32,11 +33,23 @@ const Product = () => {
 
   return (
     <>
-      {/* ================= HERO SECTION ================= */}
-
       {/* ================= PRODUCT SECTION ================= */}
       <section className="relative py-8 lg:py-12 ">
         <div className="container mx-auto px-4 sm:px-6 lg:px-6 w-full lg:w-[90%]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mb-16 text-center"
+          >
+            <SectionHeading
+              title="Our Products"
+              highlight=""
+              description="Explore our range of premium baby care products, designed with love and care for your little one."
+              align="center"
+            />
+          </motion.div>
           {/* Tabs */}
           <div className="flex gap-3 py-4 lg:justify-center overflow-x-auto whitespace-nowrap">
             {tabs.map((tab) => (

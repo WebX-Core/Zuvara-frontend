@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Title from "../shared/Title";
+// import Title from "../shared/Title";
 import Image from "next/image";
 
 const HeroSection = () => {

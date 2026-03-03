@@ -263,7 +263,7 @@ export default function Navbar() {
     { label: "Home", href: homeHref },
     { label: "Baby Products", href: "/babyCareProduct" },
     { label: "Personal Care", href: "/personalCareProduct" },
-    // { label: "Baby Gear", href: "/clothing" },
+    { label: "About Us", href: "/clothing" },
     { label: "Blogs", href: "/blogs" },
     { label: "Contact Us", href: "/contact" },
   ];

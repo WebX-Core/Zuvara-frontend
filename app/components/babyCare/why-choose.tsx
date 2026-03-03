@@ -39,9 +39,9 @@ const WhyChoose = () => {
   ];
 
   return (
-    <section className="flex flex-col justify-center lg:py-0 h-auto w-full relative">
+    <section className="flex flex-col justify-center lg:py-0 h-[120vh] w-full relative">
       {/* ─── TOP WAVE ─── */}
-      <div className="absolute top-0 left-0 w-full z-20000 pointer-events-none">
+      <div className=" w-full z-20000 pointer-events-none">
         <Image
           src="/new/wave.svg"
           alt=""
@@ -51,8 +51,18 @@ const WhyChoose = () => {
           priority
         />
       </div>
+      <div className="absolute bottom-0 left-0 w-full z-20000 pointer-events-none">
+        <Image
+          src="/new/white-wave.svg"
+          alt=""
+          width={1920}
+          height={100}
+          className="w-full h-auto object-cover"
+          priority
+        />
+      </div>
 
-      <div className="w-full  z-10">
+      <div className="w-full bg-babyCare  z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
