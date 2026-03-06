@@ -47,7 +47,7 @@ export default function Footer() {
 
   return (
     <footer className={cn(isPersonal ? "bg-personalCare/10" : "")}>
-      <div className="container mx-auto px-4 lg:px-0 w-[60%] pt-8 pb-16 lg:pb-0">
+      <div className="container mx-auto px-4 lg:px-0 w-7xl pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
         <div className="flex justify-center my-4 lg:my-8 w-full">
           <Link

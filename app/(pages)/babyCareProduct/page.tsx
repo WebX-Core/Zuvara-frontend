@@ -12,9 +12,9 @@ const BabyCareProductPage = () => {
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       className="bg-[#FCFAF8]" // Soft off-white for a premium feel
     >
       {isSmallerDevice ? (

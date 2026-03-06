@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import SectionHeading from "../common-ui/SectionHeading";
 import CrawlingBaby from "../shared/CrawlingBaby";
+import Image from "next/image";
 
 const Testimonials = () => {
   const testimonials = [
@@ -50,101 +51,89 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="relative min-h-screen py-20 overflow-hidden">
-      {/* Background Accents */}
-      {/* <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
-      _____________________bg-linear-to-b from-babyCare/90 via-babyCare/80 to-babyCare/60 _________
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#8cd700]/10 blur-3xl rounded-full translate-y-1/2 -translate-x-1/2" /> */}
+    <section className="relative py-0 bg-babyCare overflow-hidden">
+      {/* Top Wave */}
+      <div className=" w-full z-20000 pointer-events-none -mt-1">
+        <Image
+          src="/new/white-wave.svg"
+          alt=""
+          width={1920}
+          height={100}
+          className="w-full h-auto object-cover rotate-x-180"
+          priority
+        />
+      </div>
 
-      <div className="w-7xl mx-auto relative z-10">
-        <header className="mb-16">
+      <div className="container mx-auto px-6 relative z-10 text-center">
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mb-16 text-center"
+        >
           <SectionHeading
-            title="What"
-            highlight=" Mothers Say"
-            description="Real reviews from real mothers who trust Zuvara for their little ones."
+            title="Hear from Our Happy Parents"
+            highlight=""
+            description="Discover why Nepali parents trust Zuvara for their baby's care, with heartfelt testimonials that speak to our commitment to quality and safety."
             align="center"
           />
-        </header>
+        </motion.div>
 
-        {/* The Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
+        {/* Testimonials */}
+        <div className="w-7xl mx-auto flex gap-8">
           {testimonials.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={cardVariants}
-              whileHover={{ y: -10 }}
-              className="group bg-white/95 backdrop-blur-sm rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col border border-white/50"
-            >
-              {/* Header: Image & Info */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="relative size-16 shrink-0">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="size-full object-cover rounded-2xl ring-2 ring-[#8cd700]/20"
-                  />
-                  <div className="absolute -bottom-1 -right-1 bg-[#8cd700] rounded-full p-1 border-2 border-white">
-                    <Icon
-                      icon="mdi:check-decagram"
-                      className="text-white"
-                      width={14}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 text-lg leading-tight">
-                    {item.name}
-                  </h4>
-                  <p className="text-sm text-zinc-500 font-medium">
-                    {item.location}
-                  </p>
-                </div>
+            <div key={item.id} className="flex flex-col items-start">
+              {/* Speech Bubble */}
+              <div className="relative bg-white rounded-2xl p-6 shadow-md text-left max-w-sm">
+                <h4 className="font-semibold mb-2 text-gray-800">
+                  {item.name}
+                </h4>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {item.text}
+                </p>
+
+                {/* Bubble Tail */}
+                <div className="absolute -bottom-3 left-8 w-6 h-6 bg-white rotate-45"></div>
               </div>
 
-              {/* Rating */}
-              <div className="flex gap-0.5 mb-4">
+              {/* Profile Image */}
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-16 h-16 rounded-full object-cover mt-6 border-4 border-white shadow-md"
+              />
+
+              {/* Location */}
+              <p className="mt-3 text-foreground font-medium">{item.location}</p>
+
+              {/* Stars */}
+              <div className="flex mt-2">
                 {[...Array(5)].map((_, i) => (
                   <Icon
                     key={i}
                     icon="mdi:star"
-                    className={
-                      i < item.rating ? "text-[#8cd700]" : "text-zinc-200"
-                    }
+                    className="text-yellow-500"
                     width={18}
                   />
                 ))}
               </div>
-
-              {/* Body */}
-              <div className="relative grow">
-                <Icon
-                  icon="ri:double-quotes-l"
-                  className="absolute -top-2 -left-2 text-[#8cd700]/10"
-                  width={40}
-                />
-                <p className="text-zinc-700 leading-relaxed italic relative z-10">
-                  {item.text}
-                </p>
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-zinc-100">
-                <span className="text-[10px] uppercase tracking-widest font-bold text-[#8cd700]">
-                  Verified Purchase
-                </span>
-              </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-
-        <div className=" ">
-          <CrawlingBaby />
         </div>
+      </div>
+
+      {/* Bottom Wave */}
+      <div className=" w-full z-20000 pointer-events-none -mb-1">
+        <Image
+          src="/new/white-wave.svg"
+          alt=""
+          width={1920}
+          height={100}
+          className="w-full h-auto object-cover rotate-y-180"
+          priority
+        />
       </div>
     </section>
   );

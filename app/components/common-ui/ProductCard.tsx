@@ -2,26 +2,22 @@
 
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
 
 // Types remain the same as your structure
 import type {
   Product as BabyProduct,
-  Variant as BabyVariant,
 } from "@/type/babyCareProductType";
 import type {
   Product as ClothingProduct,
-  Variant as ClothingVariant,
 } from "@/type/babyClothesType";
 import type {
   Product as StrollerProduct,
-  Variant as StrollerVariant,
 } from "@/type/strollerRockerProductType";
 import type {
   Product as PersonalProduct,
-  Variant as PersonalVariant,
 } from "@/type/personalCareProductType";
 
 type ProductType =
@@ -44,8 +40,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   activeTab,
   className,
 }) => {
-  const router = useRouter();
-
   const routeMap: Record<typeof activeTab, string> = {
     baby: "babyCareProduct",
     personal: "personalCareProduct",
@@ -54,6 +48,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const displayImage = product.variants?.[0]?.image || product.image;
+  const detailsHref = `/${routeMap[activeTab]}/${product.slug}`;
+
+  const variantLabels = (product.variants ?? [])
+    .map((variant) => variant.size ?? variant.color ?? "")
+    .filter(Boolean)
+    .slice(0, 3);
+
+  const price = "price" in product ? product.price : undefined;
+  const priceLabel = price
+    ? `${price.currency} ${price.amount}`
+    : "Explore variants";
 
   return (
     <motion.div
@@ -67,51 +72,74 @@ const ProductCard: React.FC<ProductCardProps> = ({
       viewport={{ once: true }}
       className={`h-full w-full ${className}`}
     >
-      <motion.div
-        onClick={() => router.push(`/${routeMap[activeTab]}/${product.slug}`)}
-        whileHover={{ y: -8, scale: 1.02 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="group relative flex flex-col h-80 bg-white border border-zinc-100 rounded-4xl p-8 cursor-pointer overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-emerald-900/10 transition-shadow duration-500"
-      >
-        {/* Label */}
-        <div className="z-10">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700/60">
-            Premium Selection
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="flex flex-col mt-4 flex-1 z-10">
-          <h3 className="text-2xl font-semibold text-zinc-900 leading-snug">
-            {product.name}
-          </h3>
-          <p className="mt-3 text-sm text-zinc-500 leading-relaxed line-clamp-2 max-w-[85%]">
-            {product.description}
-          </p>
-        </div>
-
-        {/* CTA */}
-        <div className="flex items-center gap-2 mt-8 z-10 text-emerald-900">
-          <span className="text-sm font-medium tracking-wide">View </span>
-          <div className="p-1.5 rounded-full bg-emerald-50 group-hover:bg-emerald-900 group-hover:text-white transition-colors duration-300">
-            <ArrowUpRight size={14} strokeWidth={2.5} />
+      <Link href={detailsHref} className="block h-full">
+        <motion.article
+          whileHover={{ y: -8, scale: 1.02 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="group relative flex h-full min-h-[21rem] flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:border-[#45685e]/35 hover:shadow-xl hover:shadow-[#45685e]/10 lg:p-6"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-700">
+              {product.category}
+            </span>
+            {product.rating ? (
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#eef4f1] px-2.5 py-1 text-xs font-medium text-[#45685e]">
+                <Star size={12} className="fill-current" />
+                {product.rating.toFixed(1)}
+              </span>
+            ) : null}
           </div>
-        </div>
 
-        {/* Hero Image - Maintains Scale and Perspective */}
-        <div className="absolute -bottom-6 -right-6 w-48 h-48 transition-transform duration-700 ease-out group-hover:scale-110">
-          <Image
-            src={displayImage}
-            alt={product.name}
-            fill
-            className="object-contain"
-            sizes="200px"
-          />
-        </div>
+          <div className="mt-4 flex flex-1 flex-col">
+            <h3 className="text-xl font-semibold leading-snug text-zinc-900 lg:text-2xl">
+              {product.name}
+            </h3>
 
-        {/* Decorative Background Accent */}
-        <div className="absolute inset-0 bg-linear-to-br from-emerald-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </motion.div>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500 line-clamp-2">
+              {product.description ??
+                "Premium quality product designed for everyday comfort and reliable care."}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {variantLabels.map((label) => (
+                <span
+                  key={`${product.id}-${label}`}
+                  className="rounded-md border border-zinc-200 px-2 py-1 text-[11px] font-medium text-zinc-600"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-5 flex items-center justify-between">
+              <div>
+                <p className="text-[11px] uppercase tracking-wide text-zinc-400">
+                  Starting from
+                </p>
+                <p className="text-sm font-semibold text-zinc-900">
+                  {priceLabel}
+                </p>
+              </div>
+
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#45685e] px-3 py-2 text-xs font-semibold text-white transition-colors duration-300 group-hover:bg-[#38564f]">
+                View Details
+                <ArrowUpRight size={14} />
+              </span>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute -bottom-3 -right-2 h-36 w-36 transition-transform duration-500 group-hover:scale-105 sm:h-40 sm:w-40">
+            <div className="absolute inset-0 rounded-full bg-[#eef4f1]" />
+            <Image
+              src={displayImage}
+              alt={product.name}
+              fill
+              className="object-contain p-3"
+              sizes="180px"
+            />
+          </div>
+        </motion.article>
+      </Link>
     </motion.div>
   );
 };
