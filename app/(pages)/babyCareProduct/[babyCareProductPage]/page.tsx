@@ -167,7 +167,7 @@ export default function Page() {
         const rises = section.querySelectorAll(".fx-rise");
         const floats = section.querySelectorAll(".fx-float");
         const parallax = section.querySelectorAll(".fx-parallax");
-
+      
         if (rises.length) {
           gsap.fromTo(
             rises,
@@ -242,18 +242,7 @@ export default function Page() {
         className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
       />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-360 h-44"
-        style={{
-          background: `radial-gradient(ellipse at center, ${hexToRgba(theme.accent, 0.22)}, rgba(255,255,255,0))`,
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-488 h-160"
-        style={{
-          background: `radial-gradient(ellipse at center, ${hexToRgba(theme.accent, 0.18)}, rgba(255,255,255,0))`,
-        }}
-      />
+
 
       <BabyCareHeroSection
         active={active}

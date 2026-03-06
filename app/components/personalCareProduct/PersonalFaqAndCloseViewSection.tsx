@@ -1,78 +1,53 @@
+import type { CSSProperties } from "react";
 import type { Product } from "@/type/personalCareProductType";
-import { Accordions, Accordion } from "@/app/components/ui/accordion";
+import FaqSection from "@/app/components/common-ui/FaqSection";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
-import PersonalProductCloseViewSection from "@/app/components/personalCareProduct/PersonalProductCloseViewSection";
 
 type PersonalFaqAndCloseViewSectionProps = {
   active: Product;
   theme: ThemePreset;
 };
 
+const sectionTitle =
+  "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
+
 export default function PersonalFaqAndCloseViewSection({
   active,
   theme,
 }: PersonalFaqAndCloseViewSectionProps) {
-  const faqs = active.faqs || [];
+  const cardStyle = {
+    borderColor: `${theme.border}66`,
+    backgroundColor: hexToRgba(theme.pageBg, 0.78),
+  } as CSSProperties;
 
   return (
-    <section className="relative px-6 pb-16 pt-8 lg:px-10">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <div>
-          <h2 className="text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight" style={{ color: theme.accent }}>
-            Questions You Ask In Real Life
+    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-16">
+      <div
+        className="pointer-events-none absolute left-10 top-0 h-40 w-52 rounded-full blur-3xl"
+        style={{ backgroundColor: hexToRgba(theme.chipBg, 0.4) }}
+      />
+      <div className="mx-auto max-w-7xl space-y-6 perspective-1200px">
+        <div className="fx-rise">
+          <h2 className={sectionTitle} style={{ color: theme.accent }}>
+            Questions Women Ask Before They Trust
           </h2>
-          <p className="mt-2 text-sm md:text-base" style={{ color: hexToRgba(theme.accent, 0.72) }}>
-            Honest answers on fit, comfort, and confidence before you choose what your body needs.
+          <p
+            className="mt-2 text-sm md:text-base"
+            style={{ color: hexToRgba(theme.accent, 1) }}
+          >
+            Clear answers about comfort, skin safety, flow support, and
+            everyday confidence.
           </p>
         </div>
 
-        <div
-          className="rounded-3xl border p-4 md:p-6"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 0.78),
-          }}
-        >
-          {faqs.length > 0 ? (
-            <Accordions type="single" className="w-full">
-              {faqs.map((faq, index) => (
-                <Accordion
-                  key={`${faq.question}-${index}`}
-                  id={`personal-faq-${index}`}
-                  title={faq.question}
-                  className="overflow-hidden px-0"
-                  triggerClassName="py-4 text-left text-sm font-semibold md:text-base hover:no-underline"
-                  triggerStyle={{ color: theme.accent }}
-                  style={{
-                    borderBottom: `1px solid ${theme.border}44`,
-                    backgroundColor: "transparent",
-                    boxShadow: "none",
-                  }}
-                >
-                  <div className="pb-4 pt-1 pr-1">
-                    <p className="whitespace-pre-line text-sm leading-relaxed md:text-base" style={{ color: hexToRgba(theme.accent, 0.76) }}>
-                      {faq.answer}
-                    </p>
-                  </div>
-                </Accordion>
-              ))}
-            </Accordions>
-          ) : (
-            <p className="text-sm" style={{ color: hexToRgba(theme.accent, 0.72) }}>
-              FAQs will be updated soon.
-            </p>
-          )}
-        </div>
-
-        <div
-          className="rounded-3xl border p-4 md:p-5"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 0.78),
-          }}
-        >
-          <PersonalProductCloseViewSection product={active} theme={theme} />
+        <div className="fx-rise" style={cardStyle}>
+          <FaqSection
+            product={active}
+            faqs={active.faqs}
+            questionColor={theme.accent}
+            answerColor={hexToRgba(theme.accent, 0.76)}
+          />
         </div>
       </div>
     </section>

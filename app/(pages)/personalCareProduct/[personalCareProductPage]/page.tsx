@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
+import { ArrowUp } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { personalCareProducts } from "@/constants/personalCareProduct";
-import type { Product } from "@/type/personalCareProductType";
-import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
-import { hexToRgba } from "@/app/components/personalCareProduct/theme";
+import type { Product as PersonalProduct } from "@/type/personalCareProductType";
 import PersonalProductHeroSection from "@/app/components/personalCareProduct/PersonalProductHeroSection";
 import PersonalWhyItMattersSection from "@/app/components/personalCareProduct/PersonalWhyItMattersSection";
 import PersonalComfortDetailsSection from "@/app/components/personalCareProduct/PersonalComfortDetailsSection";
@@ -13,6 +15,20 @@ import PersonalSizeGuideSection from "@/app/components/personalCareProduct/Perso
 import PersonalTrustFusionSection from "@/app/components/personalCareProduct/PersonalTrustFusionSection";
 import PersonalCarePromiseSection from "@/app/components/personalCareProduct/PersonalCarePromiseSection";
 import PersonalFaqAndCloseViewSection from "@/app/components/personalCareProduct/PersonalFaqAndCloseViewSection";
+import PersonalProductCloseViewSection from "@/app/components/personalCareProduct/PersonalProductCloseViewSection";
+
+import { hexToRgba } from "@/app/components/personalCareProduct/theme";
+import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
+
+const comparisonRows = [
+  { label: "Skin Compatibility", zuvara: "Derm-tested", ordinary: "Varies" },
+  { label: "Absorbency Performance", zuvara: "High", ordinary: "Standard" },
+  { label: "Odour Control", zuvara: "Advanced", ordinary: "Basic" },
+  { label: "Leak Protection", zuvara: "Multi-layer", ordinary: "Regular" },
+  { label: "Everyday Comfort", zuvara: "Adaptive fit", ordinary: "Generic fit" },
+  { label: "Night Support", zuvara: "Overnight-ready", ordinary: "Not always" },
+  { label: "Breathability", zuvara: "Airflow layer", ordinary: "Limited" },
+];
 
 const themePresets: ThemePreset[] = [
   {
@@ -39,23 +55,14 @@ const themePresets: ThemePreset[] = [
     chipBg: "#dfc4f8",
     sectionTint: "#f2e7ff",
   },
-];
-
-const moodboardImages = [
-  "/images/personalCare/period-panties-pack.png",
-  "/images/personalCare/period-panties-pack-l.png",
-  "/images/personalCare/sanitary-pads-pack.png",
-  "/images/personalCare/sanitary-pads-pack-l.png",
-  "/images/personalCare/happy-lady.png",
-  "/images/personalCare/lady-with-goggles.png",
-];
-
-const comparisonRows = [
-  { label: "Skin-Friendly Materials", zuvara: "Derm-tested", ordinary: "Varies" },
-  { label: "Absorbency Confidence", zuvara: "High", ordinary: "Medium" },
-  { label: "Odour Control", zuvara: "Advanced", ordinary: "Basic" },
-  { label: "Leak Protection", zuvara: "Multi-layer", ordinary: "Standard" },
-  { label: "Comfort Fit", zuvara: "Adaptive", ordinary: "Generic" },
+  {
+    accent: "#6a4aa3",
+    pageBg: "#f6f2ff",
+    containerBg: "#e8defd",
+    border: "#b49cdc",
+    chipBg: "#decef9",
+    sectionTint: "#efe7ff",
+  },
 ];
 
 function clampIndex(i: number, len: number) {
@@ -63,7 +70,7 @@ function clampIndex(i: number, len: number) {
   return ((i % len) + len) % len;
 }
 
-function pickHeroPack(product: Product) {
+function pickHeroPack(product: PersonalProduct) {
   return product.image || product.variants?.[0]?.image || product.productImage;
 }
 
@@ -71,21 +78,146 @@ export default function Page() {
   const params = useParams<{ personalCareProductPage: string }>();
   const slug = params?.personalCareProductPage;
 
-  const products = useMemo(() => personalCareProducts, []);
-  const product = products.find((item) => item.slug === slug) || products[0];
+  const mappedProducts = useMemo(() => personalCareProducts, []);
 
+  const product = mappedProducts.find((item) => item.slug === slug);
   const initialIndex = Math.max(
     0,
-    products.findIndex((item) => item.slug === slug),
+    mappedProducts.findIndex((item) => item.slug === slug),
   );
-  const [activeIdx, setActiveIdx] = useState(initialIndex);
 
-  const active = products[clampIndex(activeIdx, products.length)] || product;
+  const [activeIdx, setActiveIdx] = useState(initialIndex);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const rootRef = useRef<HTMLElement | null>(null);
+
+  const active =
+    mappedProducts.length > 0
+      ? mappedProducts[clampIndex(activeIdx, mappedProducts.length)]
+      : product || mappedProducts[0];
+
   const theme = themePresets[clampIndex(activeIdx, themePresets.length)];
   const heroPackSrc = active ? pickHeroPack(active) : "";
+  const variants = active?.variants || [];
   const highlights = (active?.highlights || []).slice(0, 4);
+  const heroAvatars =
+    active?.heroAvatars && active.heroAvatars.length > 0
+      ? active.heroAvatars
+      : [active.image, active.image, active.image, active.image];
+  const moodboardImages =
+    active?.moodboardImages && active.moodboardImages.length > 0
+      ? active.moodboardImages
+      : [active.image];
+  const sizeGuideImages =
+    active?.sizeGuideImages && active.sizeGuideImages.length > 0
+      ? active.sizeGuideImages
+      : [active.image];
+  const whyItMattersImage = active?.whyItMattersImage || active.image;
+  const trustImages = active?.trustImages || {
+    testimonialPrimary: active.image,
+    testimonialSecondary: active.image,
+    comparisonZuvara: active.image,
+    comparisonOrdinary: active.image,
+  };
+  const carePromiseImages =
+    active?.carePromiseImages && active.carePromiseImages.length > 0
+      ? active.carePromiseImages
+      : [active.image];
 
-  if (!active) {
+  useEffect(() => {
+    const handleVisibility = () => {
+      const footer = document.querySelector("footer");
+      const pastFirstScreen = window.scrollY > window.innerHeight;
+      const footerReached = footer
+        ? footer.getBoundingClientRect().top <= window.innerHeight
+        : false;
+
+      setShowScrollTop(pastFirstScreen && !footerReached);
+    };
+
+    handleVisibility();
+    window.addEventListener("scroll", handleVisibility, { passive: true });
+    window.addEventListener("resize", handleVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", handleVisibility);
+      window.removeEventListener("resize", handleVisibility);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+      gsap.to(".theme-orb", {
+        y: -30,
+        x: 20,
+        duration: 6,
+        yoyo: true,
+        repeat: -1,
+        stagger: 0.35,
+        ease: "sine.inOut",
+      });
+
+      const sections = gsap.utils.toArray<HTMLElement>(".immersive-section");
+      sections.forEach((section) => {
+        const rises = section.querySelectorAll(".fx-rise");
+        const floats = section.querySelectorAll(".fx-float");
+        const parallax = section.querySelectorAll(".fx-parallax");
+
+        if (rises.length) {
+          gsap.fromTo(
+            rises,
+            { opacity: 0, y: 36 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.9,
+              stagger: 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 78%",
+                once: true,
+              },
+            },
+          );
+        }
+
+        if (floats.length) {
+          gsap.to(floats, {
+            yPercent: -4,
+            stagger: 0.12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          });
+        }
+
+        if (parallax.length && isDesktop) {
+          gsap.to(parallax, {
+            yPercent: -5,
+            scale: 1.01,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+          });
+        }
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [active?.id, theme.accent]);
+
+  if (!product || !active) {
     return (
       <main className="min-h-screen grid place-items-center px-6">
         <p className="text-zinc-600">Product not found.</p>
@@ -95,46 +227,82 @@ export default function Page() {
 
   return (
     <main
+      ref={rootRef}
       className="relative overflow-hidden text-zinc-800 transition-colors duration-500 antialiased"
       style={{ backgroundColor: theme.pageBg }}
     >
       <div
-        className="pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
+        className="theme-orb pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.2) }}
       />
       <div
-        className="pointer-events-none absolute top-[30rem] -right-20 h-72 w-72 rounded-full blur-3xl"
+        className="theme-orb pointer-events-none absolute top-120 -right-20 h-72 w-72 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.44) }}
+      />
+      <div
+        className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
+        style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
       />
 
       <PersonalProductHeroSection
         active={active}
-        products={products}
+        products={mappedProducts}
         heroPackSrc={heroPackSrc}
+        heroAvatars={heroAvatars}
         theme={theme}
         onPrev={() => setActiveIdx((v) => v - 1)}
         onNext={() => setActiveIdx((v) => v + 1)}
-        onSelectProduct={(index) => setActiveIdx(index)}
+        onSelectProduct={setActiveIdx}
       />
 
-      <PersonalWhyItMattersSection theme={theme} />
-
+      <PersonalWhyItMattersSection
+        theme={theme}
+        backgroundImage={whyItMattersImage}
+      />
+      <PersonalProductCloseViewSection product={active} theme={theme} />
       <PersonalComfortDetailsSection
         theme={theme}
         highlights={highlights}
         moodboardImages={moodboardImages}
       />
 
-      <PersonalSizeGuideSection theme={theme} variants={active.variants || []} />
+      <PersonalSizeGuideSection
+        theme={theme}
+        variants={variants}
+        sizeGuideImages={sizeGuideImages}
+      />
 
-      <PersonalTrustFusionSection theme={theme} comparisonRows={comparisonRows} />
+      <PersonalTrustFusionSection
+        theme={theme}
+        comparisonRows={comparisonRows}
+        images={trustImages}
+      />
 
       <PersonalCarePromiseSection
         theme={theme}
-        conceptImage={active.productImage || "/images/personalCare/sleeping-lady.png"}
+        conceptImages={carePromiseImages}
       />
 
       <PersonalFaqAndCloseViewSection active={active} theme={theme} />
+
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Scroll to top"
+        className={`fixed right-5 bottom-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_18px_32px_rgba(0,0,0,0.16)] transition-all duration-300 md:right-8 md:bottom-8 ${
+          showScrollTop
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-4 opacity-0"
+        }`}
+        style={{
+          borderColor: `${theme.border}88`,
+          backgroundColor: hexToRgba(theme.pageBg, 0.92),
+          color: theme.accent,
+          boxShadow: `0 18px 32px ${hexToRgba(theme.accent, 0.2)}`,
+        }}
+      >
+        <ArrowUp size={18} strokeWidth={2.4} />
+      </button>
     </main>
   );
 }

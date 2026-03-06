@@ -16,7 +16,39 @@ type ProductSeed = {
   features: string[];
   reviewsData: Product["reviewsData"];
   faqs: Product["faqs"];
+  productCloseView: Product["productCloseView"];
+  heroAvatars: Product["heroAvatars"];
+  whyItMattersImage: Product["whyItMattersImage"];
+  moodboardImages: Product["moodboardImages"];
+  sizeGuideImages: Product["sizeGuideImages"];
+  carePromiseImages: Product["carePromiseImages"];
+  trustImages: Product["trustImages"];
 };
+
+const defaultHeroAvatars = [
+  "/images/personalCare/happy-lady.png",
+  "/images/personalCare/lady-with-goggles.png",
+  "/images/personalCare/sleeping-lady.png",
+  "/images/personalCare/happy-lady.png",
+];
+
+const defaultMoodboardImages = [
+  "/images/personalCare/period-panties-pack.png",
+  "/images/personalCare/period-panties-pack-l.png",
+  "/images/personalCare/sanitary-pads-pack.png",
+  "/images/personalCare/sanitary-pads-pack-l.png",
+  "/images/personalCare/happy-lady.png",
+  "/images/personalCare/lady-with-goggles.png",
+  "/images/personalCare/sleeping-lady.png",
+  "/images/personalCare/period-panties-pack-s.png",
+];
+
+const defaultSizeGuideImages = [
+  "/images/personalCare/period-panties-pack-s.png",
+  "/images/personalCare/period-panties-pack-l.png",
+  "/images/personalCare/sanitary-pads-pack-s.png",
+  "/images/personalCare/sanitary-pads-pack-l.png",
+];
 
 const commonFaqs: NonNullable<Product["faqs"]> = [
   {
@@ -99,6 +131,41 @@ const seeds: ProductSeed[] = [
       },
     ],
     faqs: commonFaqs,
+    productCloseView: [
+      { icon: "/icons/inner-core.png", label: "Ultra Soft Top Layer" },
+      { icon: "/icons/absorption.png", label: "Rapid Absorb Core" },
+      { icon: "/icons/loop-style-waist.png", label: "Body-Hug Fit" },
+      { icon: "/icons/disposable-tape.png", label: "Secure Disposal Tape" },
+    ],
+    heroAvatars: defaultHeroAvatars,
+    whyItMattersImage: "/images/personalCare/sleeping-lady.png",
+    moodboardImages: [
+      "/images/personalCare/period-panties-pack.png",
+      "/images/personalCare/period-panties.png",
+      "/images/personalCare/happy-lady.png",
+      "/images/personalCare/period-panties-pack-l.png",
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/lady-with-goggles.png",
+      "/images/personalCare/period-panties-pack-s.png",
+      "/images/personalCare/sanitary-pads-pack.png",
+    ],
+    sizeGuideImages: [
+      "/images/personalCare/period-panties-pack-s.png",
+      "/images/personalCare/period-panties-pack-l.png",
+      "/images/personalCare/sanitary-pads-pack-s.png",
+      "/images/personalCare/sanitary-pads-pack-l.png",
+    ],
+    carePromiseImages: [
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/happy-lady.png",
+      "/images/personalCare/lady-with-goggles.png",
+    ],
+    trustImages: {
+      testimonialPrimary: "/images/personalCare/happy-lady.png",
+      testimonialSecondary: "/images/personalCare/lady-with-goggles.png",
+      comparisonZuvara: "/images/personalCare/period-panties-pack.png",
+      comparisonOrdinary: "/images/personalCare/sanitary-pads-pack.png",
+    },
   },
   {
     id: 2,
@@ -157,6 +224,36 @@ const seeds: ProductSeed[] = [
       },
     ],
     faqs: commonFaqs,
+    productCloseView: [
+      { icon: "/icons/fabric.png", label: "Cotton-Soft Surface" },
+      { icon: "/icons/absorption.png", label: "Quick Lock Channels" },
+      { icon: "/icons/trust.png", label: "Leak-Guard Wing Hold" },
+      { icon: "/icons/natural.png", label: "Breathable Comfort Layer" },
+    ],
+    heroAvatars: defaultHeroAvatars,
+    whyItMattersImage: "/images/personalCare/happy-lady.png",
+    moodboardImages: [
+      "/images/personalCare/sanitary-pads-pack.png",
+      "/images/personalCare/sanitary-pad.png",
+      "/images/personalCare/sanitary-pads-pack-l.png",
+      "/images/personalCare/sanitary-pads-pack-s.png",
+      "/images/personalCare/lady-with-goggles.png",
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/happy-lady.png",
+      "/images/personalCare/period-panties-pack.png",
+    ],
+    sizeGuideImages: defaultSizeGuideImages,
+    carePromiseImages: [
+      "/images/personalCare/happy-lady.png",
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/lady-with-goggles.png",
+    ],
+    trustImages: {
+      testimonialPrimary: "/images/personalCare/happy-lady.png",
+      testimonialSecondary: "/images/personalCare/sleeping-lady.png",
+      comparisonZuvara: "/images/personalCare/sanitary-pads-pack.png",
+      comparisonOrdinary: "/images/personalCare/sanitary-pads-pack-l.png",
+    },
   },
   {
     id: 3,
@@ -215,6 +312,36 @@ const seeds: ProductSeed[] = [
       },
     ],
     faqs: commonFaqs,
+    productCloseView: [
+      { icon: "/icons/12-hours.png", label: "Overnight Length" },
+      { icon: "/icons/absorption.png", label: "High-Capacity Core" },
+      { icon: "/icons/trusted-icon.png", label: "Back Leak Shield" },
+      { icon: "/icons/fabric.png", label: "Soft Skin Contact Layer" },
+    ],
+    heroAvatars: defaultHeroAvatars,
+    whyItMattersImage: "/images/personalCare/sleeping-lady.png",
+    moodboardImages: [
+      "/images/personalCare/sanitary-pads-pack-l.png",
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/sanitary-pads-pack.png",
+      "/images/personalCare/happy-lady.png",
+      "/images/personalCare/lady-with-goggles.png",
+      "/images/personalCare/sanitary-pads-pack-s.png",
+      "/images/personalCare/period-panties-pack-l.png",
+      "/images/personalCare/period-panties-pack-s.png",
+    ],
+    sizeGuideImages: defaultSizeGuideImages,
+    carePromiseImages: [
+      "/images/personalCare/sleeping-lady.png",
+      "/images/personalCare/lady-with-goggles.png",
+      "/images/personalCare/happy-lady.png",
+    ],
+    trustImages: {
+      testimonialPrimary: "/images/personalCare/sleeping-lady.png",
+      testimonialSecondary: "/images/personalCare/lady-with-goggles.png",
+      comparisonZuvara: "/images/personalCare/sanitary-pads-pack-l.png",
+      comparisonOrdinary: "/images/personalCare/sanitary-pads-pack-s.png",
+    },
   },
 ];
 
@@ -235,6 +362,21 @@ function normalizeProduct(seed: ProductSeed): Product {
     features: seed.features,
     reviewsData: seed.reviewsData,
     faqs: seed.faqs,
+    productCloseView: seed.productCloseView,
+    heroAvatars: seed.heroAvatars || defaultHeroAvatars,
+    whyItMattersImage:
+      seed.whyItMattersImage || "/images/personalCare/sleeping-lady.png",
+    moodboardImages: seed.moodboardImages || defaultMoodboardImages,
+    sizeGuideImages: seed.sizeGuideImages || defaultSizeGuideImages,
+    carePromiseImages: seed.carePromiseImages || [
+      "/images/personalCare/sleeping-lady.png",
+    ],
+    trustImages: seed.trustImages || {
+      testimonialPrimary: "/images/personalCare/happy-lady.png",
+      testimonialSecondary: "/images/personalCare/lady-with-goggles.png",
+      comparisonZuvara: "/images/personalCare/sanitary-pads-pack.png",
+      comparisonOrdinary: "/images/personalCare/sanitary-pads-pack-l.png",
+    },
   };
 }
 

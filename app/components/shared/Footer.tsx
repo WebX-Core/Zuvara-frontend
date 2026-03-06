@@ -178,7 +178,12 @@ export default function Footer() {
           {/* Newsletter */}
           <div className="col-span-2 lg:col-span-1 flex flex-col gap-4">
             <Link href="/" className="flex items-center shrink-0">
-              <Image src="/logo.png" alt="Zuvara Logo" width={90} height={90} />
+              <Image
+                src="/logo/logo.png"
+                alt="Zuvara Logo"
+                width={90}
+                height={90}
+              />
             </Link>
             <p className="text-sm text-zinc-700">
               Subscribe to get special offers and updates on new arrivals.
@@ -224,15 +229,27 @@ export default function Footer() {
         {/* Background Image */}
         <div className="absolute mx-auto">
           <Image
-            src="/new/babiesplural.png"
+            src={
+              isPersonal
+                ? "/images/personalCare/sleeping-lady.png"
+                : "/new/babiesplural.png"
+            }
             width={1080}
             height={400}
-            alt="Happy babies"
-            className="object-cover object-top"
+            alt={isPersonal ? "Woman resting comfortably" : "Happy babies"}
+            className={cn(
+              "object-cover object-top",
+              isPersonal ? "object-contain h-[42vh] w-auto" : "",
+            )}
           />
         </div>
         {/* Bottom Copyright */}
-        <div className="absolute bottom-0 w-full mt-10 pt-2  text-sm text-[#45685e] py-4 px-6 flex flex-col md:flex-row justify-between gap-4">
+        <div
+          className={cn(
+            "absolute bottom-0 w-full mt-10 pt-2 text-sm py-4 px-6 flex flex-col md:flex-row justify-between gap-4",
+            isPersonal ? "text-personalCare" : "text-[#45685e]",
+          )}
+        >
           <p className="font-medium">
             © {new Date().getFullYear()}{" "}
             <span className="font-bold">ZUVARA</span> — All rights reserved.

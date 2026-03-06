@@ -35,8 +35,6 @@ export default function BabyCareHeroSection({
   theme,
   onPrev,
   onNext,
-  onSelectProduct,
-  pickHeroPack,
 }: BabyCareHeroSectionProps) {
   return (
     <motion.section

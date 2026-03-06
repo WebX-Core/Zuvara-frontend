@@ -19,6 +19,18 @@ export interface FAQ {
   answer: string;
 }
 
+export interface ProductCloseView {
+  icon: string;
+  label: string;
+}
+
+export interface TrustImages {
+  testimonialPrimary: string;
+  testimonialSecondary: string;
+  comparisonZuvara: string;
+  comparisonOrdinary: string;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -35,4 +47,11 @@ export interface Product {
   features?: string[];
   reviewsData?: Review[];
   faqs?: FAQ[];
+  productCloseView?: ProductCloseView[];
+  heroAvatars?: string[];
+  whyItMattersImage?: string;
+  moodboardImages?: string[];
+  sizeGuideImages?: string[];
+  carePromiseImages?: string[];
+  trustImages?: TrustImages;
 }

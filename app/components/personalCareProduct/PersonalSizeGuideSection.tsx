@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Variant } from "@/type/personalCareProductType";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
@@ -5,76 +6,88 @@ import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 type PersonalSizeGuideSectionProps = {
   theme: ThemePreset;
   variants: Variant[];
+  sizeGuideImages: string[];
 };
 
-export default function PersonalSizeGuideSection({ theme, variants }: PersonalSizeGuideSectionProps) {
+const sectionTitle =
+  "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
+
+export default function PersonalSizeGuideSection({
+  theme,
+  variants,
+  sizeGuideImages,
+}: PersonalSizeGuideSectionProps) {
+  void variants;
+
   return (
-    <section className="relative px-6 py-14 lg:px-10 lg:py-16">
-      <div className="mx-auto max-w-7xl space-y-7">
-        <div>
-          <h2 className="text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight" style={{ color: theme.accent }}>
-            Find The Fit That Feels Right
-          </h2>
-          <p className="mt-2 text-sm md:text-base" style={{ color: hexToRgba(theme.accent, 0.72) }}>
-            Your comfort changes day to day. Pick the size that gives you the calmest, safest feel.
-          </p>
+    <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
+      <div
+        className="pointer-events-none absolute right-10 top-10 h-44 w-44 rounded-full blur-3xl"
+        style={{ backgroundColor: hexToRgba(theme.chipBg, 0.42) }}
+      />
+      <div className="mx-auto max-w-7xl space-y-7 perspective-1200px">
+        <div className="fx-rise flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2
+              className="text-3xl lg:text-5xl font-bold tracking-tight"
+              style={{ color: hexToRgba(theme.accent, 0.9) }}
+            >
+              Find Your Perfect
+              <span className="font-light italic opacity-60"> Everyday Fit</span>
+            </h2>
+            <h2 className={sectionTitle} style={{ color: theme.accent }}></h2>
+            <p
+              className="mt-2 text-sm md:text-base font-medium"
+              style={{ color: hexToRgba(theme.accent, 1) }}
+            >
+              Choose the variant that matches your flow and comfort preference
+              for day-long confidence.
+            </p>
+          </div>
+          <span
+            className="w-fit rounded-full border px-4 py-2 text-xs font-semibold tracking-wide"
+            style={{
+              borderColor: `${theme.border}66`,
+              backgroundColor: hexToRgba(theme.chipBg, 0.55),
+              color: theme.accent,
+            }}
+          >
+            Comfort Guide
+          </span>
         </div>
 
         <div
-          className="overflow-hidden rounded-3xl border"
+          className="fx-rise overflow-hidden rounded-3xl border"
           style={{
             borderColor: `${theme.border}66`,
             backgroundColor: hexToRgba(theme.pageBg, 0.88),
           }}
         >
-          <div
-            className="hidden grid-cols-12 border-b px-6 py-4 text-[11px] font-semibold uppercase tracking-wide md:grid"
-            style={{
-              borderColor: `${theme.border}44`,
-              color: hexToRgba(theme.accent, 0.62),
-              backgroundColor: hexToRgba(theme.containerBg, 0.32),
-            }}
-          >
-            <div className="col-span-2">Size</div>
-            <div className="col-span-3">Body Range</div>
-            <div className="col-span-7">Fit Guidance</div>
-          </div>
-
-          <div>
-            {variants.map((variant, idx) => (
-              <div
-                key={variant.id}
-                className="grid grid-cols-1 gap-2 px-6 py-4 md:grid-cols-12 md:items-center"
-                style={{ borderTop: idx === 0 ? "none" : `1px solid ${theme.border}33` }}
-              >
-                <div className="md:col-span-2">
-                  <span
-                    className="inline-flex min-w-10 justify-center rounded-xl border px-3 py-1 text-sm font-semibold"
-                    style={{
-                      borderColor: `${theme.border}66`,
-                      color: theme.accent,
-                      backgroundColor: hexToRgba(theme.pageBg, 0.95),
-                    }}
-                  >
-                    {variant.size || "-"}
-                  </span>
-                </div>
-
-                <div className="md:col-span-3 text-sm font-medium" style={{ color: hexToRgba(theme.accent, 0.8) }}>
-                  {variant.weight ? `${variant.weight} kg` : "-"}
-                </div>
-
-                <div className="md:col-span-7 text-sm" style={{ color: hexToRgba(theme.accent, 0.7) }}>
-                  {idx === 0
-                    ? "Great for lighter flow days and all-day comfort."
-                    : idx === variants.length - 1
-                      ? "Extra confidence for extended wear and overnight use."
-                      : "Balanced fit and absorbency for everyday routines."}
-                </div>
-              </div>
+          <div className="flex items-center justify-center gap-8 p-6">
+            {sizeGuideImages.map((src, idx) => (
+              <Image
+                src={src}
+                key={idx}
+                alt="Size Guide"
+                height={500}
+                width={500}
+                className="h-50 w-50 object-contain"
+              />
             ))}
           </div>
         </div>
+
+        <p
+          className="fx-rise px-4 py-3 text-sm"
+          style={{
+            borderColor: `${theme.border}66`,
+            backgroundColor: hexToRgba(theme.pageBg, 0.72),
+            color: hexToRgba(theme.accent, 0.8),
+          }}
+        >
+          <strong>Pro tip:</strong> On heavier days or overnight, choose higher
+          absorbency for worry-free movement and sleep.
+        </p>
       </div>
     </section>
   );

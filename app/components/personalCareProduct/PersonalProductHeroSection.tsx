@@ -1,177 +1,237 @@
+import type { Product } from "@/type/personalCareProductType";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, ShieldCheck, HeartHandshake } from "lucide-react";
-import type { Product } from "@/type/personalCareProductType";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowDown, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
-import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 
 type PersonalProductHeroSectionProps = {
   active: Product;
   products: Product[];
-  theme: ThemePreset;
   heroPackSrc: string;
+  heroAvatars: string[];
+  theme: ThemePreset;
   onPrev: () => void;
   onNext: () => void;
   onSelectProduct: (index: number) => void;
 };
 
+const bodyText = "text-sm md:text-base leading-relaxed text-zinc-700";
+
 export default function PersonalProductHeroSection({
   active,
-  products,
-  theme,
+  products: _products,
   heroPackSrc,
+  heroAvatars,
+  theme,
   onPrev,
   onNext,
-  onSelectProduct,
 }: PersonalProductHeroSectionProps) {
-  const features = (active.features || []).slice(0, 3);
-
+  void _products;
   return (
-    <section className="relative overflow-hidden px-6 pt-16 pb-12 lg:px-10 lg:pt-20">
-      <div
-        className="pointer-events-none absolute -left-12 -top-10 h-64 w-64 rounded-full blur-3xl"
-        style={{ backgroundColor: hexToRgba(theme.accent, 0.16) }}
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-28 h-72 w-72 rounded-full blur-3xl"
-        style={{ backgroundColor: hexToRgba(theme.chipBg, 0.42) }}
-      />
+    <motion.section
+      className="relative overflow-hidden"
+      animate={{ backgroundColor: theme.pageBg }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
+      <div className="relative mx-auto max-w-7xl pt-8 pb-10 md:pt-10 md:pb-14">
+        <div className="relative mt-10">
+          <div className="flex justify-between">
+            <div>
+              <h1
+                className="text-5xl font-semibold leading-[0.95] tracking-tight"
+                style={{ color: theme.accent }}
+              >
+                Comfort begins
+                <br />
+                with confidence
+              </h1>
+            </div>
 
-      <div className="mx-auto max-w-7xl">
-        <div
-          className="grid gap-8 rounded-[2rem] border p-6 lg:grid-cols-2 lg:p-10"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.containerBg, 0.84),
-            boxShadow: `0 24px 54px ${hexToRgba(theme.accent, 0.12)}`,
-          }}
-        >
-          <div className="space-y-5">
-            <p
-              className="text-[11px] font-semibold uppercase tracking-[0.2em]"
-              style={{ color: hexToRgba(theme.accent, 0.64) }}
-            >
-              Personal Care Essentials
-            </p>
-
-            <h1
-              className="text-[clamp(2rem,4.2vw,3.6rem)] font-semibold leading-[1.02] tracking-tight"
-              style={{ color: theme.accent }}
-            >
-              Care That Holds You
-              <br />
-              Through Every Hour.
-            </h1>
-
-            <p className="max-w-xl text-sm leading-relaxed md:text-base" style={{ color: hexToRgba(theme.accent, 0.78) }}>
-              {active.description ||
-                "For days when your body needs softness, trust, and one less thing to worry about."}
-            </p>
-
-            <div className="grid gap-2 sm:grid-cols-2">
-              {[
-                { icon: ShieldCheck, text: "Dermatologically conscious materials" },
-                { icon: HeartHandshake, text: "Made for comfort on sensitive days" },
-              ].map((item) => (
+            <div className="py-2">
+              <div className="flex -space-x-3">
+                {heroAvatars.map((avatar, idx) => (
+                  <div
+                    key={`${avatar}-${idx}`}
+                    className="relative h-12 w-12 rounded-full border-2 overflow-hidden bg-white"
+                    style={{ borderColor: theme.pageBg, zIndex: 10 - idx }}
+                  >
+                    <Image
+                      src={avatar}
+                      alt="Customer"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
                 <div
-                  key={item.text}
-                  className="flex items-center gap-2 rounded-2xl border px-3 py-2"
-                  style={{
-                    borderColor: `${theme.border}66`,
-                    backgroundColor: hexToRgba(theme.pageBg, 0.75),
-                  }}
+                  className="h-12 w-12 rounded-full grid place-items-center font-semibold"
+                  style={{ backgroundColor: theme.chipBg, color: theme.accent }}
                 >
-                  <item.icon size={16} style={{ color: theme.accent }} />
-                  <p className="text-xs font-medium" style={{ color: hexToRgba(theme.accent, 0.8) }}>
-                    {item.text}
-                  </p>
+                  +
                 </div>
-              ))}
-            </div>
+              </div>
+              <p className="mt-4 text-sm md:text-base text-zinc-600">
+                Trusted by 5,000+ women every month
+              </p>
 
-            <div className="flex flex-wrap gap-2">
-              {features.map((feature) => (
-                <span
-                  key={feature}
-                  className="rounded-full border px-3 py-1.5 text-xs font-semibold"
-                  style={{
-                    borderColor: `${theme.border}66`,
-                    backgroundColor: hexToRgba(theme.chipBg, 0.6),
-                    color: theme.accent,
-                  }}
+              <Link href="/products">
+                <button
+                  className="mt-8 py-3 px-6 rounded-full text-white! text-xl md:text-sm font-semibold tracking-wide"
+                  style={{ backgroundColor: theme.accent }}
                 >
-                  {feature}
-                </span>
-              ))}
+                  Inquiry Now
+                </button>
+              </Link>
             </div>
+          </div>
 
-            <div className="flex items-center gap-3 pt-2">
+          <div className="pointer-events-none absolute left-1/2 -top-30 z-20 h-50 w-70 -translate-x-1/2 md:h-160 md:w-110">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.id + "-pack"}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                transition={{ duration: 0.35 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={heroPackSrc}
+                  alt={`${active.name} pack`}
+                  fill
+                  className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
+                  sizes="(max-width: 1024px) 60vw, 22vw"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div
+          className="relative h-107.5 md:h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb:8 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
+          style={{ backgroundColor: theme.containerBg }}
+        >
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -left-24 top-10 h-56 w-56 rounded-full bg-white/20" />
+            <div className="absolute right-8 -top-24 h-56 w-56 rounded-full bg-white/20" />
+            <div className="absolute right-28 -bottom-32 h-64 w-64 rounded-full bg-white/20" />
+          </div>
+
+          <div className="w-full relative flex justify-between items-end gap-6 ">
+            <div className="w-full ">
+              <p className={`max-w-xs ${bodyText} font-medium`}>
+                Every day asks a lot from you. Our personal care products are
+                designed to protect your comfort through work, rest, and sleep.
+              </p>
+              <Link
+                href="#touch"
+                className="mt-4 inline-flex items-center gap-2 font-semibold"
+                style={{ color: theme.accent }}
+              >
+                Find more details <ArrowDown size={16} />
+              </Link>
+            </div>
+            <div className="w-full flex flex-col justify-end items-center">
+              <h2
+                className="text-nowrap text-2xl leading-[1.02] line-clamp-2 font-semibold"
+                style={{ color: theme.accent }}
+              >
+                {active.name}
+              </h2>
+              <p className="mt-2 text-base md:text-sm font-medium text-zinc-600">
+                {active.category}
+              </p>
+            </div>
+            <div className="w-full text-zinc-700 space-y-4 lg:pt-14">
+              <div className="w-2/3 mx-auto">
+                <div className="flex items-center gap-3">
+                  <Check
+                    size={18}
+                    style={{ color: theme.accent }}
+                    strokeWidth={3}
+                  />
+                  <span className="text-base font-medium">
+                    High absorbency support.
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Check
+                    size={18}
+                    style={{ color: theme.accent }}
+                    strokeWidth={3}
+                  />
+                  <span className="text-base font-medium">Cloud-soft comfort.</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Check
+                    size={18}
+                    style={{ color: theme.accent }}
+                    strokeWidth={3}
+                  />
+                  <span className="text-base font-medium">
+                    Made for sensitive skin.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center pt-4">
+            <div className="inline-flex justify-self-center items-center gap-3 py-2">
               <button
                 type="button"
                 onClick={onPrev}
-                className="h-10 w-18 rounded-full border bg-white/70 grid place-items-center"
+                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Previous product"
               >
                 <ChevronLeft size={18} />
+                Prev
               </button>
               <button
                 type="button"
                 onClick={onNext}
-                className="h-10 w-18 rounded-full border bg-white/70 grid place-items-center"
+                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Next product"
               >
+                Next
                 <ChevronRight size={18} />
               </button>
             </div>
           </div>
 
-          <div className="relative min-h-[350px] rounded-3xl border bg-white/60 overflow-hidden" style={{ borderColor: `${theme.border}66` }}>
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
-              style={{ background: `linear-gradient(180deg, rgba(255,255,255,0), ${hexToRgba(theme.pageBg, 0.82)})` }}
-            />
-            <Image
-              src={heroPackSrc}
-              alt={`${active.name} pack`}
-              fill
-              className="object-contain p-8"
-              sizes="(max-width: 1024px) 90vw, 45vw"
-            />
-            <div className="absolute inset-x-0 bottom-4 flex justify-center px-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white! transition-opacity hover:opacity-90"
-                style={{ backgroundColor: theme.accent }}
-              >
-                Inquire Now
-              </Link>
+          {/* <div className="absolute left-0 -right-6 bottom-0 z-20 flex start justify-start">
+            <div className="flex pl-2 gap-1 bg-gray-100 rounded-tr-2xl py-2 pr-2">
+              {products.map((p, i) => {
+                const isActive = p.id === active.id;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => onSelectProduct(i)}
+                    className="relative h-16 w-16 overflow-hidden rounded-2xl border transition hover:opacity-90"
+                    style={{
+                      borderColor: isActive ? theme.accent : theme.border,
+                      boxShadow: isActive
+                        ? `0 0 0 2px ${theme.accent}40`
+                        : undefined,
+                    }}
+                  >
+                    <Image
+                      src={pickHeroPack(p)}
+                      alt={p.name}
+                      fill
+                      className="object-contain p-2"
+                    />
+                  </button>
+                );
+              })}
             </div>
-          </div>
-        </div>
-
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          {products.map((product, index) => {
-            const isActive = product.id === active.id;
-            return (
-              <button
-                key={`${product.id}-${index}`}
-                type="button"
-                onClick={() => onSelectProduct(index)}
-                className="rounded-full border px-3 py-1.5 text-xs font-semibold transition"
-                style={{
-                  borderColor: isActive ? theme.accent : `${theme.border}66`,
-                  backgroundColor: isActive ? hexToRgba(theme.accent, 0.1) : "transparent",
-                  color: isActive ? theme.accent : hexToRgba(theme.accent, 0.72),
-                }}
-              >
-                {product.name}
-              </button>
-            );
-          })}
+            <div className="hidden md:block" />
+          </div> */}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

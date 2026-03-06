@@ -1,12 +1,17 @@
 "use client";
-import { FAQ, Product } from "@/type/babyCareProductType";
+import type { FAQ } from "@/type/babyCareProductType";
 import { Accordion, Accordions } from "../ui/accordion";
+
+type ProductForFaq = {
+  id?: number;
+  background?: string;
+};
 
 interface FaqSectionProps {
   faqs?: FAQ[];
   questionColor?: string;
   answerColor?: string;
-  product: Product;
+  product: ProductForFaq;
 }
 
 const FaqSection = ({
