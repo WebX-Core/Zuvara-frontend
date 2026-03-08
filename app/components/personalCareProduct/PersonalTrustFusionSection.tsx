@@ -125,36 +125,36 @@ export default function PersonalTrustFusionSection({
           className="flex justify-center items-center rounded-4xl px-4"
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
-          <div className="left">
-            <h2
-              className="text-8xl font-bold uppercase"
-              style={{ color: hexToRgba(theme.accent, 0.6) }}
-            >
-              Zuvara
-            </h2>
-          </div>
           <div className="Center">
             <div className="flex">
-              <Image
-                src={images.comparisonZuvara}
-                alt="Zuvara care"
-                width={1000}
-                height={1000}
-                className="h-150 w-full object-cover"
-              />
-              <Image
-                src={images.comparisonOrdinary}
-                alt="Typical care"
-                width={1000}
-                height={1000}
-                className="h-150 w-full object-cover -ml-0.5 border-l-2"
-              />
+              <div className="relative">
+                <h2
+                  className="absolute top-4 left-4 z-10 text-3xl md:text-5xl lg:text-6xl font-bold uppercase"
+                  style={{ color: hexToRgba(theme.accent, 0.75) }}
+                >
+                  Zuvara
+                </h2>
+                <Image
+                  src={images.comparisonZuvara}
+                  alt="Zuvara care"
+                  width={1000}
+                  height={1000}
+                  className="h-150 w-full object-cover"
+                />
+              </div>
+              <div className="relative -ml-0.5 border-l-2" style={{ borderColor: theme.border }}>
+                <h2 className="absolute top-4 right-4 z-10 text-3xl md:text-5xl lg:text-6xl font-bold uppercase text-zinc-500/70">
+                  Ordinary
+                </h2>
+                <Image
+                  src={images.comparisonOrdinary}
+                  alt="Typical care"
+                  width={1000}
+                  height={1000}
+                  className="h-150 w-full object-cover"
+                />
+              </div>
             </div>
-          </div>
-          <div className="right">
-            <h2 className="text-8xl font-bold uppercase text-zinc-500/50">
-              Ordinary
-            </h2>
           </div>
         </div>
 

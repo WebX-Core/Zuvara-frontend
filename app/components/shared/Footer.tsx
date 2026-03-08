@@ -98,10 +98,12 @@ export default function Footer() {
         >
           <CrawlingBaby />
           <h3 className="text-lg sm:text-xl md:pl-4 font-medium">
-            Zuvara would be the perfect choice for your baby care needs!
+            {isPersonal
+              ? "Zuvara would be the perfect choice for your personal care needs!"
+              : "Zuvara would be the perfect choice for your baby care needs!"}
           </h3>
           <Link
-            href="/babyCareProduct"
+            href={isPersonal ? "/personalCareProduct" : "/babyCareProduct"}
             className={cn(
               "bg-white px-4 py-2 rounded-full font-semibold transition flex items-center gap-2 shrink-0",
               isPersonal
@@ -110,7 +112,7 @@ export default function Footer() {
             )}
           >
             <Icon icon="bitcoin-icons:cart-filled" width="24" height="24" />
-            View Products
+            {isPersonal ? "View Personal Products" : "View Baby Products"}
           </Link>
         </div>
 
