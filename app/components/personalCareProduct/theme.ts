@@ -7,6 +7,24 @@ export type ThemePreset = {
   sectionTint: string;
 };
 
+export type PersonalCareListingTheme = {
+  accent: string;
+  accentSoft: string;
+  border: string;
+  chipBg: string;
+  panelBg: string;
+  pageBg: string;
+};
+
+export const personalCareListingTheme: PersonalCareListingTheme = {
+  accent: "#8200db",
+  accentSoft: "#a14ce8",
+  border: "#c89cf1",
+  chipBg: "#f2e8ff",
+  panelBg: "#faf5ff",
+  pageBg: "#fdfaff",
+};
+
 export function hexToRgba(hex: string, alpha: number) {
   const normalized = hex.replace("#", "");
   const full =

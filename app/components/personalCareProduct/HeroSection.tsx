@@ -1,97 +1,122 @@
 "use client";
 
-import Button from "../common-ui/Button";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import Button from "../common-ui/Button";
 
 const HeroSection = () => {
   return (
-    <main className=" bg-personalCare/10 h-[85vh] lg:min-h-screen relative">
-      <section className="px-4 sm:px-6 lg:px-6 mx-auto! max-w-7xl h-full pt-24 relative">
-        <div className="lg:w-1/2 mx-auto">
-          <div className="flex flex-col items-center text-center gap-4 lg:gap-8">
-            <h1 className="text-2xl md:text-3xl lg:text-5xl font-black">
-              Period care that lets you{" "}
-              <span className="text-personalCare">
+    <section className="relative min-h-svh overflow-hidden bg-linear-to-b from-personalCare/10 via-white to-white lg:h-screen">
+      <div className="relative mx-auto flex min-h-svh w-[92%] max-w-7xl items-center py-22 sm:py-24 lg:h-full lg:py-8">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center text-center">
+          <div className="max-w-3xl">
+            <h1 className="mt-5 text-4xl font-semibold leading-[0.92] tracking-tight text-personalCare sm:text-5xl lg:text-5xl">
+              Period care that lets you
+              <span className="block italic font-light text-personalCare">
                 move, rest, and live normally.
               </span>
             </h1>
-            {/* <h1>Made for Everyday Living</h1> */}
-            <p className="text-lg lg:text-xl">
-              Designed to support you—wherever the day takes you.
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm font-medium text-zinc-600 sm:text-base">
+              Designed to support you wherever the day takes you, with reliable
+              comfort that feels light, discreet, and easy to trust.
             </p>
-            <Button
-              content="Product List"
-              link="/personalCareProduct"
-              for="personalCare"
-              buttonClassName="z-30 text-white!"
-            />
+
+            {/* <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <Button
+                content="Product List"
+                link="/personalCareProduct"
+                for="personalCare"
+                buttonClassName="z-20"
+                className="rounded-full px-6 py-3.5 text-sm font-semibold shadow-[0_18px_34px_rgba(130,0,219,0.2)] ring-0!"
+              />
+              <Link
+                href="/contact"
+                className="inline-flex rounded-full border border-personalCare/15 bg-white/90 px-6 py-3.5 text-sm font-semibold text-zinc-700 shadow-[0_14px_30px_rgba(24,24,27,0.06)] transition-colors duration-300 hover:bg-personalCare/5"
+              >
+                Talk to us
+              </Link>
+            </div> */}
+          </div>
+
+          <div className="relative mt-10 w-full max-w-7xl lg:mt-8">
+            <div className="relative h-75 sm:h-84 lg:h-100">
+              <motion.img
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.2,
+                }}
+                style={{ originX: 1, originY: 1 }}
+                src="/images/personalCare/period-panties-pack-l.png"
+                alt="Period Panties pack"
+                className="absolute bottom-[8%] w-36 sm:w-44 lg:w-72"
+              />
+              <motion.img
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.4,
+                }}
+                style={{ originX: 1, originY: 1 }}
+                src="/images/personalCare/sanitary-pads-pack-l.png"
+                alt="Sanitary Pads pack"
+                className="absolute bottom-[10%] left-[24%] w-28 sm:w-32 lg:w-56"
+              />
+              <motion.img
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.4,
+                }}
+                style={{ originX: 1, originY: 1 }}
+                src="/new/momnobg.png"
+                alt="Sanitary Pads pack"
+                className="absolute bottom-[0%] left-[30%] w-28 sm:w-32 lg:w-100"
+              />
+              <motion.img
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.2,
+                }}
+                style={{ originX: 1, originY: 1 }}
+                src="/images/personalCare/period-panties-pack.png"
+                alt="Period Panties pack"
+                className="absolute bottom-[8%] right-[0%] w-36 sm:w-44 lg:w-72"
+              />
+              <motion.img
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.4,
+                }}
+                style={{ originX: 1, originY: 1 }}
+                src="/images/personalCare/sanitary-pads-pack.png"
+                alt="Sanitary Pads pack"
+                className="absolute bottom-[10%] right-[24%] w-28 sm:w-32 lg:w-56"
+              />
+            </div>
           </div>
         </div>
-
-        <motion.img
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.2,
-          }}
-          style={{ originX: 1, originY: 1 }}
-          src="/images/personalCare/period-panties-pack-l.png"
-          alt="Period Panties pack"
-          className="absolute bottom-[5%] lg:bottom-[10%] left-4 lg:left-0 w-32 lg:w-80 z-10"
-        />
-        <motion.img
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.4,
-          }}
-          style={{ originX: 1, originY: 1 }}
-          src="/images/personalCare/sanitary-pads-pack-l.png"
-          alt="Sanitary Pads pack"
-          className="absolute bottom-[5%] lg:bottom-[10%] left-[20%] w-24 lg:w-70 z-20"
-        />
-        <motion.img
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.2,
-          }}
-          style={{ originX: 1, originY: 1 }}
-          src="/images/personalCare/period-panties-pack.png"
-          alt="Period Panties pack"
-          className="absolute bottom-[5%] lg:bottom-[10%] right-4 lg:right-0 w-32 lg:w-80 z-10"
-        />
-        <motion.img
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.4,
-          }}
-          style={{ originX: 1, originY: 1 }}
-          src="/images/personalCare/sanitary-pads-pack.png"
-          alt="Sanitary Pads pack"
-          className="absolute bottom-[5%] lg:bottom-[10%] right-[20%] w-24 lg:w-70 z-20"
-        />
-      </section>
-
-      {/* {!isSmallerDevice && (
-        <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-full z-40">
-          <StatsDivider />
-        </div>
-      )} */}
-    </main>
+      </div>
+    </section>
   );
 };
 
