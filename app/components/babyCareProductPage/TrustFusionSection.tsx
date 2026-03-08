@@ -137,14 +137,14 @@ export default function TrustFusionSection({
           <div className="Center ">
             <div className="flex ">
               <Image
-                src="/images/diaper/zuvara-diaper.png"
+                src="/PRODUCTS/Baby/supreme-diapers/product.png"
                 alt="Sarah M."
                 width={1000}
                 height={1000}
                 className="h-150 w-full object-cover"
               />
               <Image
-                src="/images/diaper/normal-diaper.png"
+                src="/PRODUCTS/Baby/value-diapers/product.png"
                 alt="Sarah M."
                 width={1000}
                 height={1000}

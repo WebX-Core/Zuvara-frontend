@@ -27,13 +27,14 @@ export default function PersonalTrustFusionSection({
   return (
     <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
       <div
-        className="pointer-events-none absolute left-1/2 top-6 h-44 w-60 -translate-x-1/2 rounded-full blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-6 h-44 w-60 -translate-x-1/2 rounded-full blur-3xl opacity-50"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
-      <div className="mx-auto max-w-7xl perspective-1200px flex gap-6">
+      {/* Testimonials Container - Stack on mobile, Side-by-side on desktop */}
+      <div className="mx-auto max-w-7xl flex flex-col md:flex-row gap-6">
         <article
-          className="fx-rise fx-float rounded-3xl border p-5 md:p-6"
+          className="fx-rise fx-float w-full rounded-3xl border p-5 md:p-6"
           style={{
             borderColor: `${theme.border}66`,
             backgroundColor: hexToRgba(theme.accent, 1),
@@ -41,10 +42,8 @@ export default function PersonalTrustFusionSection({
         >
           <div className="flex items-start gap-4 md:items-center">
             <div
-              className="h-11 w-11 overflow-hidden rounded-full border"
-              style={{
-                borderColor: `${theme.border}66`,
-              }}
+              className="h-11 w-11 shrink-0 overflow-hidden rounded-full border"
+              style={{ borderColor: `${theme.border}66` }}
             >
               <Image
                 src={images.testimonialPrimary}
@@ -55,10 +54,7 @@ export default function PersonalTrustFusionSection({
               />
             </div>
             <div>
-              <p
-                className="text-sm font-semibold"
-                style={{ color: theme.chipBg }}
-              >
+              <p className="text-sm font-semibold" style={{ color: theme.chipBg }}>
                 Nina R. · Verified Customer
               </p>
               <p
@@ -71,8 +67,9 @@ export default function PersonalTrustFusionSection({
             </div>
           </div>
         </article>
+
         <article
-          className="fx-rise fx-float rounded-3xl border p-5 md:p-6"
+          className="fx-rise fx-float w-full rounded-3xl border p-5 md:p-6"
           style={{
             borderColor: `${theme.border}66`,
             backgroundColor: hexToRgba(theme.pageBg, 1),
@@ -80,7 +77,7 @@ export default function PersonalTrustFusionSection({
         >
           <div className="flex items-start gap-4 md:items-center">
             <div
-              className="h-11 w-11 overflow-hidden rounded-full border"
+              className="h-11 w-11 shrink-0 overflow-hidden rounded-full border"
               style={{ borderColor: `${theme.border}66` }}
             >
               <Image
@@ -92,10 +89,7 @@ export default function PersonalTrustFusionSection({
               />
             </div>
             <div>
-              <p
-                className="text-sm font-semibold"
-                style={{ color: theme.accent }}
-              >
+              <p className="text-sm font-semibold" style={{ color: theme.accent }}>
                 Priya T. · Verified Customer
               </p>
               <p
@@ -109,8 +103,9 @@ export default function PersonalTrustFusionSection({
           </div>
         </article>
       </div>
-      <div className="w-7xl mx-auto mt-12 space-y-8">
-        <div className="fx-rise">
+
+      <div className="mx-auto mt-16 max-w-7xl space-y-8">
+        <div className="fx-rise text-center md:text-left">
           <h2
             className="text-3xl lg:text-5xl font-bold tracking-tight"
             style={{ color: hexToRgba(theme.accent, 0.9) }}
@@ -119,99 +114,108 @@ export default function PersonalTrustFusionSection({
             <span className="font-light italic opacity-60"> Wins</span>
           </h2>
           <p
-            className="mt-2 text-sm font-medium"
+            className="mt-2 text-sm md:text-base font-medium"
             style={{ color: hexToRgba(theme.accent, 0.68) }}
           >
-            A side-by-side look at comfort, performance, and everyday
-            confidence.
+            A side-by-side look at comfort, performance, and everyday confidence.
           </p>
         </div>
 
+        {/* Visual Comparison Section - Hidden side text on mobile, Flex images */}
         <div
-          className="flex justify-center items-center rounded-4xl px-4"
+          className="flex flex-col md:flex-row justify-center items-center rounded-3xl md:rounded-4xl overflow-hidden"
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
-          <div className="left">
+          <div className="hidden lg:block lg:w-1/4 text-center">
             <h2
-              className="text-8xl font-bold uppercase"
-              style={{ color: hexToRgba(theme.accent, 0.6) }}
+              className="text-6xl xl:text-8xl font-bold uppercase rotate-180 [writing-mode:vertical-lr]"
+              style={{ color: hexToRgba(theme.accent, 0.15) }}
             >
               Zuvara
             </h2>
           </div>
-          <div className="Center ">
-            <div className="flex ">
+
+          <div className="w-full lg:w-2/4 flex">
+            <div className="relative w-1/2 overflow-hidden">
+               <div className="absolute top-4 left-4 z-10 md:hidden bg-white/80 px-2 py-1 rounded text-[10px] font-bold uppercase">Zuvara</div>
               <Image
                 src={images.comparisonZuvara}
                 alt="Zuvara care"
-                width={1000}
-                height={1000}
-                className="h-150 w-full object-cover"
+                width={800}
+                height={1200}
+                className="h-[300px] md:h-[500px] lg:h-[600px] w-full object-cover"
               />
+            </div>
+            <div className="relative w-1/2 overflow-hidden border-l-2" style={{ borderColor: theme.border }}>
+              <div className="absolute top-4 right-4 z-10 md:hidden bg-zinc-200/80 px-2 py-1 rounded text-[10px] font-bold uppercase">Ordinary</div>
               <Image
                 src={images.comparisonOrdinary}
                 alt="Typical care"
-                width={1000}
-                height={1000}
-                className="h-150 w-full object-cover -ml-0.5 border-l-2"
+                width={800}
+                height={1200}
+                className="h-[300px] md:h-[500px] lg:h-[600px] w-full object-cover"
               />
             </div>
           </div>
-          <div className="right">
-            <h2 className="text-8xl font-bold uppercase text-zinc-500/50">
+
+          <div className="hidden lg:block lg:w-1/4 text-center">
+            <h2 className="text-6xl xl:text-8xl font-bold uppercase [writing-mode:vertical-lr] text-zinc-500/10">
               Ordinary
             </h2>
           </div>
         </div>
 
-        <div
-          className="fx-rise overflow-hidden rounded-3xl border"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 0.9),
-          }}
-        >
+        {/* Comparison Table - Scrollable on very small devices */}
+        <div className="overflow-x-auto">
           <div
-            className="grid grid-cols-12 border-b px-4 py-3 text-[11px] font-semibold uppercase tracking-wide"
+            className="min-w-[500px] md:min-w-full fx-rise overflow-hidden rounded-3xl border"
             style={{
-              borderColor: `${theme.border}44`,
-              backgroundColor: hexToRgba(theme.containerBg, 0.34),
-              color: hexToRgba(theme.accent, 0.62),
+              borderColor: `${theme.border}66`,
+              backgroundColor: hexToRgba(theme.pageBg, 0.9),
             }}
           >
-            <div className="col-span-6">Feature</div>
-            <div className="col-span-3 text-center">Zuvara</div>
-            <div className="col-span-3 text-center">Ordinary</div>
-          </div>
-
-          {comparisonRows.map((row, idx) => (
             <div
-              key={row.label}
-              className="fx-float grid grid-cols-12 items-center px-4 py-3 text-sm"
+              className="grid grid-cols-12 border-b px-6 py-4 text-[11px] font-semibold uppercase tracking-widest"
               style={{
-                borderTop: idx === 0 ? "none" : `1px solid ${theme.border}33`,
+                borderColor: `${theme.border}44`,
+                backgroundColor: hexToRgba(theme.containerBg, 0.34),
+                color: hexToRgba(theme.accent, 0.62),
               }}
             >
-              <div
-                className="col-span-6 font-medium"
-                style={{ color: hexToRgba(theme.accent, 0.82) }}
-              >
-                {row.label}
-              </div>
-              <div
-                className="col-span-3 text-center font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {row.zuvara}
-              </div>
-              <div
-                className="col-span-3 text-center"
-                style={{ color: hexToRgba(theme.accent, 0.7) }}
-              >
-                {row.ordinary}
-              </div>
+              <div className="col-span-6">Feature</div>
+              <div className="col-span-3 text-center">Zuvara</div>
+              <div className="col-span-3 text-center">Ordinary</div>
             </div>
-          ))}
+
+            {comparisonRows.map((row, idx) => (
+              <div
+                key={row.label}
+                className="fx-float grid grid-cols-12 items-center px-6 py-4 text-sm md:text-base"
+                style={{
+                  borderTop: idx === 0 ? "none" : `1px solid ${theme.border}33`,
+                }}
+              >
+                <div
+                  className="col-span-6 font-medium"
+                  style={{ color: hexToRgba(theme.accent, 0.82) }}
+                >
+                  {row.label}
+                </div>
+                <div
+                  className="col-span-3 text-center font-bold"
+                  style={{ color: theme.accent }}
+                >
+                  {row.zuvara}
+                </div>
+                <div
+                  className="col-span-3 text-center"
+                  style={{ color: hexToRgba(theme.accent, 0.5) }}
+                >
+                  {row.ordinary}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

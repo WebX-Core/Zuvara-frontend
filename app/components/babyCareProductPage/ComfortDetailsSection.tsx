@@ -7,6 +7,7 @@ type ComfortDetailsSectionProps = {
   theme: ThemePreset;
   highlights: string[];
   moodboardImages: string[];
+  technicalDetailImages: string[];
 };
 
 const sectionTitle =
@@ -16,20 +17,8 @@ export default function ComfortDetailsSection({
   theme,
   highlights,
   moodboardImages,
+  technicalDetailImages,
 }: ComfortDetailsSectionProps) {
-  const highlightImageClasses = [
-    "object-contain object-bottom p-6 md:p-8",
-    "object-contain object-bottom p-3 md:p-5 scale-[1.08]",
-    "object-contain object-bottom p-2 md:p-4 scale-[1.02]",
-    "object-contain object-bottom p-5 md:p-7",
-  ];
-  const titlePaths = [
-    "M 34 92 Q 160 18 286 92",
-    "M 38 72 Q 160 154 282 72",
-    "M 56 60 Q 160 20 264 60",
-    "M 42 56 Q 160 18 278 56",
-  ];
-
   return (
     <section className="relative px-6 py-14 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-7xl space-y-8 perspective-1200px">
@@ -120,7 +109,7 @@ export default function ComfortDetailsSection({
             >
               <div className="absolute inset-0 h-100">
                 <Image
-                  src={`/images/diaper/supreme-diaper/${idx + 1}.jpg`}
+                  src={technicalDetailImages[idx] || technicalDetailImages[0]}
                   alt={item}
                   fill
                   className={`"object-contain object-bottom p-6"} transition-transform duration-700 group-hover:scale-[1.04]`}

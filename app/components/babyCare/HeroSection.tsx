@@ -84,7 +84,7 @@ export default function Home() {
                 >
                   <div className="w-12 lg:w-16 h-12 lg:h-16 rounded-full bg-white overflow-hidden shadow-lg group-hover:scale-110 transition">
                     <Image
-                      src="/images/diaper/supreme-diaper/supreme-diaper-pants-l.png"
+                      src="/PRODUCTS/Baby/supreme-diapers/product.png"
                       alt={name}
                       width={64}
                       height={64}

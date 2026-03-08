@@ -676,7 +676,7 @@ export default function Navbar() {
               >
                 <Link href="/" className="flex items-center">
                   <Image
-                      src="/logo.png"
+                      src="/logo/logo.png"
                       alt="Zuvara Logo"
                       width={90}
                       height={90}

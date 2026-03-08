@@ -1,12 +1,9 @@
 "use client";
 
 import Button from "../common-ui/Button";
-import { useMediaQuery } from "react-responsive";
 import { motion } from "framer-motion";
 
 const HeroSection = () => {
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-
   return (
     <main className=" bg-personalCare/10 h-[85vh] lg:min-h-screen relative">
       <section className="px-4 sm:px-6 lg:px-6 mx-auto! max-w-7xl h-full pt-24 relative">

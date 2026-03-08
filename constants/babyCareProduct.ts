@@ -105,9 +105,8 @@ function normalizeProduct(p: Product): Product {
 
     // productCloseView
     productCloseView:
-      Array.isArray((p as any).productCloseView) &&
-      (p as any).productCloseView.length
-        ? (p as any).productCloseView
+      Array.isArray(p.productCloseView) && p.productCloseView.length
+        ? p.productCloseView
         : DEFAULT_CLOSE_VIEW,
   };
 }
@@ -125,36 +124,36 @@ const rawBabyCareProducts: Product[] = [
     foreground: "#ffffff",
     rating: 4.8,
     reviews: 245,
-    heroImage: "/images/diaper/supreme-diaper/diapers.png",
-    heroImage2: "/images/diaper/supreme-diaper/hero-diaper.png",
-    image: "/images/diaper/supreme-diaper/diaper.png",
+    heroImage: "/PRODUCTS/Baby/supreme-diapers/product.png",
+    heroImage2: "/PRODUCTS/Baby/supreme-diapers/product.png",
+    image: "/PRODUCTS/Baby/supreme-diapers/product.png",
     video: "/videos/diaper-video2.mp4",
     category: "Baby Diaper",
     variants: [
       {
         id: 1,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
         icon: "/icons/m.png",
         size: "M",
         weight: "4-10",
       },
       {
         id: 2,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-l.png",
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
         icon: "/icons/l.png",
         size: "L",
         weight: "9-14",
       },
       {
         id: 3,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-xl.png",
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
         icon: "/icons/xl.png",
         size: "XL",
         weight: "12-17",
       },
       {
         id: 4,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-xxl.png",
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
         icon: "/icons/xxl.png",
         size: "XXL",
         weight: ">15",
@@ -233,7 +232,7 @@ const rawBabyCareProducts: Product[] = [
           "Yes, our Zuvara Diapers do have an expiry date. You can keep our baby diapers for up to 3 years without worry. We strongly recommend storing Feather diapers in a cool and dry environment for hygienic reasons.",
       },
     ],
-    featureImage: "/images/diaper/supreme-diaper/feature.png",
+    featureImage: "/PRODUCTS/Baby/supreme-diapers/technology.jpg",
     featureImageTitle1: "Chlorine-Free",
     featureImageTitle2: "Japanese Absorbent Core",
     featureImageDesc: "10s fast Absorption, Keep 12 Hours Dry",
@@ -275,48 +274,49 @@ const rawBabyCareProducts: Product[] = [
     foreground: "#ffffff",
     rating: 4.8,
     reviews: 245,
-    heroImage: "/images/diaper/supreme-diaper/diapers.png",
-    image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+    heroImage: "/PRODUCTS/Baby/premium-diapers/product.png",
+    heroImage2: "/PRODUCTS/Baby/premium-diapers/product.png",
+    image: "/PRODUCTS/Baby/premium-diapers/product.png",
     video: "/videos/diaper-video2.mp4",
     category: "Baby Diaper",
     variants: [
       {
         id: 1,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/nb.png",
         size: "NB",
       },
       {
         id: 2,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/s.png",
         size: "S",
         weight: "3-6",
       },
       {
         id: 3,
-        image: "/images/diaper/supreme-diaper/diaper.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/m.png",
         size: "M",
         weight: "4-10",
       },
       {
         id: 4,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/l.png",
         size: "L",
         weight: "9-14",
       },
       {
         id: 5,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/xl.png",
         size: "XL",
         weight: "13-18",
       },
       {
         id: 6,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/xxl.png",
         size: "XXL",
         weight: "16-21",
@@ -341,6 +341,12 @@ const rawBabyCareProducts: Product[] = [
           "Very soft and absorbent. Highly recommended for sensitive skin.",
         date: "2024-01-20",
       },
+    ],
+    highlights: [
+      "Ultra-soft breathable top sheet",
+      "Quick lock absorbent core",
+      "Flexible waistband for active movement",
+      "Wetness indicator for timely changes",
     ],
     faqs: [
       {
@@ -382,7 +388,7 @@ const rawBabyCareProducts: Product[] = [
     ],
     description:
       "Feather Diaper Tape technology provides a lightweight yet secure fit for newborns.",
-    featureImage: "/images/diaper/supreme-diaper/feature.png",
+    featureImage: "/PRODUCTS/Baby/premium-diapers/technology.jpg",
     featureTitle: "Absorbs 15x its weight in liquid",
     featureDesc:
       "Zuvara Premium Care Pants have super-absorbent gel absorbs the liquid to lock it away from your baby’s skin and prevent wetness from transferring to your baby’s bed or clothes.",
@@ -392,6 +398,24 @@ const rawBabyCareProducts: Product[] = [
       "PE film for breathable relief and good mood healing",
       "Highly effective SAP core, instantly absorbent, as dry as the sun",
       "Upgraded bubble waistband for a soft, caressing hug and comfortable wear for your baby",
+    ],
+    productCloseView: [
+      {
+        icon: "/icons/fabric.png",
+        label: "Cloud-Soft Top Sheet",
+      },
+      {
+        icon: "/icons/absorption.png",
+        label: "Quick-Lock Core",
+      },
+      {
+        icon: "/icons/loop-style-waist.png",
+        label: "Flex Waistband",
+      },
+      {
+        icon: "/icons/wetness-indicator.png",
+        label: "Wetness Indicator",
+      },
     ],
   },
   {
@@ -404,20 +428,21 @@ const rawBabyCareProducts: Product[] = [
     rating: 4.8,
     reviews: 245,
     video: "/videos/diaper-video2.mp4",
-    heroImage: "/images/diaper/supreme-diaper/diapers.png",
-    image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+    heroImage: "/PRODUCTS/Baby/premium-diapers/product.png",
+    heroImage2: "/PRODUCTS/Baby/premium-diapers/product.png",
+    image: "/PRODUCTS/Baby/premium-diapers/product.png",
     category: "Baby Diaper",
     variants: [
       {
         id: 1,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/nb.png",
         size: "NB",
         weight: "<5",
       },
       {
         id: 2,
-        image: "/images/diaper/supreme-diaper/supreme-diaper-pants-m.png",
+        image: "/PRODUCTS/Baby/premium-diapers/product.png",
         icon: "/icons/s.png",
         size: "S",
         weight: "3-6",
@@ -442,7 +467,7 @@ const rawBabyCareProducts: Product[] = [
         date: "2024-03-05",
       },
     ],
-    featureImage: "/images/diaper/supreme-diaper/feature.png",
+    featureImage: "/PRODUCTS/Baby/premium-diapers/technology.jpg",
     featureTitle: "Reliable Absorption for Everyday Use",
     featureDesc:
       "Zuvara Value Series Diapers absorb up to 10x their weight in liquid (based on diaper weight and total absorbing capacity), keeping your baby dry, fresh, and comfortable all day long. The breathable core locks moisture away, preventing leaks and rashes, perfect for daily wear and active playtime.",
@@ -451,6 +476,24 @@ const rawBabyCareProducts: Product[] = [
       "Soft Inner Core",
       "Stretch Waistband",
       "Disposable Tape",
+    ],
+    productCloseView: [
+      {
+        icon: "/icons/inner-core.png",
+        label: "Soft Inner Core",
+      },
+      {
+        icon: "/icons/absorption.png",
+        label: "10x Absorbency Core",
+      },
+      {
+        icon: "/icons/comfortable.png",
+        label: "Stretch Comfort Fit",
+      },
+      {
+        icon: "/icons/disposable-tape.png",
+        label: "Easy Disposal Tape",
+      },
     ],
   },
   {
@@ -461,49 +504,49 @@ const rawBabyCareProducts: Product[] = [
     background: "#f7d214",
     rating: 4.8,
     reviews: 245,
-    heroImage: "/images/diaper/value-diaper/diapers.png",
-    heroImage2: "/images/diaper/value-diaper/value-diaper-pants-nb.png",
+    heroImage: "/PRODUCTS/Baby/value-diapers/product.png",
+    heroImage2: "/PRODUCTS/Baby/value-diapers/product.png",
     video: "/videos/diaper-video2.mp4",
-    image: "/images/diaper/value-diaper/diaper.png",
+    image: "/PRODUCTS/Baby/value-diapers/product.png",
     category: "Baby Diaper",
     variants: [
       {
         id: 1,
-        image: "/images/diaper/value-diaper/value-diaper-pants-nb.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/nb.png",
         size: "NB",
       },
       {
         id: 2,
-        image: "/images/diaper/value-diaper/value-diaper-pants-s.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/s.png",
         size: "S",
         weight: "3-6",
       },
       {
         id: 3,
-        image: "/images/diaper/value-diaper/value-diaper-pants-s.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/m.png",
         size: "M",
         weight: "4-10",
       },
       {
         id: 4,
-        image: "/images/diaper/value-diaper/value-diaper-pants-s.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/l.png",
         size: "L",
         weight: "9-14",
       },
       {
         id: 5,
-        image: "/images/diaper/value-diaper/value-diaper-pants-s.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/xl.png",
         size: "XL",
         weight: "13-18",
       },
       {
         id: 6,
-        image: "/images/diaper/value-diaper/value-diaper-pants-s.png",
+        image: "/PRODUCTS/Baby/value-diapers/product.png",
         icon: "/icons/xxl.png",
         size: "XXL",
         weight: "16-21",
@@ -518,6 +561,12 @@ const rawBabyCareProducts: Product[] = [
       "Breathable pores ensure air circulation, acting as a shield against rashes, while the leak-proof design and 12-hour super absorbency guarantee uninterrupted playtime and sleep. The 360-degree elasticity provides freedom of movement, preventing discomfort during exploration and discovery.",
     subDesc4:
       "Zuvara Supreme Diapers also feature a handy wetness indicator, changing color when it’s time for a change, ensuring your baby stays dry and comfortable. Give your little one the gift of a happy diaper journey with Zuvara, the premium choice for discerning parents in Nepal.",
+    highlights: [
+      "Quick absorbent core for day-long dryness",
+      "Soft inner layer for gentle skin contact",
+      "Stretch waistband for better active fit",
+      "Wetness indicator for easy diaper checks",
+    ],
     faqs: [
       {
         question: "Are Value Diapers safe to be used by my baby?",
@@ -558,7 +607,7 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
           "Yes, our Zuvara Diapers do have an expiry date. You can keep our baby diapers for up to 3 years without worry. We strongly recommend storing Feather diapers in a cool and dry environment for hygienic reasons.",
       },
     ],
-    featureImage: "/images/diaper/supreme-diaper/feature.png",
+    featureImage: "/PRODUCTS/Baby/value-diapers/technology.jpg",
     featureTitle: "Reliable Absorption for Everyday Use",
     featureDesc:
       "Zuvara Value Series Diapers absorb up to 10x their weight in liquid (based on diaper weight and total absorbing capacity), keeping your baby dry, fresh, and comfortable all day long. The breathable core locks moisture away, preventing leaks and rashes, perfect for daily wear and active playtime.",
@@ -568,6 +617,24 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
       "Stretch Waistband",
       "Disposable Tape",
     ],
+    productCloseView: [
+      {
+        icon: "/icons/inner-core.png",
+        label: "Soft Inner Core",
+      },
+      {
+        icon: "/icons/absorption.png",
+        label: "10x Absorbency Core",
+      },
+      {
+        icon: "/icons/comfortable.png",
+        label: "Stretch Comfort Fit",
+      },
+      {
+        icon: "/icons/disposable-tape.png",
+        label: "Easy Disposal Tape",
+      },
+    ],
   },
   {
     id: 5,
@@ -576,9 +643,10 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
     slug: "moisturising-tissue",
     rating: 4.6,
     reviews: 156,
-    heroImage: "/images/diaper/supreme-diaper/diapers.png",
+    heroImage: "/PRODUCTS/Baby/tissue/product.png",
+    heroImage2: "/PRODUCTS/Baby/tissue/product.png",
     video: "/videos/diaper-video2.mp4",
-    image: "/images/diaper/supreme-diaper/diaper.png",
+    image: "/PRODUCTS/Baby/tissue/product.png",
     category: "Cotton Tissue",
     description:
       "Our Moisturising Tissue is infused with natural aloe and vitamin E to soothe even the most sensitive skin. ",
@@ -634,6 +702,24 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
           "Zuvara Tissue is typically designed for single-use purposes to maintain hygiene and prevent the spread of germs. While some may opt to reuse them, it’s essential to consider hygiene factors and potential contamination risks, especially for baby care. If you’re looking for reusable options, consider using washable and reusable cotton cloths specifically designed for baby care routines. Always prioritize hygiene and safety when caring for your baby’s delicate skin.",
       },
     ],
+    productCloseView: [
+      {
+        icon: "/icons/natural.png",
+        label: "Natural Cotton Base",
+      },
+      {
+        icon: "/icons/fabric.png",
+        label: "Soft Textured Sheet",
+      },
+      {
+        icon: "/icons/trust.png",
+        label: "Hypoallergenic Formula",
+      },
+      {
+        icon: "/icons/clothes.png",
+        label: "Multipurpose Daily Use",
+      },
+    ],
   },
   {
     id: 6,
@@ -642,9 +728,10 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
     slug: "value-wet-wipes",
     rating: 4.6,
     reviews: 156,
-    heroImage: "/images/diaper/supreme-diaper/diapers.png",
+    heroImage: "/PRODUCTS/Baby/wet-wipes/product.png",
+    heroImage2: "/PRODUCTS/Baby/wet-wipes/product2.jpg",
     video: "/videos/diaper-video2.mp4",
-    image: "/images/wipes/water-wipes.png",
+    image: "/PRODUCTS/Baby/wet-wipes/product.png",
     category: "Wipes",
     description: "Wipes that are skin friendly !!",
     subDesc1:
@@ -704,6 +791,24 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
           "No, Zuvara Wipes are not reusable and should be disposed of correctly after use.",
       },
     ],
+    productCloseView: [
+      {
+        icon: "/icons/nature.png",
+        label: "99.9% Water Base",
+      },
+      {
+        icon: "/icons/fabric.png",
+        label: "Gentle Wipe Fabric",
+      },
+      {
+        icon: "/icons/trusted-icon.png",
+        label: "Fragrance-Free Care",
+      },
+      {
+        icon: "/icons/comfortable.png",
+        label: "Soft Daily Comfort",
+      },
+    ],
   },
 ];
 
@@ -711,5 +816,15 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
  * Final export:
  * ✅ every product now has every field (via normalizeProduct)
  */
+const PRODUCTS_WITH_DEDICATED_IMAGES = new Set([
+  "supreme-diapers",
+  "premium-diapers-pants",
+  "value-diapers-pants",
+  "moisturising-tissue",
+  "value-wet-wipes",
+]);
+
 export const babyCareProducts: Product[] =
-  rawBabyCareProducts.map(normalizeProduct);
+  rawBabyCareProducts
+    .filter((product) => PRODUCTS_WITH_DEDICATED_IMAGES.has(product.slug))
+    .map(normalizeProduct);

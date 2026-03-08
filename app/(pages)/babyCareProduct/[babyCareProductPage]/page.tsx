@@ -19,20 +19,121 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProductCloseViewSection from "@/app/components/babyCareProductPage/ProductCloseViewSection";
 
-const moodboardImages = [
-  "/images/diaper/supreme-diaper/feature.png",
-  "/images/baby/baby29.png",
-  "/images/baby/baby24.png",
-  "/images/baby/baby31.png",
-  "/images/baby/baby30.png",
-  "/images/diaper/supreme-diaper/2.jpg",
-  "/images/baby/baby32.png",
-  "/images/baby/baby33.png",
-  "/images/diaper/supreme-diaper/3.jpg",
-  "/images/baby/baby23.png",
-  "/images/baby/baby20.png",
-  "/images/diaper/supreme-diaper/4.jpg",
-];
+const productImageSets: Record<
+  string,
+  { moodboardImages: string[]; technicalDetailImages: string[] }
+> = {
+  "supreme-diapers": {
+    moodboardImages: [
+      "/PRODUCTS/Baby/supreme-diapers/technology.jpg",
+      "/images/baby/baby29.png",
+      "/images/baby/baby24.png",
+      "/images/baby/baby31.png",
+      "/images/baby/baby30.png",
+      "/images/baby/baby14.png",
+      "/images/baby/baby32.png",
+      "/images/baby/baby33.png",
+      "/images/baby/baby10.png",
+      "/images/baby/baby23.png",
+      "/images/baby/baby20.png",
+      "/images/baby/baby12.png",
+    ],
+    technicalDetailImages: [
+      "/PRODUCTS/Baby/supreme-diapers/tech1.jpg",
+      "/PRODUCTS/Baby/supreme-diapers/tech2.jpg",
+      "/PRODUCTS/Baby/supreme-diapers/tech3.jpg",
+      "/PRODUCTS/Baby/supreme-diapers/tech4.jpg",
+    ],
+  },
+  "premium-diapers-pants": {
+    moodboardImages: [
+      "/PRODUCTS/Baby/premium-diapers/technology.jpg",
+      "/images/baby/baby29.png",
+      "/images/baby/baby24.png",
+      "/images/baby/baby31.png",
+      "/images/baby/baby30.png",
+      "/images/baby/baby14.png",
+      "/images/baby/baby32.png",
+      "/images/baby/baby33.png",
+      "/images/baby/baby10.png",
+      "/images/baby/baby23.png",
+      "/images/baby/baby20.png",
+      "/images/baby/baby12.png",
+    ],
+    technicalDetailImages: [
+      "/PRODUCTS/Baby/premium-diapers/tech1.jpg",
+      "/PRODUCTS/Baby/premium-diapers/tech2.jpg",
+      "/PRODUCTS/Baby/premium-diapers/tech3.jpg",
+      "/PRODUCTS/Baby/premium-diapers/tech4.jpg",
+    ],
+  },
+  "value-diapers-pants": {
+    moodboardImages: [
+      "/PRODUCTS/Baby/value-diapers/technology.jpg",
+      "/images/baby/baby29.png",
+      "/images/baby/baby24.png",
+      "/images/baby/baby31.png",
+      "/images/baby/baby30.png",
+      "/images/baby/baby14.png",
+      "/images/baby/baby32.png",
+      "/images/baby/baby33.png",
+      "/images/baby/baby10.png",
+      "/images/baby/baby23.png",
+      "/images/baby/baby20.png",
+      "/images/baby/baby12.png",
+    ],
+    technicalDetailImages: [
+      "/PRODUCTS/Baby/value-diapers/tech1.jpg",
+      "/PRODUCTS/Baby/value-diapers/tech2.jpg",
+      "/PRODUCTS/Baby/value-diapers/tech3.jpg",
+      "/PRODUCTS/Baby/value-diapers/tech4.jpg",
+    ],
+  },
+  "moisturising-tissue": {
+    moodboardImages: [
+      "/PRODUCTS/Baby/tissue/technology.jpg",
+      "/images/baby/baby29.png",
+      "/images/baby/baby24.png",
+      "/images/baby/baby31.png",
+      "/images/baby/baby30.png",
+      "/images/baby/baby14.png",
+      "/images/baby/baby32.png",
+      "/images/baby/baby33.png",
+      "/images/baby/baby10.png",
+      "/images/baby/baby23.png",
+      "/images/baby/baby20.png",
+      "/images/baby/baby12.png",
+    ],
+    technicalDetailImages: [
+      "/PRODUCTS/Baby/tissue/tech1.jpg",
+      "/PRODUCTS/Baby/tissue/tech2.jpg",
+      "/PRODUCTS/Baby/tissue/tech3.jpg",
+      "/PRODUCTS/Baby/tissue/tech4.jpg",
+    ],
+  },
+  "value-wet-wipes": {
+    moodboardImages: [
+      "/PRODUCTS/Baby/wet-wipes/product2.jpg",
+      "/images/baby/baby29.png",
+      "/images/baby/baby24.png",
+      "/images/baby/baby31.png",
+      "/images/baby/baby30.png",
+      "/images/baby/baby14.png",
+      "/images/baby/baby32.png",
+      "/images/baby/baby33.png",
+      "/images/baby/baby10.png",
+      "/images/baby/baby23.png",
+      "/images/baby/baby20.png",
+      "/images/baby/baby12.png",
+    ],
+    technicalDetailImages: [
+      "/PRODUCTS/Baby/wet-wipes/tech1.jpg",
+      "/PRODUCTS/Baby/wet-wipes/tech2.jpg",
+      "/PRODUCTS/Baby/wet-wipes/tech3.jpg",
+      "/PRODUCTS/Baby/wet-wipes/tech4.jpg",
+    ],
+  },
+};
 
 const conceptImages = [
   "/images/baby/baby14.png",
@@ -125,6 +226,9 @@ export default function Page() {
   const heroPackSrc = active ? pickHeroPack(active) : "";
   const variants = active?.variants || [];
   const highlights = (active?.highlights || []).slice(0, 4);
+  const activeImageSet =
+    productImageSets[active?.slug ?? ""] ||
+    productImageSets["supreme-diapers"];
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -261,7 +365,8 @@ export default function Page() {
       <ComfortDetailsSection
         theme={theme}
         highlights={highlights}
-        moodboardImages={moodboardImages}
+        moodboardImages={activeImageSet.moodboardImages}
+        technicalDetailImages={activeImageSet.technicalDetailImages}
       />
 
       <SizeGuideSection theme={theme} variants={variants} />

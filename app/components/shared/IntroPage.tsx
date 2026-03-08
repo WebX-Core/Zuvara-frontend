@@ -10,10 +10,10 @@ import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
+type SectionId = "baby" | "personal";
+
 export default function IntroPage() {
-  const [hoveredSection, setHoveredSection] = useState<
-    "baby" | "personal" | null
-  >(null);
+  const [hoveredSection, setHoveredSection] = useState<SectionId | null>(null);
   const isSmallerDevice = useMediaQuery({ maxWidth: 768 });
 
   const leftArrowPathRef = useRef<SVGPathElement>(null);
@@ -50,7 +50,16 @@ export default function IntroPage() {
     }
   }, []);
 
-  const sections = [
+  const sections: {
+    id: SectionId;
+    title: string;
+    subtitle: string;
+    image: string;
+    href: string;
+    color: string;
+    icon: string;
+    description: string;
+  }[] = [
     {
       id: "baby",
       title: "Baby Care",
@@ -80,7 +89,7 @@ export default function IntroPage() {
       {/* Nav / Logo */}
       <nav className="bg-babyCare fixed top-0 w-full py-4 flex items-center justify-center z-50">
         <Link href="/">
-          <Image src="/logo.png" alt="Zuvara Logo" width={100} height={100} />
+          <Image src="/logo/logo.png" alt="Zuvara Logo" width={100} height={100} />
         </Link>
       </nav>
 
@@ -100,7 +109,7 @@ export default function IntroPage() {
             key={section.id}
             href={section.href}
             className="w-full lg:w-100 group relative"
-            onMouseEnter={() => setHoveredSection(section.id as any)}
+            onMouseEnter={() => setHoveredSection(section.id)}
             onMouseLeave={() => setHoveredSection(null)}
           >
             <motion.div
@@ -130,9 +139,11 @@ export default function IntroPage() {
                 className="absolute bottom-6 lg:top-6 right-6 pointer-events-none"
               >
                 {/* <Icon icon={section.icon} width="140" height="140" /> */}
-                <img
+                <Image
                   src={section.icon}
                   alt={section.title}
+                  width={96}
+                  height={96}
                   className="size-24 group-hover:invert"
                 />
               </motion.div>
@@ -226,9 +237,7 @@ export default function IntroPage() {
             </motion.div>
 
             {!isSmallerDevice && (
-              <motion.img
-                src={section.image}
-                alt=""
+              <motion.div
                 initial={{
                   scale: 0,
                   opacity: 0,
@@ -247,10 +256,18 @@ export default function IntroPage() {
                 style={{ originX: 0.5, originY: 1 }}
                 className={`absolute z-0 pointer-events-none ${
                   section.id === "baby"
-                    ? "bottom-6 -left-12 w-70"
-                    : "bottom-4 -right-12 w-160 h-120"
+                    ? "bottom-6 -left-12 w-[17.5rem]"
+                    : "bottom-4 -right-12 w-[40rem] h-[30rem]"
                 }`}
-              />
+              >
+                <Image
+                  src={section.image}
+                  alt={`${section.title} visual`}
+                  width={640}
+                  height={480}
+                  className="w-full h-full object-contain"
+                />
+              </motion.div>
             )}
           </Link>
         ))}

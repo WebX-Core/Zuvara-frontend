@@ -7,16 +7,13 @@ import { Icon } from "@iconify/react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
-import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import CrawlingBaby from "./CrawlingBaby";
 
 export default function Footer() {
   const pathname = usePathname();
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-  const [isMounted, setIsMounted] = useState(true);
+  const isMounted = true;
 
   const footerSections = [
     {
@@ -47,7 +44,7 @@ export default function Footer() {
 
   return (
     <footer className={cn(isPersonal ? "bg-personalCare/10" : "")}>
-      <div className="container mx-auto px-4 lg:px-0 w-7xl pt-8 pb-16 lg:pb-0">
+      <div className="container mx-auto max-w-7xl px-4 lg:px-0 pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
         <div className="flex justify-center my-4 lg:my-8 w-full">
           <Link
@@ -63,11 +60,13 @@ export default function Footer() {
                 isPersonal ? "bg-personalCare" : "bg-babyCare",
               )}
             >
-              <img
+              <Image
                 src={
                   isPersonal ? "/icons/xl.png" : "/icons/sanitary-napkin.png"
                 }
-                alt=""
+                alt={isPersonal ? "Personal care icon" : "Baby care icon"}
+                width={32}
+                height={32}
                 className={cn("size-8", isPersonal ? "invert" : "")}
               />
             </div>
@@ -91,20 +90,20 @@ export default function Footer() {
         </div>
         <div
           className={cn(
-            "relative flex flex-col gap-2 text-center md:text-left md:flex-row items-center justify-between rounded-lg md:rounded-full p-4 md:p-2",
+            "relative flex flex-col gap-3 text-center md:text-left md:flex-row items-center md:items-center justify-between rounded-2xl md:rounded-full p-4 md:p-2",
             isPersonal
               ? "bg-ternary text-white"
               : "bg-foreground text-babyCare",
           )}
         >
           <CrawlingBaby />
-          <h3 className="text-xl md:pl-4 font-medium">
+          <h3 className="text-lg sm:text-xl md:pl-4 font-medium">
             Zuvara would be the perfect choice for your baby care needs!
           </h3>
           <Link
             href="/babyCareProduct"
             className={cn(
-              "bg-white px-4 py-2 rounded-full font-semibold transition flex items-center gap-2",
+              "bg-white px-4 py-2 rounded-full font-semibold transition flex items-center gap-2 shrink-0",
               isPersonal
                 ? "text-personalCare! hover:bg-white/70 hover:text-foreground"
                 : "text-foreground! hover:bg-babyCare hover:text-foreground",
@@ -116,10 +115,9 @@ export default function Footer() {
         </div>
 
         {/* Newsletter & Contact Section */}
-        <div className="py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* quick links */}
-          {!isSmallerDevice && (
-            <div className="">
+          <div className="hidden lg:block">
               {footerSections.map((section, index) => (
                 <div key={index}>
                   <h3
@@ -147,8 +145,7 @@ export default function Footer() {
                   </ul>
                 </div>
               ))}
-            </div>
-          )}
+          </div>
           {/* Visit Us */}
           <div>
             <h3
@@ -159,14 +156,14 @@ export default function Footer() {
             >
               Visit Us
             </h3>
-            <div className="flex flex-row lg:flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {contactLists.slice(0, 2).map((contact) => (
-                <div key={contact.id} className="">
+                <div key={contact.id}>
                   <p className="font-semibold lg:font-normal">
                     {contact.title}
                   </p>
                   <Link href={contact.link}>
-                    <p className="text-sm hover:underline w-60">
+                    <p className="text-sm hover:underline max-w-[15rem]">
                       {contact.desc}
                     </p>
                   </Link>
@@ -176,7 +173,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="col-span-2 lg:col-span-1 flex flex-col gap-4">
+          <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4">
             <Link href="/" className="flex items-center shrink-0">
               <Image
                 src="/logo/logo.png"
@@ -225,7 +222,7 @@ export default function Footer() {
       </div>
       {/*  Image Div */}
 
-      <div className="relative  h-[50vh]   flex items-center justify-center overflow-hidden">
+      <div className="relative h-[34vh] sm:h-[40vh] md:h-[46vh] flex items-center justify-center overflow-hidden px-4">
         {/* Background Image */}
         <div className="absolute mx-auto">
           <Image
@@ -238,8 +235,10 @@ export default function Footer() {
             height={400}
             alt={isPersonal ? "Woman resting comfortably" : "Happy babies"}
             className={cn(
-              "object-cover object-top",
-              isPersonal ? "object-contain h-[42vh] w-auto" : "",
+              "object-cover object-top w-full max-w-[980px] h-auto",
+              isPersonal
+                ? "object-contain h-[30vh] sm:h-[36vh] md:h-[42vh] w-auto"
+                : "",
             )}
           />
         </div>
@@ -272,37 +271,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      {/* </div> */}
-
-      {/* Content */}
-      {/* // <div className="relative z-10 text-center px-6 max-w-xl">
-
-  //   <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
-  //     Subscribe to our newsletter
-  //   </h2>
-
-  //   <p className="text-white/80 mb-8">
-  //     Get updates about new products, offers and parenting tips.
-  //   </p>
-
-  //   <form>
-  //     <div className="flex items-center bg-white/20 backdrop-blur-xl rounded-full p-2 shadow-xl border border-white/30">
-
-  //       <input */}
-      {/* //         type="email"
-  //         placeholder="Enter your email"
-  //         className="flex-1 bg-transparent px-4 py-3 text-white placeholder-white/70 outline-none"
-  //       />
-
-  //       <button
-  //         type="submit"
-  //         className="bg-[#45685e] hover:bg-[#35544b] transition px-6 py-3 rounded-full text-white font-medium"
-  //       >
-  //         Subscribe
-  //       </button>
-
-  //     </div>
-  //   </form> */}
     </footer>
   );
 }

@@ -7,6 +7,7 @@ type PersonalComfortDetailsSectionProps = {
   theme: ThemePreset;
   highlights: string[];
   moodboardImages: string[];
+  technicalDetailImages: string[];
 };
 
 const sectionTitle =
@@ -16,6 +17,7 @@ export default function PersonalComfortDetailsSection({
   theme,
   highlights,
   moodboardImages,
+  technicalDetailImages,
 }: PersonalComfortDetailsSectionProps) {
   return (
     <section className="relative px-6 py-14 lg:px-10 lg:py-16">
@@ -72,10 +74,10 @@ export default function PersonalComfortDetailsSection({
             >
               <div className="absolute inset-0 h-100">
                 <Image
-                  src={moodboardImages[idx % moodboardImages.length]}
+                  src={technicalDetailImages[idx] || technicalDetailImages[0]}
                   alt={item}
                   fill
-                  className="object-contain object-bottom p-6 transition-transform duration-700 group-hover:scale-[1.04]"
+                  className="rounded-[1.6rem] object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
               </div>
 

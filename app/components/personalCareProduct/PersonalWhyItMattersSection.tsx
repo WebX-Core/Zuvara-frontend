@@ -35,9 +35,10 @@ export default function PersonalWhyItMattersSection({
 
   return (
     <section
-      className="immersive-section relative overflow-hidden px-6 py-14 lg:px-0 lg:py-16"
+      className="immersive-section relative overflow-hidden px-6 py-14 lg:px-10 lg:py-24"
       id="touch"
     >
+      {/* Background Layer */}
       <div className="absolute inset-0">
         <Image
           src={backgroundImage}
@@ -47,20 +48,25 @@ export default function PersonalWhyItMattersSection({
           aria-hidden="true"
           className="object-cover object-center"
         />
+        {/* Responsive Gradient Overlay */}
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(105deg, ${hexToRgba(theme.pageBg, 0.9)} 0%, ${hexToRgba(theme.pageBg, 0)} 95%, ${hexToRgba(theme.pageBg, 0.88)} 100%)`,
+            background: `linear-gradient(105deg, 
+              ${hexToRgba(theme.pageBg, 0.95)} 0%, 
+              ${hexToRgba(theme.pageBg, 0.4)} 50%, 
+              ${hexToRgba(theme.pageBg, 0.9)} 100%)`,
           }}
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl space-y-8 perspective-1300px">
-        <div className="max-w-3xl fx-rise">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-10 lg:space-y-16">
+        {/* Header Section */}
+        <div className="max-w-3xl">
           <h2 className={sectionTitle} style={{ color: theme.accent }}>
-            Because Your
+            Because Your{" "}
             <span
-              className="italic font-light"
+              className="italic font-light block sm:inline"
               style={{ color: hexToRgba(theme.accent, 0.56) }}
             >
               Comfort Matters
@@ -68,8 +74,8 @@ export default function PersonalWhyItMattersSection({
           </h2>
 
           <p
-            className="mt-3 text-sm md:text-base"
-            style={{ color: hexToRgba(theme.accent, 1) }}
+            className="mt-4 text-base md:text-lg max-w-xl leading-relaxed"
+            style={{ color: hexToRgba(theme.accent, 0.9) }}
           >
             Your day deserves protection that feels natural and steady. Our
             personal care essentials support you with comfort, dignity, and
@@ -77,38 +83,41 @@ export default function PersonalWhyItMattersSection({
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-          <div className="space-y-3 w-1/2">
+        {/* Content Grid */}
+        <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-10 lg:gap-20">
+          {/* Cards Column */}
+          <div className="space-y-4 w-full lg:w-1/2">
             {cards.map(({ icon: Icon, title, body }) => (
               <article
                 key={title}
-                className="fx-rise fx-float rounded-3xl border p-4 md:p-5 transition-transform duration-500 hover:-translate-y-1"
+                className="rounded-3xl border p-5 md:p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl"
                 style={{
-                  borderColor: `${theme.border}66`,
-                  backgroundColor: hexToRgba(theme.pageBg, 0.8),
-                  boxShadow: `0 18px 40px ${hexToRgba(theme.accent, 0.12)}`,
+                  borderColor: `${theme.border}44`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.7),
+                  backdropFilter: "blur(8px)",
+                  boxShadow: `0 12px 30px ${hexToRgba(theme.accent, 0.08)}`,
                 }}
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-4">
                   <div
-                    className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-sm"
                     style={{
                       backgroundColor: theme.chipBg,
                       color: theme.accent,
                     }}
                   >
-                    <Icon size={18} />
+                    <Icon size={22} />
                   </div>
                   <div>
                     <h3
-                      className="text-base font-semibold"
+                      className="text-lg font-semibold"
                       style={{ color: theme.accent }}
                     >
                       {title}
                     </h3>
                     <p
-                      className="mt-1 text-sm leading-relaxed"
-                      style={{ color: hexToRgba(theme.accent, 0.72) }}
+                      className="mt-1.5 text-sm md:text-base leading-relaxed"
+                      style={{ color: hexToRgba(theme.accent, 0.75) }}
                     >
                       {body}
                     </p>
@@ -118,16 +127,25 @@ export default function PersonalWhyItMattersSection({
             ))}
           </div>
 
-          <div className=" w-1/2 relative overflow-hidden">
-            <div className="absolute  w-1/2 right-4 bottom-4">
-              <p
-                className="text-sm font-medium md:text-xl"
-                style={{ color: theme.accent }}
-              >
-                &quot;Comfort you can feel. Protection you can trust, every
-                hour.&quot;
-              </p>
-            </div>
+          {/* Quote Column */}
+          <div className="w-full lg:w-1/2 relative flex items-center justify-center lg:justify-end">
+             <div className="relative p-8 lg:p-0">
+                {/* Decorative Quote Mark */}
+                <span 
+                  className="absolute -top-4 -left-2 text-6xl opacity-20 font-serif"
+                  style={{ color: theme.accent }}
+                >
+                  &ldquo;
+                </span>
+                <p
+                  className="text-xl md:text-3xl lg:text-4xl font-medium italic leading-tight text-center lg:text-right"
+                  style={{ color: theme.accent }}
+                >
+                  Comfort you can feel. <br className="hidden md:block" />
+                  Protection you can trust, <br className="hidden md:block" />
+                  every hour.
+                </p>
+             </div>
           </div>
         </div>
       </div>

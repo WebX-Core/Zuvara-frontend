@@ -30,16 +30,17 @@ export default function PersonalProductHeroSection({
   void _products;
   return (
     <motion.section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden px-4"
       animate={{ backgroundColor: theme.pageBg }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
       <div className="relative mx-auto max-w-7xl pt-8 pb-10 md:pt-10 md:pb-14">
         <div className="relative mt-10">
-          <div className="flex justify-between">
+          {/* Responsive Flex: Column on mobile, Row on desktop */}
+          <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0">
             <div>
               <h1
-                className="text-5xl font-semibold leading-[0.95] tracking-tight"
+                className="text-4xl md:text-5xl font-semibold leading-[0.95] tracking-tight"
                 style={{ color: theme.accent }}
               >
                 Comfort begins
@@ -86,7 +87,8 @@ export default function PersonalProductHeroSection({
             </div>
           </div>
 
-          <div className="pointer-events-none absolute left-1/2 -top-30 z-20 h-50 w-70 -translate-x-1/2 md:h-160 md:w-110">
+          {/* Image positioning: Relative/block on mobile to save space, Absolute on desktop to overlap */}
+          <div className="pointer-events-none relative md:absolute left-1/2 md:-top-30 z-20 h-80 w-full md:h-160 md:w-110 -translate-x-1/2 mt-8 md:mt-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.id + "-pack"}
@@ -101,7 +103,7 @@ export default function PersonalProductHeroSection({
                   alt={`${active.name} pack`}
                   fill
                   className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
-                  sizes="(max-width: 1024px) 60vw, 22vw"
+                  sizes="(max-width: 1024px) 80vw, 22vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -109,7 +111,7 @@ export default function PersonalProductHeroSection({
         </div>
 
         <div
-          className="relative h-107.5 md:h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb:8 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
+          className="relative min-h-[400px] md:h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb-8 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
           style={{ backgroundColor: theme.containerBg }}
         >
           <div className="pointer-events-none absolute inset-0">
@@ -118,9 +120,10 @@ export default function PersonalProductHeroSection({
             <div className="absolute right-28 -bottom-32 h-64 w-64 rounded-full bg-white/20" />
           </div>
 
-          <div className="w-full relative flex justify-between items-end gap-6 ">
-            <div className="w-full ">
-              <p className={`max-w-xs ${bodyText} font-medium`}>
+          {/* Inner Content Flex: Stacks on mobile */}
+          <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
+            <div className="w-full text-center md:text-left">
+              <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
                 Every day asks a lot from you. Our personal care products are
                 designed to protect your comfort through work, rest, and sleep.
               </p>
@@ -132,9 +135,10 @@ export default function PersonalProductHeroSection({
                 Find more details <ArrowDown size={16} />
               </Link>
             </div>
-            <div className="w-full flex flex-col justify-end items-center">
+
+            <div className="w-full flex flex-col justify-end items-center order-first md:order-0">
               <h2
-                className="text-nowrap text-2xl leading-[1.02] line-clamp-2 font-semibold"
+                className="text-center text-2xl leading-[1.02] line-clamp-2 font-semibold"
                 style={{ color: theme.accent }}
               >
                 {active.name}
@@ -143,45 +147,31 @@ export default function PersonalProductHeroSection({
                 {active.category}
               </p>
             </div>
+
             <div className="w-full text-zinc-700 space-y-4 lg:pt-14">
-              <div className="w-2/3 mx-auto">
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">
-                    High absorbency support.
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">Cloud-soft comfort.</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">
-                    Made for sensitive skin.
-                  </span>
-                </div>
+              <div className="w-full md:w-2/3 mx-auto">
+                {["High absorbency support.", "Cloud-soft comfort.", "Made for sensitive skin."].map((text, i) => (
+                   <div key={i} className="flex items-center gap-3 mb-2">
+                   <Check
+                     size={18}
+                     style={{ color: theme.accent }}
+                     strokeWidth={3}
+                   />
+                   <span className="text-base font-medium">
+                     {text}
+                   </span>
+                 </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center pt-4">
+
+          <div className="flex items-center justify-center pt-8 md:pt-4">
             <div className="inline-flex justify-self-center items-center gap-3 py-2">
               <button
                 type="button"
                 onClick={onPrev}
-                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
+                className="px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Previous product"
               >
@@ -191,7 +181,7 @@ export default function PersonalProductHeroSection({
               <button
                 type="button"
                 onClick={onNext}
-                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
+                className="px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Next product"
               >
@@ -200,36 +190,6 @@ export default function PersonalProductHeroSection({
               </button>
             </div>
           </div>
-
-          {/* <div className="absolute left-0 -right-6 bottom-0 z-20 flex start justify-start">
-            <div className="flex pl-2 gap-1 bg-gray-100 rounded-tr-2xl py-2 pr-2">
-              {products.map((p, i) => {
-                const isActive = p.id === active.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => onSelectProduct(i)}
-                    className="relative h-16 w-16 overflow-hidden rounded-2xl border transition hover:opacity-90"
-                    style={{
-                      borderColor: isActive ? theme.accent : theme.border,
-                      boxShadow: isActive
-                        ? `0 0 0 2px ${theme.accent}40`
-                        : undefined,
-                    }}
-                  >
-                    <Image
-                      src={pickHeroPack(p)}
-                      alt={p.name}
-                      fill
-                      className="object-contain p-2"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-            <div className="hidden md:block" />
-          </div> */}
         </div>
       </div>
     </motion.section>

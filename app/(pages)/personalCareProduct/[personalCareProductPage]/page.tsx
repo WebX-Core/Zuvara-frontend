@@ -30,6 +30,37 @@ const comparisonRows = [
   { label: "Breathability", zuvara: "Airflow layer", ordinary: "Limited" },
 ];
 
+const personalTechnicalDetailImages: Record<string, string[]> = {
+  "period-panties": [
+    "/PRODUCTS/personal/period%20panties/tech1.jpg",
+    "/PRODUCTS/personal/period%20panties/tech2.jpg",
+    "/PRODUCTS/personal/period%20panties/tech3.jpg",
+    "/PRODUCTS/personal/period%20panties/tech4.jpg",
+  ],
+  "sanitary-pads": [
+    "/PRODUCTS/personal/sanitary%20pads/tech1.jpg",
+    "/PRODUCTS/personal/sanitary%20pads/tech2.jpg",
+    "/PRODUCTS/personal/sanitary%20pads/tech3.jpg",
+    "/PRODUCTS/personal/sanitary%20pads/tech4.jpg",
+  ],
+};
+
+const personalSizeGuideImageOverrides: Record<string, string[]> = {
+  "period-panties": [
+    "/PRODUCTS/personal/period%20panties/size_m-l.jpg",
+    "/PRODUCTS/personal/period%20panties/size_l-xl.jpg",
+  ],
+  "sanitary-pads": [
+    "/PRODUCTS/personal/sanitary%20pads/tech1.jpg",
+    "/PRODUCTS/personal/sanitary%20pads/tech2.jpg",
+  ],
+};
+
+const personalHeroPackSectionImages: Record<string, string> = {
+  "period-panties": "/images/personalCare/period-panties.png",
+  "sanitary-pads": "/images/personalCare/sanitary-pad.png",
+};
+
 const themePresets: ThemePreset[] = [
   {
     accent: "#7b2cbf",
@@ -96,7 +127,9 @@ export default function Page() {
       : product || mappedProducts[0];
 
   const theme = themePresets[clampIndex(activeIdx, themePresets.length)];
-  const heroPackSrc = active ? pickHeroPack(active) : "";
+  const heroPackSrc =
+    personalHeroPackSectionImages[active?.slug ?? ""] ||
+    (active ? pickHeroPack(active) : "");
   const variants = active?.variants || [];
   const highlights = (active?.highlights || []).slice(0, 4);
   const heroAvatars =
@@ -107,10 +140,14 @@ export default function Page() {
     active?.moodboardImages && active.moodboardImages.length > 0
       ? active.moodboardImages
       : [active.image];
+  const technicalDetailImages =
+    personalTechnicalDetailImages[active?.slug ?? ""] ||
+    moodboardImages.slice(0, 4);
   const sizeGuideImages =
-    active?.sizeGuideImages && active.sizeGuideImages.length > 0
+    personalSizeGuideImageOverrides[active?.slug ?? ""] ||
+    (active?.sizeGuideImages && active.sizeGuideImages.length > 0
       ? active.sizeGuideImages
-      : [active.image];
+      : [active.image]);
   const whyItMattersImage = active?.whyItMattersImage || active.image;
   const trustImages = active?.trustImages || {
     testimonialPrimary: active.image,
@@ -264,6 +301,7 @@ export default function Page() {
         theme={theme}
         highlights={highlights}
         moodboardImages={moodboardImages}
+        technicalDetailImages={technicalDetailImages}
       />
 
       <PersonalSizeGuideSection
