@@ -111,7 +111,7 @@ export default function PersonalProductHeroSection({
         </div>
 
         <div
-          className="relative min-h-[400px] md:h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb-8 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
+          className="relative min-h-100 md:h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb-8 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
           style={{ backgroundColor: theme.containerBg }}
         >
           <div className="pointer-events-none absolute inset-0">

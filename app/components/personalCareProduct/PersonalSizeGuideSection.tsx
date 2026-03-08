@@ -9,8 +9,6 @@ type PersonalSizeGuideSectionProps = {
   sizeGuideImages: string[];
 };
 
-const sectionTitle =
-  "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
 
 export default function PersonalSizeGuideSection({
   theme,

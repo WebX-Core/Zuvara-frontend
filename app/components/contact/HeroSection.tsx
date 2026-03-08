@@ -12,6 +12,12 @@ const HeroSection = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   const isMobile = useMediaQuery({ maxWidth: 480 });
+  const messageText = isPersonal
+    ? "Hello! Looking for safe, comfortable personal care products?"
+    : "Hello! Looking for gentle, comfy diapers for your baby?";
+  const contactImage = isPersonal
+    ? "/new/contacpagemom.png"
+    : "/images/baby/baby-calling.png";
 
   return (
     <div
@@ -47,7 +53,7 @@ const HeroSection = () => {
               )}
             >
               <TypingAnimation
-                text="Hello! Looking for gentle, comfy diapers for your baby?"
+                text={messageText}
                 className="text-xl font-semibold"
                 duration={75}
                 delay={1500}
@@ -67,10 +73,14 @@ const HeroSection = () => {
 
             <div className="relative">
               <Image
-                src="/images/baby/baby-calling.png"
-                alt="baby calling"
-                width={isMobile ? 150 : 180}
-                height={isMobile ? 150 : 180}
+                src={contactImage}
+                alt={isPersonal ? "woman contact" : "baby calling"}
+                width={
+                  isPersonal ? (isMobile ? 190 : 240) : isMobile ? 150 : 180
+                }
+                height={
+                  isPersonal ? (isMobile ? 190 : 240) : isMobile ? 150 : 180
+                }
                 className="relative z-0 object-contain drop-shadow-2xl"
               />
             </div>

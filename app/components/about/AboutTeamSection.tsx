@@ -59,7 +59,7 @@ export default function AboutTeamSection({
                   fill
                   className="object-cover grayscale transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/8 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/8 to-transparent" />
               </div>
 
               <div className="absolute inset-x-0 bottom-0 p-5 text-white">

@@ -198,7 +198,7 @@ export default function IntroPage() {
                 </h2>
 
                 <p
-                  className={`max-w-[280px] text-sm font-medium leading-relaxed transition-colors duration-300 ${
+                  className={`max-w-70 text-sm font-medium leading-relaxed transition-colors duration-300 ${
                     hoveredSection === section.id
                       ? "text-white/80"
                       : "text-zinc-500"
@@ -256,8 +256,8 @@ export default function IntroPage() {
                 style={{ originX: 0.5, originY: 1 }}
                 className={`absolute z-0 pointer-events-none ${
                   section.id === "baby"
-                    ? "bottom-6 -left-12 w-[17.5rem]"
-                    : "bottom-4 -right-12 w-[40rem] h-[30rem]"
+                    ? "bottom-6 -left-12 w-70"
+                    : "bottom-4 -right-12 w-160 h-120"
                 }`}
               >
                 <Image

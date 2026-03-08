@@ -163,7 +163,7 @@ export default function Footer() {
                     {contact.title}
                   </p>
                   <Link href={contact.link}>
-                    <p className="text-sm hover:underline max-w-[15rem]">
+                    <p className="text-sm hover:underline max-w-60">
                       {contact.desc}
                     </p>
                   </Link>
@@ -235,7 +235,7 @@ export default function Footer() {
             height={400}
             alt={isPersonal ? "Woman resting comfortably" : "Happy babies"}
             className={cn(
-              "object-cover object-top w-full max-w-[980px] h-auto",
+              "object-cover object-top w-full max-w-245 h-auto",
               isPersonal
                 ? "object-contain h-[30vh] sm:h-[36vh] md:h-[42vh] w-auto"
                 : "",

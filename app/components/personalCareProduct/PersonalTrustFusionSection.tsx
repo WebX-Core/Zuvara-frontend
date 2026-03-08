@@ -143,7 +143,7 @@ export default function PersonalTrustFusionSection({
                 alt="Zuvara care"
                 width={800}
                 height={1200}
-                className="h-[300px] md:h-[500px] lg:h-[600px] w-full object-cover"
+                className="h-75 md:h-125 lg:h-150 w-full object-cover"
               />
             </div>
             <div className="relative w-1/2 overflow-hidden border-l-2" style={{ borderColor: theme.border }}>
@@ -153,7 +153,7 @@ export default function PersonalTrustFusionSection({
                 alt="Typical care"
                 width={800}
                 height={1200}
-                className="h-[300px] md:h-[500px] lg:h-[600px] w-full object-cover"
+                className="h-75 md:h-125 lg:h-150 w-full object-cover"
               />
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function PersonalTrustFusionSection({
         {/* Comparison Table - Scrollable on very small devices */}
         <div className="overflow-x-auto">
           <div
-            className="min-w-[500px] md:min-w-full fx-rise overflow-hidden rounded-3xl border"
+            className="min-w-125 md:min-w-full fx-rise overflow-hidden rounded-3xl border"
             style={{
               borderColor: `${theme.border}66`,
               backgroundColor: hexToRgba(theme.pageBg, 0.9),
