@@ -54,7 +54,7 @@ const CTA = () => {
             </div>
 
             {/* Image */}
-            <div className="relative h-80 sm:h-95 lg:h-115 w-full">
+            <div className="relative h-80 sm:h-95 lg:h-90 w-full">
               <div className="absolute inset-0 rounded-[1.6rem] bg-white/60 backdrop-blur-[1px]" />
               <div className="absolute inset-4 rounded-[1.2rem] border border-white/70 bg-white/40" />
               <div className="absolute inset-0">

@@ -1,77 +1,93 @@
-"use client";
+import Image from "next/image";
 
-import { useMediaQuery } from "react-responsive";
+type StatItem = {
+  id: number;
+  title: string;
+  desc: string;
+  icon: string;
+  eyebrow: string;
+};
 
-const statsLists = [
+const statsLists: StatItem[] = [
   {
     id: 1,
     title: "Absorbs 15x",
-    desc: "Holds 15x its weight",
+    desc: "Built to lock in flow fast and help you stay dry through longer wear.",
     icon: "/icons/absorption.png",
+    eyebrow: "High absorbency",
   },
   {
     id: 2,
     title: "Thin & Soft",
-    desc: "Soft cotton surface",
+    desc: "A light, cotton-soft surface designed for breathable everyday comfort.",
     icon: "/icons/fabric.png",
+    eyebrow: "Soft-touch feel",
   },
   {
     id: 3,
     title: "12 hour+",
-    desc: "12-hour protection",
+    desc: "Reliable day-to-night support for routines that do not slow down.",
     icon: "/icons/12-hours.png",
+    eyebrow: "Long coverage",
   },
 ];
 
 const StatsDivider = () => {
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-
   return (
-    <section className="py-8 bg-personalCare/5">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl">
-        {isSmallerDevice ? (
-          <div className="grid grid-cols-2 gap-3 w-full">
-            {statsLists.map((list) => (
-              <div
-                key={list.id}
-                className={`flex flex-col items-center justify-center gap-2 px-4 py-4 bg-white rounded-xl shadow-md ${
-                  list.id === 3 ? "col-span-2" : ""
-                }`}
-              >
-                <div className="bg-personalCare size-16 rounded-full relative">
-                  <img
+    <section className="relative overflow-hidden bg-personalCare/6 py-16 lg:py-20">
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-personalCare/20 to-transparent" />
+
+      <div className="mx-auto w-[92%] max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex rounded-full border border-personalCare/20 bg-white/80 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+            Everyday performance
+          </span>
+          <h2 className="mt-5 text-5xl font-semibold leading-[0.98] tracking-tight text-personalCare">
+            Protection details that feel
+            <span className="ml-2 italic font-light text-personalCare/70">
+              calm, light, and reliable.
+            </span>
+          </h2>
+          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
+            Designed to keep comfort and confidence balanced across long days,
+            active movement, and everyday wear.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {statsLists.map((list) => (
+            <article
+              key={list.id}
+              className="group rounded-[1.8rem] border border-personalCare/12 bg-white/90 p-6 shadow-[0_20px_48px_rgba(24,24,27,0.08)] backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-linear-to-br from-personalCare to-personalCare/80 shadow-[0_18px_34px_rgba(219,39,119,0.22)]">
+                  <Image
                     src={list.icon}
                     alt={list.title}
-                    className="size-10 invert absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
+                    width={34}
+                    height={34}
+                    className="invert"
                   />
                 </div>
-                <p className="text-sm font-semibold text-center">
-                  {list.title}
-                </p>
-                <p className="text-xs text-center text-zinc-500">{list.desc}</p>
+                <span className="rounded-full bg-personalCare/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-personalCare">
+                  {list.eyebrow}
+                </span>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex justify-center gap-4 w-full">
-            {statsLists.map((list) => (
-              <div
-                key={list.id}
-                className="flex flex-col items-center justify-center gap-2 px-16 py-4 bg-white rounded-xl shadow-md"
-              >
-                <div className="bg-personalCare size-24 rounded-full relative">
-                  <img
-                    src={list.icon}
-                    alt={list.title}
-                    className="size-16 invert absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"
-                  />
-                </div>
-                <p className="text-xl font-semibold">{list.title}</p>
-                <p className="text-sm">{list.desc}</p>
+
+              <h3 className="mt-6 text-2xl font-semibold tracking-tight text-zinc-900">
+                {list.title}
+              </h3>
+              <p className="mt-3 max-w-sm text-sm font-medium leading-6 text-zinc-600">
+                {list.desc}
+              </p>
+
+              <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-personalCare/8">
+                <div className="h-full w-2/3 rounded-full bg-linear-to-r from-personalCare to-personalCare/70 transition-all duration-300 group-hover:w-full" />
               </div>
-            ))}
-          </div>
-        )}
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

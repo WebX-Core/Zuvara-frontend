@@ -3,13 +3,12 @@ import HeroSection from "@/app/components/personalCare/HeroSection";
 import ProductSection from "@/app/components/personalCare/ProductSection";
 import StatsDivider from "@/app/components/personalCare/StatsDivider";
 import WhyUsSection from "@/app/components/personalCare/WhyUsSection";
-import React from "react";
 
 const page = () => {
   return (
     <div className="">
       <HeroSection />
-      {/* <WhyUsSection /> */}
+      <WhyUsSection />
       <StatsDivider />
       <ProductSection />
       <ProductList />

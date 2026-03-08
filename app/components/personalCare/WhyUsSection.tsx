@@ -1,7 +1,12 @@
-import React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-const featureLists = [
+type FeatureItem = {
+  id: number;
+  title: string;
+};
+
+const featureLists: FeatureItem[] = [
   { id: 1, title: "Ultra-soft, pillow-like comfort" },
   { id: 2, title: "Breathable and skin-friendly" },
   { id: 3, title: "Perfect fit for restful sleep" },
@@ -12,19 +17,25 @@ const featureLists = [
 
 const WhyUsSection = () => {
   return (
-    <section className="w-full min-h-screen relative py-20 overflow-hidden">
+    <section className="relative min-h-screen w-full overflow-hidden py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl flex flex-col items-center">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-personalCare">
-            Redefining Gentle Protection
+        <div className="mb-16 max-w-3xl text-center">
+          <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+            Why Personal Care
+          </span>
+          <h2 className="mt-5 text-5xl font-semibold leading-[0.98] tracking-tight text-personalCare">
+            Redefining gentle
+            <span className="ml-2 italic font-light text-personalCare/70">
+              protection and comfort.
+            </span>
           </h2>
-          <p className="text-gray-600 max-w-lg mx-auto">
-            Experience the ultimate comfort and care with our specially designed
-            products for your wellness.
+          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
+            Experience soft, breathable essentials designed to support your
+            everyday routine with comfort, confidence, and dependable care.
           </p>
         </div>
 
-        <div className="w-full relative min-h-[500px] lg:min-h-[700px] flex flex-col items-center justify-center isolate gap-10 lg:gap-0">
+        <div className="w-full relative min-h-125 lg:min-h-175 flex flex-col items-center justify-center isolate gap-10 lg:gap-0">
           {/* Mobile Layout - Top Triangle (Features 1, 2, 3) */}
           <div className="lg:hidden w-full space-y-4 z-20">
             {/* Point 1: Top Center */}
@@ -53,7 +64,7 @@ const WhyUsSection = () => {
                   className="absolute top-1/2 left-1/2"
                 >
                   <div
-                    className="absolute top-0 left-0 h-px bg-gradient-to-r from-personalCare/40 to-transparent origin-left hidden xl:block"
+                    className="absolute top-0 left-0 h-px bg-linear-to-r from-personalCare/40 to-transparent origin-left hidden xl:block"
                     style={{
                       width: `${radius - innerRadius - 20}px`,
                       transform: `rotate(${angle}deg) translateX(${innerRadius}px)`,
@@ -73,10 +84,11 @@ const WhyUsSection = () => {
 
             <div className="absolute inset-4 bg-personalCare/20 rounded-full blur-2xl z-10" />
             <div className="absolute inset-0 bg-personalCare/5 rounded-full border border-personalCare/10 z-10" />
-            <img
+            <Image
               src="/images/personalCare/sleeping-lady.png"
               alt="Sleeping Lady"
-              className="relative z-20 w-full h-full object-contain drop-shadow-2xl float-animation"
+              fill
+              className="relative z-20 h-full w-full object-contain drop-shadow-2xl float-animation"
             />
           </div>
 
@@ -112,7 +124,7 @@ const WhyUsSection = () => {
                       transform: `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`,
                     }}
                   >
-                    <div className="bg-white/70 backdrop-blur-md border border-personalCare/20 p-4 rounded-2xl shadow-lg hover:shadow-personalCare/20 transition-all duration-500 hover:-translate-y-1 w-56 text-center">
+                    <div className="bg-white/70 backdrop-blur-md border border-personalCare/20 p-4 rounded-2xl shadow-lg hover:shadow-personalCare/20 transition-all duration-500 hover:-translate-y-1 w-fit text-center">
                       <p className="text-sm font-semibold text-gray-800 whitespace-nowrap">
                         {feature.title}
                       </p>
@@ -134,7 +146,7 @@ const MobileFeatureCard = ({
   feature,
   className,
 }: {
-  feature: any;
+  feature: FeatureItem;
   className?: string;
 }) => (
   <div

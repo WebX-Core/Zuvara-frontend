@@ -1,158 +1,135 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import Button from "../common-ui/Button";
-import { useMediaQuery } from "react-responsive";
+import { ArrowRight, Check, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 
 const ProductSection = () => {
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-
   return (
-    <main className="relative w-full flex flex-col justify-between">
-      <section className="container mx-auto px-4 sm:px-6 lg:px-6 max-w-7xl flex flex-col lg:justify-between py-12 lg:py-0 gap-12 lg:gap-12 relative z-10">
-        {personalCareProducts.map((product) => (
-          <div
-            key={product.id}
-            className={`flex flex-col lg:flex-row items-center lg:h-screen ${product.id === 2 && "lg:flex-row-reverse"}`}
-          >
-            {/* Left Content: Text & CTA */}
-            <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-20 gap-4 lg:gap-8">
-              {/* <motion.div
+    <section className="relative overflow-hidden bg-white py-16 lg:py-24">
+      <div className="mx-auto w-[92%] max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+            Signature products
+          </span>
+          <h2 className="mt-5 text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight text-personalCare">
+            Designed for everyday
+            <span className="ml-2 italic font-light text-personalCare/70">
+              comfort and confidence.
+            </span>
+          </h2>
+          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
+            Explore the personal care essentials built to feel soft, stay
+            dependable, and support your routine from day wear to overnight use.
+          </p>
+        </div>
+
+        <div className="mt-12 space-y-8 lg:space-y-10">
+          {personalCareProducts.map((product) => {
+            const features = (
+              product.highlights ??
+              product.features ??
+              []
+            ).slice(0, 4);
+            const variantLabels = product.variants
+              .slice(0, 3)
+              .map((variant) => ({
+                id: variant.id,
+                label: variant.size,
+              }));
+
+            return (
+              <motion.article
+                key={product.id}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-block px-4 py-1.5 rounded-full bg-white border border-pink-100 shadow-sm"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 shadow-[0_22px_44px_rgba(24,24,27,0.06)] sm:p-6 lg:p-8"
               >
-                <span className="text-sm font-semibold text-personalCare uppercase tracking-wider">
-                  100% Cotton Feel
-                </span>
-              </motion.div> */}
+                <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+                  <div className="max-w-2xl">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="text-sm font-semibold text-personalCare/75">
+                        Exclusive Features
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-personalCare/8 px-3 py-1 text-xs font-medium text-personalCare">
+                        <Star size={13} className="fill-current" />
+                        {product.rating.toFixed(1)}
+                      </span>
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-zinc-500 shadow-sm">
+                        {product.reviews}+ reviews
+                      </span>
+                    </div>
 
-              <p className="text-4xl md:text-5xl lg:text-7xl font-semibold text-zinc-900 leading-tight">
-                {product.name}
-              </p>
-              <p className="text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed">
-                {product.description}
-              </p>
+                    <h3 className="mt-4 text-4xl font-semibold leading-[0.96] tracking-tight text-zinc-900 sm:text-5xl">
+                      {product.name}
+                    </h3>
 
-              {/* product image for mobile devices */}
-              {isSmallerDevice && (
-                <div className="w-full relative flex justify-center items-center py-16">
-                  <div className={`relative w-full h-full flex items-center`}>
-                    {/* Decorative Circle Behind */}
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{
-                        duration: 5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[80%] aspect-square rounded-full border border-personalCare/30 bg-white/60 backdrop-blur-sm -z-10"
-                    />
-
-                    {/* Main Product: Period Panties */}
-                    <motion.div
-                      // initial={{ opacity: 0, x: 50, rotate: 5 }}
-                      // animate={{ opacity: 1, x: 0, rotate: 0 }}
-                      // transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
-                      className="relative z-10 w-[70%] max-w-sm"
-                    >
-                      <Image
-                        src={product.productImage}
-                        alt={product.name}
-                        width={500}
-                        height={500}
-                        className="w-full h-auto drop-shadow-2xl object-contain translate-x-12"
-                        priority
-                      />
-                    </motion.div>
-                  </div>
-                </div>
-              )}
-
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 items-center">
-                {product.features?.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="bg-white/70 backdrop-blur-md border border-personalCare/20 p-4 rounded-2xl shadow-lg hover:shadow-personalCare/20 transition-all duration-500 hover:-translate-y-1 text-center"
-                  >
-                    <p className="text-sm font-semibold text-gray-800 whitespace-nowrap">
-                      {feature}
+                    <p className="mt-5 max-w-xl text-sm font-medium leading-8 text-zinc-600 md:text-base">
+                      {product.subDesc1 ?? product.description}
                     </p>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {variantLabels.map((variant) => (
+                        <span
+                          key={variant.id}
+                          className="rounded-full border border-personalCare/15 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700"
+                        >
+                          {variant.label}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                      <Link
+                        href={`/personalCareProduct/${product.slug}`}
+                        className="inline-flex items-center gap-2 rounded-full bg-personalCare px-6 py-3 text-sm font-semibold text-white! shadow-[0_18px_35px_rgba(219,39,119,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"
+                      >
+                        View product
+                        <ArrowRight size={16} />
+                      </Link>
+                      <Link
+                        href="/personalCareProduct"
+                        className="inline-flex rounded-full border border-personalCare/20 bg-white px-6 py-3 text-sm font-semibold text-zinc-700 transition-colors duration-300 hover:bg-personalCare/6"
+                      >
+                        Browse collection
+                      </Link>
+                    </div>
                   </div>
-                ))}
-              </div>
-              <Button
-                content="View Product"
-                link={`/personalCareProduct/${product.slug}`}
-                for="personalCare"
-                buttonClassName="w-full lg:w-fit"
-                className="justify-center"
-              />
-              {/* <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-7xl font-black text-zinc-900 leading-tight"
-          >
-            Ultimate Comfort <br />
-            <span className="text-personalCare">Zero Leakage.</span>
-          </motion.h1> */}
 
-              {/* <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-lg lg:text-xl text-zinc-600 font-medium max-w-lg leading-relaxed"
-              >
-                Experience our ultra-thin sanitary pads and period panties
-                designed for maximum absorption and breathable softness.
-              </motion.p> */}
-            </div>
+                  <div className="relative ">
+                    <div className="relative mx-auto flex min-h-96 items-center justify-center sm:min-h-112 lg:min-h-120">
+                      <div className="absolute h-80 w-80 rounded-full bg-personalCare/8 sm:h-96 sm:w-96 lg:h-112 lg:w-md" />
 
-            {/* for desktop Right Content: Product Composition */}
-            {!isSmallerDevice && (
-              <div className="w-full lg:w-1/2 relative flex justify-center lg:justify-end items-center h-[50vh] lg:h-auto">
-                <div
-                  className={`relative w-full h-full flex items-center ${product.id === 1 ? "lg:justify-center" : "lg:justify-start"}`}
-                >
-                  {/* Decorative Circle Behind */}
-                  <motion.div
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="absolute w-[80%] aspect-square rounded-full border border-personalCare/30 bg-white/60 backdrop-blur-sm -z-10"
-                  />
+                      <div className="absolute left-0 top-10 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-zinc-800 shadow-[0_16px_30px_rgba(24,24,27,0.08)] sm:left-4 lg:left-0">
+                        {features[0] ?? "Soft-touch comfort"}
+                      </div>
 
-                  {/* Main Product: Period Panties */}
-                  <motion.div
-                    // initial={{ opacity: 0, x: 50, rotate: 5 }}
-                    // animate={{ opacity: 1, x: 0, rotate: 0 }}
-                    // transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
-                    className="relative z-10 w-[70%] max-w-sm"
-                  >
-                    <Image
-                      src={product.productImage}
-                      alt={product.name}
-                      width={500}
-                      height={500}
-                      className="w-full h-auto drop-shadow-2xl object-contain translate-x-12 lg:translate-x-0"
-                      priority
-                    />
-                  </motion.div>
+                      <div className="absolute bottom-8 right-0 rounded-2xl bg-personalCare px-4 py-3 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(219,39,119,0.22)] sm:right-4 lg:right-0">
+                        {features[1] ?? "Reliable protection"}
+                      </div>
+
+                      <div className="relative h-80 w-full max-w-sm sm:h-96 lg:h-112">
+                        <Image
+                          src={product.productImage}
+                          alt={product.name}
+                          fill
+                          className="object-contain drop-shadow-[0_30px_45px_rgba(45,19,68,0.16)]"
+                          sizes="(min-width: 1024px) 36vw, 90vw"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </section>
-    </main>
+              </motion.article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 };
 

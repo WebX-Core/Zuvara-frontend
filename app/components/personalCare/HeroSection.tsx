@@ -1,186 +1,150 @@
-"use client";
-
-import React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import Button from "../common-ui/Button";
-// import StatsDivider from "../personalCare/StatsDivider";
-import { useMediaQuery } from "react-responsive";
-import { cn } from "@/lib/utils";
-import Title from "../shared/Title";
+import Link from "next/link";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 
-const featureLists = [
-  { id: 1, title: "Ultra-soft, pillow-like comfort" },
-  { id: 2, title: "Breathable and skin-friendly" },
-  { id: 3, title: "Perfect fit for restful sleep" },
-  { id: 4, title: "Fast absorption" },
-  { id: 5, title: "Side-leak guards" },
-  { id: 6, title: "All-night dryness guarantee" },
+const comfortPoints = [
+  "Ultra-thin comfort for everyday confidence",
+  "Fast-lock absorbent core",
+  "Soft top layer for sensitive skin",
+  "Secure fit with flexible wings",
 ];
 
 const HeroSection = () => {
-  const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
-
   return (
-    <main className="relative bg-personalCare/5 min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between">
-      <section className="container mx-auto px-6 lg:px-6 max-w-7xl flex-1 flex flex-col lg:flex-row items-center justify-between py-8 lg:py-0 gap-12 lg:gap-0 relative z-10">
-        {/* Left Content: Text & CTA */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left z-20 space-y-6">
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-white border border-pink-100 shadow-sm"
-          >
-            <span className="text-sm font-semibold text-personalCare uppercase tracking-wider">
-              100% Cotton Feel
-            </span>
-          </motion.div> */}
-          <Title
-            title="Ultimate Comfort"
-            highlighter="Zero Leakage."
-            desc="Experience our ultra-thin sanitary pads and period panties designed
-            for maximum absorption and breathable softness."
-          />
-        </div>
+    <section className="relative min-h-svh overflow-hidden bg-personalCare/8">
+      <div className="absolute inset-y-0 right-0 hidden w-[44%] bg-linear-to-b from-personalCare/90 via-personalCare to-personalCare/80 lg:block" />
 
-        {/* Right Content: Product Composition */}
-        <div className="w-full lg:w-1/2 relative flex justify-center lg:justify-end items-center h-[50vh] lg:h-auto">
-          <div className="w-full relative min-h-[500px] lg:min-h-[700px] flex flex-col items-center justify-center gap-2">
-            {/* Mobile Layout - Top Triangle (Features 1, 2, 3) */}
-            <div className="lg:hidden w-full space-y-2 z-20">
-              {/* Point 1: Top Center */}
-              <div className="flex justify-center">
-                <MobileFeatureCard
-                  feature={featureLists[0]}
-                  className="w-[85%]"
-                />
-              </div>
-              {/* Point 2 & 3: Horizontal line below 1 */}
-              <div className="flex justify-between gap-3">
-                <MobileFeatureCard
-                  feature={featureLists[1]}
-                  className="flex-1"
-                />
-                <MobileFeatureCard
-                  feature={featureLists[2]}
-                  className="flex-1"
-                />
-              </div>
+      <div className="relative mx-auto flex min-h-svh w-[92%] max-w-7xl flex-col justify-center py-12 sm:py-14 lg:py-16">
+        <div className="grid items-center gap-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[0.95fr_0.85fr_1.05fr] lg:gap-8">
+          <div className="max-w-xl pt-4 lg:self-center lg:pt-0">
+            <p className="inline-flex items-center gap-2 text-[11px] font-semibold text-personalCare/70">
+              <span className="size-1.5 rounded-full bg-personalCare/55" />
+              Feel the confidence
+            </p>
+
+            <h1 className="mt-5 text-4xl font-semibold leading-[0.95] tracking-tight text-zinc-900 sm:text-5xl lg:text-5xl">
+              Comfort that stays{" "}
+              <span className="italic font-thin">with you</span>
+            </h1>
+
+            <p className="mt-5 max-w-lg text-sm leading-7 font-medium text-zinc-600 sm:text-base">
+              Zuvara personal care essentials are made for breathable comfort,
+              secure protection, and easy everyday wear without bulk.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href="/personalCareProduct"
+                className="inline-flex items-center gap-2 rounded-full bg-personalCare px-6 py-3 text-sm font-semibold text-white! shadow-[0_18px_35px_rgba(219,39,119,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"
+              >
+                Shop now
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-700 shadow-[0_10px_28px_rgba(24,24,27,0.08)] transition-all duration-300 hover:bg-zinc-50"
+              >
+                Learn more
+              </Link>
             </div>
+          </div>
 
-            {/* Desktop Circular Features - Lines Layer (Behind Image) */}
-            <div className="absolute inset-0 hidden lg:block pointer-events-none -z-10">
-              {featureLists.map((feature, index) => {
-                const angle = index * 60 - 60;
-                const radius = 280;
-                const innerRadius = 180;
-                return (
-                  <div
-                    key={`line-${feature.id}`}
-                    className="absolute top-1/2 left-1/2"
-                  >
-                    <div
-                      className="absolute top-0 left-0 h-px bg-linear-to-r from-personalCare/40 to-transparent origin-left hidden xl:block"
-                      style={{
-                        width: `${radius - innerRadius - 20}px`,
-                        transform: `rotate(${angle}deg) translateX(${innerRadius}px)`,
-                      }}
-                    >
-                      <div className="absolute right-0 -top-1 size-2 bg-personalCare rounded-full border-2 border-white shadow-sm" />
+          <div className="relative mx-auto h-88 w-full max-w-[34rem] sm:h-112 lg:-ml-8 lg:h-[min(72vh,40rem)] lg:max-w-[32rem] lg:self-center xl:-ml-12">
+            <Image
+              src="/images/personalCare/happy-lady.png"
+              alt="Happy woman holding Zuvara personal care product"
+              fill
+              priority
+              className="object-contain object-bottom drop-shadow-[0_26px_45px_rgba(67,33,120,0.26)]"
+            />
+          </div>
+
+          <div className="relative z-10 grid gap-4 lg:w-full lg:max-w-[32rem] lg:self-center lg:justify-self-end">
+            {/* <div className="rounded-[1.6rem] bg-linear-to-br from-personalCare to-personalCare/80 p-6 text-white shadow-[0_24px_50px_rgba(219,39,119,0.28)]">
+              <p className="text-sm font-semibold">
+                Comfort that stays with you
+              </p>
+              <p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/78">
+                Designed to stay light, soft, and secure through workdays,
+                travel, and long hours on the move.
+              </p>
+
+              <div className="mt-7 flex items-center justify-between rounded-full bg-white/16 px-4 py-2.5 backdrop-blur-sm">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/70">
+                    Daily comfort
+                  </p>
+                  <p className="mt-1 text-sm font-semibold">
+                    Feel fresh longer
+                  </p>
+                </div>
+                <div className="flex h-8 w-16 items-center rounded-full bg-white/24 px-1">
+                  <span className="ml-auto flex size-6 items-center justify-center rounded-full bg-white text-[10px] font-bold text-personalCare">
+                    On
+                  </span>
+                </div>
+              </div>
+            </div> */}
+
+            <div className="rounded-[1.6rem] bg-white/80 p-6 shadow-[0_24px_50px_rgba(24,24,27,0.08)] sm:p-7">
+              <div className="grid gap-6">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                    Zuvara features
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {comfortPoints.map((point) => (
+                      <li key={point} className="flex items-start gap-3">
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-personalCare/12 text-personalCare">
+                          <Check size={12} strokeWidth={3} />
+                        </span>
+                        <span className="text-sm font-medium leading-6 text-zinc-700">
+                          {point}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="rounded-[1.35rem] bg-personalCare/5 p-5">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-personalCare shadow-sm">
+                    <Sparkles size={12} />
+                    Why women choose it
+                  </div>
+
+                  <h2 className="mt-4 text-xl font-semibold text-zinc-900">
+                    Gentle support for busy days
+                  </h2>
+                  <p className="mt-3 text-sm leading-6 text-zinc-600">
+                    Built for confidence, with a breathable feel and dependable
+                    protection that does not get in the way of your routine.
+                  </p>
+
+                  <div className="mt-5 rounded-[1.2rem] border border-personalCare/12 bg-white px-4 py-4">
+                    <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                      Best for
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {["Workdays", "Travel", "Overnight", "Active wear"].map(
+                        (item) => (
+                          <span
+                            key={item}
+                            className="rounded-full bg-personalCare/10 px-3 py-1.5 text-xs font-semibold text-personalCare"
+                          >
+                            {item}
+                          </span>
+                        ),
+                      )}
                     </div>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Central Image Container */}
-            <div className="relative z-10 size-44 md:size-80 lg:size-96 flex items-center justify-center">
-              {/* Opaque mask to truly hide lines behind everything */}
-              <div className="absolute inset-0 bg-white rounded-full z-0" />
-
-              <div className="absolute inset-4 bg-personalCare/20 rounded-full blur-2xl z-10" />
-              <div className="absolute inset-0 bg-personalCare/5 rounded-full border border-personalCare/10 z-10" />
-              <img
-                src="/images/personalCare/sleeping-lady.png"
-                alt="Sleeping Lady"
-                className="relative z-20 w-full h-full object-contain drop-shadow-2xl float-animation"
-              />
-            </div>
-
-            {/* Mobile Layout - Bottom Inverted Triangle (Features 4, 5, 6) */}
-            <div className="lg:hidden w-full space-y-4 z-20">
-              {/* Point 4 & 5: Horizontal line below image */}
-              <div className="flex justify-between gap-3">
-                <MobileFeatureCard
-                  feature={featureLists[3]}
-                  className="flex-1"
-                />
-                <MobileFeatureCard
-                  feature={featureLists[4]}
-                  className="flex-1"
-                />
+                </div>
               </div>
-              {/* Point 6: Bottom Center */}
-              <div className="flex justify-center">
-                <MobileFeatureCard
-                  feature={featureLists[5]}
-                  className="w-[85%]"
-                />
-              </div>
-            </div>
-
-            {/* Desktop Circular Features - Cards Layer (In Front of Image) */}
-            <div className="absolute inset-0 hidden lg:block pointer-events-none z-20">
-              {featureLists.map((feature, index) => {
-                const angle = index * 60 - 60;
-                const radius = 280;
-                return (
-                  <div
-                    key={`card-${feature.id}`}
-                    className="absolute top-1/2 left-1/2"
-                  >
-                    <div
-                      className="absolute pointer-events-auto group -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        transform: `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`,
-                      }}
-                    >
-                      <div className="bg-white/70 backdrop-blur-md border border-personalCare/20 px-6 py-3 rounded-2xl shadow-lg hover:shadow-personalCare/20 transition-all duration-500 hover:-translate-y-1 text-center">
-                        <p className="text-sm font-semibold text-gray-800 whitespace-nowrap">
-                          {feature.title}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
 };
 
 export default HeroSection;
-
-const MobileFeatureCard = ({
-  feature,
-  className,
-}: {
-  feature: any;
-  className?: string;
-}) => (
-  <div
-    className={cn(
-      "bg-white/90 backdrop-blur-md border border-personalCare/20 px-6 py-3 rounded-2xl shadow-sm flex items-center gap-3 justify-center text-center",
-      className,
-    )}
-  >
-    {/* <div className="size-1.5 bg-personalCare rounded-full shrink-0" /> */}
-    <p className="text-xs font-bold text-gray-800 leading-tight">
-      {feature.title}
-    </p>
-  </div>
-);
