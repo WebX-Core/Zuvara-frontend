@@ -148,6 +148,14 @@ const conceptImages = [
   "/images/baby/baby27.png",
 ];
 
+const ordinaryComparisonImageBySlug: Record<string, string> = {
+  "supreme-diapers": "/new/nonbrand/supreme-diaper.jpg",
+  "premium-diapers-pants": "/new/nonbrand/premium-diaper.jpg",
+  "value-diapers-pants": "/new/nonbrand/value-diaper.jpg",
+  "moisturising-tissue": "/new/nonbrand/tissue.jpg",
+  "value-wet-wipes": "/new/nonbrand/wetwipes.jpg",
+};
+
 const comparisonRows = [
   { label: "Dermatologically Tested", zuvara: "Yes", ordinary: "Not Always" },
   { label: "Hypoallergenic Design", zuvara: "Yes", ordinary: "Varies" },
@@ -229,6 +237,12 @@ export default function Page() {
   const activeImageSet =
     productImageSets[active?.slug ?? ""] ||
     productImageSets["supreme-diapers"];
+  const trustImages = {
+    comparisonZuvara: active?.image || heroPackSrc,
+    comparisonOrdinary:
+      ordinaryComparisonImageBySlug[active?.slug ?? ""] ||
+      "/new/nonbrand/supreme-diaper.jpg",
+  };
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -371,7 +385,11 @@ export default function Page() {
 
       <SizeGuideSection theme={theme} variants={variants} />
 
-      <TrustFusionSection theme={theme} comparisonRows={comparisonRows} />
+      <TrustFusionSection
+        theme={theme}
+        comparisonRows={comparisonRows}
+        images={trustImages}
+      />
 
       <CarePromiseSection theme={theme} conceptImages={conceptImages} />
 

@@ -125,9 +125,9 @@ export default function PersonalTrustFusionSection({
           className="flex justify-center items-center rounded-4xl px-4"
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
-          <div className="Center">
-            <div className="flex">
-              <div className="relative">
+          <div className="Center w-full">
+            <div className="flex w-full overflow-hidden rounded-3xl">
+              <div className="relative h-[340px] w-[65%] md:h-[460px] lg:h-[560px]">
                 <h2
                   className="absolute top-4 left-4 z-10 text-3xl md:text-5xl lg:text-6xl font-bold uppercase"
                   style={{ color: hexToRgba(theme.accent, 0.75) }}
@@ -139,10 +139,13 @@ export default function PersonalTrustFusionSection({
                   alt="Zuvara care"
                   width={1000}
                   height={1000}
-                  className="h-150 w-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <div className="relative -ml-0.5 border-l-2" style={{ borderColor: theme.border }}>
+              <div
+                className="relative h-[340px] w-[35%] border-l-2 md:h-[460px] lg:h-[560px]"
+                style={{ borderColor: theme.border }}
+              >
                 <h2 className="absolute top-4 right-4 z-10 text-3xl md:text-5xl lg:text-6xl font-bold uppercase text-zinc-500/70">
                   Ordinary
                 </h2>
@@ -151,7 +154,7 @@ export default function PersonalTrustFusionSection({
                   alt="Typical care"
                   width={1000}
                   height={1000}
-                  className="h-150 w-full object-cover"
+                  className="h-full w-full object-cover grayscale"
                 />
               </div>
             </div>

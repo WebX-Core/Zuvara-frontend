@@ -1,0 +1,23 @@
+<svg width="900" height="1200" viewBox="0 0 900 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2F2F2"/>
+      <stop offset="1" stop-color="#D8D8D8"/>
+    </linearGradient>
+    <linearGradient id="pack" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E3E3E3"/>
+      <stop offset="1" stop-color="#BFBFBF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect x="140" y="160" width="620" height="860" rx="58" fill="url(#pack)" stroke="#9A9A9A" stroke-width="6"/>
+  <rect x="190" y="240" width="520" height="120" rx="24" fill="#CFCFCF"/>
+  <rect x="215" y="274" width="240" height="24" rx="12" fill="#AFAFAF"/>
+  <rect x="215" y="312" width="360" height="18" rx="9" fill="#B9B9B9"/>
+
+  <path d="M300 660C300 570 370 500 460 500C550 500 620 570 620 660V690C620 780 550 850 460 850C370 850 300 780 300 690V660Z" fill="#B2B2B2"/>
+  <path d="M350 655C350 593 398 545 460 545C522 545 570 593 570 655V690C570 752 522 800 460 800C398 800 350 752 350 690V655Z" fill="#D4D4D4"/>
+
+  <rect x="190" y="910" width="520" height="38" rx="19" fill="#B3B3B3"/>
+</svg>

@@ -152,7 +152,7 @@ const seeds: ProductSeed[] = [
       testimonialPrimary: "/images/personalCare/happy-lady.png",
       testimonialSecondary: "/images/personalCare/lady-with-goggles.png",
       comparisonZuvara: "/PRODUCTS/personal/period%20panties/product.png",
-      comparisonOrdinary: "/PRODUCTS/personal/sanitary%20pads/product.png",
+      comparisonOrdinary: "/new/nonbrand/periodpanty.jpg",
     },
   },
   {
@@ -239,7 +239,7 @@ const seeds: ProductSeed[] = [
       testimonialPrimary: "/images/personalCare/happy-lady.png",
       testimonialSecondary: "/images/personalCare/sleeping-lady.png",
       comparisonZuvara: "/PRODUCTS/personal/sanitary%20pads/product.png",
-      comparisonOrdinary: "/PRODUCTS/personal/period%20panties/product.png",
+      comparisonOrdinary: "/new/nonbrand/sanitary-pad.jpg",
     },
   },
 
@@ -275,7 +275,7 @@ function normalizeProduct(seed: ProductSeed): Product {
       testimonialPrimary: "/images/personalCare/happy-lady.png",
       testimonialSecondary: "/images/personalCare/lady-with-goggles.png",
       comparisonZuvara: "/PRODUCTS/personal/sanitary%20pads/product.png",
-      comparisonOrdinary: "/PRODUCTS/personal/period%20panties/product.png",
+      comparisonOrdinary: "/new/nonbrand/sanitary-pad.jpg",
     },
   };
 }
