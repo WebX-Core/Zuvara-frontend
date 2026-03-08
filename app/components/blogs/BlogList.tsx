@@ -14,7 +14,12 @@ const BlogList = () => {
   return (
     <section className="container mx-auto py-4 lg:py-8 px-4 sm:px-6 lg:px-8 w-[90%]">
       <div className="mb-4 lg:mb-8">
-        <div className="max-w-3xl mx-auto text-center py-4 text-foreground">
+        <div
+          className={cn(
+            "max-w-3xl mx-auto text-center py-4",
+            isPersonal ? "text-personalCare" : "text-foreground",
+          )}
+        >
           <p className="text-sm font-semibold">Our Articles</p>
           <h2 className="mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]">
             Explore Our Expert

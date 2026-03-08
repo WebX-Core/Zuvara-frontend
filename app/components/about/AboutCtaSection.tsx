@@ -12,7 +12,7 @@ export default function AboutCtaSection({ palette }: AboutCtaSectionProps) {
         className="mx-auto max-w-7xl rounded-[2.4rem] border px-6 py-12 text-center md:px-10 md:py-16"
         style={{
           borderColor: `${palette.border}44`,
-          background: `linear-gradient(135deg, ${palette.accent} 0%, #58796f 100%)`,
+          background: `linear-gradient(135deg, ${palette.accent} 0%, ${palette.accentSoft} 100%)`,
         }}
       >
         <p className="text-sm font-semibold text-white/72">Our Promise</p>

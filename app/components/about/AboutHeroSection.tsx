@@ -7,12 +7,6 @@ type AboutHeroSectionProps = {
   palette: AboutPalette;
 };
 
-const heroTags = [
-  "Skin-first materials",
-  "Parent-led thinking",
-  "Soft daily care",
-];
-
 const heroNotes = [
   {
     title: "Our Focus",
@@ -26,7 +20,10 @@ const heroNotes = [
 
 export default function AboutHeroSection({ palette }: AboutHeroSectionProps) {
   return (
-    <section className="relative px-4 pt-12 sm:px-8 md:px-0 lg:px-0 bg-babyCare/50">
+    <section
+      className="relative px-4 pt-12 sm:px-8 md:px-0 lg:px-0"
+      style={{ backgroundColor: `${palette.chip}80` }}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-14 lg:px-14">
           <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -79,7 +76,7 @@ export default function AboutHeroSection({ palette }: AboutHeroSectionProps) {
             <div className="relative mx-auto mt-12 max-w-6xl">
               <div
                 className="pointer-events-none absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full blur-3xl md:h-80 md:w-80"
-                style={{ backgroundColor: "rgba(215,235,232,0.95)" }}
+                style={{ backgroundColor: `${palette.chip}f2` }}
               />
 
               <div className="grid items-center gap-4 lg:grid-cols-4">
@@ -93,8 +90,7 @@ export default function AboutHeroSection({ palette }: AboutHeroSectionProps) {
                     style={{
                       minHeight: "30rem",
                       borderColor: `${palette.border}44`,
-                      background:
-                        "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(237,245,241,0.92) 100%)",
+                      background: `linear-gradient(180deg, rgba(255,255,255,0.82) 0%, ${palette.panel}eb 100%)`,
                     }}
                   >
                     <div

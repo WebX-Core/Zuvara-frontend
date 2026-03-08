@@ -8,6 +8,7 @@ import AboutPromisesSection from "@/app/components/about/AboutPromisesSection";
 import AboutTeamSection from "@/app/components/about/AboutTeamSection";
 import AboutCtaSection from "@/app/components/about/AboutCtaSection";
 import { aboutPalette } from "@/app/components/about/theme";
+import { useSection } from "@/app/providers/SectionProvider";
 
 const stories = [
   {
@@ -59,49 +60,50 @@ const promises = [
 
 const team = [
   {
-    name: "Aarav Regmi",
-    role: "Founder, Zuvara",
-    image: "/images/parent/parent.png",
+    name: "Abhilash Bansal",
+    role: "Director",
+    image: "/partners/About/abhilash-bansal-director.avif",
   },
   {
-    name: "Sana Koirala",
-    role: "Brand and Experience",
-    image: "/images/personalCare/lady-with-goggles.png",
+    name: "Nikhil Bansal",
+    role: "Managing Director",
+    image: "/partners/About/nikhil-bansal.avif",
   },
   {
-    name: "Ritvik Shrestha",
-    role: "Creative Direction",
-    image: "/images/parent/parent2.png",
-  },
-  {
-    name: "Mila Thapa",
-    role: "Parent Community Lead",
-    image: "/new/mom.png",
-  },
-  {
-    name: "Elina Sharma",
-    role: "Product Research",
-    image: "/images/personalCare/happy-lady.png",
-  },
-  {
-    name: "Niraj Basnet",
-    role: "Care Innovation",
-    image: "/images/parents.png",
+    name: "Shasank Bansal",
+    role: "Director",
+    image: "/partners/About/shasank-bansal-director.avif",
   },
 ];
 
 export default function AboutPage() {
+  const { activeSection } = useSection();
+  const isPersonal = activeSection === "personal";
+  const pagePalette = isPersonal
+    ? {
+        ...aboutPalette,
+        accent: "#8200db",
+        accentSoft: "#9352bf",
+        border: "#be8fe2",
+        chip: "#eeddfb",
+        panel: "#f7efff",
+        page: "#fcf8ff",
+        ink: "#2d1d3a",
+        body: "#6d5b79",
+      }
+    : aboutPalette;
+
   return (
     <main
       className="relative min-h-screen overflow-hidden"
-      style={{ backgroundColor: aboutPalette.page, color: aboutPalette.ink }}
+      style={{ backgroundColor: pagePalette.page, color: pagePalette.ink }}
     >
-      <AboutHeroSection palette={aboutPalette} />
-      <AboutStorySection palette={aboutPalette} stories={stories} />
-      <AboutMilestonesSection palette={aboutPalette} milestones={milestones} />
-      <AboutPromisesSection palette={aboutPalette} promises={promises} />
-      <AboutTeamSection palette={aboutPalette} team={team} />
-      <AboutCtaSection palette={aboutPalette} />
+      <AboutHeroSection palette={pagePalette} />
+      <AboutStorySection palette={pagePalette} stories={stories} />
+      <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
+      <AboutPromisesSection palette={pagePalette} promises={promises} />
+      <AboutTeamSection palette={pagePalette} team={team} />
+      <AboutCtaSection palette={pagePalette} />
     </main>
   );
 }

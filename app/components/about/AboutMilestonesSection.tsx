@@ -20,7 +20,7 @@ export default function AboutMilestonesSection({
         className="mx-auto max-w-7xl rounded-4xl border px-5 py-6 md:px-8 md:py-8"
         style={{
           borderColor: `${palette.border}44`,
-          background: `linear-gradient(135deg, ${palette.accent} 0%, #58796f 100%)`,
+          background: `linear-gradient(135deg, ${palette.accent} 0%, ${palette.accentSoft} 100%)`,
         }}
       >
         <div className="grid gap-6 md:grid-cols-3">

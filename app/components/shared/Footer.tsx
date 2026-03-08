@@ -190,7 +190,7 @@ export default function Footer() {
                 type="email"
                 placeholder="Your email"
                 className={cn(
-                  "w-full px-3 py-2 border border-zinc-200 text-sm focus:outline-none rounded-full",
+                  "w-full px-3 py-2 border border-zinc-400 text-sm focus:outline-none rounded-full",
                   isPersonal
                     ? "focus:border-personalCare"
                     : "focus:border-foreground",

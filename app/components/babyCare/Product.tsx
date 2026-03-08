@@ -47,6 +47,29 @@ const Product = () => {
     product.description ??
     "Premium product designed for everyday comfort and reliable care.";
 
+  const getCardImage = (product: ProductItem) => {
+    if (activeTab !== "baby") {
+      return product.image;
+    }
+
+    const babyProduct = product as BabyProduct;
+
+    if (babyProduct.slug === "moisturising-tissue") {
+      return "/PRODUCTS/Baby/tissue/product.png";
+    }
+
+    if (babyProduct.slug === "value-wet-wipes") {
+      return "/PRODUCTS/Baby/wet-wipes/product.png";
+    }
+
+    return (
+      babyProduct.variants?.[0]?.image ||
+      babyProduct.image ||
+      babyProduct.heroImage ||
+      "/images/placeholder.png"
+    );
+  };
+
   return (
     <>
       {/* ================= PRODUCT SECTION ================= */}
@@ -128,7 +151,7 @@ const Product = () => {
                       {product.category}
                     </span>
                     <Image
-                      src={product.variants?.[0]?.image || product.image}
+                      src={getCardImage(product)}
                       alt={product.name}
                       fill
                       className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
