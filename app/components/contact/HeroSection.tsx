@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useMemo } from "react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { TypingAnimation } from "../shared/TypingAnimation";
 import { useMediaQuery } from "react-responsive";
@@ -12,104 +11,88 @@ import ContactSection from "./ContactSection";
 const HeroSection = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
-  
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  const theme = useMemo(() => ({
-    text: isPersonal
-      ? "Hello! Looking for safe, comfortable personal care products?"
-      : "Hello! Looking for gentle, comfy diapers for your baby?",
-    image: isPersonal 
-      ? "/new/contacpagemom.png" 
-      : "/images/baby/baby-calling.webp",
-    accent: isPersonal ? "bg-personalCare" : "bg-babyCare",
-    lightAccent: isPersonal ? "bg-personalCare/10" : "bg-babyCare/20",
-    bubble: isPersonal 
-      ? "bg-personalCare/60 border-white/20 text-white" 
-      : "bg-white/80 border-babyCare/20 text-slate-800",
-  }), [isPersonal]);
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+  const imageSize = isPersonal
+    ? isMobile
+      ? 190
+      : 440
+    : isMobile
+      ? 150
+      : 180;
 
   return (
-    <div className={cn(
-      "relative min-h-screen w-full flex items-center justify-center transition-colors duration-1000 overflow-hidden py-12 lg:py-0",
-      theme.lightAccent
-    )}>
-      
-      {/* Background Gradient */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className={cn("absolute -top-[10%] -right-[10%] w-72 md:w-125 h-72 md:h-125 rounded-full blur-[100px] opacity-40", theme.accent)} />
-        <div className={cn("absolute -bottom-[10%] -left-[10%] w-72 md:w-125 h-72 md:h-125 rounded-full blur-[100px] opacity-20", theme.accent)} />
-      </div>
-
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-12">
-          
-          {/* Form Side - Scales beautifully from mobile to desktop */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full lg:w-1/2 order-2 lg:order-1"
-          >
-            <div className="bg-white/40 backdrop-blur-md rounded-3xl p-1 shadow-sm border border-white/20">
-              <ContactSection />
-            </div>
-          </motion.div>
-
-          {/* Visual Side - Fixed Overlap Logic */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end justify-center order-1 lg:order-2 mb-8 lg:mb-0 lg:pt-20">
-            <div className="relative flex flex-col items-center lg:items-end">
-              
-              {/* Responsive Chat Bubble */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSection}
-                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ type: "spring", damping: 20, stiffness: 120 }}
-                  className={cn(
-                    "z-30 p-5 md:p-6 rounded-4xl shadow-xl backdrop-blur-lg border mb-4 lg:absolute",
-                    "lg:top-4 lg:-left-32 lg:mb-0 lg:w-[320px]",
-                    "w-[90%] max-w-87.5 relative",
-                    theme.bubble
-                  )}
-                >
-                  <TypingAnimation
-                    text={theme.text}
-                    className="text-base md:text-lg font-semibold leading-tight text-center lg:text-left"
-                    duration={40}
-                  />
-
-                  {/* Desktop-only tail (hidden on mobile for cleaner look) */}
-                  <div className={cn(
-                    "hidden lg:block absolute -bottom-3 right-12 w-6 h-6 rotate-45 border-r border-b",
-                    isPersonal ? "bg-personalCare/60 border-white/20" : "bg-white/80 border-babyCare/20"
-                  )} />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Character Image - Dynamic Sizing */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative lg:mt-8 translate-y-[20px]"
-              >
-                <Image
-                  src={theme.image}
-                  alt="Section Hero"
-                  // Carefully balanced sizes
-                  width={isPersonal ? (isMobile ? 240 : 350) : (isMobile ? 180 : 260)}
-                  height={isPersonal ? (isMobile ? 240 : 350) : (isMobile ? 180 : 260)}
-                  priority
-                  className="drop-shadow-2xl object-contain transition-all duration-500"
-                />
-                
-                {/* Image Base Shadow */}
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-2/3 h-4 bg-black/10 blur-xl rounded-[100%]" />
-              </motion.div>
-
-            </div>
+    <div
+      className={cn(
+        "h-[75vh] lg:min-h-screen flex lg:items-center justify-center",
+        isPersonal ? "bg-personalCare/10" : "bg-babyCare/20",
+      )}
+    >
+      <section className="container mx-auto px-4 lg:px-6 max-w-7xl">
+        <div className="h-full flex flex-col lg:flex-row lg:items-end justify-between lg:justify-center relative">
+          <div className="lg:w-2/3">
+            {/* <Title
+              title="Let's"
+              highligher="Connect"
+              desc="Diapers, wipes, and gentle care products meticulously designed
+                to keep your baby clean, comfortable, and remarkably happy."
+            /> */}
+            <ContactSection />
           </div>
 
+          <div className="lg:w-1/3 flex justify-end relative">
+            {/* Premium Rounded Message Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: 20, y: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+              transition={{ delay: 1, duration: 0.8, ease: "backOut" }}
+              style={{ originX: 1, originY: 1 }}
+              className={cn(
+                "absolute -top-16 md:top-0 lg:-top-16 left-0 z-10 p-4 w-full max-w-55 md:max-w-70 h-36 md:h-28 rounded-2xl",
+                isPersonal
+                  ? "bg-personalCare/50 text-white"
+                  : "bg-babyCare/70 text-foreground",
+              )}
+            >
+              <TypingAnimation
+                text={
+                  isPersonal
+                    ? "Hi! Looking for comfortable, reliable personal care products?"
+                    : "Hello! Looking for gentle, comfy diapers for your baby?"
+                }
+                className="text-xl font-semibold"
+                duration={75}
+                delay={1500}
+              />
+
+              {/* The Rounded Tail */}
+              <div
+                className={cn(
+                  "absolute -bottom-10 right-12 size-10",
+                  isPersonal ? "bg-personalCare/50" : "bg-babyCare/70",
+                )}
+                style={{
+                  clipPath: "polygon(0 0, 100% 0, 100% 100%)",
+                }}
+              />
+            </motion.div>
+
+            <div className="relative">
+              <Image
+                src={
+                  isPersonal
+                    ? "/new/contacpagemom.png"
+                    : "/images/baby/baby-calling.webp"
+                }
+                alt={isPersonal ? "mom calling" : "baby calling"}
+                width={imageSize}
+                height={imageSize}
+                className={cn(
+                  "relative z-0 object-contain drop-shadow-2xl",
+                  isPersonal && "translate-x-20",
+                )}
+              />
+            </div>
+          </div>
         </div>
       </section>
     </div>
