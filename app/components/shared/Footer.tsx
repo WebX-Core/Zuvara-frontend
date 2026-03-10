@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
+import { wave4Svg } from "@/constants/svgs";
 import CrawlingBaby from "./CrawlingBaby";
 
 export default function Footer() {
@@ -15,6 +16,9 @@ export default function Footer() {
   const isPersonal = activeSection === "personal";
   const logoSrc = isPersonal ? "/logo/logo_secondary.svg" : "/logo/logo.png";
   const isMounted = true;
+  const footerWaveMarkup = isPersonal
+    ? wave4Svg.markup.replace('fill="#F6F7EF"', 'fill="#F3E8FF"')
+    : wave4Svg.markup.replace('fill="#F6F7EF"', 'fill="#FFFFFF"');
 
   const footerSections = [
     {
@@ -50,20 +54,10 @@ export default function Footer() {
         isPersonal ? "bg-personalCare/10" : "", 
       )}
     >
-      <div className="relative -top-20 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none">
-        <svg
-          className="block w-screen h-auto"
-          viewBox="0 0 824 63"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M665.5 19.2391C718.622 -3.40286 792.861 4.72495 823.341 11.6191V62.4544H0V18.8097C42.4024 -1.26519 87.0133 1.29723 104.018 5.0878C150.792 20.2177 256.89 44.144 307.098 18.8097C357.306 -6.52459 421.086 -0.894188 446.7 5.0878C497.499 19.239 612.378 41.881 665.5 19.2391Z"
-            fill={isPersonal ? "#F3E8FF" : "#FFFFFF"}
-          />
-        </svg>
-      </div>
+      <div
+        className="relative -top-20 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: footerWaveMarkup }}
+      />
 
       <div className="relative z-10 container mx-auto max-w-7xl px-4 lg:px-0 pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}

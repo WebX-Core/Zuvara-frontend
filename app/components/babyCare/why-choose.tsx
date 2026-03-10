@@ -83,7 +83,7 @@ const highlightPoints = [
 
 const WhyChoose = () => {
   return (
-    <section className="relative w-full overflow-hidden  bg-[#BFDDCA] pb-20">
+    <section className="relative w-full overflow-hidden  bg-babyCare pb-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-0 lg:px-0">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -303,32 +303,44 @@ const WhyChoose = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: index * 0.08 }}
                 viewport={{ once: true }}
-                className="rounded-3xl border p-6 bg-white/90"
-                style={{
-                  borderColor: `${palette.border}44`,
-                }}
+                className="relative mx-auto w-full max-w-90"
               >
+                <svg
+                  viewBox="0 0 400 200"
+                  className="mx-auto block h-55 w-[calc(100%+5px)] sm:h-60 md:h-65"
+                  aria-hidden="true"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M40 110 C30 70 70 40 120 50 C150 20 220 20 250 50 C300 40 360 70 350 120 C360 160 300 180 240 170 C200 190 130 185 90 165 C50 160 25 135 40 110 Z"
+                    fill="#ffffff"
+                  />
+                </svg>
+                <div className="absolute inset-0 z-10 flex items-center justify-center px-10 py-8 sm:px-12 sm:py-10">
+                  <div className="w-full max-w-57.5 text-center">
                 <div
-                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl "
+                  className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11"
                   style={{
                     backgroundColor: palette.accent,
                     color: "#ffffff",
                   }}
                 >
-                  <Icon size={20} />
+                  <Icon size={16} className="sm:h-4.5 sm:w-4.5" />
                 </div>
                 <h3
-                  className="text-lg font-semibold"
+                  className="text-sm font-semibold sm:text-base"
                   style={{ color: palette.accent }}
                 >
                   {value.title}
                 </h3>
                 <p
-                  className="mt-3 text-sm leading-relaxed"
+                  className="mt-2 text-xs leading-relaxed sm:text-sm"
                   style={{ color: palette.body }}
                 >
                   {value.description}
                 </p>
+                </div>
+                </div>
               </motion.div>
             );
           })}
