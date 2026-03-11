@@ -45,16 +45,50 @@ export default function Footer() {
     },
   ];
 
+  const productsSection = [
+    {
+      title: "Products",
+      links: isPersonal
+        ? [
+            {
+              label: "Period Panties",
+              href: "/personalCareProduct/period-panties",
+            },
+            {
+              label: "Sanitary Pads",
+              href: "/personalCareProduct/sanitary-pads",
+            },
+          ]
+        : [
+            { label: "Supreme Diapers", href: "/babyCareProduct/supreme-diapers" },
+            {
+              label: "Premium Diapers & Pants",
+              href: "/babyCareProduct/premium-diapers-pants",
+            },
+            {
+              label: "Feather Diaper Tape",
+              href: "/babyCareProduct/feather-diaper-tape",
+            },
+            {
+              label: "Value Diapers & Pants",
+              href: "/babyCareProduct/value-diapers-pants",
+            },
+            {
+              label: "Moisturising Tissue",
+              href: "/babyCareProduct/moisturising-tissue",
+            },
+            { label: "Value Wet Wipes", href: "/babyCareProduct/value-wet-wipes" },
+          ],
+    },
+  ];
+
   return (
     <footer
       className={cn(
         "relative overflow-visible w-full",
-        isPersonal ? "bg-personalCare/10" : "", 
+        isPersonal ? "bg-personalCare/10" : "bg-white",
       )}
     >
-      
-   
-
       <div className="relative z-10 container mx-auto max-w-7xl px-4 lg:px-0 pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
         <div className="flex justify-center my-4 lg:my-8 w-full">
@@ -116,7 +150,7 @@ export default function Footer() {
           <Link
             href={isPersonal ? "/personalCareProduct" : "/babyCareProduct"}
             className={cn(
-              "bg-white px-4 py-2 rounded-full font-semibold transition flex items-center gap-2 shrink-0",
+              "bg-white px-4 py-2 rounded-full font-bold transition flex items-center gap-2 shrink-0",
               isPersonal
                 ? "text-personalCare! hover:bg-white/70 hover:text-foreground"
                 : "text-foreground! hover:bg-babyCare hover:text-foreground",
@@ -128,65 +162,9 @@ export default function Footer() {
         </div>
 
         {/* Newsletter & Contact Section */}
-        <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* quick links */}
-          <div className="hidden lg:block">
-            {footerSections.map((section, index) => (
-              <div key={index}>
-                <h3
-                  className={cn(
-                    "text-sm lg:text-base font-semibold mb-2 lg:mb-4",
-                    isPersonal ? "text-personalCare" : "text-foreground",
-                  )}
-                >
-                  {section.title}
-                </h3>
-                <ul className="space-y-1 lg:space-y-2">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          "text-sm lg:text-base hover:text-foreground! hover:underline! transition whitespace-nowrap",
-                          isPersonal ? "text-zinc-600!" : "text-zinc-600!",
-                        )}
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          {/* Visit Us */}
-          <div>
-            <h3
-              className={cn(
-                "text-sm lg:text-base font-semibold mb-2 lg:mb-4",
-                isPersonal ? "text-personalCare" : "text-foreground",
-              )}
-            >
-              Visit Us
-            </h3>
-            <div className="flex flex-col gap-4">
-              {contactLists.slice(0, 2).map((contact) => (
-                <div key={contact.id}>
-                  <p className="font-semibold lg:font-normal">
-                    {contact.title}
-                  </p>
-                  <Link href={contact.link}>
-                    <p className="text-sm hover:underline max-w-60">
-                      {contact.desc}
-                    </p>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-
+        <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           {/* Newsletter */}
-          <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4">
+            <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4  ">
             <Link href="/" className="flex items-center shrink-0">
               <Image src={logoSrc} alt="Zuvara Logo" width={90} height={90} />
             </Link>
@@ -226,6 +204,95 @@ export default function Footer() {
               ))}
             </div>
           </div>
+          <div>
+            {productsSection.map((section, index) => (
+              <div key={index}>
+                <h3
+                  className={cn(
+                    "text-sm lg:text-base font-bold mb-2 lg:mb-4",
+                    isPersonal ? "text-personalCare" : "text-foreground",
+                  )}
+                >
+                  {section.title}
+                </h3>
+                <ul className="space-y-1 lg:space-y-2">
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "text-sm lg:text-base font-medium hover:text-foreground! hover:underline! transition whitespace-nowrap",
+                          isPersonal ? "text-zinc-600!" : "text-zinc-600!",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          {/* Quick links */}
+          <div>
+            {footerSections.map((section, index) => (
+              <div key={index}>
+                <h3
+                  className={cn(
+                    "text-sm lg:text-base font-bold mb-2 lg:mb-4",
+                    isPersonal ? "text-personalCare" : "text-foreground",
+                  )}
+                >
+                  {section.title}
+                </h3>
+                <ul className="space-y-1 lg:space-y-2">
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "text-sm lg:text-base font-medium hover:text-foreground! hover:underline! transition whitespace-nowrap",
+                          isPersonal ? "text-zinc-600!" : "text-zinc-600!",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          
+           
+          {/* Visit Us */}
+          <div>
+            <h3
+              className={cn(
+                "text-sm lg:text-base font-bold mb-2 lg:mb-4",
+                isPersonal ? "text-personalCare" : "text-foreground",
+              )}
+            >
+              Visit Us
+            </h3>
+            <div className="flex flex-col gap-4">
+              {contactLists.slice(0, 2).map((contact) => (
+                <div key={contact.id}>
+                  <p className="font-medium">
+                    {contact.title}
+                  </p>
+                  <Link href={contact.link}>
+                    <p className="text-sm font-medium hover:underline ">
+                      {contact.desc}
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Newsletter */}
+        
         </div>
       </div>
       {/*  Image Div */}
@@ -269,7 +336,7 @@ export default function Footer() {
                 alt="WebX Nepal Logo"
                 width={50}
                 height={90}
-                className="font-semibold group-hover:scale-105 transition-transform"
+                className="font-bold group-hover:scale-105 transition-transform"
               />
             </Link>
           </div>

@@ -30,17 +30,17 @@ export default function WhyZuvaraProductsSection({
   theme,
 }: WhyZuvaraProductsSectionProps) {
 
-  const productBottomWave  = assetWithFill(wave3Svg, "#f2f7f5")
+  const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
 
   return (
-    <section className="relative overflow-hidden px-4 py-8 md:px-0 md:pb-40 bg-babyCare">
+    <section className="relative overflow-hidden bg-babyCare px-4 py-10 sm:px-6 lg:px-8 lg:py-14 lg:pb-28">
 
         <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
        
-      <div className="relative z-10  w-7xl mx-auto">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <span
             className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"

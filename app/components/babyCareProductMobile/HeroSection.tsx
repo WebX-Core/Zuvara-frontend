@@ -24,19 +24,19 @@ const featuredProductLists = [
     id: 1,
     name: "Diaper Pants",
     desc: "Ultra-Comfortable, Pant Style",
-    image: "/images/baby/baby-with-product.png",
+    image: "/images/baby/baby-with-product.webp",
   },
   {
     id: 2,
     name: "Baby Wipes",
     desc: "Gentle & Pure, Alcohol Free",
-    image: "/images/baby/baby-with-product.png",
+    image: "/images/baby/baby-with-product.webp",
   },
   {
     id: 3,
     name: "Baby Lotion",
     desc: "Nourishing Protection for Skin",
-    image: "/images/baby/baby-with-product.png",
+    image: "/images/baby/baby-with-product.webp",
   },
 ];
 

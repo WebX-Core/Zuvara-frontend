@@ -18,7 +18,7 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: wave2Svg.markup }}
         />
         {/* Flower & Ferns */}
-        <div className="absolute bottom-4 left-[1%] sm:left-[20%] -z-20 sm:bottom-20 lg:bottom-24 [&>svg]:h-50 [&>svg]:w-50">
+        <div className="absolute hidden sm:block bottom-4 left-[1%] sm:left-[20%] -z-20 sm:bottom-20 lg:bottom-24 [&>svg]:h-50 [&>svg]:w-50">
           {" "}
           <Image
             src="/waves/sunflower.gif"
@@ -55,7 +55,7 @@ export default function Home() {
         {/* Tree */}
         {/* Center Tree */}
         <div
-          className="absolute bottom-6 right-[10%] sm:right-[40%] -z-20 sm:bottom-24 lg:bottom-44 [&>svg]:h-50 [&>svg]:w-50"
+          className="absolute hidden sm:block bottom-6 right-[10%] sm:right-[40%] -z-20 sm:bottom-24 lg:bottom-44 [&>svg]:h-50 [&>svg]:w-50"
          
         >
           <Image
@@ -173,7 +173,7 @@ export default function Home() {
               comfort and safety for your heart and healthy baby.
             </p>
 
-            <div className="flex items-center gap-4 lg:gap-5 pt-2 lg:pt-4 flex-wrap">
+            <div className="flex items-center w-full gap-4 lg:gap-5 pt-2 lg:pt-4 ">
               <Link href="/babyCareProduct">
                 <button className="bg-[#45685e] text-white px-6 lg:px-8 py-2.5 lg:py-3 rounded-full font-medium hover:shadow-xl cursor-pointer hover:scale-105 transition duration-300 text-sm lg:text-base">
                   Explore Essentials
@@ -194,8 +194,8 @@ export default function Home() {
                 className="relative w-80 aspect-square"
               >
                 <Image
-                  src="/waves/"
-                  alt=""
+                  src="/waves/BORDERS.png"
+                  alt="Decorative frame"
                   fill
                   className="pointer-events-none absolute inset-0 z-20 object-contain"
                 />
@@ -231,7 +231,7 @@ export default function Home() {
               fill
               className="pointer-events-none absolute inset-0 z-20 object-contain"
             />
-            <div className="absolute inset-[15%] z-10 overflow-hidden rounded-3xl">
+            <div className="absolute inset-[15%] z-10 overflow-hidden rounded-[60px]">
               <video
                 src="/videos/babyPlaying.mp4"
                 autoPlay

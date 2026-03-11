@@ -7,6 +7,7 @@ import Image from "next/image";
 import { TypingAnimation } from "../shared/TypingAnimation";
 import { useMediaQuery } from "react-responsive";
 import ContactSection from "./ContactSection";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 const HeroSection = () => {
   const { activeSection } = useSection();
@@ -20,13 +21,22 @@ const HeroSection = () => {
       ? 150
       : 180;
 
+       
+        const wave = assetWithFill(wave4Svg, isPersonal ? "#f4e8fc" : "#ffffff");
+
+
+
   return (
     <div
       className={cn(
-        "h-[75vh] lg:min-h-screen flex lg:items-center justify-center",
+        "relative h-[75vh] lg:min-h-screen flex lg:items-center justify-center ",
         isPersonal ? "bg-personalCare/10" : "bg-babyCare/20",
       )}
     >
+        <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: wave.markup }}
+      />
       <section className="container mx-auto px-4 lg:px-6 max-w-7xl">
         <div className="h-full flex flex-col lg:flex-row lg:items-end justify-between lg:justify-center relative">
           <div className="lg:w-2/3">

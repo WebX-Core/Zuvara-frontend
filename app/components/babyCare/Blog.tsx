@@ -11,7 +11,7 @@ const Blog = () => {
   const blogPosts = blogLists.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare/20 py-16 lg:py-32">
+    <section className="relative overflow-hidden bg-babyCare/20 px-4 py-16 lg:py-32">
        <div
               className="absolute -bottom-1 left-1/2 z-20 w-screen  -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
               dangerouslySetInnerHTML={{ __html: wave32Svg.markup }}

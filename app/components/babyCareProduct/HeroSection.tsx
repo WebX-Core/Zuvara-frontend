@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
-import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import {
   babyCareListingTheme,
   type BabyCareListingTheme,
@@ -72,7 +71,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
   return (
     <section
       ref={containerRef}
-      className="relative isolate min-h-[88vh] overflow-hidden px-4 py-12 md:px-6 lg:px-10 bg-babyCare/50"
+      className="relative isolate min-h-[75vh] overflow-hidden bg-babyCare/50 px-4 py-10 sm:px-6 md:min-h-[88vh] md:py-12 lg:px-10"
     >
         <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
@@ -84,7 +83,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
         </div> */}
 
         <h2
-          className="hero-copy mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight"
+          className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.6rem)] font-semibold leading-[0.95] tracking-tight"
           style={{ color: theme.accent }}
         >
           Everyday baby care,
@@ -127,7 +126,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
               </p>
             </div>
 
-            <div className="hero-float absolute right-0 top-22 hidden w-52 rounded-[1.8rem] border border-white/60 bg-white/50 p-4 text-left shadow-[0_18px_38px_rgba(69,104,94,0.12)] backdrop-blur-sm lg:block">
+            <div className="hero-float absolute right-0 top-20 hidden w-52 rounded-[1.8rem] border border-white/60 bg-white/50 p-4 text-left shadow-[0_18px_38px_rgba(69,104,94,0.12)] backdrop-blur-sm lg:block">
               <p className="text-sm font-semibold" style={{ color: theme.accent }}>
                 {floatingNotes[1].title}
               </p>
@@ -136,7 +135,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
               </p>
             </div>
 
-            <div className="hero-float relative mx-auto flex min-h-105 w-full max-w-4xl items-end justify-center overflow-hidden rounded-[2.6rem] px-6 pt-10 md:min-h-130">
+            <div className="hero-float relative mx-auto flex h-[320px] w-full max-w-4xl items-end justify-center overflow-hidden rounded-[2.6rem] px-4 pt-8 sm:h-[400px] sm:px-6 sm:pt-10 md:h-[500px] lg:h-[560px]">
               <Image
                 src="/images/baby/baby-with-product.webp"
                 alt="Baby with product"
@@ -165,7 +164,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
         </div>
 
         <div
-          className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[84px] font-black text-foreground/70 uppercase leading-none md:text-[120px] xl:text-[170px]"
+          className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[48px] font-black uppercase leading-none text-foreground/70 sm:text-[72px] md:text-[120px] xl:text-[170px]"
         >
           zuvara
         </div>

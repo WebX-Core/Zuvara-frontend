@@ -75,14 +75,14 @@ const Product = () => {
   return (
     <>
       {/* ================= PRODUCT SECTION ================= */}
-      <section className="relative py-8 lg:pb-20 ">
+      <section className="relative py-8 lg:pb-20">
         <div
           className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
           dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
         />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-6 w-full lg:w-[90%]">
+        <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
           <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-            <h2 className="hero-copy mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight text-[#45685e]">
+            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-[#45685e]">
               Best selling
               <span className="ml-3 font-light italic text-[#6d877f]">
                 baby essentials
