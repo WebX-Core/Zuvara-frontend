@@ -9,6 +9,7 @@ import AboutTeamSection from "@/app/components/about/AboutTeamSection";
 import AboutCtaSection from "@/app/components/about/AboutCtaSection";
 import { aboutPalette } from "@/app/components/about/theme";
 import { useSection } from "@/app/providers/SectionProvider";
+import { assetWithFill, wave3Svg, wave4Svg } from "@/constants/svgs";
 
 const stories = [
   {
@@ -96,22 +97,60 @@ export default function AboutPage() {
     ? "/images/baby/bonding-personal.png"
     : "/new/bonding.png";
   const productHref = isPersonal ? "/personalCareProduct" : "/babyCareProduct";
+  const sectionBg = pagePalette.page;
+  const footerBg = isPersonal ? "#f4e8fc" : "#ffffff";
+  const heroWave = assetWithFill(wave3Svg, sectionBg);
+  const promisesWave = assetWithFill(wave4Svg, sectionBg);
+  const teamWave = assetWithFill(wave3Svg, sectionBg);
+  const ctaWave = assetWithFill(wave4Svg, footerBg);
+  const waveClass =
+    "pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen";
 
   return (
     <main
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: pagePalette.page, color: pagePalette.ink }}
     >
-      <AboutHeroSection
-        palette={pagePalette}
-        heroImage={heroImage}
-        productHref={productHref}
-      />
-      <AboutStorySection palette={pagePalette} stories={stories} />
-      <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
-      <AboutPromisesSection palette={pagePalette} promises={promises} />
-      <AboutTeamSection palette={pagePalette} team={team} />
-      <AboutCtaSection palette={pagePalette} productHref={productHref} />
+      <div className="relative">
+        <AboutHeroSection
+          palette={pagePalette}
+          heroImage={heroImage}
+          productHref={productHref}
+        />
+        <div
+          className={waveClass}
+          dangerouslySetInnerHTML={{ __html: heroWave.markup }}
+        />
+      </div>
+      <div className="relative">
+        <AboutStorySection palette={pagePalette} stories={stories} />
+      
+      </div>
+      <div className="relative">
+        <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
+
+      </div>
+      <div className="relative">
+        <AboutPromisesSection palette={pagePalette} promises={promises} />
+        <div
+          className={waveClass}
+          dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
+        />
+      </div>
+      <div className="relative">
+        <AboutTeamSection palette={pagePalette} team={team} />
+        <div
+          className={waveClass}
+          dangerouslySetInnerHTML={{ __html: teamWave.markup }}
+        />
+      </div>
+      <div className="relative">
+        <AboutCtaSection palette={pagePalette} productHref={productHref} />
+        <div
+          className={waveClass}
+          dangerouslySetInnerHTML={{ __html: ctaWave.markup }}
+        />
+      </div>
     </main>
   );
 }

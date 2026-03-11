@@ -10,6 +10,7 @@ import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
 import type { Product as BabyProduct } from "@/type/babyCareProductType";
 import type { Product as ClothingProduct } from "@/type/babyClothesType";
 import type { Product as StrollerProduct } from "@/type/strollerRockerProductType";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 type ProductItem = BabyProduct | ClothingProduct | StrollerProduct;
 
@@ -46,6 +47,7 @@ const Product = () => {
   const getDescription = (product: ProductItem) =>
     product.description ??
     "Premium product designed for everyday comfort and reliable care.";
+  const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
 
   const getCardImage = (product: ProductItem) => {
     if (activeTab !== "baby") {
@@ -73,7 +75,11 @@ const Product = () => {
   return (
     <>
       {/* ================= PRODUCT SECTION ================= */}
-      <section className="relative py-8 lg:py-0 ">
+      <section className="relative py-8 lg:pb-20 ">
+        <div
+          className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+          dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+        />
         <div className="container mx-auto px-4 sm:px-6 lg:px-6 w-full lg:w-[90%]">
           <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
             <h2 className="hero-copy mt-6 max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight text-[#45685e]">

@@ -9,6 +9,7 @@ import {
   babyCareListingTheme,
   type BabyCareListingTheme,
 } from "@/app/components/babyCareProduct/theme";
+import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
 const heroPills = [
   "Skin-first essentials",
@@ -66,11 +67,17 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
     { scope: containerRef },
   );
 
+   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+
   return (
     <section
       ref={containerRef}
       className="relative isolate min-h-[88vh] overflow-hidden px-4 py-12 md:px-6 lg:px-10 bg-babyCare/50"
     >
+        <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      />
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center text-center">
         {/* <div className="hero-copy inline-flex rounded-full border border-yellow-500 bg-yellow-500 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-[#ffffff] shadow-[0_12px_28px_rgba(69,104,94,0.08)] backdrop-blur-sm">
           Premium Collection

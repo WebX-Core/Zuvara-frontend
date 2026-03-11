@@ -28,13 +28,20 @@ export const wave3Svg: SvgAsset = {
   markup:
     '<svg width="824" height="75" viewBox="0 0 824 75" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M517.899 31.2641C640.291 -18.0713 772.639 1.83 823.514 17.9476V74.2465H0V31.2641C3.64488 26.2386 32.0217 12.9528 120.751 7.1552C233.341 3.75336 366.983 92.0975 517.899 31.2641Z" fill="#74A788"/></svg>',
 };
+export const wave32Svg: SvgAsset = {
+  width: 824,
+  height: 75,
+  viewBox: "0 0 824 75",
+  markup:
+    '<svg width="824" height="75" viewBox="0 0 824 75" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M517.899 31.2641C640.291 -18.0713 772.639 1.83 823.514 17.9476V74.2465H0V31.2641C3.64488 26.2386 32.0217 12.9528 120.751 7.1552C233.341 3.75336 366.983 92.0975 517.899 31.2641Z" fill="#bfddca"/></svg>',
+};
 
 export const wave4Svg: SvgAsset = {
   width: 824,
   height: 63,
   viewBox: "0 0 824 63",
   markup:
-    '<svg width="824" height="63" viewBox="0 0 824 63" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M665.5 19.2391C718.622 -3.40286 792.861 4.72495 823.341 11.6191V62.4544H0V18.8097C42.4024 -1.26519 87.0133 1.29723 104.018 5.0878C150.792 20.2177 256.89 44.144 307.098 18.8097C357.306 -6.52459 421.086 -0.894188 446.7 5.0878C497.499 19.239 612.378 41.881 665.5 19.2391Z" fill="#F6F7EF"/></svg>',
+    '<svg width="824" height="63" viewBox="0 0 824 63" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M665.5 19.2391C718.622 -3.40286 792.861 4.72495 823.341 11.6191V62.4544H0V18.8097C42.4024 -1.26519 87.0133 1.29723 104.018 5.0878C150.792 20.2177 256.89 44.144 307.098 18.8097C357.306 -6.52459 421.086 -0.894188 446.7 5.0878C497.499 19.239 612.378 41.881 665.5 19.2391Z" fill="#ffffff"/></svg>',
 };
 
 export const treeSvg: SvgAsset = {
@@ -71,3 +78,40 @@ export const svgAssets = {
 } as const;
 
 export type SvgAssetKey = keyof typeof svgAssets;
+
+// Replace every fill="..." in an SVG markup string.
+export const withSvgFill = (markup: string, fill: string): string =>
+  markup.replace(/fill="[^"]*"/g, `fill="${fill}"`);
+
+// Replace only selected fill colors in an SVG markup string.
+export const withSvgFillMap = (
+  markup: string,
+  replacements: Record<string, string>,
+): string => {
+  let next = markup;
+
+  Object.entries(replacements).forEach(([from, to]) => {
+    const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    next = next.replace(
+      new RegExp(`fill="${escaped}"`, "gi"),
+      `fill="${to}"`,
+    );
+  });
+
+  return next;
+};
+
+// Return a full SvgAsset with a single dynamic fill color.
+export const assetWithFill = (asset: SvgAsset, fill: string): SvgAsset => ({
+  ...asset,
+  markup: withSvgFill(asset.markup, fill),
+});
+
+// Return a full SvgAsset with targeted fill replacements.
+export const assetWithFillMap = (
+  asset: SvgAsset,
+  replacements: Record<string, string>,
+): SvgAsset => ({
+  ...asset,
+  markup: withSvgFillMap(asset.markup, replacements),
+});

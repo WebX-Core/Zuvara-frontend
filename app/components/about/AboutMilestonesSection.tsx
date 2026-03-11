@@ -16,7 +16,7 @@ export default function AboutMilestonesSection({
   milestones,
 }: AboutMilestonesSectionProps) {
   return (
-    <section className="px-5 py-8 sm:px-8 md:px-12 lg:px-16">
+    <section className="px-5 py-8 sm:px-8 md:px-12 lg:px-16 ">
       <div
         className="relative mx-auto max-w-7xl overflow-hidden rounded-4xl border px-5 py-6 md:px-8 md:py-8"
         style={{

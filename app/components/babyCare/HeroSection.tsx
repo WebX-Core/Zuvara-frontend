@@ -194,7 +194,7 @@ export default function Home() {
                 className="relative w-80 aspect-square"
               >
                 <Image
-                  src="/waves/babyBorder.svg"
+                  src="/waves/"
                   alt=""
                   fill
                   className="pointer-events-none absolute inset-0 z-20 object-contain"
@@ -223,15 +223,15 @@ export default function Home() {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative w-60 aspect-square lg:w-[380px]"
+            className="relative w-60 aspect-square lg:w-100"
           >
             <Image
-              src="/waves/babyBorder.svg"
+              src="/waves/BORDERS.png"
               alt=""
               fill
               className="pointer-events-none absolute inset-0 z-20 object-contain"
             />
-            <div className="absolute inset-[15%] z-10 overflow-hidden rounded-[24px]">
+            <div className="absolute inset-[15%] z-10 overflow-hidden rounded-3xl">
               <video
                 src="/videos/babyPlaying.mp4"
                 autoPlay

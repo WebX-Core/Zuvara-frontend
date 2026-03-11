@@ -10,6 +10,7 @@ import {
   Star,
 } from "lucide-react";
 import SectionHeading from "../common-ui/SectionHeading";
+import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
 const palette = {
   accent: "#45685e",
@@ -88,11 +89,17 @@ const Testimonials = () => {
     setActiveIndex((current) => (current >= maxIndex ? 0 : current + 1));
   };
 
+   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+
   return (
     <section
-      className="relative overflow-hidden py-20 lg:py-24"
-      style={{ backgroundColor: palette.page }}
+      className="relative overflow-hidden py-20 lg:py-32 bg-babyCare"
+      // style={{ backgroundColor: palette.page }}
     >
+       <div
+              className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+              dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+            />
       <div className="pointer-events-none absolute left-1/2 top-14 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-0">

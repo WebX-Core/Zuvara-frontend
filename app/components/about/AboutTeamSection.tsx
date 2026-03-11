@@ -18,7 +18,7 @@ export default function AboutTeamSection({
   team,
 }: AboutTeamSectionProps) {
   return (
-    <section className="px-5 py-16 sm:px-8 md:px-12 lg:px-16">
+    <section className="px-5 py-16 sm:px-8 md:px-12 lg:px-16 lg:pb-28">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p

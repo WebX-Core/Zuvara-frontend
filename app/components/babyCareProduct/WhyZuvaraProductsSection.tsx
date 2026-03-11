@@ -1,6 +1,8 @@
 import { HeartHandshake, ShieldCheck, Sparkles } from "lucide-react";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
+import { assetWithFill, wave3Svg } from "@/constants/svgs";
+
 
 type WhyZuvaraProductsSectionProps = {
   theme: BabyCareListingTheme;
@@ -27,8 +29,17 @@ const reasons = [
 export default function WhyZuvaraProductsSection({
   theme,
 }: WhyZuvaraProductsSectionProps) {
+
+  const productBottomWave  = assetWithFill(wave3Svg, "#f2f7f5")
+
   return (
-    <section className="relative overflow-hidden px-4 py-8 md:px-0 md:py-10 bg-babyCare/70">
+    <section className="relative overflow-hidden px-4 py-8 md:px-0 md:pb-40 bg-babyCare">
+
+        <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      />
+       
       <div className="relative z-10  w-7xl mx-auto">
         <div className="mx-auto max-w-3xl text-center">
           <span
@@ -66,33 +77,45 @@ export default function WhyZuvaraProductsSection({
           {reasons.map(({ title, body, icon: Icon }) => (
             <article
               key={title}
-              className="rounded-[1.6rem] border p-5 shadow-[0_18px_36px_rgba(69,104,94,0.08)]"
-              style={{
-                borderColor: `${theme.border}55`,
-                backgroundColor: hexToRgba(theme.pageBg, 0.96),
-              }}
+              className="relative mx-auto w-full max-w-[360px]"
             >
-              <div
-                className="flex h-11 w-11 items-center justify-center rounded-2xl"
-                style={{
-                  backgroundColor: hexToRgba(theme.chipBg, 0.85),
-                  color: theme.accent,
-                }}
+              <svg
+                viewBox="0 0 400 200"
+                className="block h-[220px] w-full sm:h-[240px] md:h-[260px]"
+                aria-hidden="true"
+                preserveAspectRatio="none"
               >
-                <Icon size={20} />
+                <path
+                  d="M40 110 C30 70 70 40 120 50 C150 20 220 20 250 50 C300 40 360 70 350 120 C360 160 300 180 240 170 C200 190 130 185 90 165 C50 160 25 135 40 110 Z"
+                  fill={hexToRgba(theme.pageBg, 0.96)}
+                />
+              </svg>
+
+              <div className="absolute inset-0 z-10 flex items-center justify-center px-10 py-8 sm:px-12 sm:py-10">
+                <div className="w-full max-w-[230px] text-center">
+                  <div
+                    className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11"
+                    style={{
+                      backgroundColor: hexToRgba(theme.chipBg, 0.85),
+                      color: theme.accent,
+                    }}
+                  >
+                    <Icon size={16} className="sm:h-[18px] sm:w-[18px]" />
+                  </div>
+                  <h3
+                    className="text-sm font-semibold sm:text-base"
+                    style={{ color: theme.accent }}
+                  >
+                    {title}
+                  </h3>
+                  <p
+                    className="mt-2 text-xs leading-relaxed sm:text-sm"
+                    style={{ color: hexToRgba(theme.accent, 0.72) }}
+                  >
+                    {body}
+                  </p>
+                </div>
               </div>
-              <h3
-                className="mt-4 text-lg font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {title}
-              </h3>
-              <p
-                className="mt-2 text-sm leading-relaxed md:text-base"
-                style={{ color: hexToRgba(theme.accent, 0.72) }}
-              >
-                {body}
-              </p>
             </article>
           ))}
         </div>

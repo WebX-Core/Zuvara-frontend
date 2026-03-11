@@ -5,12 +5,17 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Button from "../common-ui/Button";
 import { blogLists } from "@/constants";
+import { wave32Svg } from "@/constants/svgs";
 
 const Blog = () => {
   const blogPosts = blogLists.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare/20 py-16 lg:py-24">
+    <section className="relative overflow-hidden bg-babyCare/20 py-16 lg:py-32">
+       <div
+              className="absolute -bottom-1 left-1/2 z-20 w-screen  -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+              dangerouslySetInnerHTML={{ __html: wave32Svg.markup }}
+            />
       <div className="container max-w-7xl mx-auto">
         <div className="mb-10 flex flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">

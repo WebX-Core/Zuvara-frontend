@@ -3,10 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Truck } from "lucide-react";
+import { wave4Svg } from "@/constants/svgs";
 
 const CTA = () => {
+
+
+
   return (
     <section className="relative w-full overflow-hidden bg-white ">
+         <div
+        className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: wave4Svg.markup }}
+      />
       <div className="relative z-10 w-full ">
         <div className="relative w-full border-y border-zinc-200/70 bg-babyCare px-4 py-8 sm:px-8 lg:px-12 lg:py-40">
           <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 w-full lg:gap-16 items-center">

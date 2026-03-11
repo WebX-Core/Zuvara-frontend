@@ -1,3 +1,4 @@
+import Image from "next/image";
 import VideoSection from "@/app/components/babyCare/VideoSection";
 import CTA from "@/app/components/babyCare/CTA";
 import HeroSection from "@/app/components/babyCare/HeroSection";

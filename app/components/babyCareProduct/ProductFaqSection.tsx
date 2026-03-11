@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 type ProductFaqSectionProps = {
   theme: BabyCareListingTheme;
@@ -31,14 +32,19 @@ const faqs = [
 ];
 
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
+
+   const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
   return (
     <section
-      className="px-4 py-8 md:px-8 md:py-10"
+      className="relative px-4 py-8 md:px-8 md:py-20 "
       style={{
         borderColor: `${theme.border}55`,
       }}
     >
+    
+     
       <div className="mx-auto max-w-3xl text-center">
+
         <span
           className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"
           style={{
@@ -100,6 +106,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
             borderColor: `${theme.border}55`,
           }}
         >
+          
           <p
             className="text-sm font-semibold"
             style={{ color: hexToRgba(theme.accent, 0.8) }}
@@ -126,7 +133,9 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           >
             Contact support
           </Link>
+          
         </div>
+        
       </div>
     </section>
   );

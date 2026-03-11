@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
-import { wave4Svg } from "@/constants/svgs";
+
 import CrawlingBaby from "./CrawlingBaby";
 
 export default function Footer() {
@@ -16,9 +16,7 @@ export default function Footer() {
   const isPersonal = activeSection === "personal";
   const logoSrc = isPersonal ? "/logo/logo_secondary.svg" : "/logo/logo.png";
   const isMounted = true;
-  const footerWaveMarkup = isPersonal
-    ? wave4Svg.markup.replace('fill="#F6F7EF"', 'fill="#F3E8FF"')
-    : wave4Svg.markup.replace('fill="#F6F7EF"', 'fill="#FFFFFF"');
+
 
   const footerSections = [
     {
@@ -54,10 +52,8 @@ export default function Footer() {
         isPersonal ? "bg-personalCare/10" : "", 
       )}
     >
-      <div
-        className="relative -top-20 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
-        dangerouslySetInnerHTML={{ __html: footerWaveMarkup }}
-      />
+      
+   
 
       <div className="relative z-10 container mx-auto max-w-7xl px-4 lg:px-0 pt-8 pb-16 lg:pb-0">
         {/* Section Switcher */}
