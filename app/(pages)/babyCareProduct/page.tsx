@@ -24,10 +24,9 @@ const BabyCareProductPage = () => {
           <MobileHero />
           <div className="pb-12">
             <Product />
-           
-              <WhyZuvaraProductsSection theme={babyCareListingTheme} />
-              <ProductFaqSection theme={babyCareListingTheme} />
-            
+
+            <WhyZuvaraProductsSection theme={babyCareListingTheme} />
+            <ProductFaqSection theme={babyCareListingTheme} />
           </div>
         </>
       ) : (

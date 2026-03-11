@@ -41,7 +41,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
       }}
     >
   <div
-        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        className="pointer-events-none absolute -bottom-14 sm:-bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
 
