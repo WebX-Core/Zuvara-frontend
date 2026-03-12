@@ -27,8 +27,7 @@ export default function AboutHeroSection({
 }: AboutHeroSectionProps) {
   return (
     <section
-      className="relative px-4 pt-12 sm:px-8 md:px-0 lg:px-0"
-      style={{ backgroundColor: `${palette.chip}80` }}
+      className="relative px-4 pt-12 sm:px-8 md:px-0 lg:px-0 bg-[#BFDDCA]"
     >
       <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-14 lg:px-14">

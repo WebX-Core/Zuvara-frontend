@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 type PromiseItem = {
   title: string;
@@ -16,8 +17,14 @@ export default function AboutPromisesSection({
   palette,
   promises,
 }: AboutPromisesSectionProps) {
+  const promisesWave = assetWithFill(wave4Svg, "#bfddca");
+
   return (
-    <section className="px-5 py-16 sm:px-8 md:px-12 lg:px-16">
+    <section className="relative  px-5 py-16 sm:px-8 md:px-12 lg:px-16 lg:pb-40">
+        <div
+          className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+          dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
+        />
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto text-center">
           <p

@@ -12,18 +12,15 @@ export default function AboutCtaSection({
   productHref,
 }: AboutCtaSectionProps) {
   return (
-    <section className="px-4 pb-20 pt-8 sm:px-8 md:px-12 lg:px-16">
+    <section className=" pb-20   lg:pb-40 bg-foreground">
       <div
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] border px-6 py-12 text-center md:px-10 md:py-16"
-        style={{
-          borderColor: `${palette.border}44`,
-          background: `linear-gradient(135deg, ${palette.accent} 0%, ${palette.accentSoft} 100%)`,
-        }}
+        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.4rem]   text-center md:py-16"
+  
       >
         <div className="pointer-events-none absolute inset-0 opacity-50">
           <div className="absolute left-[-8%] top-[-20%] h-40 w-40 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute right-[-10%] bottom-[-18%] h-44 w-44 rounded-full bg-white/12 blur-3xl" />
-          <PremiumWaveBackground opacity={0.6} />
+          {/* <PremiumWaveBackground opacity={0.6} /> */}
         </div>
         <div className="relative z-10">
           <p className="text-sm font-semibold text-white/72">Our Promise</p>

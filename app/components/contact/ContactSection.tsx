@@ -41,7 +41,7 @@ const ContactSection = () => {
                     placeholder="Your Name"
                     className={cn(
                       "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
-                      isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                      isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
@@ -54,7 +54,7 @@ const ContactSection = () => {
                     placeholder="Your phone number"
                     className={cn(
                       "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
-                      isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                      isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
@@ -67,7 +67,7 @@ const ContactSection = () => {
                     placeholder="Your address"
                     className={cn(
                       "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
-                      isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                      isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
@@ -80,7 +80,7 @@ const ContactSection = () => {
                     placeholder="Your email address"
                     className={cn(
                       "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
-                      isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                      isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
@@ -94,7 +94,7 @@ const ContactSection = () => {
                   placeholder="Tell us, How can we help you..."
                   className={cn(
                     "w-full lg:h-24 resize-none p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
-                    isPersonal ? "bg-personalCare/10" : "bg-foreground/10",
+                    isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                   )}
                   required
                 />

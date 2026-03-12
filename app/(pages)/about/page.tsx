@@ -97,11 +97,32 @@ export default function AboutPage() {
     ? "/images/baby/bonding-personal.png"
     : "/new/bonding.png";
   const productHref = isPersonal ? "/personalCareProduct" : "/babyCareProduct";
-  const sectionBg = pagePalette.page;
-  const footerBg = isPersonal ? "#f4e8fc" : "#ffffff";
-  const heroWave = assetWithFill(wave3Svg, sectionBg);
-  const promisesWave = assetWithFill(wave4Svg, sectionBg);
-  const teamWave = assetWithFill(wave3Svg, sectionBg);
+
+  const babyAlternatingBg = {
+    hero: "#BFDDCA",
+    story: "#ffffff",
+    milestones: "#ffffff",
+    promises: "#ffffff",
+    team: "#BFDDCA",
+    cta: "rgba(69,104,94,0.12)",
+    footer: "#ffffff",
+  };
+
+  const sectionBg = isPersonal
+    ? {
+        hero: pagePalette.page,
+        story: pagePalette.page,
+        milestones: pagePalette.page,
+        promises: pagePalette.page,
+        team: pagePalette.page,
+        cta: pagePalette.page,
+        footer: "#f4e8fc",
+      }
+    : babyAlternatingBg;
+
+  const heroWave = assetWithFill(wave3Svg, sectionBg.story);
+  const teamWave = assetWithFill(wave3Svg, "#45685E");
+  const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
   const waveClass =
     "pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen";
@@ -109,9 +130,9 @@ export default function AboutPage() {
   return (
     <main
       className="relative min-h-screen overflow-hidden"
-      style={{ backgroundColor: pagePalette.page, color: pagePalette.ink }}
+      style={{ backgroundColor: sectionBg.hero, color: pagePalette.ink }}
     >
-      <div className="relative">
+      <div className="relative" style={{ backgroundColor: "#BFDDCA" }}>
         <AboutHeroSection
           palette={pagePalette}
           heroImage={heroImage}
@@ -122,29 +143,27 @@ export default function AboutPage() {
           dangerouslySetInnerHTML={{ __html: heroWave.markup }}
         />
       </div>
-      <div className="relative">
+      <div className="relative" style={{ backgroundColor: sectionBg.story }}>
         <AboutStorySection palette={pagePalette} stories={stories} />
+      </div>
+      <div
+        className="relative"
+        style={{ backgroundColor: sectionBg.milestones }}
+      >
+        <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
+      </div>
+      <div className="relative" style={{ backgroundColor: sectionBg.promises }}>
+        <AboutPromisesSection palette={pagePalette} promises={promises} />
       
       </div>
-      <div className="relative">
-        <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
-
-      </div>
-      <div className="relative">
-        <AboutPromisesSection palette={pagePalette} promises={promises} />
-        <div
-          className={waveClass}
-          dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
-        />
-      </div>
-      <div className="relative">
+      <div className="relative" style={{ backgroundColor: sectionBg.team }}>
         <AboutTeamSection palette={pagePalette} team={team} />
         <div
           className={waveClass}
           dangerouslySetInnerHTML={{ __html: teamWave.markup }}
         />
       </div>
-      <div className="relative">
+      <div className="relative" style={{ backgroundColor: sectionBg.cta }}>
         <AboutCtaSection palette={pagePalette} productHref={productHref} />
         <div
           className={waveClass}

@@ -32,19 +32,20 @@ const faqs = [
 ];
 
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
-
-   const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
+  const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
   return (
     <section
-      className="relative px-4 py-8 md:px-8 md:py-20 "
+      className="relative px-4 py-10 sm:px-6 lg:px-8 lg:py-16 lg:pb-40"
       style={{
         borderColor: `${theme.border}55`,
       }}
     >
-    
-     
-      <div className="mx-auto max-w-3xl text-center">
+      <div
+        className="pointer-events-none absolute -bottom-14 sm:-bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      />
 
+      <div className="mx-auto max-w-3xl text-center">
         <span
           className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"
           style={{
@@ -68,7 +69,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           </span>
         </h2>
         <p
-          className="mt-4 text-sm leading-relaxed md:text-base"
+          className="mt-4 text-sm font-medium leading-relaxed md:text-base"
           style={{ color: hexToRgba(theme.accent, 0.74) }}
         >
           A quick guide to the most common questions around comfort, sizing, and
@@ -76,7 +77,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
         </p>
       </div>
 
-      <div className="mt-8 w-7xl mx-auto grid gap-6 lg:grid-cols-[1.2fr_0.8fr]  overflow-hidden">
+      <div className="mx-auto mt-8 grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]">
         <Accordions type="single" className="space-y-3 divide-y-0">
           {faqs.map((faq, index) => (
             <Accordion
@@ -106,7 +107,6 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
             borderColor: `${theme.border}55`,
           }}
         >
-          
           <p
             className="text-sm font-semibold"
             style={{ color: hexToRgba(theme.accent, 0.8) }}
@@ -133,9 +133,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           >
             Contact support
           </Link>
-          
         </div>
-        
       </div>
     </section>
   );

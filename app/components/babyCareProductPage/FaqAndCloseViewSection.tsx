@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Product } from "@/type/babyCareProductType";
 import FaqSection from "@/app/components/common-ui/FaqSection";
-import ProductCloseViewSection from "@/app/components/babyCareProductPage/ProductCloseViewSection";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
@@ -22,7 +21,7 @@ export default function FaqAndCloseViewSection({
   } as CSSProperties;
 
   return (
-    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-16">
+    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-12">
       <div
         className="pointer-events-none absolute left-10 top-0 h-40 w-52 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.4) }}

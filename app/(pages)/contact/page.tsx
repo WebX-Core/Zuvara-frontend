@@ -12,16 +12,13 @@ const Page = () => {
       className="relative overflow-hidden"
       style={{
         background: isPersonal
-          ? "linear-gradient(180deg, rgba(130,0,219,0.12) 0%, rgba(130,0,219,0.04) 50%, rgba(255,255,255,1) 100%)"
-          : "linear-gradient(180deg, rgba(191,221,202,0.48) 0%, rgba(191,221,202,0.12) 50%, rgba(255,255,255,1) 100%)",
+          ? "#956eae"
+          : "#bfddd9",
       }}
     >
       <div
-        className="pointer-events-none absolute top-2 md:top-3 lg:top-4 right-2 md:right-8 lg:right-10 text-right font-black uppercase select-none leading-none z-0"
-        style={{
-          fontSize: "clamp(4rem, 12vw, 11rem)",
-          color: isPersonal ? "rgba(130,0,219,0.11)" : "rgba(69,104,94,0.12)",
-        }}
+        className="pointer-events-none absolute top-2 md:top-3 lg:top-4 right-2 md:right-8 lg:right-10 text-zinc-500 text-right font-black uppercase select-none leading-none z-0"
+ 
       >
         ZUVARA
       </div>

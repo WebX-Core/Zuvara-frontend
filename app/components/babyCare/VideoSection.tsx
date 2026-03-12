@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useMediaQuery } from "react-responsive";
+import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
 const VideoSection = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -35,9 +36,14 @@ const VideoSection = () => {
     setIsLiked(!isLiked);
     setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
   };
+     const productBottomWave = assetWithFill(wave3Svg, "#bfdec9");
 
   return (
-    <section className="">
+    <section className="relative">
+        <div
+        className="pointer-events-none absolute -top-10 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen rotate-180"
+        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      />
       <div className=" mx-auto w-full">
         {/* Section Header */}
         {/* <SectionHeading
