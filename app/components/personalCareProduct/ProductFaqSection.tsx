@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { PersonalCareListingTheme } from "@/app/components/personalCareProduct/theme";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 type ProductFaqSectionProps = {
   theme: PersonalCareListingTheme;
@@ -32,8 +33,14 @@ const faqs = [
 ];
 
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
+  const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
+
   return (
-    <section className="px-4 py-8 md:px-8 md:py-20">
+    <section className="relative px-4 py-8 md:px-8 md:py-20">
+      <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: footerWave.markup }}
+      />
       <div className="mx-auto max-w-3xl text-center">
         <span
           className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold"

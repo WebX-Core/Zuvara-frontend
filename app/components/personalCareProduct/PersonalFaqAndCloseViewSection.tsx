@@ -3,6 +3,7 @@ import type { Product } from "@/type/personalCareProductType";
 import FaqSection from "@/app/components/common-ui/FaqSection";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 type PersonalFaqAndCloseViewSectionProps = {
   active: Product;
@@ -16,6 +17,7 @@ export default function PersonalFaqAndCloseViewSection({
   active,
   theme,
 }: PersonalFaqAndCloseViewSectionProps) {
+  const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
   const cardStyle = {
     borderColor: `${theme.border}66`,
     backgroundColor: hexToRgba(theme.pageBg, 0.78),
@@ -23,6 +25,10 @@ export default function PersonalFaqAndCloseViewSection({
 
   return (
     <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-16">
+      <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: footerWave.markup }}
+      />
       <div
         className="pointer-events-none absolute left-10 top-0 h-40 w-52 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.4) }}

@@ -6,36 +6,34 @@ import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 type SizeGuideSectionProps = {
   theme: ThemePreset;
   variants: Variant[];
+  sizeGuideImages?: string[];
 };
-
-const sectionTitle =
-  "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
 
 export default function SizeGuideSection({
   theme,
   variants,
+  sizeGuideImages = sizeImages,
 }: SizeGuideSectionProps) {
-  const previewVariants = variants.slice(0, 5);
+  void variants;
 
   return (
-    <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-6 py-10 md:py-14 lg:px-10 lg:py-16">
       <div
-        className="pointer-events-none absolute right-10 top-10 h-44 w-44 rounded-full blur-3xl"
+        className="pointer-events-none absolute right-4 md:right-10 top-10 h-32 w-32 md:h-44 md:w-44 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.42) }}
       />
       <div className="mx-auto max-w-7xl space-y-7 perspective-1200px">
-        <div className="fx-rise flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
+        <div className="fx-rise flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
             <h2
-              className="text-3xl lg:text-5xl font-bold tracking-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
               style={{ color: hexToRgba(theme.accent, 0.9) }}
             >
               Find Their Perfect
               <span className="font-light italic opacity-60"> Little Fit</span>
             </h2>
-            <h2 className={sectionTitle} style={{ color: theme.accent }}></h2>
             <p
-              className="mt-2 text-sm md:text-base font-medium"
+              className="mt-3 text-sm md:text-base font-medium leading-relaxed"
               style={{ color: hexToRgba(theme.accent, 1) }}
             >
               Every baby grows at their own pace. Use this chart for a secure,
@@ -43,7 +41,7 @@ export default function SizeGuideSection({
             </p>
           </div>
           <span
-            className="w-fit rounded-full border px-4 py-2 text-xs font-semibold tracking-wide"
+            className="w-fit rounded-full border px-4 py-2 text-xs font-bold tracking-widest uppercase"
             style={{
               borderColor: `${theme.border}66`,
               backgroundColor: hexToRgba(theme.chipBg, 0.55),
@@ -55,36 +53,43 @@ export default function SizeGuideSection({
         </div>
 
         <div
-          className="fx-rise overflow-hidden rounded-3xl border"
+          className="fx-rise overflow-hidden rounded-3xl border shadow-sm"
           style={{
             borderColor: `${theme.border}66`,
             backgroundColor: hexToRgba(theme.pageBg, 0.88),
           }}
         >
-          <div className="flex items-center justify-center gap-8 p-6">
-            {sizeImages.map((src, idx) => (
-              <Image
-                src={src}
+          <div className="flex flex-wrap items-center justify-center gap-6 p-8 md:gap-12 md:p-12">
+            {sizeGuideImages.map((src, idx) => (
+              <div
                 key={idx}
-                alt="Size Guide"
-                height={500}
-                width={500}
-                className="h-50 w-50 object-contain"
-              />
+                className="relative h-40 w-40 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform duration-500 hover:scale-105"
+              >
+                <Image
+                  src={src}
+                  alt={`Size Guide Option ${idx + 1}`}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 160px, (max-width: 1200px) 240px, 300px"
+                />
+              </div>
             ))}
           </div>
         </div>
 
         <p
-          className="fx-rise px-4 py-3 text-sm"
+          className="fx-rise rounded-2xl border px-5 py-4 text-sm leading-relaxed"
           style={{
-            borderColor: `${theme.border}66`,
+            borderColor: `${theme.border}44`,
             backgroundColor: hexToRgba(theme.pageBg, 0.72),
             color: hexToRgba(theme.accent, 0.8),
           }}
         >
-          <strong>Pro tip:</strong> If your baby is close to the upper weight
-          limit, size up for better overnight absorbency.
+          <strong className="font-bold" style={{ color: theme.accent }}>
+            Pro tip:
+          </strong>{" "}
+          If your baby is close to the upper weight limit, size up for better
+          overnight absorbency and a more comfortable fit.
         </p>
       </div>
     </section>

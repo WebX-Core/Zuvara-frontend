@@ -9,20 +9,21 @@ import { assetWithFill, wave4Svg } from "@/constants/svgs";
 const Page = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
-     const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
+  const wave = assetWithFill(wave4Svg, isPersonal ? "#f4e8fc" : "#ffffff");
 
   return (
     <div
-      className="relative overflow-hidden pb-40"
+      className="relative overflow-hidden pb-20 sm:pb-40"
       style={{
         background: isPersonal
-          ? "linear-gradient(180deg, rgba(130,0,219,0.10) 0%, rgba(130,0,219,0.03) 55%, rgba(255,255,255,1) 100%)"
+          ? "#ffffff"
           : "#BFDDCA",
+        
       }}
     >
-  <div
+       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
-        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+        dangerouslySetInnerHTML={{ __html: wave.markup }}
       />
       <div
         className="pointer-events-none absolute -top-16 -left-16 h-52 w-52 rounded-full blur-3xl"

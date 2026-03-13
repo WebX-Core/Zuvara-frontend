@@ -61,27 +61,24 @@ export default function IntroPage() {
         activeId === "baby" ? "bg-babyCare" : "bg-ternary/50"
       }`}
     >
-      {" "}
-      <Link href="/" className="absolute top-2 left-1/2 -translate-x-1/2">
+      <Link href="/" className="absolute top-4 left-1/2 z-30 -translate-x-1/2 sm:top-2">
         <Image
           src={activeId === "personal" ? "/logo/logo_secondary.svg" : "/logo/logo.svg"}
           alt="Zuvara Logo"
-          width={110}
-          height={110}
+          width={80}
+          height={60}
           priority
-          className="h-auto w-auto"
+          className="h-auto w-18 sm:w-auto"
         />
       </Link>
-      {/* Main content */}
-      <section className="relative z-20 mx-auto flex min-h-screen w-full max-w-360 flex-col justify-center px-5  md:px-8 lg:px-10">
+      <section className="relative z-20 mx-auto flex min-h-screen w-full max-w-360 flex-col justify-center px-4 pt-24 pb-10 sm:px-5 md:px-8 md:pt-28 lg:px-10">
         <div className="flex flex-col items-center justify-center">
-          {/* Top Text content */}
           <div className="max-w-240 text-center">
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-3 text-sm font-bold uppercase tracking-[0.28em] text-white"
+              className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white sm:mb-3 sm:text-xs sm:tracking-[0.24em]"
             >
               Welcome to Zuvara
             </motion.p>
@@ -91,7 +88,7 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className=" text-5xl  font-black uppercase leading-[0.9] tracking-[-0.04em] text-white sm:text-6xl md:text-5xl lg:text-[110px]"
+              className="text-[clamp(2rem,10vw,5rem)] font-black uppercase leading-[0.92] tracking-[-0.035em] text-white"
             >
               {activeDestination.id === "baby" ? "baby care" : "Personal Care"}
             </motion.h1>
@@ -101,7 +98,7 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="mt-5  text-sm leading-7 text-white/80 md:text-base"
+              className="mt-3 text-sm leading-6 text-white/80 md:mt-4 md:text-base md:leading-7"
             >
               {activeDestination.id === "baby"
                 ? "Soft, safe, and thoughtfully made essentials for your little one."
@@ -109,8 +106,7 @@ export default function IntroPage() {
             </motion.p>
           </div>
 
-          {/* Mid cards */}
-          <div className="flex items-center justify-center gap-10">
+          <div className="mt-8 grid w-full max-w-6xl grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
             {destinations.map((section) => {
               const isActive = activeId === section.id;
 
@@ -118,7 +114,7 @@ export default function IntroPage() {
                 <Link
                   key={section.id}
                   href={section.href}
-                  className="group relative"
+                  className="group relative pt-20 md:pt-0"
                   onMouseEnter={() => setActiveId(section.id)}
                 >
                   {/* Card */}
@@ -126,7 +122,7 @@ export default function IntroPage() {
                     initial={{ opacity: 0, scale: 0.95, y: 24 }}
                     animate={{
                       opacity: 1,
-                      scale: isActive ? 1.05 : 1,
+                      scale: isActive ? 1.02 : 1,
                       backgroundColor: isActive
                         ? section.id === "baby"
                           ? "rgba(69, 104, 94, 0.68)"
@@ -140,92 +136,72 @@ export default function IntroPage() {
                       duration: 0.4,
                       ease: [0.23, 1, 0.32, 1],
                     }}
-                    className="relative z-10 flex h-full w-90 flex-col justify-between overflow-hidden rounded-[2.5rem] border p-8 shadow-2xl backdrop-blur-xl"
+                    className="relative z-10 flex h-full  w-full flex-col overflow-hidden rounded-4xl border p-5 shadow-2xl backdrop-blur-xl sm:p-6  lg:rounded-[2.5rem] lg:p-8"
                   >
-                    <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] border border-white/12" />
+                    <div className="pointer-events-none absolute inset-0 rounded-4xl border border-white/12 lg:rounded-[2.5rem]" />
                     <div className="pointer-events-none absolute inset-x-0 top-[48%] h-px bg-white/12" />
                     <div className="pointer-events-none absolute bottom-[18%] left-[62%] top-[48%] w-px bg-white/8" />
 
-                    {/* Card Content */}
-                    <div className="relative z-10 space-y-3 ">
-                        <div className="flex justify-between">
-                          <div>
-                      <div
-                        className={`inline-flex items-center gap-2 rounded-2xl   py-1.5  bg-zinc-50"
-                        `}
-                      >
-                        <span
-                          className={`text-[10px] font-black uppercase tracking-wider ${
-                            isActive ? "text-white/85" : "text-zinc-500"
-                          }`}
-                        >
-                          {section.subtitle}
-                        </span>
-                      </div>
+                    <div className="relative z-10 flex h-full flex-col space-y-4 pb-1 sm:pb-0">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <div className="inline-flex items-center gap-2 rounded-2xl py-1.5">
+                            <span
+                              className={`text-[10px] font-black uppercase tracking-wider ${
+                                isActive ? "text-white/85" : "text-zinc-500"
+                              }`}
+                            >
+                              {section.subtitle}
+                            </span>
+                          </div>
 
-                      <h2
-                        className={`text-3xl font-black leading-none ${
-                          isActive ? "text-white" : "text-foreground"
-                        }`}
-                      >
-                        {section.title.split(" ")[0]} <br />
-                        <span
-                          className={`${
-                            isActive ?  "text-white" : "text-zinc-100"
-                          }`}
-                        >
-                          {section.title.split(" ")[1]}
-                        </span>
-                      </h2>
-                      </div> {/* Icon Background */}
+                          <h2
+                            className={`text-2xl font-black leading-none sm:text-3xl ${
+                              isActive ? "text-white" : "text-foreground"
+                            }`}
+                          >
+                            {section.title.split(" ")[0]} <br />
+                            <span
+                              className={`${
+                                isActive ? "text-white" : "text-zinc-100"
+                              }`}
+                            >
+                              {section.title.split(" ")[1]}
+                            </span>
+                          </h2>
+                        </div>
                       <motion.div
                         animate={{ opacity: isActive ? 0.9 : 0.25 }}
                         transition={{ duration: 0.35 }}
-                        className=" pointer-events-none"
+                        className="pointer-events-none shrink-0"
                       >
                         <Image
                           src={section.icon}
                           alt={section.title}
                           width={96}
                           height={96}
-                          className={`size-24 transition ${isActive ? "invert" : ""}`}
+                          className={`size-14 transition sm:size-20 lg:size-24 ${isActive ? "invert" : ""}`}
                         />
                       </motion.div>
-                     </div>
+                      </div>
 
                       <p
-                        className={`max-w-60 text-sm font-medium leading-relaxed ${
+                        className={`max-w-72 text-sm font-medium leading-relaxed ${
                           isActive ? "text-white/80" : "text-zinc-500"
                         }`}
                       >
                         {section.description}
                       </p>
-
-                     
-
-                      <div className="flex w-full bg-white rounded-full justify-center gap-3  py-4 px-4">
-                        {/* <div
-                          className={`flex size-10 items-center justify-center rounded-full transition ${
-                            isActive
-                              ? "scale-105 bg-white text-zinc-900"
-                              : "text-zinc-500"
-                          }`}
-                          style={{
-                            backgroundColor: isActive
-                              ? section.color
-                              : "#fff",
-                          }}
-                        >
-                          <Icon icon="solar:arrow-right-up-linear" width="20" />
-                        </div> */}
-
-                        <span
-                          className={`text-sm font-bold uppercase  ${
-                            isActive ? "text-black" : "text-zinc-800"
-                          }`}
-                        >
-                          Visit Now
-                        </span>
+                      <div className="mt-auto pt-2 sm:pt-3">
+                        <div className="flex w-full justify-center rounded-full bg-white px-4 py-3 sm:py-4">
+                          <span
+                            className={`text-sm font-bold uppercase ${
+                              isActive ? "text-black" : "text-zinc-800"
+                            }`}
+                          >
+                            Visit Now
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -243,10 +219,10 @@ export default function IntroPage() {
                       stiffness: 260,
                       damping: 20,
                     }}
-                    className={`absolute z-0 pointer-events-none ${
+                    className={`absolute left-1/2 top-0 z-20 pointer-events-none -translate-x-1/2 ${
                       section.id === "baby"
-                        ? "bottom-10 -left-46 w-72"
-                        : "-bottom-6 -right-60 w-120"
+                        ? "w-32 sm:w-40 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-left-8 md:w-34 lg:bottom-10 lg:-left-46 lg:w-72"
+                        : "w-40 sm:w-48 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-right-6 md:w-44 lg:-bottom-6 lg:-right-60 lg:w-120"
                     }`}
                   >
                     <Image
@@ -263,8 +239,7 @@ export default function IntroPage() {
           </div>
         </div>
 
-        {/* Bottom dots */}
-        <div className="mt-10 flex items-center justify-center gap-3">
+        <div className="mt-8 flex items-center justify-center gap-3 md:mt-10">
           {destinations.map((item) => (
             <button
               key={item.id}

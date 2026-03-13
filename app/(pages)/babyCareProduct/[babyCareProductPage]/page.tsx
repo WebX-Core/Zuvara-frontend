@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
@@ -217,8 +217,8 @@ function pickHeroPack(p: Product) {
 export default function Page() {
   const params = useParams<{ babyCareProductPage: string }>();
   const slug = params?.babyCareProductPage;
-  const product = babyCareProducts.find((item) => item.slug === slug);
-  const products = babyCareProducts;
+  const products = useMemo(() => babyCareProducts, []);
+  const product = products.find((item) => item.slug === slug);
   const initialIndex = Math.max(
     0,
     products.findIndex((item) => item.slug === slug),
@@ -373,7 +373,10 @@ export default function Page() {
         pickHeroPack={pickHeroPack}
       />
 
-      <WhyTouchMattersSection theme={theme} />
+      <WhyTouchMattersSection
+        theme={theme}
+        backgroundImage={activeImageSet.moodboardImages[0] || pickHeroBaby(active)}
+      />
       <ProductCloseViewSection product={active} theme={theme} />
 
       <ComfortDetailsSection
@@ -383,7 +386,11 @@ export default function Page() {
         technicalDetailImages={activeImageSet.technicalDetailImages}
       />
 
-      <SizeGuideSection theme={theme} variants={variants} />
+      <SizeGuideSection
+        theme={theme}
+        variants={variants}
+        sizeGuideImages={active?.sizeGuideImages}
+      />
 
       <TrustFusionSection
         theme={theme}

@@ -709,7 +709,7 @@ export default function Navbar() {
                 className="fixed top-0 w-full z-120 bg-white/80 backdrop-blur-md border-b border-zinc-200"
             >
               <div
-                  className="flex justify-between items-center h-full px-4"
+                  className="flex justify-between items-center h-full px-4 py-2"
                   ref={isSmallerDevice ? searchRef : null}
               >
                 <Link href="/" className="flex items-center">
@@ -760,7 +760,7 @@ export default function Navbar() {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     className="fixed top-0 right-0 bottom-0 w-[70%] pt-12 max-w-sm bg-white z-110 shadow-xl p-4 flex flex-col border-r border-zinc-100"
                 >
-                  <div className="flex flex-col gap-0">
+                  <div className="flex flex-col gap-0 py-4">
                     {filteredMenuItems.map((item, index) => {
                       const isActive = checkIsActive(item.href);
                       return (

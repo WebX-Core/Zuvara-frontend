@@ -16,8 +16,8 @@ const CTA = () => {
         dangerouslySetInnerHTML={{ __html: wave4Svg.markup }}
       />
       <div className="relative z-10 w-full ">
-        <div className="relative w-full border-y border-zinc-200/70 bg-babyCare px-4 py-8 sm:px-8 lg:px-40 lg:pb-40">
-          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 w-full lg:gap-16 items-center">
+        <div className="relative w-full border-y border-zinc-200/70 bg-babyCare  py-8 sm:px-8 lg:px-40 lg:pb-40">
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 w-full lg:gap-16 items-center px-4 sm:px-0">
             {/* Content */}
             <div>
               <p className="inline-flex items-center rounded-full border border-foreground/20 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground">

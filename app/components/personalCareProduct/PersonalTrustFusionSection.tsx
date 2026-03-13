@@ -128,7 +128,7 @@ export default function PersonalTrustFusionSection({
           <div className="Center w-full">
             <div className="relative h-[340px] w-full overflow-hidden rounded-3xl md:h-[460px] lg:h-[560px]">
                 <h2
-                  className="absolute top-4 left-4 z-10 text-4xl md:text-6xl lg:text-7xl font-bold uppercase"
+                  className="absolute top-4 left-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase"
                   style={{ color: hexToRgba(theme.accent, 0.75) }}
                 >
                   Zuvara
@@ -140,7 +140,7 @@ export default function PersonalTrustFusionSection({
                   height={1000}
                   className="h-full w-full object-cover"
                 />
-                <h2 className="absolute top-4 right-4 z-10 text-4xl md:text-6xl lg:text-7xl font-bold uppercase text-zinc-500/70">
+                <h2 className="absolute top-4 right-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase text-zinc-500/70">
                   Ordinary
                 </h2>
             </div>

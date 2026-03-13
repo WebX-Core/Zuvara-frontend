@@ -10,20 +10,20 @@ const ContactSection = () => {
   const isPersonal = activeSection === "personal";
 
   return (
-    <section className={cn("h-auto container mx-auto px-4 lg:px-6 max-w-7xl")}>
+    <section className={cn("container mx-auto h-auto max-w-7xl px-0 lg:px-6")}>
       <div>
         <div className="mb-4">
-          <div className="max-w-3xl py-4">
+          <div className="max-w-3xl py-2 sm:py-4">
             <h2
               className={cn(
-                "mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]",
+                "mt-2 text-[clamp(2rem,7vw,4rem)] font-semibold leading-[0.98]",
                 isPersonal ? "text-personalCare" : "text-foreground",
               )}
             >
               Let&apos;s
               <span className="ml-2 font-light italic">Talk</span>
             </h2>
-            <p className="mt-4 text-sm leading-relaxed font-medium md:text-base">
+            <p className="mt-4 max-w-2xl text-sm font-medium leading-relaxed md:text-base">
               Our team will get back to you as soon as possible.
             </p>
           </div>
@@ -32,54 +32,62 @@ const ContactSection = () => {
         <div className="w-full flex flex-col gap-4">
           <div className="w-full">
             <form action="" className="w-full">
-              <div className="w-full lg:grid lg:grid-cols-2 gap-4 space-y-4 lg:space-y-0">
+              <div className="grid w-full gap-4 lg:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="name">Name*</label>
+                  <label htmlFor="name" className="text-sm font-medium">
+                    Name*
+                  </label>
                   <input
                     id="name"
                     type="text"
                     placeholder="Your Name"
                     className={cn(
-                      "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
+                      "w-full rounded-lg p-3 text-base focus:outline-none placeholder:text-foreground/50 md:text-lg",
                       isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="phone">Phone*</label>
+                  <label htmlFor="phone" className="text-sm font-medium">
+                    Phone*
+                  </label>
                   <input
                     id="phone"
                     type="text"
                     placeholder="Your phone number"
                     className={cn(
-                      "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
+                      "w-full rounded-lg p-3 text-base focus:outline-none placeholder:text-foreground/50 md:text-lg",
                       isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="address">Address*</label>
+                  <label htmlFor="address" className="text-sm font-medium">
+                    Address*
+                  </label>
                   <input
                     id="address"
                     type="text"
                     placeholder="Your address"
                     className={cn(
-                      "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
+                      "w-full rounded-lg p-3 text-base focus:outline-none placeholder:text-foreground/50 md:text-lg",
                       isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="email">Email*</label>
+                  <label htmlFor="email" className="text-sm font-medium">
+                    Email*
+                  </label>
                   <input
                     id="email"
                     type="email"
                     placeholder="Your email address"
                     className={cn(
-                      "w-full p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
+                      "w-full rounded-lg p-3 text-base focus:outline-none placeholder:text-foreground/50 md:text-lg",
                       isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                     )}
                     required
@@ -88,12 +96,14 @@ const ContactSection = () => {
               </div>
 
               <div className="flex flex-col gap-2 mt-4">
-                <label htmlFor="message">Message*</label>
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message*
+                </label>
                 <textarea
                   id="message"
                   placeholder="Tell us, How can we help you..."
                   className={cn(
-                    "w-full lg:h-24 resize-none p-2 rounded-lg text-lg focus:outline-none placeholder:text-foreground/50",
+                    "h-28 w-full resize-none rounded-lg p-3 text-base focus:outline-none placeholder:text-foreground/50 md:text-lg lg:h-24",
                     isPersonal ? "bg-zinc-200" : "bg-foreground/10",
                   )}
                   required
@@ -104,7 +114,7 @@ const ContactSection = () => {
                 <Button
                   content="Submit"
                   buttonClassName="w-full lg:w-fit"
-                  className="px-6 lg:px-10 text-white! hover:bg-[#45685e]/90 "
+                  className="px-6 lg:px-10 text-white! hover:bg-white hover:text-zinc-800! "
                   for={isPersonal ? "personalCare" : "babyCare"}
                 />
               </div>

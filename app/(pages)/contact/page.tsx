@@ -12,12 +12,12 @@ const Page = () => {
       className="relative overflow-hidden"
       style={{
         background: isPersonal
-          ? "#956eae"
+          ? "#D3C4DE"
           : "#bfddd9",
       }}
     >
       <div
-        className="pointer-events-none absolute top-2 md:top-3 lg:top-4 right-2 md:right-8 lg:right-10 text-zinc-500 text-right font-black uppercase select-none leading-none z-0"
+        className={`pointer-events-none absolute right-2 top-2 z-10 text-right text-[clamp(3.5rem,18vw,8rem)] font-black uppercase leading-none select-none md:right-8 md:top-3 lg:right-10 lg:top-4 ${isPersonal ? "text-ternary/80" : "text-foreground"}`}
  
       >
         ZUVARA

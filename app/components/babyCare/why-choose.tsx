@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Baby,
   Droplets,
@@ -92,8 +95,39 @@ const highlightPoints = [
 ];
 
 const WhyChoose = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".why-rise",
+        { y: 42, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.55,
+          ease: "power2.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 78%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative w-full overflow-hidden bg-babyCare pb-20">
+    <section
+      id="babycare-why-choose"
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-babyCare pb-20 px-4"
+    >
       <div className="relative mx-auto max-w-7xl ">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -142,7 +176,7 @@ const WhyChoose = () => {
               return (
                 <div
                   key={item.label}
-                  className="rounded-[1.8rem] border bg-white/90 px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(69,104,94,0.12)] md:px-6 md:py-5"
+                  className="why-rise rounded-[1.8rem] border bg-white/90 px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(69,104,94,0.12)] md:px-6 md:py-5"
                   style={{
                     borderColor: `${palette.border}44`,
                     boxShadow: "0 14px 30px rgba(69,104,94,0.05)",
@@ -178,13 +212,7 @@ const WhyChoose = () => {
             })}
           </div>
           <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55 }}
-              viewport={{ once: true }}
-              className="relative z-10 "
-            >
+            <div className="why-rise relative z-10">
               <h3
                 className="text-2xl font-semibold leading-tight lg:text-3xl"
                 style={{ color: palette.accent }}
@@ -232,15 +260,9 @@ Made for growing babies and confident parents.
               >
                 Learn more about Zuvara
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
+            <div className="why-rise relative">
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="grid gap-4">
                   <div
@@ -305,22 +327,18 @@ Made for growing babies and confident parents.
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {values.map((value, index) => {
+          {values.map((value) => {
             const Icon = value.icon;
 
             return (
-              <motion.div
+              <div
                 key={value.id}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
-                viewport={{ once: true }}
-                className="relative mx-auto w-full max-w-90"
+                className="why-rise relative mx-auto w-full max-w-90"
               >
                 <svg
                   viewBox="0 0 400 200"
@@ -357,7 +375,7 @@ Made for growing babies and confident parents.
                 </p>
                 </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

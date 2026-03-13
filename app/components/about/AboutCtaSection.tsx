@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { AboutPalette } from "@/app/components/about/theme";
-import PremiumWaveBackground from "@/app/components/common-ui/PremiumWaveBackground";
 
 type AboutCtaSectionProps = {
   palette: AboutPalette;
@@ -12,15 +11,17 @@ export default function AboutCtaSection({
   productHref,
 }: AboutCtaSectionProps) {
   return (
-    <section className=" pb-20   lg:pb-40 bg-foreground">
+    <section
+      className="pb-20 lg:pb-40"
+      style={{ backgroundColor: palette.panel }}
+    >
       <div
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.4rem]   text-center md:py-16"
-  
+        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] px-6 py-12 text-center md:py-16"
+        style={{ backgroundColor: palette.accent }}
       >
         <div className="pointer-events-none absolute inset-0 opacity-50">
           <div className="absolute left-[-8%] top-[-20%] h-40 w-40 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute right-[-10%] bottom-[-18%] h-44 w-44 rounded-full bg-white/12 blur-3xl" />
-          {/* <PremiumWaveBackground opacity={0.6} /> */}
         </div>
         <div className="relative z-10">
           <p className="text-sm font-semibold text-white/72">Our Promise</p>

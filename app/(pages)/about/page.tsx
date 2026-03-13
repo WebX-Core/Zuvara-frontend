@@ -121,7 +121,7 @@ export default function AboutPage() {
     : babyAlternatingBg;
 
   const heroWave = assetWithFill(wave3Svg, sectionBg.story);
-  const teamWave = assetWithFill(wave3Svg, "#45685E");
+  const teamWave = assetWithFill(wave3Svg, sectionBg.cta);
   const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
   const waveClass =
@@ -132,7 +132,7 @@ export default function AboutPage() {
       className="relative min-h-screen overflow-hidden"
       style={{ backgroundColor: sectionBg.hero, color: pagePalette.ink }}
     >
-      <div className="relative" style={{ backgroundColor: "#BFDDCA" }}>
+      <div className="relative" style={{ backgroundColor: sectionBg.hero }}>
         <AboutHeroSection
           palette={pagePalette}
           heroImage={heroImage}

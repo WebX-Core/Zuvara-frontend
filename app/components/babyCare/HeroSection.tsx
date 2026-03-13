@@ -18,13 +18,14 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: wave2Svg.markup }}
         />
         {/* Flower & Ferns */}
-        <div className="absolute hidden sm:block bottom-4 left-[1%] sm:left-[20%] -z-20 sm:bottom-20 lg:bottom-24 [&>svg]:h-50 [&>svg]:w-50 invert-4">
+        <div className="absolute  sm:block bottom-4 left-[1%] sm:left-[20%] -z-20 sm:bottom-20 lg:bottom-24 [&>svg]:h-30 [&>svg]:w-30 invert-4">
           {" "}
           <Image
             src="/waves/sunflower.gif"
             alt="flower"
-            width={100}
-            height={80}
+            width={70}
+            height={60}
+            className=""
           ></Image>
           <div className="absolute inset-0 " />
         </div>
@@ -64,7 +65,7 @@ export default function Home() {
           ></Image>
         </div>
         {/* Right tree */}
-        <div className="absolute bottom-48 right-[5%] -z-20 hidden  [&>svg]:h-50 [&>svg]:w-50">
+        <div className="absolute bottom-48 right-[5%] -z-20  [&>svg]:h-50 [&>svg]:w-50">
           <Image
             src="/waves/tree3.svg"
             alt="tree"
@@ -198,8 +199,8 @@ export default function Home() {
                   <div className="absolute inset-[15%] z-10 overflow-hidden rounded-[20px]">
                     <video
                       src="/videos/babyPlaying.mp4"
-                      autoPlay
-                      loop
+                      
+                      
                       muted
                       playsInline
                       className="h-full w-full object-cover"
