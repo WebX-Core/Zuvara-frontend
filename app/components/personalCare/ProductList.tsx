@@ -6,14 +6,21 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as ProductType } from "@/type/personalCareProductType";
+import { assetWithFill, wave4Svg } from "@/constants/svgs";
 
 const ProductList = () => {
+  const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
+
   const getDescription = (product: ProductType) =>
     product.description ??
     "Premium product designed for everyday comfort and reliable care.";
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-24">
+    <section className="relative overflow-hidden bg-white py-16 lg:py-24 lg:pb-32">
+      <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: footerWave.markup }}
+      />
       <div className="mx-auto w-[92%] max-w-7xl">
         <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
           <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">

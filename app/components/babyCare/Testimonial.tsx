@@ -3,13 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  ChevronLeft,
-  ChevronRight,
-  MessageCircleMore,
-  Star,
-} from "lucide-react";
-import SectionHeading from "../common-ui/SectionHeading";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
 const palette = {
@@ -65,11 +59,32 @@ const testimonials = [
   },
 ];
 
-const visibleCards = 3;
-
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visibleCards, setVisibleCards] = useState(3);
   const maxIndex = Math.max(0, testimonials.length - visibleCards);
+  const safeActiveIndex = Math.min(activeIndex, maxIndex);
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth < 768) {
+        setVisibleCards(1);
+        return;
+      }
+
+      if (window.innerWidth < 1024) {
+        setVisibleCards(2);
+        return;
+      }
+
+      setVisibleCards(3);
+    };
+
+    updateVisibleCards();
+    window.addEventListener("resize", updateVisibleCards);
+
+    return () => window.removeEventListener("resize", updateVisibleCards);
+  }, []);
 
   useEffect(() => {
     if (maxIndex === 0) return;
@@ -89,17 +104,16 @@ const Testimonials = () => {
     setActiveIndex((current) => (current >= maxIndex ? 0 : current + 1));
   };
 
-   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+  const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
 
   return (
     <section
-      className="relative overflow-hidden  lg:pb-48 bg-babyCare"
-      // style={{ backgroundColor: palette.page }}
+      className="relative overflow-hidden bg-babyCare px-4 lg:pb-48"
     >
-       <div
-              className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
-              dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
-            />
+      <div
+        className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      />
       <div className="pointer-events-none absolute left-1/2 top-14 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-0">
@@ -111,12 +125,12 @@ const Testimonials = () => {
           className="mb-12"
         >
           <div className="">
-            <div className="text-center max-w-3xl mx-auto">
+            <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
                 Hear from Our
-                <span className=" font-light italic">Happy Parents</span>
+                <span className="font-light italic"> Happy Parents</span>
               </h2>
-              <p className="text-sm lg:text-lg text-foreground mt-5 font-medium leading-relaxed">
+              <p className="mt-5 text-sm font-medium leading-relaxed text-foreground lg:text-lg">
                 Real experiences from families who trust Zuvara for comfort,
                 care, and gentle everyday protection.
               </p>
@@ -124,13 +138,11 @@ const Testimonials = () => {
           </div>
         </motion.div>
 
-        <div
-          className="rounded-4xl r px-4 py-5  md:py-6"
-        >
-          <div className="mb-5 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+        <div className="rounded-4xl px-2 py-5 sm:px-4 md:py-6">
+          <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <span
-                className="text-xl  py-2 flex gap-2 justify-center items-center font-semibold"
+                className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
                 style={{
                   color: palette.accent,
                 }}
@@ -168,12 +180,12 @@ const Testimonials = () => {
                 </svg>
                 Reviews
               </span>
-              <p className="hidden text-sm text-zinc-500 md:block">
+              <p className="text-sm text-zinc-500">
                 Swipe through real feedback from parents
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-end sm:self-auto">
               <button
                 type="button"
                 onClick={goPrev}
@@ -207,12 +219,12 @@ const Testimonials = () => {
             <div
               className="flex transition-transform duration-700 ease-out"
               style={{
-                transform: `translateX(-${activeIndex * (100 / visibleCards)}%)`,
+                transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
               }}
             >
               {testimonials.map((item) => (
                 <div
-                  key={item.id}
+                key={item.id}
                   className="w-full shrink-0 md:w-1/2 lg:w-1/3"
                 >
                   <article
@@ -222,7 +234,7 @@ const Testimonials = () => {
                       backgroundColor: "rgba(255,255,255,0.94)",
                     }}
                   >
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex items-center gap-3">
                         <div className="relative h-12 w-12 overflow-hidden rounded-full">
                           <Image
@@ -246,7 +258,7 @@ const Testimonials = () => {
                       </div>
 
                       <span
-                        className="rounded-full px-3 py-1 text-[11px] font-semibold"
+                        className="w-fit rounded-full px-3 py-1 text-[11px] font-semibold"
                         style={{
                           backgroundColor: "rgba(215,235,232,0.55)",
                           color: palette.accentSoft,
@@ -256,7 +268,7 @@ const Testimonials = () => {
                       </span>
                     </div>
 
-                    <div className="mt-5 flex items-center justify-between gap-3">
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                       <div className="flex items-center gap-1">
                         {Array.from({ length: item.rating }).map((_, index) => (
                           <Star
@@ -301,9 +313,9 @@ const Testimonials = () => {
                 onClick={() => setActiveIndex(index)}
                 className="h-2.5 rounded-full transition-all duration-300"
                 style={{
-                  width: activeIndex === index ? "2.8rem" : "0.7rem",
+                  width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
                   backgroundColor:
-                    activeIndex === index
+                    safeActiveIndex === index
                       ? palette.accent
                       : "rgba(132,170,165,0.35)",
                 }}

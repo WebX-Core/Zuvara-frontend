@@ -18,7 +18,10 @@ export default function AboutTeamSection({
   team,
 }: AboutTeamSectionProps) {
   return (
-    <section className="px-5 py-16 sm:px-8 md:px-12 lg:px-16 lg:pb-40 bg-[#bfddca]">
+    <section
+      className="px-5 py-16 sm:px-8 md:px-12 lg:px-16 lg:pb-40"
+      style={{ backgroundColor: palette.panel }}
+    >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p
@@ -50,7 +53,7 @@ export default function AboutTeamSection({
             <article
               key={member.name}
               className="group relative overflow-hidden rounded-[1.3rem]"
-              style={{ backgroundColor: "#d8d8d8" }}
+              style={{ backgroundColor: palette.chip }}
             >
               <div className="relative aspect-[0.86]">
                 <Image

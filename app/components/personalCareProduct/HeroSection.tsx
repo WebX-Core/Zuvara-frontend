@@ -79,7 +79,7 @@ const HeroSection = () => {
                 style={{ originX: 1, originY: 1 }}
                 src="/new/momnobg.png"
                 alt="Sanitary Pads pack"
-                className="absolute bottom-[0%] left-[30%] w-28 sm:w-32 lg:w-100"
+                className="absolute bottom-[0%] left-[30%] w-60 z-20 sm:w-32 lg:w-100"
               />
               <motion.img
                 initial={{ scale: 0, opacity: 0 }}

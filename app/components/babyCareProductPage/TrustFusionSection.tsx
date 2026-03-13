@@ -32,7 +32,7 @@ export default function TrustFusionSection({
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
-      <div className="mx-auto max-w-7xl perspective-1200px flex gap-6">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 perspective-1200px lg:flex-row lg:gap-6">
         <article
           className="fx-rise fx-float rounded-3xl border p-5 md:p-6"
           style={{
@@ -110,7 +110,7 @@ export default function TrustFusionSection({
           </div>
         </article>
       </div>
-      <div className="w-7xl mx-auto mt-12 space-y-8">
+      <div className="mx-auto mt-12 max-w-7xl space-y-8">
         <div className="fx-rise">
           <h2
             className="text-3xl lg:text-5xl font-bold tracking-tight"
@@ -128,13 +128,13 @@ export default function TrustFusionSection({
         </div>
 
         <div
-          className="flex justify-center items-center rounded-4xl px-4"
+          className="flex items-center justify-center rounded-4xl px-2 sm:px-4"
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
-          <div className="Center w-full">
-            <div className="relative h-[340px] w-full overflow-hidden rounded-3xl md:h-[460px] lg:h-[560px]">
+          <div className="w-full">
+            <div className="relative h-[220px] w-full overflow-hidden rounded-3xl sm:h-[300px] md:h-[460px] lg:h-[560px]">
                 <h2
-                  className="absolute top-4 left-4 z-10 text-4xl md:text-6xl lg:text-7xl font-bold uppercase"
+                  className="absolute left-3 top-3 z-10 text-2xl font-bold uppercase sm:left-4 sm:top-4 sm:text-4xl md:text-6xl lg:text-7xl"
                   style={{ color: hexToRgba(theme.accent, 0.75) }}
                 >
                   Zuvara
@@ -146,7 +146,7 @@ export default function TrustFusionSection({
                 height={1000}
                 className="h-full w-full object-cover"
               />
-              <h2 className="absolute top-4 right-4 z-10 text-4xl md:text-6xl lg:text-7xl font-bold uppercase text-zinc-500/70">
+              <h2 className="absolute right-3 top-3 z-10 text-2xl font-bold uppercase text-zinc-500/70 sm:right-4 sm:top-4 sm:text-4xl md:text-6xl lg:text-7xl">
                   Ordinary
                 </h2>
             </div>
@@ -161,7 +161,7 @@ export default function TrustFusionSection({
           }}
         >
           <div
-            className="grid grid-cols-12 border-b px-4 py-3 text-[11px] font-semibold uppercase tracking-wide"
+            className="hidden grid-cols-12 border-b px-4 py-3 text-[11px] font-semibold uppercase tracking-wide md:grid"
             style={{
               borderColor: `${theme.border}44`,
               backgroundColor: hexToRgba(theme.containerBg, 0.34),
@@ -176,28 +176,42 @@ export default function TrustFusionSection({
           {comparisonRows.map((row, idx) => (
             <div
               key={row.label}
-              className="fx-float grid grid-cols-12 items-center px-4 py-3 text-sm"
+              className="fx-float grid gap-2 px-4 py-3 text-sm md:grid-cols-12 md:items-center"
               style={{
                 borderTop: idx === 0 ? "none" : `1px solid ${theme.border}33`,
               }}
             >
               <div
-                className="col-span-6 font-medium"
+                className="font-medium md:col-span-6"
                 style={{ color: hexToRgba(theme.accent, 0.82) }}
               >
                 {row.label}
               </div>
-              <div
-                className="col-span-3 text-center font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {row.zuvara}
-              </div>
-              <div
-                className="col-span-3 text-center"
-                style={{ color: hexToRgba(theme.accent, 0.7) }}
-              >
-                {row.ordinary}
+              <div className="grid grid-cols-2 gap-3 md:col-span-6 md:contents">
+                <div
+                  className="rounded-2xl px-3 py-2 text-center font-semibold md:rounded-none md:px-0 md:py-0"
+                  style={{
+                    color: theme.accent,
+                    backgroundColor: hexToRgba(theme.containerBg, 0.28),
+                  }}
+                >
+                  <span className="mb-1 block text-[10px] uppercase tracking-wide text-zinc-500 md:hidden">
+                    Zuvara
+                  </span>
+                  {row.zuvara}
+                </div>
+                <div
+                  className="rounded-2xl px-3 py-2 text-center md:rounded-none md:px-0 md:py-0"
+                  style={{
+                    color: hexToRgba(theme.accent, 0.7),
+                    backgroundColor: hexToRgba(theme.pageBg, 0.2),
+                  }}
+                >
+                  <span className="mb-1 block text-[10px] uppercase tracking-wide text-zinc-500 md:hidden">
+                    Ordinary
+                  </span>
+                  {row.ordinary}
+                </div>
               </div>
             </div>
           ))}
