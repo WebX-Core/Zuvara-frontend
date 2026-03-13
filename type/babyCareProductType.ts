@@ -65,4 +65,5 @@ export interface Product {
   featureDesc?: string;
   features?: string[];
   productCloseView?: ProductCloseView[];
+  sizeGuideImages?: string[];
 }
