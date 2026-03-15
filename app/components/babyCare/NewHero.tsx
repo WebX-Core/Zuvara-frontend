@@ -73,19 +73,18 @@ export default function Home() {
             duration: 0.5,
             ease: "power2.out",
           },
-          "-=0.12",
+          "<",
         )
         .to(
           ".hero-wave-fill-1",
           {
             opacity: 0,
-            duration: 0.25,
           },
-          "-=0.08",
+          "<",
         )
         .to(".hero-wave-fill-2", {
           scaleY: 1,
-          duration: 0.75,
+
           ease: "power2.out",
         })
         .to(
@@ -96,7 +95,7 @@ export default function Home() {
             duration: 0.5,
             ease: "power2.out",
           },
-          "-=0.12",
+          1,
         )
         .to(
           ".hero-wave-fill-2",
@@ -104,23 +103,23 @@ export default function Home() {
             opacity: 0,
             duration: 0.25,
           },
-          "-=0.08",
+          "<",
         )
 
         .to(
           ".hero-plant",
           { y: 0, opacity: 1, scale: 1, duration: 0.55, stagger: 0.1 },
-          "-=0.2",
+          "<",
         )
         .to(
           ".hero-copy",
           { x: 0, opacity: 1, duration: 0.65, stagger: 0.08 },
-          "-=0.18",
+          "<",
         )
         .to(
           ".hero-bubble",
           { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.08 },
-          "-=0.35",
+          "<",
         )
         .to(
           [".hero-baby-right", ".hero-baby-mobile"],
@@ -137,7 +136,7 @@ export default function Home() {
               });
             },
           },
-          "-=0.1",
+          "<",
         )
         .to(
           ".hero-sun",
@@ -148,7 +147,7 @@ export default function Home() {
             duration: 0.9,
             ease: "back.out(1.35)",
           },
-          "-=0.25",
+          "<",
         );
 
       if (isMobile) {
