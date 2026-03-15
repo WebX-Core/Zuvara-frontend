@@ -61,19 +61,19 @@ export default function IntroPage() {
         activeId === "baby" ? "bg-babyCare" : "bg-ternary/50"
       }`}
     >
-      <Link href="/" className="absolute top-4 left-1/2 z-30 -translate-x-1/2 sm:top-2">
+      <Link href="/" className="absolute top-4 left-1/2 z-30 -translate-x-1/2 sm:top-8">
         <Image
           src={activeId === "personal" ? "/logo/logo_secondary.svg" : "/logo/logo.svg"}
           alt="Zuvara Logo"
           width={80}
           height={60}
           priority
-          className="h-auto w-18 sm:w-auto"
+          className="h-auto w-24 sm:w-48"
         />
       </Link>
       <section className="relative z-20 mx-auto flex min-h-screen w-full max-w-360 flex-col justify-center px-4 pt-24 pb-10 sm:px-5 md:px-8 md:pt-28 lg:px-10">
         <div className="flex flex-col items-center justify-center">
-          <div className="max-w-240 text-center">
+          <div className="hidden sm:block max-w-240 text-center">
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="mt-3 text-sm leading-6 text-white/80 md:mt-4 md:text-base md:leading-7"
+              className="mt-3 text-sm leading-6 text-white md:mt-4 md:text-xl font-medium md:leading-7"
             >
               {activeDestination.id === "baby"
                 ? "Soft, safe, and thoughtfully made essentials for your little one."
@@ -106,7 +106,7 @@ export default function IntroPage() {
             </motion.p>
           </div>
 
-          <div className="mt-8 grid w-full max-w-6xl grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
+          <div className="mt-4 grid w-full max-w-6xl grid-cols-1 gap-4 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
             {destinations.map((section) => {
               const isActive = activeId === section.id;
 
@@ -114,7 +114,7 @@ export default function IntroPage() {
                 <Link
                   key={section.id}
                   href={section.href}
-                  className="group relative pt-20 md:pt-0"
+                  className="group relative"
                   onMouseEnter={() => setActiveId(section.id)}
                 >
                   {/* Card */}
@@ -186,12 +186,27 @@ export default function IntroPage() {
                       </div>
 
                       <p
-                        className={`max-w-72 text-sm font-medium leading-relaxed ${
+                        className={`max-w-40 text-sm font-medium leading-relaxed sm:max-w-72 ${
                           isActive ? "text-white/80" : "text-zinc-500"
                         }`}
                       >
                         {section.description}
                       </p>
+                      <div className="pointer-events-none absolute bottom-18 right-3 md:hidden">
+                        <div
+                          className={`${
+                            section.id === "baby" ? "w-24" : "w-28"
+                          }`}
+                        >
+                          <Image
+                            src={section.image}
+                            alt={section.title}
+                            width={320}
+                            height={240}
+                            className="h-auto w-full object-contain"
+                          />
+                        </div>
+                      </div>
                       <div className="mt-auto pt-2 sm:pt-3">
                         <div className="flex w-full justify-center rounded-full bg-white px-4 py-3 sm:py-4">
                           <span
@@ -219,10 +234,10 @@ export default function IntroPage() {
                       stiffness: 260,
                       damping: 20,
                     }}
-                    className={`absolute left-1/2 top-0 z-20 pointer-events-none -translate-x-1/2 ${
+                    className={`pointer-events-none absolute hidden md:block ${
                       section.id === "baby"
-                        ? "w-32 sm:w-40 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-left-8 md:w-34 lg:bottom-10 lg:-left-46 lg:w-72"
-                        : "w-40 sm:w-48 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-right-6 md:w-44 lg:-bottom-6 lg:-right-60 lg:w-120"
+                        ? "md:z-20 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:w-34 lg:bottom-10 lg:-left-46 lg:w-72"
+                        : "md:z-20 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-right-6 md:w-44 lg:-bottom-6 lg:-right-60 lg:w-120"
                     }`}
                   >
                     <Image

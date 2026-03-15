@@ -6,6 +6,7 @@ import Image from "next/image";
 import gsap from "gsap";
 
 const STORAGE_KEY = "babycare-loader-seen-session";
+const LOADER_DURATION_MS = 3000;
 
 export default function Loader() {
   const [shouldRender, setShouldRender] = useState(false);
@@ -47,7 +48,7 @@ export default function Loader() {
   useEffect(() => {
     if (!checked || !shouldRender) return;
 
-    const duration = 3200;
+    const duration = LOADER_DURATION_MS;
     const start = Date.now();
 
     const intervalId = window.setInterval(() => {
@@ -77,7 +78,7 @@ export default function Loader() {
       { x: startX },
       {
         x: targetX,
-        duration: 3.2,
+        duration: LOADER_DURATION_MS / 1000,
         ease: "none",
         onComplete: () => setBabyDone(true),
       },

@@ -36,7 +36,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
 
   return (
-    <section className="relative px-4 py-8 md:px-8 md:py-20">
+    <section className="relative px-4 py-8 md:px-8 md:py-20 md:pb-40">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
