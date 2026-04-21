@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {  Cormorant_Garamond, Montserrat, Amatic_SC } from "next/font/google";
+import { Cormorant_Garamond, Montserrat, Amatic_SC } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "./providers/LenisProvider";
 
@@ -9,17 +9,15 @@ const cormorant = Cormorant_Garamond({
 });
 
 const amaticSc = Amatic_SC({
-  weight: ["400","700"],
+  weight: ["400", "700"],
   variable: "--font-amatic",
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
 });
-
-
 
 export const metadata: Metadata = {
   title: "Zuvara - Premium Baby & Kids Care Products",
@@ -32,6 +30,7 @@ export const metadata: Metadata = {
 
 // import CrawlingBaby from "./components/shared/CrawlingBaby";
 import { SectionProvider } from "./providers/SectionProvider";
+import WhatsAppButton from "./components/common-ui/WhatsAppButton";
 
 export default function RootLayout({
   children,
@@ -43,6 +42,7 @@ export default function RootLayout({
       <body
         className={`${cormorant.variable} ${montserrat.variable} ${amaticSc.variable} antialiased text-zinc-900 overflow-x-hidden! `}
       >
+        <WhatsAppButton />
         <LenisProvider>
           <SectionProvider>
             {children}

@@ -60,36 +60,42 @@ const values = [
 
 const trustStats = [
   {
-    label: "Parents Trusting Zuvara",
+    label: "Trusted Parents",
     value: "50K+",
     chip: "Families",
     icon: Baby,
   },
   {
-    label: "Safety Checks Per Batch",
+    label: "Safety Checks ",
     value: "30+",
     chip: "Safety",
     icon: ShieldAlert,
   },
   {
-    label: "Average Customer Rating",
-    value: "4.8/5",
+    label: " Customer Rating",
+    value: "4.8",
     chip: "Rating",
     icon: Star,
+  },
+  {
+    label: "Derm Tested ",
+    value: "100%",
+    chip: "Skin Safe",
+    icon: Leaf,
   },
 ];
 
 const highlightPoints = [
   {
-    text: "Designed around softness, absorbency, and practical ease.",
+    text: "Soft, absorbent, and easy to use.",
     icon: Droplets,
   },
   {
-    text: "Made to support calmer daily routines for both babies and parents.",
+    text: "Made for calmer daily routines.",
     icon: HeartHandshake,
   },
   {
-    text: "Refined visual language that feels premium without losing warmth.",
+    text: "Premium feel with a warm touch.",
     icon: Sparkles,
   },
 ];
@@ -155,58 +161,70 @@ const WhyChoose = () => {
               className="ml-2 block font-light italic lg:inline"
               style={{ color: palette.accentSoft }}
             >
-              elevated for modern families.
+              made simple.
             </span>
           </h2>
           <p
             className="mt-4 text-sm leading-relaxed font-medium lg:text-base"
             style={{ color: palette.body }}
           >
-            Zuvara blends quiet premium design with everyday performance so
-            every product feels softer, safer, and more reassuring to use.
+            Soft, safe essentials designed to make everyday care easier.
           </p>
         </motion.div>
 
         <div className="relative overflow-hidden   md:py-6 lg:py-8">
           <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 " />
-          <div className="grid gap-4 lg:grid-cols-3">
+          <div className="grid grid-cols-2  gap-2 sm:grid-cols-3 lg:grid-cols-4 max-w-5xl mx-auto">
             {trustStats.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
                   key={item.label}
-                  className="why-rise rounded-[1.8rem] border bg-white/90 px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(69,104,94,0.12)] md:px-6 md:py-5"
+                  className="group flex sm:flex-col items-center gap-2 sm:gap-4 rounded-xl border px-3  py-2 sm:py-6 transition-all duration-200 hover:bg-white"
                   style={{
-                    borderColor: `${palette.border}44`,
-                    boxShadow: "0 14px 30px rgba(69,104,94,0.05)",
+                    borderColor: `${palette.border}30`,
+                    backgroundColor: "rgba(255,255,255,0.85)",
                   }}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span
-                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold"
-                      style={{
-                        borderColor: `${palette.border}33`,
-                        backgroundColor: "rgba(255,255,255,0.98)",
-                        color: palette.accentSoft,
-                      }}
-                    >
-                      <Icon size={12} />
-                      {item.chip}
-                    </span>
+                  <div
+                    className="flex h-7 w-7 sm:h-12 sm:w-12 md:hidden items-center justify-center rounded-lg"
+                    style={{
+                      backgroundColor: `${palette.accent}12`,
+                      color: palette.accent,
+                    }}
+                  >
+                    <Icon className="w-4 sm:w-6 " />
                   </div>
-                  <p
-                    className="mt-8 text-4xl font-semibold tracking-tight md:text-5xl"
-                    style={{ color: palette.accent }}
-                  >
-                    {item.value}
-                  </p>
-                  <p
-                    className="mt-3 max-w-52 text-sm leading-relaxed font-medium"
-                    style={{ color: palette.body }}
-                  >
-                    {item.label}
-                  </p>
+
+                  <div className="leading-tight flex flex-col sm:gap-1">
+                    <p
+                      className="text-md sm:text-4xl md:text-center ml-2 font-semibold tracking-tight"
+                      style={{ color: palette.accent }}
+                    >
+                      {item.value}
+                      {item.value == "4.8" && (
+                        <span className="text-xs sm:text-lg ">/ 5</span>
+                      )}
+                    </p>
+                    <p
+                      className="text-xs sm:text-lg flex items-center gap-2 font-medium opacity-80 "
+                      style={{ color: palette.body }}
+                    >
+                      <span>
+                        <span
+                          className="hidden sm:h-3 sm:w-4 md:flex  items-center justify-center rounded-lg"
+                          style={{
+                            backgroundColor: `${palette.accent}12`,
+                            color: palette.accent,
+                          }}
+                        >
+                          <Icon className="w-4  " />
+                        </span>
+                      </span>
+                      {item.label}
+                    </p>
+                  </div>
                 </div>
               );
             })}
@@ -217,15 +235,14 @@ const WhyChoose = () => {
                 className="text-2xl font-semibold leading-tight lg:text-3xl"
                 style={{ color: palette.accent }}
               >
-                Built for gentler routines
+                Gentler care, every day
               </h3>
 
               <p
                 className="mt-4 max-w-xl text-sm font-medium leading-relaxed lg:text-base"
                 style={{ color: palette.body }}
               >
-                Soft care. Strong protection.
-Made for growing babies and confident parents.
+                Soft care and reliable protection for everyday routines.
               </p>
 
               <div className="mt-6 space-y-3">
@@ -235,10 +252,10 @@ Made for growing babies and confident parents.
                   return (
                     <div
                       key={point.text}
-                      className="flex items-start gap-3 rounded-3xl border px-4 py-3 transition-all duration-300 bg-white/10  hover:bg-white/75"
+                      className="flex items-center gap-3 rounded-3xl border px-4 py-3 transition-all duration-300 bg-white/10  hover:bg-white/75"
                       style={{
                         borderColor: `${palette.border}40`,
-                       
+
                         color: palette.accent,
                       }}
                     >
@@ -255,14 +272,14 @@ Made for growing babies and confident parents.
 
               <Link
                 href="/about"
-                className="mt-7 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white! shadow-[0_12px_28px_rgba(69,104,94,0.25)] transition-all duration-300 hover:translate-y-[-1px] hover:shadow-[0_16px_30px_rgba(69,104,94,0.3)]"
+                className="mt-7 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white! shadow-[0_12px_28px_rgba(69,104,94,0.25)] transition-all duration-300 hover:-translate-y-px hover:shadow-[0_16px_30px_rgba(69,104,94,0.3)]"
                 style={{ backgroundColor: palette.accent }}
               >
-                Learn more about Zuvara
+                About Zuvara
               </Link>
             </div>
 
-            <div className="why-rise relative">
+            <div className="why-rise relative hidden md:block">
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="grid gap-4">
                   <div
@@ -331,7 +348,7 @@ Made for growing babies and confident parents.
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {/* <div className="mt-8 hidden  md:grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {values.map((value) => {
             const Icon = value.icon;
 
@@ -355,30 +372,27 @@ Made for growing babies and confident parents.
                 </svg>
                 <div className="absolute inset-0 z-10 flex items-center justify-center px-10 py-8 sm:px-12 sm:py-10">
                   <div className="w-full max-w-57.5 text-center">
-                <div
-                  className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11"
-              
-                >
-                  <Icon size={16} className="sm:h-4.5 sm:w-4.5" />
-                </div>
-                <h3
-                  className="text-sm font-semibold sm:text-base"
-                  style={{ color: palette.accent }}
-                >
-                  {value.title}
-                </h3>
-                <p
-                  className="mt-2 text-xs leading-relaxed sm:text-sm"
-                  style={{ color: palette.body }}
-                >
-                  {value.description}
-                </p>
-                </div>
+                    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11">
+                      <Icon size={16} className="sm:h-4.5 sm:w-4.5" />
+                    </div>
+                    <h3
+                      className="text-sm font-semibold sm:text-base"
+                      style={{ color: palette.accent }}
+                    >
+                      {value.title}
+                    </h3>
+                    <p
+                      className="mt-2 text-xs leading-relaxed sm:text-sm"
+                      style={{ color: palette.body }}
+                    >
+                      {value.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </section>
   );

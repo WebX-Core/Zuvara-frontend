@@ -3,7 +3,6 @@ import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
-
 type WhyZuvaraProductsSectionProps = {
   theme: BabyCareListingTheme;
 };
@@ -11,17 +10,17 @@ type WhyZuvaraProductsSectionProps = {
 const reasons = [
   {
     title: "Gentle by design",
-    body: "Everyday essentials built for delicate skin, softer touch, and calmer routines.",
+    body: "Soft essentials for delicate skin.",
     icon: HeartHandshake,
   },
   {
     title: "Trusted protection",
-    body: "Parents choose Zuvara for reliable absorbency, comfort, and practical daily performance.",
+    body: "Reliable comfort and absorbency.",
     icon: ShieldCheck,
   },
   {
     title: "Made to feel better",
-    body: "Thoughtful materials and balanced fit help your baby stay comfortable longer.",
+    body: "Balanced fit for longer comfort.",
     icon: Sparkles,
   },
 ];
@@ -29,17 +28,15 @@ const reasons = [
 export default function WhyZuvaraProductsSection({
   theme,
 }: WhyZuvaraProductsSectionProps) {
-
   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
 
   return (
     <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8  lg:pb-36">
-
-        <div
+      <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
-       
+
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <span
@@ -68,20 +65,16 @@ export default function WhyZuvaraProductsSection({
             className="mt-4 text-sm leading-relaxed font-medium md:text-base"
             style={{ color: hexToRgba(theme.accent, 0.76) }}
           >
-            Zuvara products are built around comfort, safety, and the practical
-            needs parents care about most from morning changes to overnight use.
+            Built for comfort, safety, and easier daily care.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-1 md:grid-cols-3 md:gap-4">
           {reasons.map(({ title, body, icon: Icon }) => (
-            <article
-              key={title}
-              className="relative mx-auto w-full max-w-[360px]"
-            >
+            <article key={title} className="relative mx-auto w-full max-w-90">
               <svg
                 viewBox="0 0 400 200"
-                className="block h-[220px] w-full sm:h-[240px] md:h-[260px]"
+                className="block h-42 w-full sm:h-52 md:h-65"
                 aria-hidden="true"
                 preserveAspectRatio="none"
               >
@@ -91,25 +84,25 @@ export default function WhyZuvaraProductsSection({
                 />
               </svg>
 
-              <div className="absolute inset-0 z-10 flex items-center justify-center px-10 py-8 sm:px-12 sm:py-10">
-                <div className="w-full max-w-[230px] text-center">
+              <div className="absolute inset-0 z-10 flex items-center justify-center px-7 py-5 sm:px-10 sm:py-8">
+                <div className="w-full max-w-44 text-center sm:max-w-57.5">
                   <div
-                    className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11"
+                    className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-lg sm:mb-4 sm:h-11 sm:w-11 sm:rounded-xl"
                     style={{
                       backgroundColor: hexToRgba(theme.chipBg, 0.85),
                       color: theme.accent,
                     }}
                   >
-                    <Icon size={16} className="sm:h-[18px] sm:w-[18px]" />
+                    <Icon size={14} className="sm:h-4.5 sm:w-4.5" />
                   </div>
                   <h3
-                    className="text-sm font-semibold sm:text-base"
+                    className="text-xs font-semibold sm:text-base"
                     style={{ color: theme.accent }}
                   >
                     {title}
                   </h3>
                   <p
-                    className="mt-2 text-xs leading-relaxed sm:text-sm"
+                    className="mt-1 text-[11px] leading-snug sm:mt-2 sm:text-sm sm:leading-relaxed"
                     style={{ color: hexToRgba(theme.accent, 0.72) }}
                   >
                     {body}

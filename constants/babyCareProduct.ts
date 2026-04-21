@@ -117,156 +117,6 @@ function normalizeProduct(p: Product): Product {
 const rawBabyCareProducts: Product[] = [
   {
     id: 1,
-    name: "Supreme Diapers",
-    price: { amount: 299, currency: "NPR" },
-    slug: "supreme-diapers",
-    background: "#456a5c",
-    foreground: "#ffffff",
-    rating: 4.8,
-    reviews: 245,
-    heroImage: "/PRODUCTS/Baby/supreme-diapers/product.png",
-    heroImage2: "/PRODUCTS/Baby/supreme-diapers/product.png",
-    image: "/PRODUCTS/Baby/supreme-diapers/product.png",
-    video: "/videos/diaper-video2.mp4",
-    category: "Baby Diaper",
-    variants: [
-      {
-        id: 1,
-        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
-        icon: "/icons/m.png",
-        size: "M",
-        weight: "4-10",
-      },
-      {
-        id: 2,
-        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
-        icon: "/icons/l.png",
-        size: "L",
-        weight: "9-14",
-      },
-      {
-        id: 3,
-        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
-        icon: "/icons/xl.png",
-        size: "XL",
-        weight: "12-17",
-      },
-      {
-        id: 4,
-        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
-        icon: "/icons/xxl.png",
-        size: "XXL",
-        weight: ">15",
-      },
-    ],
-    description: "Get ready for a dry, leak-free adventure ahead!",
-    subDesc1:
-      "Say goodbye to worries over rashes, heaviness, and leakage with Zuvara Supreme Diapers! Your baby deserves the best, and these diapers deliver unparalleled comfort and protection.",
-    subDesc2:
-      "Crafted to be the thinnest diapers on the market, Zuvara Supreme Diapers prioritize your baby’s well-being. Dermatologically and Pediatrician tested, they’re gentle on even the most sensitive skin types. Plus, they’re completely chemical-free, with 0% Parabens, Latex, Fragrance, Phthalates, and Chlorine.",
-    subDesc3:
-      "Breathable pores ensure air circulation, acting as a shield against rashes, while the leak-proof design and 12-hour super absorbency guarantee uninterrupted playtime and sleep. The 360-degree elasticity provides freedom of movement, preventing discomfort during exploration and discovery.",
-    subDesc4:
-      "Zuvara Supreme Diapers also feature a handy wetness indicator, changing color when it’s time for a change, ensuring your baby stays dry and comfortable. Give your little one the gift of a happy diaper journey with Zuvara, the premium choice for discerning parents in Nepal.",
-    highlights: [
-      "Extra soft breathable outer layer",
-      "12-hour leak protection",
-      "Wetness indicator",
-      "Hypoallergenic materials",
-      "Flexible waistband for perfect fit",
-    ],
-    reviewsData: [
-      {
-        id: 1,
-        userName: "Amir S.",
-        userInitial: "AS",
-        rating: 5,
-        comment:
-          "This has completely changed our diaper routine. No more leaks at night!",
-        date: "2024-01-15",
-      },
-      {
-        id: 2,
-        userName: "Maria K.",
-        userInitial: "MK",
-        rating: 4,
-        comment:
-          "Very soft and absorbent. Highly recommended for sensitive skin.",
-        date: "2024-01-20",
-      },
-    ],
-    faqs: [
-      {
-        question: "Are Supreme Diapers safe to be used by my baby?",
-        answer:
-          "Only pure water-based inks are utilized on our Zuvara Supreme Diapers, making them completely safe and secure to be used by babies daily. Zuvara Diapers are the softest disposable diapers and breathable pores to ensure air can easily pass through and work as a rash guard for your baby’s safety.",
-      },
-      {
-        question: "How does the wetness indicator work in Supreme Diapers?",
-        answer:
-          "Wetness indicators are a convenient way to indicate the time to change your baby’s diaper. Each Diaper comes with 3 wetness indicator lines on them. These lines turn from yellow to blue whenever your baby pees/poops",
-      },
-      {
-        question: "How can I pick the right size of diaper for my baby?",
-        answer: `Zuvara Diapers are obtainable in different sizes ranging from M to XXL. You can select the perfect size depending on the weight of your baby:
-
-• Medium: 6-11 kgs
-• Large: 9-14 kgs
-• Extra Large: 12-17 kgs
-• XXL: More than 15 kgs`,
-      },
-      {
-        question:
-          "How to dispose off Supreme diapers?Is there a wetness indicator?",
-        answer:
-          "Zuvara diapers come with disposable tape so that you can dispose of the diapers with utmost hygiene and care. The soiled diapers can be conveniently wrapped and sealed using disposable tape.",
-      },
-      {
-        question: "Are Supreme Diapers safe to be used by my baby?",
-        answer:
-          "Only pure water-based inks are used on our Zuvara Diapers making it completely safe to be used by babies on daily basis. Zuvara Diaper also has breathable pores to ensure air can easily pass through and act as a rash guard for your baby’s safety.",
-      },
-      {
-        question: "Do Supreme Diapers have an expiry date?",
-        answer:
-          "Yes, our Zuvara Diapers do have an expiry date. You can keep our baby diapers for up to 3 years without worry. We strongly recommend storing Feather diapers in a cool and dry environment for hygienic reasons.",
-      },
-    ],
-    featureImage: "/PRODUCTS/Baby/supreme-diapers/technology.jpg",
-    featureImageTitle1: "Chlorine-Free",
-    featureImageTitle2: "Japanese Absorbent Core",
-    featureImageDesc: "10s fast Absorption, Keep 12 Hours Dry",
-    featureTitle: "Absorbs 15x its weight in liquid",
-    featureDesc:
-      "Zuvara Premium Care Pants have super-absorbent gel absorbs the liquid to lock it away from your baby’s skin and prevent wetness from transferring to your baby’s bed or clothes.",
-    features: [
-      "Upgraded softbess for a cloud of touch and skin-friendly pampering",
-      "Visibly thin, like it's not worn, the butt feel relaxed",
-      "PE film for breathable relief and good mood healing",
-      "Highly effective SAP core, instantly absorbent, as dry as the sun",
-      "Upgraded bubble waistband for a soft, caressing hug and comfortable wear for your baby",
-    ],
-    productCloseView: [
-      {
-        icon: "/icons/inner-core.png",
-        label: "Velvety Soft Inner layer",
-      },
-      {
-        icon: "/icons/loop-style-waist.png",
-        label: "Loop Style Waist",
-      },
-      {
-        icon: "/icons/disposable-tape.png",
-        label: "Disposable Tape",
-      },
-      {
-        icon: "/icons/wetness-indicator.png",
-        label: "Wetness Indicator",
-      },
-    ],
-  },
-  {
-    id: 2,
     name: "Premium Diapers & Pants",
     price: { amount: 249, currency: "NPR" },
     slug: "premium-diapers-pants",
@@ -418,6 +268,157 @@ const rawBabyCareProducts: Product[] = [
       },
     ],
   },
+  {
+    id: 2,
+    name: "Supreme Diapers",
+    price: { amount: 299, currency: "NPR" },
+    slug: "supreme-diapers",
+    background: "#456a5c",
+    foreground: "#ffffff",
+    rating: 4.8,
+    reviews: 245,
+    heroImage: "/PRODUCTS/Baby/supreme-diapers/product.png",
+    heroImage2: "/PRODUCTS/Baby/supreme-diapers/product.png",
+    image: "/PRODUCTS/Baby/supreme-diapers/product.png",
+    video: "/videos/diaper-video2.mp4",
+    category: "Baby Diaper",
+    variants: [
+      {
+        id: 1,
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
+        icon: "/icons/m.png",
+        size: "M",
+        weight: "4-10",
+      },
+      {
+        id: 2,
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
+        icon: "/icons/l.png",
+        size: "L",
+        weight: "9-14",
+      },
+      {
+        id: 3,
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
+        icon: "/icons/xl.png",
+        size: "XL",
+        weight: "12-17",
+      },
+      {
+        id: 4,
+        image: "/PRODUCTS/Baby/supreme-diapers/product.png",
+        icon: "/icons/xxl.png",
+        size: "XXL",
+        weight: ">15",
+      },
+    ],
+    description: "Get ready for a dry, leak-free adventure ahead!",
+    subDesc1:
+      "Say goodbye to worries over rashes, heaviness, and leakage with Zuvara Supreme Diapers! Your baby deserves the best, and these diapers deliver unparalleled comfort and protection.",
+    subDesc2:
+      "Crafted to be the thinnest diapers on the market, Zuvara Supreme Diapers prioritize your baby’s well-being. Dermatologically and Pediatrician tested, they’re gentle on even the most sensitive skin types. Plus, they’re completely chemical-free, with 0% Parabens, Latex, Fragrance, Phthalates, and Chlorine.",
+    subDesc3:
+      "Breathable pores ensure air circulation, acting as a shield against rashes, while the leak-proof design and 12-hour super absorbency guarantee uninterrupted playtime and sleep. The 360-degree elasticity provides freedom of movement, preventing discomfort during exploration and discovery.",
+    subDesc4:
+      "Zuvara Supreme Diapers also feature a handy wetness indicator, changing color when it’s time for a change, ensuring your baby stays dry and comfortable. Give your little one the gift of a happy diaper journey with Zuvara, the premium choice for discerning parents in Nepal.",
+    highlights: [
+      "Extra soft breathable outer layer",
+      "12-hour leak protection",
+      "Wetness indicator",
+      "Hypoallergenic materials",
+      "Flexible waistband for perfect fit",
+    ],
+    reviewsData: [
+      {
+        id: 1,
+        userName: "Amir S.",
+        userInitial: "AS",
+        rating: 5,
+        comment:
+          "This has completely changed our diaper routine. No more leaks at night!",
+        date: "2024-01-15",
+      },
+      {
+        id: 2,
+        userName: "Maria K.",
+        userInitial: "MK",
+        rating: 4,
+        comment:
+          "Very soft and absorbent. Highly recommended for sensitive skin.",
+        date: "2024-01-20",
+      },
+    ],
+    faqs: [
+      {
+        question: "Are Supreme Diapers safe to be used by my baby?",
+        answer:
+          "Only pure water-based inks are utilized on our Zuvara Supreme Diapers, making them completely safe and secure to be used by babies daily. Zuvara Diapers are the softest disposable diapers and breathable pores to ensure air can easily pass through and work as a rash guard for your baby’s safety.",
+      },
+      {
+        question: "How does the wetness indicator work in Supreme Diapers?",
+        answer:
+          "Wetness indicators are a convenient way to indicate the time to change your baby’s diaper. Each Diaper comes with 3 wetness indicator lines on them. These lines turn from yellow to blue whenever your baby pees/poops",
+      },
+      {
+        question: "How can I pick the right size of diaper for my baby?",
+        answer: `Zuvara Diapers are obtainable in different sizes ranging from M to XXL. You can select the perfect size depending on the weight of your baby:
+
+• Medium: 6-11 kgs
+• Large: 9-14 kgs
+• Extra Large: 12-17 kgs
+• XXL: More than 15 kgs`,
+      },
+      {
+        question:
+          "How to dispose off Supreme diapers?Is there a wetness indicator?",
+        answer:
+          "Zuvara diapers come with disposable tape so that you can dispose of the diapers with utmost hygiene and care. The soiled diapers can be conveniently wrapped and sealed using disposable tape.",
+      },
+      {
+        question: "Are Supreme Diapers safe to be used by my baby?",
+        answer:
+          "Only pure water-based inks are used on our Zuvara Diapers making it completely safe to be used by babies on daily basis. Zuvara Diaper also has breathable pores to ensure air can easily pass through and act as a rash guard for your baby’s safety.",
+      },
+      {
+        question: "Do Supreme Diapers have an expiry date?",
+        answer:
+          "Yes, our Zuvara Diapers do have an expiry date. You can keep our baby diapers for up to 3 years without worry. We strongly recommend storing Feather diapers in a cool and dry environment for hygienic reasons.",
+      },
+    ],
+    featureImage: "/PRODUCTS/Baby/supreme-diapers/technology.jpg",
+    featureImageTitle1: "Chlorine-Free",
+    featureImageTitle2: "Japanese Absorbent Core",
+    featureImageDesc: "10s fast Absorption, Keep 12 Hours Dry",
+    featureTitle: "Absorbs 15x its weight in liquid",
+    featureDesc:
+      "Zuvara Premium Care Pants have super-absorbent gel absorbs the liquid to lock it away from your baby’s skin and prevent wetness from transferring to your baby’s bed or clothes.",
+    features: [
+      "Upgraded softbess for a cloud of touch and skin-friendly pampering",
+      "Visibly thin, like it's not worn, the butt feel relaxed",
+      "PE film for breathable relief and good mood healing",
+      "Highly effective SAP core, instantly absorbent, as dry as the sun",
+      "Upgraded bubble waistband for a soft, caressing hug and comfortable wear for your baby",
+    ],
+    productCloseView: [
+      {
+        icon: "/icons/inner-core.png",
+        label: "Velvety Soft Inner layer",
+      },
+      {
+        icon: "/icons/loop-style-waist.png",
+        label: "Loop Style Waist",
+      },
+      {
+        icon: "/icons/disposable-tape.png",
+        label: "Disposable Tape",
+      },
+      {
+        icon: "/icons/wetness-indicator.png",
+        label: "Wetness Indicator",
+      },
+    ],
+  },
+
   {
     id: 3,
     name: "Feather Diaper Tape",
@@ -817,14 +818,14 @@ Choose the size that best matches your baby’s weight for a snug, comfortable f
  * ✅ every product now has every field (via normalizeProduct)
  */
 const PRODUCTS_WITH_DEDICATED_IMAGES = new Set([
-  "supreme-diapers",
   "premium-diapers-pants",
+  "supreme-diapers",
+
   "value-diapers-pants",
   "moisturising-tissue",
   "value-wet-wipes",
 ]);
 
-export const babyCareProducts: Product[] =
-  rawBabyCareProducts
-    .filter((product) => PRODUCTS_WITH_DEDICATED_IMAGES.has(product.slug))
-    .map(normalizeProduct);
+export const babyCareProducts: Product[] = rawBabyCareProducts
+  .filter((product) => PRODUCTS_WITH_DEDICATED_IMAGES.has(product.slug))
+  .map(normalizeProduct);

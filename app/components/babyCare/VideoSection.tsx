@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useMediaQuery } from "react-responsive";
-import { assetWithFill, wave3Svg } from "@/constants/svgs";
+import { WaveSvg } from "@/app/components/common-ui/WaveSvg";
 
 const VideoSection = () => {
   const [isMuted, setIsMuted] = useState(true);
@@ -36,13 +36,13 @@ const VideoSection = () => {
     setIsLiked(!isLiked);
     setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
   };
-     const productBottomWave = assetWithFill(wave3Svg, "#bfdec9");
-
   return (
     <section className="relative">
-        <div
-        className="pointer-events-none absolute -top-10 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen rotate-180"
-        dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
+      <WaveSvg
+        className="pointer-events-none absolute -top-1 left-1/2 z-20 h-auto w-screen max-w-none -translate-x-1/2 rotate-180 overflow-visible md:-top-10"
+        fill="#bfdec9"
+        path="M517.899 31.2641C640.291 -18.0713 772.639 1.83 823.514 17.9476V74.2465H0V31.2641C3.64488 26.2386 32.0217 12.9528 120.751 7.1552C233.341 3.75336 366.983 92.0975 517.899 31.2641Z"
+        viewBox="0 0 824 75"
       />
       <div className=" mx-auto w-full">
         {/* Section Header */}
@@ -63,7 +63,7 @@ const VideoSection = () => {
           className="mb-4 lg:mb-8 relative"
         >
           {/* Video Container */}
-          <div className="relative w-full h-[30vh] md:h-[50vh] lg:h-screen bg-linear-to-br from-foreground to-[#8cd700] overflow-hidden">
+          <div className="relative w-full h-[50vh] md:h-[50vh] lg:h-screen bg-linear-to-br from-foreground to-[#8cd700] overflow-hidden">
             <video
               ref={videoRef}
               autoPlay
@@ -77,7 +77,7 @@ const VideoSection = () => {
             </video>
 
             {/* Video Label */}
-            <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded text-xs font-medium backdrop-blur-md">
+            <div className="hidden md:block absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded text-xs font-medium backdrop-blur-md">
               Zuvara Solutions.
             </div>
           </div>

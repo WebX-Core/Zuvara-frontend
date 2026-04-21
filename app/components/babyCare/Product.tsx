@@ -44,9 +44,9 @@ const Product = () => {
 
   // const browseHref = `/${routeMap[activeTab]}`;
 
-  const getDescription = (product: ProductItem) =>
-    product.description ??
-    "Premium product designed for everyday comfort and reliable care.";
+  // const getDescription = (product: ProductItem) =>
+  //   product.description ??
+  //   "Premium product designed for everyday comfort and reliable care.";
   const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
 
   const getCardImage = (product: ProductItem) => {
@@ -90,10 +90,8 @@ const Product = () => {
             </h2>
 
             <p className="hero-copy mt-5 max-w-2xl text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-              Discover our most loved products, chosen by parents for their
-              perfect blend of comfort, quality, and style. These essentials are
-              designed to support your baby&apos;s daily needs with care and
-              reliability.
+              Discover our most loved products, trusted by parents for comfort,
+              quality, and everyday care.
             </p>
           </div>
 
@@ -153,7 +151,7 @@ const Product = () => {
                   className="h-full rounded-2xl border border-zinc-200 bg-white p-3 flex flex-col"
                 >
                   <div className="relative h-44 rounded-2xl bg-babyCare/20 overflow-hidden">
-                    <span className="absolute top-3 left-3 z-10 text-[10px] uppercase tracking-wider font-semibold text-zinc-500">
+                    <span className="absolute top-3 left-3 z-10 text-sm uppercase tracking-wider font-semibold text-zinc-500">
                       {product.category}
                     </span>
                     <Image
@@ -165,14 +163,14 @@ const Product = () => {
                     />
                   </div>
 
-                  <h3 className="mt-4 text-sm lg:text-xl font-semibold text-zinc-900 group-hover:text-foreground line-clamp-1">
+                  <h3 className="mt-4 text-2xl lg:text-xl font-semibold text-zinc-900 group-hover:text-foreground line-clamp-1">
                     <span className="group-hover:underline underline-foreground decoration-foreground">
                       {product.name}
                     </span>
                   </h3>
-                  <p className="mt-1 text-xs lg:text-sm font-medium text-zinc-500 leading-relaxed line-clamp-2 min-h-9">
+                  {/* <p className="mt-1 text-xs lg:text-sm font-medium text-zinc-500 leading-relaxed line-clamp-2 min-h-9">
                     {getDescription(product)}
-                  </p>
+                  </p> */}
                   <div className="mt-auto pt-4 flex justify-end">
                     <span className="inline-flex items-center rounded-full border border-foreground px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors group-hover:bg-foreground group-hover:text-white group-hover:border-foreground">
                       Learn more

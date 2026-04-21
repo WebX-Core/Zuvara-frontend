@@ -107,9 +107,7 @@ const Testimonials = () => {
   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
 
   return (
-    <section
-      className="relative overflow-hidden bg-babyCare px-4 lg:pb-48"
-    >
+    <section className="relative overflow-hidden bg-babyCare px-4 lg:pb-48">
       <div
         className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
@@ -122,7 +120,7 @@ const Testimonials = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className=""
         >
           <div className="">
             <div className="mx-auto max-w-3xl text-center">
@@ -130,10 +128,10 @@ const Testimonials = () => {
                 Hear from Our
                 <span className="font-light italic"> Happy Parents</span>
               </h2>
-              <p className="mt-5 text-sm font-medium leading-relaxed text-foreground lg:text-lg">
+              {/* <p className="mt-5 text-sm font-medium leading-relaxed text-foreground lg:text-lg">
                 Real experiences from families who trust Zuvara for comfort,
                 care, and gentle everyday protection.
-              </p>
+              </p> */}
             </div>
           </div>
         </motion.div>
@@ -217,80 +215,79 @@ const Testimonials = () => {
 
           <div className="overflow-hidden">
             <div
-              className="flex transition-transform duration-700 ease-out"
+              className="flex  md:gap-4 transition-transform duration-700 ease-out"
               style={{
                 transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
               }}
             >
               {testimonials.map((item) => (
                 <div
-                key={item.id}
-                  className="w-full shrink-0 md:w-1/2 lg:w-1/3"
+                  key={item.id}
+                  className="w-full shrink-0  md:w-1/2 lg:w-1/3"
                 >
                   <article
-                    className="h-full rounded-[1.9rem] border p-5 md:p-6"
+                    className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
                     style={{
                       borderColor: `${palette.border}44`,
                       backgroundColor: "rgba(255,255,255,0.94)",
                     }}
                   >
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="relative h-12 w-12 overflow-hidden rounded-full">
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div>
-                          <p
-                            className="text-sm font-semibold"
-                            style={{ color: palette.accent }}
-                          >
-                            {item.name}
-                          </p>
-                          <p className="text-xs text-zinc-500">
-                            {item.location}
-                          </p>
-                        </div>
-                      </div>
-
-                      <span
-                        className="w-fit rounded-full px-3 py-1 text-[11px] font-semibold"
-                        style={{
-                          backgroundColor: "rgba(215,235,232,0.55)",
-                          color: palette.accentSoft,
-                        }}
-                      >
-                        {item.badge}
-                      </span>
+                    <div className="relative h-16 w-16 overflow-hidden rounded-full md:h-18 md:w-18">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
 
-                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                    <div className="mt-5 flex flex-col items-center gap-3">
                       <div className="flex items-center gap-1">
                         {Array.from({ length: item.rating }).map((_, index) => (
                           <Star
                             key={index}
-                            size={15}
+                            size={17}
                             fill="#fbbf24"
                             color="#fbbf24"
                           />
                         ))}
                       </div>
-                      <span className="text-xs text-zinc-400">{item.time}</span>
+
+                      <div>
+                        <p
+                          className="text-base font-semibold md:text-lg"
+                          style={{ color: palette.accent }}
+                        >
+                          {item.name}
+                        </p>
+                        <p className="text-sm text-zinc-500">{item.location}</p>
+                      </div>
+                      <div className="flex justify-between min-w-72">
+                        <span
+                          className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                          style={{
+                            backgroundColor: "#e5e7eb",
+                            color: palette.accentSoft,
+                          }}
+                        >
+                          {item.badge}
+                        </span>
+
+                        <span className="text-sm text-zinc-400">
+                          {item.time}
+                        </span>
+                      </div>
                     </div>
 
                     <p
-                      className="mt-4 text-sm leading-relaxed md:text-base"
+                      className="mt-5 text-base leading-relaxed md:text-lg"
                       style={{ color: palette.body }}
                     >
                       {item.text}
                     </p>
 
                     <div
-                      className="mt-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest"
+                      className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
                       style={{ color: palette.accentSoft }}
                     >
                       <span

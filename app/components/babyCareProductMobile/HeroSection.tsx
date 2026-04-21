@@ -106,7 +106,7 @@ const HeroSection = () => {
   const currentProduct = featuredProductLists[currentIndex];
 
   return (
-    <section className="relative z-60 w-screen px-4 pt-4 flex flex-col gap-4">
+    <section className="relative z-60 w-screen px-4 pt-4 flex flex-col  gap-4">
       <div className="relative z-50" ref={searchRef}>
         <div className="relative flex items-center">
           <input
@@ -178,22 +178,10 @@ const HeroSection = () => {
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Featured Products</h2>
-          <div className="flex gap-1.5">
-            {featuredProductLists.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  currentIndex === idx
-                    ? "w-6 bg-foreground"
-                    : "w-1.5 bg-zinc-200"
-                }`}
-              />
-            ))}
-          </div>
+          {/* <h2 className="text-2xl font-semibold">Featured Products</h2> */}
         </div>
 
-        <div className="relative h-40 overflow-hidden rounded-2xl">
+        <div className="relative h-40 overflow-hidden  rounded-2xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentProduct.id}
@@ -223,6 +211,16 @@ const HeroSection = () => {
               </div>
             </motion.div>
           </AnimatePresence>
+        </div>
+        <div className="flex justify-center gap-1.5">
+          {featuredProductLists.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                currentIndex === idx ? "w-6 bg-foreground" : "w-1.5 bg-zinc-200"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

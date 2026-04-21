@@ -6,12 +6,9 @@ import { ArrowRight, ShieldCheck, Truck } from "lucide-react";
 import { wave4Svg } from "@/constants/svgs";
 
 const CTA = () => {
-
-
-
   return (
     <section className="relative w-full overflow-hidden bg-white ">
-         <div
+      <div
         className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: wave4Svg.markup }}
       />
@@ -52,12 +49,6 @@ const CTA = () => {
                   Shop Premium Diapers
                   <ArrowRight size={16} />
                 </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center rounded-full border border-foreground/30 bg-white px-6 py-3 text-sm sm:text-base font-semibold text-foreground transition-all duration-300 hover:bg-foreground/5"
-                >
-                  Talk to Sales
-                </Link>
               </div>
             </div>
 
@@ -78,7 +69,6 @@ const CTA = () => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };

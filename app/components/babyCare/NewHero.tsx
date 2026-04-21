@@ -302,7 +302,7 @@ export default function Home() {
     <div className="relative w-full overflow-hidden">
       <section
         ref={rootRef}
-        className="relative z-0 min-h-svh px-4 pb-24 pt-24 sm:min-h-[90vh] sm:pt-28"
+        className="relative z-0 min-h-svh px-4 pb-24 pt-8 sm:min-h-[90vh] sm:pt-28"
       >
         <div className="pointer-events-none absolute inset-0 z-[-1] bg-[radial-gradient(circle_at_22%_14%,rgba(255,255,255,0.92),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.66),transparent_36%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.75),transparent_45%)]" />
 
@@ -368,7 +368,7 @@ export default function Home() {
                 and all the joyful little moments in between.
               </p>
 
-              <div className="hero-copy flex w-full items-center justify-start gap-3 pt-2 lg:gap-4 lg:pt-3">
+              <div className="hero-copy flex flex-col sm:flex-row w-full sm: justify-start gap-3 pt-2 lg:gap-4 lg:pt-3">
                 <Link href="/babyCareProduct">
                   <button className="rounded-full bg-[#45685e] px-6 py-2.5 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base">
                     Explore Baby Products
