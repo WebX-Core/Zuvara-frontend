@@ -59,18 +59,17 @@ export default function SizeGuideSection({
             backgroundColor: hexToRgba(theme.pageBg, 0.88),
           }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-6 p-8 md:gap-12 md:p-12">
+          <div className="grid grid-cols-4 gap-4 px-6 py-4 md:gap-12 md:p-12 mx-auto">
             {sizeGuideImages.map((src, idx) => (
               <div
                 key={idx}
-                className="relative h-40 w-40 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform duration-500 hover:scale-105"
+                className="relative h-20 w-20 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform duration-500 hover:scale-105"
               >
                 <Image
                   src={src}
                   alt={`Size Guide Option ${idx + 1}`}
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 160px, (max-width: 1200px) 240px, 300px"
                 />
               </div>
             ))}

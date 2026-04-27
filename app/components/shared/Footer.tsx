@@ -28,7 +28,6 @@ export default function Footer() {
   const logoSrc = isPersonal ? "/logo/logo_secondary.svg" : "/logo/logo.png";
   const isMounted = true;
 
-
   const footerSections = [
     {
       title: "Links",
@@ -71,7 +70,10 @@ export default function Footer() {
             },
           ]
         : [
-            { label: "Supreme Diapers", href: "/babyCareProduct/supreme-diapers" },
+            {
+              label: "Supreme Diapers",
+              href: "/babyCareProduct/supreme-diapers",
+            },
             {
               label: "Premium Diapers & Pants",
               href: "/babyCareProduct/premium-diapers-pants",
@@ -88,7 +90,10 @@ export default function Footer() {
               label: "Moisturising Tissue",
               href: "/babyCareProduct/moisturising-tissue",
             },
-            { label: "Value Wet Wipes", href: "/babyCareProduct/value-wet-wipes" },
+            {
+              label: "Value Wet Wipes",
+              href: "/babyCareProduct/value-wet-wipes",
+            },
           ],
     },
   ];
@@ -189,7 +194,7 @@ export default function Footer() {
         {/* Newsletter & Contact Section */}
         <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           {/* Newsletter */}
-            <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4  ">
+          <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4  ">
             <Link href="/" className="flex items-center shrink-0">
               <Image src={logoSrc} alt="Zuvara Logo" width={90} height={90} />
             </Link>
@@ -245,7 +250,6 @@ export default function Footer() {
                 );
               })}
             </div>
-
           </div>
           <div>
             {productsSection.map((section, index) => (
@@ -306,8 +310,7 @@ export default function Footer() {
               </div>
             ))}
           </div>
-          
-           
+
           {/* Visit Us */}
           <div>
             <h3
@@ -321,9 +324,7 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               {contactLists.slice(0, 2).map((contact) => (
                 <div key={contact.id}>
-                  <p className="font-medium">
-                    {contact.title}
-                  </p>
+                  <p className="font-medium">{contact.title}</p>
                   <Link href={contact.link}>
                     <p className="text-sm font-medium hover:underline ">
                       {contact.desc}
@@ -335,12 +336,11 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-        
         </div>
       </div>
 
       {isGameOpen ? (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 p-4">
+        <div className="fixed inset-0 z-120 flex items-center justify-center bg-black/70 p-4">
           <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
             <button
               onClick={() => {
@@ -414,11 +414,13 @@ export default function Footer() {
         </div>
       ) : null}
 
-      <div className={`relative flex items-center justify-center overflow-hidden h-auto `}>
+      <div
+        className={`relative flex items-center justify-center overflow-hidden h-auto `}
+      >
         <div
           className={cn(
             "absolute bottom-0 w-full mt-10 pt-2 text-sm  px-6 flex flex-col md:flex-row justify-between gap-4",
-            isPersonal ? "text-personalCare" : "text-[#45685e]",
+            isPersonal ? "text-personalCare" : "text-baby-accent",
           )}
         >
           <div className="absolute inset-0 bg-linear-to-t from-gray-200 via-50% via-transparent to-transparent z-0" />

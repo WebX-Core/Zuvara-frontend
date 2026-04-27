@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Product } from "@/type/personalCareProductType";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
@@ -6,17 +8,32 @@ import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 type PersonalProductCloseViewSectionProps = {
   product: Product;
   theme: ThemePreset;
+  technicalDetailImages: string[];
 };
 
 export default function PersonalProductCloseViewSection({
   product,
   theme,
+  technicalDetailImages,
 }: PersonalProductCloseViewSectionProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
+
   if (!product.productCloseView) return null;
 
-  const midIndex = Math.ceil((product.productCloseView.length || 0) / 2);
-  const leftFeatures = product.productCloseView.slice(0, midIndex);
-  const rightFeatures = product.productCloseView.slice(midIndex);
+  const detailImages = technicalDetailImages.slice(0, 4);
+  const midIndex = Math.ceil(detailImages.length / 2);
+  const leftDetailImages = detailImages.slice(0, midIndex);
+  const rightDetailImages = detailImages.slice(midIndex);
 
   return (
     <section className="relative px-2 py-8 lg:px-4 lg:py-10 overflow-hidden">
@@ -38,54 +55,70 @@ export default function PersonalProductCloseViewSection({
         </div>
 
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-3 space-y-12 lg:space-y-24 order-2 lg:order-1">
-            {leftFeatures.map((feature, idx) => (
+          <div className="order-2 grid grid-cols-2 gap-4 lg:hidden">
+            {detailImages.map((imageSrc, idx) => (
+              <div
+                key={idx}
+                className="group relative overflow-hidden rounded-[1.4rem] border"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.86),
+                }}
+              >
+                <div className="relative aspect-4/5 w-full">
+                  <Image
+                    src={imageSrc}
+                    alt={`Technical detail ${idx + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="order-2 mx-auto hidden w-full max-w-64 space-y-6 lg:col-span-3 lg:order-1 lg:block lg:max-w-none lg:space-y-24">
+            {leftDetailImages.map((imageSrc, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="group relative flex items-center lg:flex-row-reverse gap-6 text-left lg:text-right"
+                className="group relative overflow-hidden rounded-[1.8rem] border"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.86),
+                }}
               >
-                <div
-                  className="fx-float shrink-0 size-14 lg:size-16 rounded-2xl border flex items-center justify-center p-3 shadow-sm transition-all group-hover:shadow-md group-hover:scale-110"
-                  style={{
-                    backgroundColor: hexToRgba(theme.pageBg, 0.86),
-                    borderColor: `${theme.border}66`,
-                  }}
-                >
-                  <img
-                    src={feature.icon}
-                    alt={feature.label}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <p
-                    className="text-sm lg:text-base font-bold leading-snug uppercase tracking-tight"
-                    style={{ color: hexToRgba(theme.accent, 0.86) }}
-                  >
-                    {feature.label}
-                  </p>
-                  <div
-                    className="hidden lg:block h-1 w-12 ml-auto rounded-full group-hover:w-20 transition-all duration-500"
-                    style={{ backgroundColor: `${theme.accent}44` }}
+                <div className="relative aspect-4/5 w-full">
+                  <Image
+                    src={imageSrc}
+                    alt={`Technical detail ${idx + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <div className="lg:col-span-6 relative order-1 lg:order-2 flex flex-col items-center">
-            <div className="fx-rise relative z-10 w-full max-w-sm lg:max-w-md mx-auto transform transition-transform duration-700 hover:scale-105">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="fx-parallax w-full h-auto object-contain drop-shadow-[0_50px_80px_rgba(0,0,0,0.15)]"
-              />
+          <div className="lg:col-span-6 relative order-1 lg:order-2 flex flex-col items-center px-6">
+            <div
+              className={`fx-rise relative z-10 w-full max-w-sm lg:max-w-md mx-auto ${
+                isMobile ? "" : "transform transition-transform duration-700 hover:scale-105"
+              }`}
+            >
+              <div className="relative aspect-square w-full">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="fx-parallax object-contain drop-shadow-[0_50px_80px_rgba(0,0,0,0.15)]"
+                />
+              </div>
 
               <div
-                className="absolute inset-0 border-2 rounded-full scale-110 -z-10 animate-pulse"
+                className={`absolute inset-0 -z-10 border-2 rounded-full scale-110 ${isMobile ? "" : "animate-pulse"}`}
                 style={{ borderColor: `${theme.border}66` }}
               />
             </div>
@@ -106,38 +139,25 @@ export default function PersonalProductCloseViewSection({
             </div>
           </div>
 
-          <div className="lg:col-span-3 space-y-12 lg:space-y-24 order-3">
-            {rightFeatures.map((feature, idx) => (
+          <div className="order-3 mx-auto hidden w-full max-w-64 space-y-6 lg:col-span-3 lg:block lg:max-w-none lg:space-y-24">
+            {rightDetailImages.map((imageSrc, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="group relative flex items-center gap-6 text-left"
+                className="group relative overflow-hidden rounded-[1.8rem] border"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.86),
+                }}
               >
-                <div
-                  className="fx-float shrink-0 size-14 lg:size-16 rounded-2xl border flex items-center justify-center p-3 shadow-sm transition-all group-hover:shadow-md group-hover:scale-110"
-                  style={{
-                    backgroundColor: hexToRgba(theme.pageBg, 0.86),
-                    borderColor: `${theme.border}66`,
-                  }}
-                >
-                  <img
-                    src={feature.icon}
-                    alt={feature.label}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <p
-                    className="text-sm lg:text-base font-bold leading-snug uppercase tracking-tight"
-                    style={{ color: hexToRgba(theme.accent, 0.86) }}
-                  >
-                    {feature.label}
-                  </p>
-                  <div
-                    className="hidden lg:block h-1 w-12 rounded-full group-hover:w-20 transition-all duration-500"
-                    style={{ backgroundColor: `${theme.accent}44` }}
+                <div className="relative aspect-4/5 w-full">
+                  <Image
+                    src={imageSrc}
+                    alt={`Technical detail ${midIndex + idx + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               </motion.div>

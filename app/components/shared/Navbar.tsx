@@ -367,7 +367,11 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
+    document.body.style.overflowY = isMenuOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflowY = "";
+    };
   }, [isMenuOpen]);
 
   useEffect(() => {

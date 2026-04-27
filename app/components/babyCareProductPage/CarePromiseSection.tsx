@@ -8,9 +8,6 @@ type CarePromiseSectionProps = {
   conceptImages: string[];
 };
 
-const sectionTitle =
-  "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
-
 export default function CarePromiseSection({
   theme,
   conceptImages,
@@ -94,7 +91,7 @@ export default function CarePromiseSection({
                 within 7 days and our care team will help you find a better size
                 or a better solution.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
+              {/* <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/contact"
                   className="inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(0,0,0,0.14)]"
@@ -112,7 +109,7 @@ export default function CarePromiseSection({
                 >
                   7-day support promise
                 </span>
-              </div>
+              </div> */}
               <div
                 className="mt-6 grid gap-2 text-sm md:max-w-xl md:grid-cols-3"
                 style={{ color: hexToRgba(theme.accent, 0.74) }}

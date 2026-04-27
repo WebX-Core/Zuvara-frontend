@@ -1,27 +1,25 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Product } from "@/type/babyCareProductType";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
-import { cn } from "@/lib/utils";
-
+import { motion } from "framer-motion";
+import { Play, Volume2, VolumeX } from "lucide-react";
 
 const ProductVideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+  const togglePlay = async () => {
+    if (!videoRef.current) {
+      return;
     }
+
+    if (videoRef.current.paused) {
+      await videoRef.current.play();
+      return;
+    }
+
+    videoRef.current.pause();
   };
 
   const toggleMute = () => {
@@ -41,10 +39,9 @@ const ProductVideoSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-             
               className="text-lg lg:text-3xl font-semibold tracking-tight"
             >
-              Watch  in Action
+              Watch in Action
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -74,28 +71,26 @@ const ProductVideoSection = () => {
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onClick={togglePlay}
-            >
-            
-            </video>
+            ></video>
 
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+            {!isPlaying && (
+              <>
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-            {/* Custom Controls Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={togglePlay}
-                className="size-20 lg:size-28 bg-white/10 backdrop-blur-xl border border-white/30 rounded-full flex items-center justify-center text-white shadow-2xl transition-colors hover:bg-white/20 group/btn"
-              >
-                {isPlaying ? (
-                  <Pause className="size-8 lg:size-12 fill-white opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-                ) : (
-                  <Play className="size-8 lg:size-12 fill-white ml-1" />
-                )}
-              </motion.button>
-            </div>
+                {/* Custom Controls Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={togglePlay}
+                    className="size-20 lg:size-28 bg-white/10 backdrop-blur-xl border border-white/30 rounded-full flex items-center justify-center text-white shadow-2xl transition-colors hover:bg-white/20"
+                  >
+                    <Play className="size-8 lg:size-12 fill-white ml-1" />
+                  </motion.button>
+                </div>
+              </>
+            )}
 
             {/* Floating Info Overlay (Top Right) */}
             <div className="absolute top-6 right-6 lg:top-10 lg:right-10 flex gap-3">

@@ -1,5 +1,5 @@
 import { HeartHandshake, ShieldCheck, Sparkles } from "lucide-react";
-import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
+import { hexToRgba, colors } from "@/lib/tokens";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 
@@ -28,7 +28,7 @@ const reasons = [
 export default function WhyZuvaraProductsSection({
   theme,
 }: WhyZuvaraProductsSectionProps) {
-  const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+  const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
     <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8  lg:pb-36">

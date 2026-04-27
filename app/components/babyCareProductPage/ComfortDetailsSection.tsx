@@ -1,13 +1,10 @@
-import Image from "next/image";
 import PhotoMosaic from "@/app/components/babyCareProductPage/PhotoMosaic";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
 type ComfortDetailsSectionProps = {
   theme: ThemePreset;
-  highlights: string[];
   moodboardImages: string[];
-  technicalDetailImages: string[];
 };
 
 const sectionTitle =
@@ -15,9 +12,7 @@ const sectionTitle =
 
 export default function ComfortDetailsSection({
   theme,
-  highlights,
   moodboardImages,
-  technicalDetailImages,
 }: ComfortDetailsSectionProps) {
   return (
     <section className="relative px-6 py-14 lg:px-10 lg:py-16">
@@ -101,7 +96,7 @@ export default function ComfortDetailsSection({
           ))}
         </div> */}
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {/* <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {highlights.map((item, idx) => (
             <article
               key={item}
@@ -135,7 +130,7 @@ export default function ComfortDetailsSection({
               </div>
             </article>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

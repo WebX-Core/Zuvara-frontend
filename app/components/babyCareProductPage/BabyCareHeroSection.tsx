@@ -1,8 +1,9 @@
+import { useEffect, useState } from "react";
 import type { Product } from "@/type/babyCareProductType";
 import Image from "next/image";
-import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDown, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion, type PanInfo } from "framer-motion";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
 
 type ThemePreset = {
   accent: string;
@@ -22,9 +23,8 @@ type BabyCareHeroSectionProps = {
   onNext: () => void;
   onSelectProduct: (index: number) => void;
   pickHeroPack: (product: Product) => string;
+  enableMobileSwipe?: boolean;
 };
-
-const bodyText = "text-sm md:text-base leading-relaxed text-zinc-700";
 
 export default function BabyCareHeroSection({
   active,
@@ -33,72 +33,86 @@ export default function BabyCareHeroSection({
   theme,
   onPrev,
   onNext,
+  enableMobileSwipe = true,
 }: BabyCareHeroSectionProps) {
   void _products;
+  const [isMobile, setIsMobile] = useState(false);
+  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
+
+  const handleHeroSwipe = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    if (!isMobile) return;
+
+    if (info.offset.x <= -50) {
+      onNext();
+      return;
+    }
+
+    if (info.offset.x >= 50) {
+      onPrev();
+    }
+  };
+
   return (
     <motion.section
       className="relative overflow-hidden px-4"
-      animate={{ backgroundColor: theme.pageBg }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
+      animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
+      transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
     >
-      <div className="relative mx-auto max-w-7xl pt-8 pb-10 md:pt-10 md:pb-14">
-        <div className="relative mt-10">
-          <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0">
-            <div>
-              <h1
-                className="text-4xl md:text-5xl font-semibold leading-[0.95] tracking-tight"
+      <div className="relative mx-auto max-w-7xl  pb-10 md:pt-10 md:pb-14">
+        {/*   */}
+        <motion.div
+          className="relative pt-4 sm:mt-10"
+          drag={isMobile && enableMobileSwipe ? "x" : false}
+          dragElastic={0.22}
+          dragSnapToOrigin
+          onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
+        >
+          <div className="hidden w-full items-center justify-between md:order-0 md:flex md:py-12">
+            <div className="min-w-0">
+              <h2
+                className="text-2xl font-semibold leading-[1.02] line-clamp-2 sm:text-4xl md:font-bold"
                 style={{ color: theme.accent }}
               >
-                Love begins
-                <br />
-                with a touch
-              </h1>
-            </div>
-
-            <div className="py-2">
-              <div className="flex -space-x-3">
-                {[
-                  "/images/baby/baby29.png",
-                  "/images/baby/baby24.png",
-                  "/images/baby/baby31.png",
-                  "/images/baby/baby30.png",
-                ].map((avatar, idx) => (
-                  <div
-                    key={avatar}
-                    className="relative h-12 w-12 rounded-full border-2 overflow-hidden bg-white"
-                    style={{ borderColor: theme.pageBg, zIndex: 10 - idx }}
-                  >
-                    <Image
-                      src={avatar}
-                      alt="Parent"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-                <div
-                  className="h-12 w-12 rounded-full grid place-items-center font-semibold"
-                  style={{ backgroundColor: theme.chipBg, color: theme.accent }}
-                >
-                  +
-                </div>
-              </div>
-              <p className="mt-4 text-sm md:text-base text-zinc-600">
-                Loved by 5,000+ happy parents
+                {active.name}
+              </h2>
+              <p className="mt-2 text-base md:text-sm font-medium text-zinc-600">
+                {active.category}
               </p>
-
-              <Link href="/products">
-                <button
-                  className="mt-8 rounded-full px-6 py-3 text-xl md:text-sm font-semibold tracking-wide text-white"
-                  style={{ backgroundColor: theme.accent }}
-                >
-                  Inquiry Now
-                </button>
-              </Link>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setIsInquiryModalOpen(true)}
+              className="mt-8 flex shrink-0 gap-2 rounded-full px-2 sm:px-5 py-2.5 text-sm font-semibold tracking-wide text-white md:px-6 md:py-3 md:text-base"
+              style={{ backgroundColor: theme.accent }}
+            >
+              <span>Inquiry </span>
+              <span>
+                <Image
+                  src="/icons/share.png"
+                  alt="Inquiry"
+                  width={28}
+                  height={28}
+                  className="invert-100 w-5"
+                />
+              </span>
+            </button>
           </div>
 
-          <div className="pointer-events-none relative md:absolute left-1/2 md:-top-30 z-20 h-80 w-full md:h-160 md:w-110 -translate-x-1/2 mt-8 md:mt-0">
+          <div className="pointer-events-none relative left-1/2 z-20 mt-8 hidden h-80 w-full -translate-x-1/2 md:absolute md:-top-30 md:block md:h-160 md:w-110 md:mt-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active.id + "-pack"}
@@ -118,10 +132,10 @@ export default function BabyCareHeroSection({
               </motion.div>
             </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
         <div
-          className="relative min-h-100 overflow-hidden rounded-4xl px-6 lg:px-10 pt-16 pb-8 md:h-100 md:pb-16 md:pt-20 lg:pt-30 transition-colors duration-500"
+          className="relative min-h-100 overflow-hidden rounded-4xl px-6 pb-8 pt-8 md:h-100 md:pb-16 md:pt-20 lg:px-10 lg:pt-30 md:transition-colors md:duration-500"
           style={{ backgroundColor: theme.containerBg }}
         >
           <div className="pointer-events-none absolute inset-0">
@@ -130,8 +144,54 @@ export default function BabyCareHeroSection({
             <div className="absolute right-28 -bottom-32 h-64 w-64 rounded-full bg-white/20" />
           </div>
 
+          <div className="relative z-10 md:hidden">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <h2
+                  className="text-2xl font-semibold leading-[1.02] line-clamp-2"
+                  style={{ color: theme.accent }}
+                >
+                  {active.name}
+                </h2>
+                <p className="mt-2 text-sm font-medium text-zinc-600">
+                  {active.category}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsInquiryModalOpen(true)}
+                className="flex shrink-0 gap-2 rounded-full px-5 py-2.5 text-sm font-semibold tracking-wide text-white"
+                style={{ backgroundColor: theme.accent }}
+              >
+                <span>Inquiry</span>
+                <span>
+                  <Image
+                    src="/icons/share.png"
+                    alt="Inquiry"
+                    width={28}
+                    height={28}
+                    className="w-4 shrink-0 invert-100"
+                  />
+                </span>
+              </button>
+            </div>
+
+          <div className="pointer-events-none relative mx-auto mt-6 h-72 w-full max-w-sm">
+            <div className="absolute inset-0">
+              <Image
+                src={heroPackSrc}
+                alt={`${active.name} pack`}
+                fill
+                className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
+                sizes="80vw"
+              />
+            </div>
+          </div>
+          </div>
+
           <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
-            <div className="w-full text-center md:text-left">
+            {/* <div className="w-full text-center md:text-left">
               <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
                 Every cuddle, every giggle, every tiny moment matters. Our care
                 products protect the softness you never want to lose.
@@ -143,18 +203,8 @@ export default function BabyCareHeroSection({
               >
                 Find more details <ArrowDown size={16} />
               </Link>
-            </div>
-            <div className="w-full flex flex-col justify-end items-center order-first md:order-0">
-              <h2
-                className="text-center text-2xl leading-[1.02] line-clamp-2 font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {active.name}
-              </h2>
-              <p className="mt-2 text-base md:text-sm font-medium text-zinc-600">
-                {active.category}
-              </p>
-            </div>
+            </div> */}
+
             <div className="w-full space-y-4 text-zinc-700 lg:pt-14">
               <div className="w-full md:w-2/3 mx-auto">
                 <div className="flex items-center gap-3">
@@ -193,27 +243,39 @@ export default function BabyCareHeroSection({
               <button
                 type="button"
                 onClick={onPrev}
-                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
+                className="rounded-full border bg-white/70 px-5 py-2.5 font-medium hover:bg-white/20 flex items-center justify-center gap-2 md:px-6 md:py-3"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Previous product"
               >
                 <ChevronLeft size={18} />
-                Prev
+                <span className="flex flex-col items-start leading-none">
+                  <span>Prev</span>
+                </span>
               </button>
               <button
                 type="button"
                 onClick={onNext}
-                className=" px-6 py-3 font-medium hover:bg-white/20 rounded-full border bg-white/70 flex items-center justify-center gap-2"
+                className="rounded-full border bg-white/70 px-5 py-2.5 font-medium hover:bg-white/20 flex items-center justify-center gap-2 md:px-6 md:py-3"
                 style={{ borderColor: theme.border, color: theme.accent }}
                 aria-label="Next product"
               >
-                Next
+                <span className="flex flex-col items-end leading-none">
+                  <span>Next</span>
+                </span>
                 <ChevronRight size={18} />
               </button>
             </div>
           </div>
         </div>
       </div>
+      {isInquiryModalOpen ? (
+        <ContactIntentModal
+          intent="inquiry"
+          onClose={() => setIsInquiryModalOpen(false)}
+          productName={active.name}
+          themeColor={theme.accent}
+        />
+      ) : null}
     </motion.section>
   );
 }

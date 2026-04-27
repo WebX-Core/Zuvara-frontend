@@ -5,15 +5,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
+import { colors } from "@/lib/tokens";
+import { Section, Container } from "@/app/components/layout";
 
 const palette = {
-  accent: "#45685e",
-  accentSoft: "#6d877f",
-  border: "#84aaa5",
-  chip: "#d7ebe8",
-  panel: "#edf5f1",
-  page: "#f7fbf8",
-  body: "#596963",
+  accent:     colors.baby.accent,
+  accentSoft: colors.baby.accentSoft,
+  border:     colors.baby.border,
+  chip:       colors.baby.chip,
+  panel:      colors.baby.panel,
+  page:       colors.baby.page,
+  body:       colors.baby.body,
 };
 
 const testimonials = [
@@ -67,17 +69,12 @@ const Testimonials = () => {
 
   useEffect(() => {
     const updateVisibleCards = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1024) {
         setVisibleCards(1);
         return;
       }
 
-      if (window.innerWidth < 1024) {
-        setVisibleCards(2);
-        return;
-      }
-
-      setVisibleCards(3);
+      setVisibleCards(2);
     };
 
     updateVisibleCards();
@@ -104,17 +101,17 @@ const Testimonials = () => {
     setActiveIndex((current) => (current >= maxIndex ? 0 : current + 1));
   };
 
-  const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+  const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare px-4 lg:pb-48">
+    <Section size="md" className="relative overflow-hidden bg-babyCare lg:pb-48">
       <div
         className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
       <div className="pointer-events-none absolute left-1/2 top-14 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-0">
+      <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -136,7 +133,7 @@ const Testimonials = () => {
           </div>
         </motion.div>
 
-        <div className="rounded-4xl px-2 py-5 sm:px-4 md:py-6">
+        <div className="rounded-4xl  py-5 sm:px-4 md:py-6">
           <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <span
@@ -215,16 +212,13 @@ const Testimonials = () => {
 
           <div className="overflow-hidden">
             <div
-              className="flex  md:gap-4 transition-transform duration-700 ease-out"
+              className="flex transition-transform duration-700 ease-out"
               style={{
                 transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
               }}
             >
               {testimonials.map((item) => (
-                <div
-                  key={item.id}
-                  className="w-full shrink-0  md:w-1/2 lg:w-1/3"
-                >
+                <div key={item.id} className="w-full shrink-0  lg:w-1/2">
                   <article
                     className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
                     style={{
@@ -321,8 +315,8 @@ const Testimonials = () => {
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 };
 

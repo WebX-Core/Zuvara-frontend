@@ -117,7 +117,7 @@ function normalizeProduct(p: Product): Product {
 const rawBabyCareProducts: Product[] = [
   {
     id: 1,
-    name: "Premium Diapers & Pants",
+    name: "Premium Diapers ",
     price: { amount: 249, currency: "NPR" },
     slug: "premium-diapers-pants",
     background: "#6abbb8",
@@ -499,7 +499,7 @@ const rawBabyCareProducts: Product[] = [
   },
   {
     id: 4,
-    name: "Value Diapers & Pants",
+    name: "Value Diapers ",
     price: { amount: 179, currency: "NPR" },
     slug: "value-diapers-pants",
     background: "#f7d214",

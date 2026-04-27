@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type PhotoMosaicProps = {
   images: string[];
@@ -36,15 +37,11 @@ export default function PhotoMosaic({
     return () => window.clearInterval(timer);
   }, [pages.length]);
 
-  useEffect(() => {
-    if (activePage >= pages.length) {
-      setActivePage(0);
-    }
-  }, [activePage, pages.length]);
-
   if (!pages.length) {
     return null;
   }
+
+  const safeActivePage = activePage % pages.length;
 
   return (
     <div className={`relative overflow-hidden p-4 md:p-0 ${className ?? ""}`}>
@@ -68,34 +65,30 @@ export default function PhotoMosaic({
                 current === 0 ? pages.length - 1 : current - 1,
               )
             }
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-              backgroundColor: theme
-                ? hexToRgba(theme.pageBg, 0.72)
-                : undefined,
+
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Previous slide"
           >
-            {"<"}
+            <ChevronLeft />
           </button>
           <button
             type="button"
             onClick={() =>
               setActivePage((current) => (current + 1) % pages.length)
             }
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-              backgroundColor: theme
-                ? hexToRgba(theme.pageBg, 0.72)
-                : undefined,
+
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Next slide"
           >
-            {">"}
+            <ChevronRight />
           </button>
         </div>
       </div>
@@ -103,7 +96,7 @@ export default function PhotoMosaic({
       <div className="overflow-hidden">
         <div
           className="flex h-full transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${activePage * 100}%)` }}
+          style={{ transform: `translateX(-${safeActivePage * 100}%)` }}
         >
           {pages.map((page, pageIndex) => (
             <div
@@ -140,12 +133,12 @@ export default function PhotoMosaic({
             onClick={() => setActivePage(index)}
             className="h-2.5 rounded-full transition-all duration-300"
             style={{
-              width: index === activePage ? "2.75rem" : "0.7rem",
+              width: index === safeActivePage ? "2.75rem" : "0.7rem",
               backgroundColor: theme
-                ? index === activePage
+                ? index === safeActivePage
                   ? theme.accent
                   : hexToRgba(theme.accent, 0.22)
-                : index === activePage
+                : index === safeActivePage
                   ? "#111827"
                   : "rgba(17,24,39,0.22)",
             }}

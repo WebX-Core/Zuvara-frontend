@@ -8,25 +8,20 @@ import { TypingAnimation } from "../shared/TypingAnimation";
 import { useMediaQuery } from "react-responsive";
 import ContactSection from "./ContactSection";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { Container } from "@/app/components/layout";
 
 const HeroSection = () => {
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const imageSize = isPersonal
-    ? isMobile
-      ? 220
-      : 380
-    : isMobile
-      ? 180
-      : 260;
+  const imageSize = isPersonal ? (isMobile ? 220 : 380) : isMobile ? 180 : 260;
   const wave = assetWithFill(wave4Svg, isPersonal ? "#f4e8fc" : "#ffffff");
 
   return (
     <div
       className={cn(
         "relative flex min-h-[calc(100svh-4rem)] justify-center overflow-hidden pt-16 lg:min-h-screen lg:items-center lg:pt-0",
-        isPersonal ? "bg-personalCare/10" : "bg-[#bfddca]",
+        isPersonal ? "bg-personalCare/10" : "bg-babyCare",
       )}
     >
       <div
@@ -88,7 +83,9 @@ const HeroSection = () => {
                 height={imageSize}
                 className={cn(
                   "relative z-0 object-contain drop-shadow-2xl",
-                  isPersonal ? "mx-auto sm:max-w-[22rem] lg:max-w-none lg:translate-x-6" : "",
+                  isPersonal
+                    ? "mx-auto sm:max-w-88 lg:max-w-none lg:translate-x-6"
+                    : "",
                 )}
               />
             </div>

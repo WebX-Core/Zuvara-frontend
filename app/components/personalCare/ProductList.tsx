@@ -7,6 +7,21 @@ import { ArrowUpRight, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as ProductType } from "@/type/personalCareProductType";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { Section, Container } from "@/app/components/layout";
+
+const personalDetailPagePaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "period-panties": {
+    background: "#f0e2fb",
+    foreground: "#7b2cbf",
+  },
+  "sanitary-pads": {
+    background: "#f7e8ff",
+    foreground: "#9d4edd",
+  },
+};
 
 const ProductList = () => {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
@@ -15,13 +30,27 @@ const ProductList = () => {
     product.description ??
     "Premium product designed for everyday comfort and reliable care.";
 
+  const getCardTheme = (product: ProductType) => {
+    const detailPalette = personalDetailPagePaletteBySlug[product.slug] ?? {
+      background: "#f0e2fb",
+      foreground: "#7b2cbf",
+    };
+
+    return {
+      background: detailPalette.background,
+      foreground: detailPalette.foreground,
+      border: `${detailPalette.foreground}22`,
+      chip: "rgba(255,255,255,0.72)",
+    };
+  };
+
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-24 lg:pb-32">
+    <Section size="md" className="relative overflow-hidden bg-white lg:pb-32">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
       />
-      <div className="mx-auto w-[92%] max-w-7xl">
+      <Container>
         <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
           <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
             Shop the range
@@ -52,6 +81,7 @@ const ProductList = () => {
               .map((variant) => variant.size)
               .filter(Boolean)
               .slice(0, 3);
+            const cardTheme = getCardTheme(product);
 
             return (
               <Link
@@ -64,19 +94,38 @@ const ProductList = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.06, duration: 0.45 }}
                   viewport={{ once: true }}
-                  className="flex h-full flex-col overflow-hidden rounded-[1.9rem] border border-personalCare/12 bg-white p-4 shadow-[0_18px_40px_rgba(24,24,27,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(219,39,119,0.12)] sm:p-5"
+                  className="flex h-full flex-col overflow-hidden rounded-[1.9rem] border p-4 shadow-[0_18px_40px_rgba(24,24,27,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(219,39,119,0.12)] sm:p-5"
+                  style={{
+                    borderColor: cardTheme.border,
+                    backgroundColor: cardTheme.background,
+                  }}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <span className="rounded-full bg-personalCare/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-personalCare">
+                    <span
+                      className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]"
+                      style={{
+                        backgroundColor: cardTheme.chip,
+                        color: cardTheme.foreground,
+                      }}
+                    >
                       {product.category}
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-personalCare/6 px-2.5 py-1 text-xs font-medium text-personalCare">
+                    <span
+                      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium"
+                      style={{
+                        backgroundColor: cardTheme.chip,
+                        color: cardTheme.foreground,
+                      }}
+                    >
                       <Star size={12} className="fill-current" />
                       {product.rating.toFixed(1)}
                     </span>
                   </div>
 
-                  <div className="relative mt-4 h-56 overflow-hidden rounded-[1.6rem] bg-linear-to-br from-personalCare/12 to-white">
+                  <div
+                    className="relative mt-4 h-56 overflow-hidden rounded-[1.6rem]"
+                    style={{ backgroundColor: cardTheme.chip }}
+                  >
                     <Image
                       src={displayImage}
                       alt={product.name}
@@ -87,18 +136,28 @@ const ProductList = () => {
                   </div>
 
                   <div className="mt-5 flex flex-1 flex-col">
-                    <h3 className="text-xl font-semibold leading-tight text-zinc-900 lg:text-2xl">
+                    <h3
+                      className="mt-4 line-clamp-1 text-2xl font-semibold lg:text-3xl"
+                      style={{ color: cardTheme.foreground }}
+                    >
                       {product.name}
                     </h3>
-                    <p className="mt-2 text-sm font-medium leading-relaxed text-zinc-500 line-clamp-2">
+                    {/* <p
+                      className="mt-2 text-sm font-medium leading-relaxed line-clamp-2"
+                      style={{ color: `${cardTheme.foreground}bb` }}
+                    >
                       {getDescription(product)}
-                    </p>
+                    </p> */}
 
                     <div className="mt-4 flex flex-wrap gap-2">
                       {variantLabels.map((label) => (
                         <span
                           key={`${product.id}-${label}`}
-                          className="rounded-md border border-personalCare/14 px-2.5 py-1 text-[11px] font-medium text-zinc-600"
+                          className="rounded-md border px-2.5 py-1 text-[11px] font-medium"
+                          style={{
+                            borderColor: cardTheme.border,
+                            color: `${cardTheme.foreground}cc`,
+                          }}
                         >
                           {label}
                         </span>
@@ -107,15 +166,24 @@ const ProductList = () => {
 
                     <div className="mt-5 flex items-center justify-between">
                       <div>
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-400">
+                        <p
+                          className="text-[11px] uppercase tracking-[0.18em]"
+                          style={{ color: `${cardTheme.foreground}88` }}
+                        >
                           Trusted by
                         </p>
-                        <p className="text-sm font-semibold text-zinc-900">
+                        <p
+                          className="text-sm font-semibold"
+                          style={{ color: cardTheme.foreground }}
+                        >
                           {product.reviews}+ happy customers
                         </p>
                       </div>
 
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-personalCare px-3 py-2 text-xs font-semibold text-white transition-colors duration-300 group-hover:bg-personalCare/90">
+                      <span
+                        className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-white transition-colors duration-300"
+                        style={{ backgroundColor: cardTheme.foreground }}
+                      >
                         View details
                         <ArrowUpRight size={14} />
                       </span>
@@ -126,8 +194,8 @@ const ProductList = () => {
             );
           })}
         </motion.div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 };
 

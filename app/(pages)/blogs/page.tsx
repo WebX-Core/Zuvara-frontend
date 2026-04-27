@@ -5,6 +5,7 @@ import BlogList from "@/app/components/blogs/BlogList";
 import React from "react";
 import { useSection } from "@/app/providers/SectionProvider";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { colors } from "@/lib/tokens";
 
 const Page = () => {
   const { activeSection } = useSection();
@@ -17,7 +18,7 @@ const Page = () => {
       style={{
         background: isPersonal
           ? "#ffffff"
-          : "#BFDDCA",
+          : colors.baby.chip,
         
       }}
     >

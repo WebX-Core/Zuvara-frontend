@@ -5,11 +5,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
+import { Section, Container, Stack } from "@/app/components/layout";
 
 const ProductSection = () => {
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-24">
-      <div className="mx-auto w-[92%] max-w-7xl">
+    <Section size="md" className="relative overflow-hidden bg-white">
+      <Container>
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
             Signature products
@@ -26,7 +27,7 @@ const ProductSection = () => {
           </p>
         </div>
 
-        <div className="mt-12 space-y-8 lg:space-y-10">
+        <Stack spacing="lg" className="mt-12">
           {personalCareProducts.map((product) => {
             const features = (
               product.highlights ??
@@ -127,9 +128,9 @@ const ProductSection = () => {
               </motion.article>
             );
           })}
-        </div>
-      </div>
-    </section>
+        </Stack>
+      </Container>
+    </Section>
   );
 };
 

@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { wave1Svg, wave2Svg } from "@/constants/svgs";
+import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
+import { colors } from "@/lib/tokens";
 
 export default function Home() {
   const rootRef = useRef<HTMLElement | null>(null);
+  const [isDistributorModalOpen, setIsDistributorModalOpen] = useState(false);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -302,22 +305,20 @@ export default function Home() {
     <div className="relative w-full overflow-hidden">
       <section
         ref={rootRef}
-        className="relative z-0 min-h-svh px-4 pb-24 pt-8 sm:min-h-[90vh] sm:pt-28"
+        className="relative z-0 pb-24 h-svh bg-[#bfdec9] sm:bg-white  sm:min-h-[90vh] sm:pt-28"
       >
-        <div className="pointer-events-none absolute inset-0 z-[-1] bg-[radial-gradient(circle_at_22%_14%,rgba(255,255,255,0.92),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.66),transparent_36%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.75),transparent_45%)]" />
-
         <div
-          className="hero-wave1 parallax-wave-back absolute -bottom-1 z-20 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
+          className="hero-wave1 parallax-wave-back hidden md:block absolute -bottom-1 z-20 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
           dangerouslySetInnerHTML={{ __html: wave1Svg.markup }}
         />
         <div
-          className="hero-wave2 parallax-wave-front absolute inset-x-0 -bottom-1 z-30 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
+          className="hero-wave2 parallax-wave-front absolute hidden md:block inset-x-0 -bottom-1 z-30 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
           dangerouslySetInnerHTML={{ __html: wave2Svg.markup }}
         />
         <svg
           viewBox="0 0 822 142"
           preserveAspectRatio="none"
-          className="hero-wave-fill-1 pointer-events-none absolute -bottom-1 z-40 block h-auto w-full opacity-0"
+          className="hero-wave-fill-1 pointer-events-none hidden md:block absolute -bottom-1 z-40  h-auto w-full opacity-0"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -330,7 +331,7 @@ export default function Home() {
         <svg
           viewBox="0 0 821 126"
           preserveAspectRatio="none"
-          className="hero-wave-fill-2 pointer-events-none absolute inset-x-0 -bottom-1 z-40 block h-auto w-full opacity-0"
+          className="hero-wave-fill-2 pointer-events-none absolute hidden md:block inset-x-0 -bottom-1 z-40  h-auto w-full opacity-0"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -340,50 +341,74 @@ export default function Home() {
           />
         </svg>
 
-        <div className="hero-plant parallax-plant absolute bottom-8 left-[30%] z-30 sm:bottom-48 sm:left-[10%] lg:bottom-16">
+        <div className="hero-plant parallax-plant hidden sm:block absolute -bottom-3 left-[30%] z-30 sm:bottom-48 sm:left-[10%] lg:bottom-14">
           <Image src="/waves/fern.svg" alt="fern" width={60} height={40} />
         </div>
-        <div className="hero-plant parallax-plant absolute bottom-12 right-[16%] z-30 hidden sm:block sm:bottom-14 sm:right-[10%] lg:bottom-20">
+        <div className="hero-plant parallax-plant absolute bottom-0 right-[16%] z-30 hidden sm:block sm:bottom-14 sm:right-[10%] lg:bottom-20">
           <Image src="/waves/fern.svg" alt="fern" width={60} height={40} />
         </div>
-        <div className="hero-plant parallax-plant absolute bottom-10 right-[60%] z-30 hidden sm:block sm:bottom-24 lg:bottom-46">
+        <div className="hero-plant parallax-plant absolute bottom-0 right-[60%] z-30 hidden sm:block sm:bottom-10 lg:bottom-40">
           <Image src="/waves/fern.svg" alt="fern" width={60} height={40} />
         </div>
 
-        <div className="mx-auto max-w-7xl">
-          <div className="relative flex flex-col items-center justify-between gap-8 sm:flex-row sm:items-center">
-            <div className="relative z-30 w-full max-w-xl space-y-1.5 text-left lg:max-w-lg lg:space-y-3">
-              <p className="hero-copy text-xs font-semibold tracking-wide text-foreground lg:text-sm">
-                Premium Baby Care Essentials
-              </p>
-              <h2 className="hero-copy mt-3 text-[1.8rem] font-semibold tracking-tight text-foreground lg:mt-4 lg:text-[2.8rem]">
-                Tiny giggles,
-                <span className="block font-light italic text-[#6d877f]">
-                  big comfort every day.
-                </span>
-              </h2>
+        <div className="mx-auto max-w-7xl ">
+          <div className="relative  flex flex-col items-center justify-between gap-2 sm:flex-row sm:items-center">
+            <div className="relative  z-30 flex w-full max-w-xl flex-col gap-1.5 text-left lg:max-w-lg lg:gap-3">
+              <div className="relative">
+                <div
+                  className=" md:hidden absolute -top-12 z-10 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
+                  dangerouslySetInnerHTML={{ __html: wave1Svg.markup }}
+                />
+                <div
+                  className=" md:hidden absolute inset-x-0 -top-9 z-20 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
+                  dangerouslySetInnerHTML={{ __html: wave2Svg.markup }}
+                />
 
-              <p className="hero-copy mt-3 max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground lg:mt-4 lg:text-[1.02rem]">
-                Soft, safe, and playful essentials made for crawling, napping,
-                and all the joyful little moments in between.
-              </p>
+                <div className="hero-plant parallax-plant absolute -top-10 right-[10%] rotate-y-180 z-30 block md:hidden sm:bottom-24 lg:bottom-46">
+                  <Image
+                    src="/waves/fern.svg"
+                    alt="fern"
+                    width={60}
+                    height={40}
+                  />
+                </div>
+                <div className="px-4 pt-16 bg-[#bfdec9] sm:bg-white ">
+                  <p className="hero-copy text-xs font-semibold tracking-wide text-foreground lg:text-sm">
+                    Premium Baby Care Essentials
+                  </p>
+                  <h2 className="hero-copy mt-1 text-[1.8rem] font-semibold tracking-tight text-foreground lg:mt-4 lg:text-[2.8rem]">
+                    Tiny giggles,
+                    <span className="block font-light italic ">
+                      big comfort every day.
+                    </span>
+                  </h2>
 
-              <div className="hero-copy flex flex-col sm:flex-row w-full sm: justify-start gap-3 pt-2 lg:gap-4 lg:pt-3">
-                <Link href="/babyCareProduct">
-                  <button className="rounded-full bg-[#45685e] px-6 py-2.5 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base">
-                    Explore Baby Products
-                  </button>
-                </Link>
-                <Link href="/contact">
-                  <button className="rounded-full px-6 py-2.5 text-sm font-medium text-[#45685e] outline outline-[#45685e] transition duration-300 hover:scale-105 lg:px-8 lg:py-3 lg:text-base">
-                    Become a Distributor
-                  </button>
-                </Link>
+                  <p className="hero-copy  max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground lg:mt-4 lg:text-[1.02rem]">
+                    Soft, safe essentials for life’s smallest, most precious
+                    moments.
+                  </p>
+
+                  <div className="hero-copy flex flex-col sm:flex-row  sm:justify-start gap-3 pt-2 lg:gap-4 lg:pt-3">
+                    <Link href="/babyCareProduct">
+                      <button className="rounded-full bg-baby-accent px-6 py-2.5 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base">
+                        Explore Baby Products
+                      </button>
+                    </Link>
+                    <Link href="/babyCareProduct">
+                      <button
+                        onClick={() => setIsDistributorModalOpen(true)}
+                        className="rounded-full outline-1 outline-baby-accent px-6 py-2.5 text-sm font-medium text-baby-accent transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base"
+                      >
+                        Become a Distributor
+                      </button>
+                    </Link>
+                  </div>
+                </div>
               </div>
 
-              <div className="hero-baby-mobile mt-5 flex w-full justify-start sm:hidden">
-                <div className="relative aspect-square w-72">
-                  <div className="hero-sun parallax-sun pointer-events-none absolute -inset-x-4 bottom-18 mb-3 z-20 h-24">
+              <div className="hero-baby-mobile bg-white order-first  flex w-full justify-start sm:order-0 sm:hidden">
+                <div className="relative aspect-square w-72 mx-auto">
+                  <div className="hero-sun parallax-sun pointer-events-none absolute -inset-x-4 bottom-30 mb-3 z-20 h-24">
                     <div className="hero-sun-halo hero-sun-halo-mobile float-idle absolute -bottom-10 left-1/2 -translate-x-1/2">
                       <Image
                         src="/waves/solar.gif"
@@ -395,7 +420,7 @@ export default function Home() {
                     </div>
                   </div>
                   <video
-                    className="hero-baby-video relative z-10 h-full w-full rounded-[1.6rem] object-cover object-top"
+                    className="hero-baby-video relative z-10 h-60 w-full rounded-[1.6rem] object-cover object-top"
                     autoPlay
                     loop
                     muted
@@ -407,17 +432,17 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="hero-copy mt-3 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[#45685e] sm:hidden">
+              {/* <div className="hero-copy mt-3 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[#45685e] sm:hidden">
                 <span>Scroll Down</span>
                 <span className="animate-bounce text-base leading-none">↓</span>
-              </div>
+              </div> */}
             </div>
 
             <div className="relative z-30 hidden min-h-115 lg:block" />
           </div>
         </div>
-
-        <div className="pointer-events-none absolute bottom-50 right-[10%] z-10 hidden lg:block">
+        {/* Video/Image fallback */}
+        <div className="pointer-events-none bg-white absolute bottom-50 right-[10%] z-10 hidden lg:block">
           <div className="hero-baby-right parallax-card relative h-105 w-105 rounded-[2.6rem] p-4">
             <div className="hero-sun parallax-sun pointer-events-none absolute -inset-x-16 bottom-full mb-6 z-20 h-52">
               <div className="hero-sun-halo hero-sun-halo-desktop float-idle absolute bottom-0 left-1/2 -translate-x-1/2 ">
@@ -445,6 +470,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {isDistributorModalOpen ? (
+        <ContactIntentModal
+          intent="distributor"
+          onClose={() => setIsDistributorModalOpen(false)}
+          themeColor={colors.baby.accent}
+        />
+      ) : null}
     </div>
   );
 }

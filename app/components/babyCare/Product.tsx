@@ -11,8 +11,52 @@ import type { Product as BabyProduct } from "@/type/babyCareProductType";
 import type { Product as ClothingProduct } from "@/type/babyClothesType";
 import type { Product as StrollerProduct } from "@/type/strollerRockerProductType";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { colors } from "@/lib/tokens";
 
 type ProductItem = BabyProduct | ClothingProduct | StrollerProduct;
+
+const hexToRgba = (hex: string, alpha: number) => {
+  const normalizedHex = hex.replace("#", "");
+  const fullHex =
+    normalizedHex.length === 3
+      ? normalizedHex
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : normalizedHex;
+
+  const r = Number.parseInt(fullHex.slice(0, 2), 16);
+  const g = Number.parseInt(fullHex.slice(2, 4), 16);
+  const b = Number.parseInt(fullHex.slice(4, 6), 16);
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const babyDetailPagePaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "premium-diapers-pants": {
+    background: colors.baby.chip,
+    foreground: colors.baby.accent,
+  },
+  "supreme-diapers": {
+    background: "#dbeefe",
+    foreground: "#2d6f9f",
+  },
+  "value-diapers-pants": {
+    background: "#fff1bf",
+    foreground: "#8b6b00",
+  },
+  "moisturising-tissue": {
+    background: "#e8defd",
+    foreground: "#6a4aa3",
+  },
+  "value-wet-wipes": {
+    background: colors.baby.chip,
+    foreground: colors.baby.accent,
+  },
+};
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
@@ -47,7 +91,7 @@ const Product = () => {
   // const getDescription = (product: ProductItem) =>
   //   product.description ??
   //   "Premium product designed for everyday comfort and reliable care.";
-  const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
+  const productBottomWave = assetWithFill(wave4Svg, colors.baby.chip);
 
   const getCardImage = (product: ProductItem) => {
     if (activeTab !== "baby") {
@@ -72,6 +116,101 @@ const Product = () => {
     );
   };
 
+  const getCardTheme = (product: ProductItem) => {
+    if (activeTab !== "baby") {
+      return {
+        background: "#ffffff",
+        foreground: "#111827",
+        border: "#e4e4e7",
+        chip: "rgba(255,255,255,0.7)",
+      };
+    }
+
+    const babyProduct = product as BabyProduct;
+    const detailPalette = babyDetailPagePaletteBySlug[babyProduct.slug] ?? null;
+    const background =
+      detailPalette?.background || babyProduct.background || colors.baby.chip;
+    const foreground =
+      detailPalette?.foreground || babyProduct.foreground || "#111827";
+
+    return {
+      background: hexToRgba(background, 0.28),
+      foreground,
+      border: hexToRgba(foreground, 0.16),
+      chip: hexToRgba(background, 0.46),
+    };
+  };
+
+  const renderProductCard = (product: ProductItem, index: number) => {
+    const cardTheme = getCardTheme(product);
+
+    return (
+      <Link
+        key={product.id}
+        href={`/${routeMap[activeTab]}/${product.slug}`}
+        className="group block w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
+      >
+        <motion.article
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.06, duration: 0.45 }}
+          viewport={{ once: true }}
+          className="flex h-full flex-col rounded-2xl border p-1"
+          style={{
+            borderColor: cardTheme.border,
+            backgroundColor: cardTheme.background,
+          }}
+        >
+          <div
+            className="relative h-44 overflow-hidden rounded-2xl"
+            style={{ backgroundColor: cardTheme.chip }}
+          >
+            {/* <span
+              className="absolute top-3 left-3 z-10 text-sm font-semibold uppercase tracking-wider"
+              style={{ color: `${cardTheme.foreground}cc` }}
+            >
+              {product.category}
+            </span> */}
+            <Image
+              src={getCardImage(product)}
+              alt={product.name}
+              fill
+              className="object-contain  transition-transform duration-300 group-hover:scale-105"
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
+            />
+          </div>
+          <div className="mt-4 flex  flex-1 flex-col items-center justify-between text-center lg:mt-0 lg:min-h-0 lg:flex-row lg:items-center lg:justify-between lg:text-left">
+            <h3
+              className="max-w-56 text-md font-semibold line-clamp-2 lg:max-w-40 lg:text-sm"
+              style={{ color: cardTheme.foreground }}
+            >
+              <span
+                className="group-hover:underline"
+                style={{
+                  textDecorationColor: cardTheme.foreground,
+                }}
+              >
+                {product.name}
+              </span>
+            </h3>
+
+            <div className="flex pt-2 justify-center pb-2 lg:mt-auto lg:justify-end lg:pt-4 lg:pb-0">
+              <span
+                className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors"
+                style={{
+                  borderColor: cardTheme.foreground,
+                  color: cardTheme.foreground,
+                }}
+              >
+                Learn more
+              </span>
+            </div>
+          </div>
+        </motion.article>
+      </Link>
+    );
+  };
+
   return (
     <>
       {/* ================= PRODUCT SECTION ================= */}
@@ -82,9 +221,9 @@ const Product = () => {
         />
         <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
           <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-[#45685e]">
+            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-baby-accent">
               Best selling
-              <span className="ml-3 font-light italic text-[#6d877f]">
+              <span className="ml-3 font-light italic text-baby-accent-soft">
                 baby essentials
               </span>
             </h2>
@@ -129,56 +268,16 @@ const Product = () => {
             ))}
           </div>
 
-          {/* Products Grid */}
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 pb-10 flex flex-wrap justify-center gap-5 max-w-7xl mx-auto"
+            className="mt-8 mx-auto flex max-w-7xl flex-wrap justify-center gap-5 pb-10"
           >
-            {products.map((product, index) => (
-              <Link
-                key={product.id}
-                href={`/${routeMap[activeTab]}/${product.slug}`}
-                className="group block w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
-              >
-                <motion.article
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.06, duration: 0.45 }}
-                  viewport={{ once: true }}
-                  className="h-full rounded-2xl border border-zinc-200 bg-white p-3 flex flex-col"
-                >
-                  <div className="relative h-44 rounded-2xl bg-babyCare/20 overflow-hidden">
-                    <span className="absolute top-3 left-3 z-10 text-sm uppercase tracking-wider font-semibold text-zinc-500">
-                      {product.category}
-                    </span>
-                    <Image
-                      src={getCardImage(product)}
-                      alt={product.name}
-                      fill
-                      className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
-                      sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
-                    />
-                  </div>
-
-                  <h3 className="mt-4 text-2xl lg:text-xl font-semibold text-zinc-900 group-hover:text-foreground line-clamp-1">
-                    <span className="group-hover:underline underline-foreground decoration-foreground">
-                      {product.name}
-                    </span>
-                  </h3>
-                  {/* <p className="mt-1 text-xs lg:text-sm font-medium text-zinc-500 leading-relaxed line-clamp-2 min-h-9">
-                    {getDescription(product)}
-                  </p> */}
-                  <div className="mt-auto pt-4 flex justify-end">
-                    <span className="inline-flex items-center rounded-full border border-foreground px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors group-hover:bg-foreground group-hover:text-white group-hover:border-foreground">
-                      Learn more
-                    </span>
-                  </div>
-                </motion.article>
-              </Link>
-            ))}
+            {products.map((product, index) =>
+              renderProductCard(product, index),
+            )}
           </motion.div>
         </div>
       </section>

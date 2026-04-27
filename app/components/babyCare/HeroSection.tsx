@@ -1,13 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { wave1Svg, wave2Svg } from "@/constants/svgs";
+import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
 
 export default function Home() {
+  const [isDistributorModalOpen, setIsDistributorModalOpen] = useState(false);
+
   return (
-    <div className="relative w-full  h-svh sm:h-[80vh] bg-[#f2f7f5]">
+    <div className="relative w-full  h-svh sm:h-[80vh] bg-baby-hero">
       <section className="relative   h-full justify-center  pt-2 sm:pt-20  z-0">
         <div
           className="absolute -bottom-1 z-0 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
@@ -156,8 +160,8 @@ export default function Home() {
         </div>
         <div className="max-w-7xl mx-auto">
           {/* ================= LEFT CONTENT ================= */}
-          <div className="relative z-20 py-12 lg:w-1/2 h-full flex    ">
-            <div className=" space-y-2 lg:space-y-4">
+          <div className="relative z-20 flex h-full items-center py-12 lg:w-1/2">
+            <div className="flex flex-col gap-2 lg:gap-4">
               <p className="text-xs lg:text-sm font-semibold tracking-wide text-foreground">
                 Premium Baby Care Essentials
               </p>
@@ -172,18 +176,20 @@ export default function Home() {
 
               <div className="flex items-center w-full gap-4 lg:gap-5 pt-2 lg:pt-4 ">
                 <Link href="/babyCareProduct">
-                  <button className="bg-[#45685e] text-white px-6 lg:px-8 py-2.5 lg:py-3 rounded-full font-medium hover:shadow-xl cursor-pointer hover:scale-105 transition duration-300 text-sm lg:text-base">
+                  <button className="bg-baby-accent text-white px-6 lg:px-8 py-2.5 lg:py-3 rounded-full font-medium hover:shadow-xl cursor-pointer hover:scale-105 transition duration-300 text-sm lg:text-base">
                     Explore Essentials
                   </button>
                 </Link>
-                <Link href="/contact">
-                  <button className="outline outline-[#45685e] text-[#45685e] px-6 lg:px-8 py-2.5 lg:py-3 rounded-full font-medium hover:scale-105 transition duration-300 text-sm lg:text-base">
-                    Become a Distributor
-                  </button>
-                </Link>
+                <button
+                  type="button"
+                  onClick={() => setIsDistributorModalOpen(true)}
+                  className="outline outline-baby-accent text-baby-accent px-4 py-2 text-xs rounded-full font-medium hover:scale-105 transition duration-300 sm:px-6 sm:py-2.5 sm:text-sm lg:px-8 lg:py-3 lg:text-base"
+                >
+                  Become a Distributor
+                </button>
               </div>
 
-              <div className="mt-5 w-full sm:hidden">
+              <div className="order-first mt-5 w-full sm:order-0 sm:hidden">
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -199,8 +205,6 @@ export default function Home() {
                   <div className="absolute inset-[15%] z-10 overflow-hidden rounded-[20px]">
                     <video
                       src="/videos/babyPlaying.mp4"
-                      
-                      
                       muted
                       playsInline
                       className="h-full w-full object-cover"
@@ -241,6 +245,13 @@ export default function Home() {
           </motion.div>
         </div>
       </div>
+      {isDistributorModalOpen ? (
+        <ContactIntentModal
+          intent="distributor"
+          onClose={() => setIsDistributorModalOpen(false)}
+          themeColor="var(--baby-accent)"
+        />
+      ) : null}
     </div>
   );
 }

@@ -6,57 +6,27 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { colors } from "@/lib/tokens";
+import { Container } from "@/app/components/layout";
 import {
   Baby,
   Droplets,
   HeartHandshake,
   Leaf,
   ShieldAlert,
-  ShieldCheck,
   Sparkles,
   Star,
 } from "lucide-react";
 
 const palette = {
-  accent: "#45685e",
-  accentSoft: "#6d877f",
-  border: "#84aaa5",
-  chip: "#d7ebe8",
-  panel: "#edf5f1",
-  page: "#f7fbf8",
-  body: "#596963",
+  accent:     colors.baby.accent,
+  accentSoft: colors.baby.accentSoft,
+  border:     colors.baby.border,
+  chip:       colors.baby.chip,
+  panel:      colors.baby.panel,
+  page:       colors.baby.page,
+  body:       colors.baby.body,
 };
-
-const values = [
-  {
-    id: 1,
-    icon: ShieldCheck,
-    title: "Premium Quality",
-    description:
-      "Gentle materials specifically designed to protect delicate baby skin.",
-  },
-  {
-    id: 2,
-    icon: Leaf,
-    title: "Pure and Thoughtful",
-    description:
-      "Carefully selected components that feel soft, breathable, and dependable.",
-  },
-  {
-    id: 3,
-    icon: HeartHandshake,
-    title: "Parent Approved",
-    description:
-      "Built around real family routines, comfort needs, and daily convenience.",
-  },
-  {
-    id: 4,
-    icon: Sparkles,
-    title: "Comfort Driven",
-    description:
-      "Supportive fit and reliable performance through naps, play, and overnight use.",
-  },
-];
 
 const trustStats = [
   {
@@ -132,9 +102,9 @@ const WhyChoose = () => {
     <section
       id="babycare-why-choose"
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-babyCare pb-20 px-4"
+      className="relative w-full overflow-hidden bg-babyCare py-12 md:py-16"
     >
-      <div className="relative mx-auto max-w-7xl ">
+      <Container className="relative">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -339,7 +309,7 @@ const WhyChoose = () => {
                     fill
                     className="object-cover object-bottom  transition-transform duration-500 hover:scale-105"
                   />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-[#45685e]">
+                  <div className="absolute left-4 top-4 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-baby-accent">
                     Premium baby care
                   </div>
                 </div>
@@ -362,7 +332,7 @@ const WhyChoose = () => {
                   className="mx-auto block h-55 w-[calc(100%+5px)] sm:h-60 md:h-65"
                   aria-hidden="true"
                   preserveAspectRatio="none"
-                  stroke="#45685E"
+                  stroke={colors.baby.accent}
                   strokeWidth={4}
                 >
                   <path
@@ -393,7 +363,7 @@ const WhyChoose = () => {
             );
           })}
         </div> */}
-      </div>
+      </Container>
     </section>
   );
 };

@@ -9,6 +9,7 @@ import {
   type BabyCareListingTheme,
 } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
+import { colors } from "@/lib/tokens";
 
 const heroPills = [
   "Skin-first essentials",
@@ -66,7 +67,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
     { scope: containerRef },
   );
 
-   const productBottomWave = assetWithFill(wave3Svg, "#f2f7f5");
+   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
     <section
@@ -135,7 +136,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
               </p>
             </div>
 
-            <div className="hero-float relative mx-auto flex h-[320px] w-full max-w-4xl items-end justify-center overflow-hidden rounded-[2.6rem] px-4 pt-8 sm:h-[400px] sm:px-6 sm:pt-10 md:h-[500px] lg:h-[560px]">
+            <div className="hero-float relative mx-auto flex h-80 w-full max-w-4xl items-end justify-center overflow-hidden rounded-[2.6rem] px-4 pt-8 sm:h-100 sm:px-6 sm:pt-10 md:h-125 lg:h-140">
               <Image
                 src="/images/baby/baby-with-product.webp"
                 alt="Baby with product"

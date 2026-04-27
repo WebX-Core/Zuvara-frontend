@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { AboutPalette } from "@/app/components/about/theme";
+import { Section, Container } from "@/app/components/layout";
 
 type AboutCtaSectionProps = {
   palette: AboutPalette;
@@ -11,12 +12,14 @@ export default function AboutCtaSection({
   productHref,
 }: AboutCtaSectionProps) {
   return (
-    <section
-      className="pb-20 lg:pb-40"
+    <Section
+      size="sm"
+      className="lg:pb-40"
       style={{ backgroundColor: palette.panel }}
     >
+      <Container>
       <div
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.4rem] px-6 py-12 text-center md:py-16"
+        className="relative overflow-hidden rounded-[2.4rem] px-6 py-12 text-center md:py-16"
         style={{ backgroundColor: palette.accent }}
       >
         <div className="pointer-events-none absolute inset-0 opacity-50">
@@ -51,6 +54,7 @@ export default function AboutCtaSection({
           </div>
         </div>
       </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

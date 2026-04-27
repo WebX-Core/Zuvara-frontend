@@ -27,8 +27,6 @@ export const metadata: Metadata = {
     icon: "/favicon.png",
   },
 };
-
-// import CrawlingBaby from "./components/shared/CrawlingBaby";
 import { SectionProvider } from "./providers/SectionProvider";
 import WhatsAppButton from "./components/common-ui/WhatsAppButton";
 

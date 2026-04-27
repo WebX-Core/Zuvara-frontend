@@ -1,6 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
+import { personalTrustFusionTestimonials } from "@/app/components/personalCareProduct/personalTrustFusionTestimonials";
 
 type ComparisonRow = {
   label: string;
@@ -24,6 +29,38 @@ export default function PersonalTrustFusionSection({
   comparisonRows,
   images,
 }: PersonalTrustFusionSectionProps) {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [visibleCards, setVisibleCards] = useState(2);
+  const maxIndex = Math.max(
+    0,
+    personalTrustFusionTestimonials.length - visibleCards,
+  );
+  const safeActiveIndex = Math.min(activeTestimonial, maxIndex);
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth < 1024) {
+        setVisibleCards(1);
+        return;
+      }
+
+      setVisibleCards(2);
+    };
+
+    updateVisibleCards();
+    window.addEventListener("resize", updateVisibleCards);
+
+    return () => window.removeEventListener("resize", updateVisibleCards);
+  }, []);
+
+  const goPrev = () => {
+    setActiveTestimonial((current) => (current <= 0 ? maxIndex : current - 1));
+  };
+
+  const goNext = () => {
+    setActiveTestimonial((current) => (current >= maxIndex ? 0 : current + 1));
+  };
+
   return (
     <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
       <div
@@ -31,77 +68,173 @@ export default function PersonalTrustFusionSection({
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
-      {/* Testimonials Container - Stack on mobile, Side-by-side on desktop */}
-      <div className="mx-auto max-w-7xl flex flex-col md:flex-row gap-6">
-        <article
-          className="fx-rise fx-float w-full rounded-3xl border p-5 md:p-6"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.accent, 1),
-          }}
-        >
-          <div className="flex items-start gap-4 md:items-center">
-            <div
-              className="h-11 w-11 shrink-0 overflow-hidden rounded-full border"
-              style={{ borderColor: `${theme.border}66` }}
+      <div className="mx-auto max-w-7xl perspective-1200px">
+        <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <span
+              className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
+              style={{ color: theme.accent }}
             >
-              <Image
-                src={images.testimonialPrimary}
-                alt="Nina R."
-                width={44}
-                height={44}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div>
-              <p className="text-sm font-semibold" style={{ color: theme.chipBg }}>
-                Nina R. · Verified Customer
-              </p>
-              <p
-                className="mt-1 text-sm md:text-base italic"
-                style={{ color: hexToRgba(theme.chipBg, 0.78) }}
-              >
-                &quot;I feel secure even on long days. It is soft, breathable,
-                and genuinely dependable.&quot;
-              </p>
-            </div>
+              Stories
+            </span>
+            <p
+              className="text-sm"
+              style={{ color: hexToRgba(theme.accent, 0.68) }}
+            >
+              Swipe through real feedback from customers
+            </p>
           </div>
-        </article>
 
-        <article
-          className="fx-rise fx-float w-full rounded-3xl border p-5 md:p-6"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 1),
-          }}
-        >
-          <div className="flex items-start gap-4 md:items-center">
-            <div
-              className="h-11 w-11 shrink-0 overflow-hidden rounded-full border"
-              style={{ borderColor: `${theme.border}66` }}
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <button
+              type="button"
+              onClick={goPrev}
+              className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+              style={{
+                borderColor: `${theme.border}66`,
+                backgroundColor: hexToRgba(theme.pageBg, 0.92),
+                color: theme.accent,
+              }}
+              aria-label="Previous testimonial"
             >
-              <Image
-                src={images.testimonialSecondary}
-                alt="Priya T."
-                width={44}
-                height={44}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div>
-              <p className="text-sm font-semibold" style={{ color: theme.accent }}>
-                Priya T. · Verified Customer
-              </p>
-              <p
-                className="mt-1 text-sm md:text-base italic"
-                style={{ color: hexToRgba(theme.accent, 0.78) }}
-              >
-                &quot;No bunching, no stress. It stays comfortable through work,
-                travel, and sleep.&quot;
-              </p>
-            </div>
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+              style={{
+                borderColor: `${theme.border}66`,
+                backgroundColor: hexToRgba(theme.pageBg, 0.92),
+                color: theme.accent,
+              }}
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={18} />
+            </button>
           </div>
-        </article>
+        </div>
+
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-700 ease-out"
+            style={{
+              transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
+            }}
+          >
+            {personalTrustFusionTestimonials.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="w-full shrink-0 px-2.5 lg:w-1/2"
+              >
+                <article
+                  className="fx-rise fx-float flex h-full min-h-[23rem] flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-[25rem] md:p-7"
+                  style={{
+                    borderColor: `${theme.border}66`,
+                    backgroundColor: hexToRgba(theme.pageBg, 0.96),
+                  }}
+                >
+                  <div
+                    className="relative h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
+                    style={{ borderColor: `${theme.border}66` }}
+                  >
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="mt-5 flex flex-col items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: testimonial.rating }).map(
+                        (_, index) => (
+                          <Star
+                            key={index}
+                            size={17}
+                            fill="#fbbf24"
+                            color="#fbbf24"
+                          />
+                        ),
+                      )}
+                    </div>
+
+                    <div>
+                      <p
+                        className="text-base font-semibold md:text-lg"
+                        style={{ color: theme.accent }}
+                      >
+                        {testimonial.name}
+                      </p>
+                      <p
+                        className="text-sm"
+                        style={{ color: hexToRgba(theme.accent, 0.62) }}
+                      >
+                        {testimonial.location}
+                      </p>
+                    </div>
+
+                    <div className="flex min-w-72 justify-between">
+                      <span
+                        className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                        style={{
+                          backgroundColor: hexToRgba(theme.containerBg, 0.36),
+                          color: hexToRgba(theme.accent, 0.75),
+                        }}
+                      >
+                        {testimonial.badge}
+                      </span>
+                      <span
+                        className="text-sm"
+                        style={{ color: hexToRgba(theme.accent, 0.48) }}
+                      >
+                        {testimonial.time}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p
+                    className="mt-5 text-base leading-relaxed md:text-lg"
+                    style={{ color: hexToRgba(theme.accent, 0.82) }}
+                  >
+                    {testimonial.text}
+                  </p>
+
+                  <div
+                    className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: hexToRgba(theme.accent, 0.62) }}
+                  >
+                    <span
+                      className="inline-block h-2 w-2 rounded-full"
+                      style={{ backgroundColor: "#22c55e" }}
+                    />
+                    Verified review
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 flex justify-center gap-2">
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => setActiveTestimonial(index)}
+              className="h-2.5 rounded-full transition-all duration-300"
+              style={{
+                width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
+                backgroundColor:
+                  safeActiveIndex === index
+                    ? theme.accent
+                    : "rgba(132,170,165,0.35)",
+              }}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="mx-auto mt-16 max-w-7xl space-y-8">
@@ -117,7 +250,8 @@ export default function PersonalTrustFusionSection({
             className="mt-2 text-sm md:text-base font-medium"
             style={{ color: hexToRgba(theme.accent, 0.68) }}
           >
-            A side-by-side look at comfort, performance, and everyday confidence.
+            A side-by-side look at comfort, performance, and everyday
+            confidence.
           </p>
         </div>
 
@@ -127,71 +261,181 @@ export default function PersonalTrustFusionSection({
         >
           <div className="Center w-full">
             <div className="relative h-[340px] w-full overflow-hidden rounded-3xl md:h-[460px] lg:h-[560px]">
-                <h2
-                  className="absolute top-4 left-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase"
-                  style={{ color: hexToRgba(theme.accent, 0.75) }}
-                >
-                  Zuvara
-                </h2>
-                <Image
-                  src={images.comparisonZuvara}
-                  alt="Zuvara care"
-                  width={1000}
-                  height={1000}
-                  className="h-full w-full object-cover"
-                />
-                <h2 className="absolute top-4 right-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase text-zinc-500/70">
-                  Ordinary
-                </h2>
+              <h2
+                className="absolute top-4 left-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase"
+                style={{ color: hexToRgba(theme.accent, 0.75) }}
+              >
+                Zuvara
+              </h2>
+              <Image
+                src={images.comparisonZuvara}
+                alt="Zuvara care"
+                width={1000}
+                height={1000}
+                className="h-full w-full object-cover"
+              />
+              <h2 className="absolute top-4 right-4 z-10 text-xl md:text-6xl lg:text-7xl font-bold uppercase text-zinc-500/70">
+                Ordinary
+              </h2>
             </div>
           </div>
         </div>
 
-        {/* Comparison Table - Scrollable on very small devices */}
-        <div className="overflow-x-auto">
+        <div className="fx-rise overflow-visible md:hidden">
           <div
-            className="min-w-125 md:min-w-[85%] fx-rise overflow-hidden rounded-3xl border"
+            className="overflow-x-auto overscroll-x-contain px-3 py-4"
+            data-carousel-swipe-ignore="true"
+          >
+            <div
+              className="inline-block w-max min-w-full overflow-hidden rounded-[1.4rem] border bg-white/70 align-top"
+              style={{ borderColor: `${theme.border}33` }}
+            >
+              <div
+                className="grid min-w-max grid-cols-[10rem_8.5rem_8.5rem]"
+                style={{ borderColor: `${theme.border}33` }}
+              >
+                <div
+                  className="border-b px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]"
+                  style={{
+                    borderColor: `${theme.border}33`,
+                    color: hexToRgba(theme.accent, 0.62),
+                  }}
+                >
+                  Feature
+                </div>
+                <div
+                  className="border-b border-l bg-white px-4 py-3 text-center"
+                  style={{
+                    borderColor: `${theme.border}33`,
+                    backgroundColor: "#ffffff",
+                  }}
+                >
+                  <p
+                    className="text-sm font-semibold uppercase tracking-wide"
+                    style={{ color: theme.accent }}
+                  >
+                    Zuvara
+                  </p>
+                </div>
+                <div
+                  className="border-b border-l bg-white px-4 py-3 text-center"
+                  style={{
+                    borderColor: `${theme.border}33`,
+                    backgroundColor: "#ffffff",
+                  }}
+                >
+                  <p
+                    className="text-sm font-semibold uppercase tracking-wide"
+                    style={{ color: hexToRgba(theme.accent, 0.72) }}
+                  >
+                    Ordinary
+                  </p>
+                </div>
+
+                {comparisonRows.map((row, idx) => (
+                  <div
+                    key={row.label}
+                    className="contents"
+                  >
+                    <div
+                      className="flex min-h-18 items-center border-b px-4 py-4 text-sm font-medium leading-snug"
+                      style={{
+                        borderColor: `${theme.border}22`,
+                        backgroundColor:
+                          idx % 2 === 0
+                            ? hexToRgba(theme.pageBg, 0.18)
+                            : "transparent",
+                        color: hexToRgba(theme.accent, 0.84),
+                      }}
+                    >
+                      {row.label}
+                    </div>
+                    <div
+                      className="flex min-h-18 items-center justify-center border-b border-l bg-white px-4 py-4 text-center text-sm font-semibold"
+                      style={{
+                        borderColor: `${theme.border}33`,
+                        color: theme.accent,
+                      }}
+                    >
+                      {row.zuvara}
+                    </div>
+                    <div
+                      className="flex min-h-18 items-center justify-center border-b border-l bg-white px-4 py-4 text-center text-sm"
+                      style={{
+                        borderColor: `${theme.border}33`,
+                        color: hexToRgba(theme.accent, 0.62),
+                      }}
+                    >
+                      {row.ordinary}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden overflow-x-auto md:block">
+          <div
+            className="min-w-125 fx-rise overflow-hidden rounded-3xl border"
             style={{
-              borderColor: `${theme.border}66`,
+              borderColor: `${theme.border}33`,
               backgroundColor: hexToRgba(theme.pageBg, 0.9),
             }}
           >
             <div
-              className="grid grid-cols-12 border-b px-6 py-4 text-[11px] font-semibold uppercase tracking-widest"
+              className="grid grid-cols-12 text-[11px] font-semibold uppercase tracking-widest"
               style={{
                 borderColor: `${theme.border}44`,
-                backgroundColor: hexToRgba(theme.containerBg, 0.34),
                 color: hexToRgba(theme.accent, 0.62),
               }}
             >
-              <div className="col-span-6">Feature</div>
-              <div className="col-span-3 text-center">Zuvara</div>
-              <div className="col-span-3 text-center">Ordinary</div>
+              <div className="col-span-6 border-b px-4 py-3">Feature</div>
+              <div
+                className="col-span-3 border-b border-l bg-white px-4 py-3 text-center"
+                style={{ borderColor: `${theme.border}33` }}
+              >
+                Zuvara
+              </div>
+              <div
+                className="col-span-3 border-b border-l bg-white px-4 py-3 text-center"
+                style={{ borderColor: `${theme.border}33` }}
+              >
+                Ordinary
+              </div>
             </div>
 
             {comparisonRows.map((row, idx) => (
               <div
                 key={row.label}
-                className="fx-float grid grid-cols-12 items-center px-6 py-4 text-sm md:text-base"
-                style={{
-                  borderTop: idx === 0 ? "none" : `1px solid ${theme.border}33`,
-                }}
+                className="fx-float grid grid-cols-12 items-stretch text-sm md:text-base"
               >
                 <div
-                  className="col-span-6 font-medium"
-                  style={{ color: hexToRgba(theme.accent, 0.82) }}
+                  className="col-span-6 flex min-h-20 items-center border-b px-4 py-4 font-medium"
+                  style={{
+                    borderColor: `${theme.border}22`,
+                    backgroundColor:
+                      idx % 2 === 0 ? hexToRgba(theme.pageBg, 0.18) : "transparent",
+                    color: hexToRgba(theme.accent, 0.82),
+                  }}
                 >
                   {row.label}
                 </div>
                 <div
-                  className="col-span-3 text-center font-bold"
-                  style={{ color: theme.accent }}
+                  className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center font-bold"
+                  style={{
+                    borderColor: `${theme.border}33`,
+                    color: theme.accent,
+                  }}
                 >
                   {row.zuvara}
                 </div>
                 <div
-                  className="col-span-3 text-center"
-                  style={{ color: hexToRgba(theme.accent, 0.5) }}
+                  className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center"
+                  style={{
+                    borderColor: `${theme.border}33`,
+                    color: hexToRgba(theme.accent, 0.5),
+                  }}
                 >
                   {row.ordinary}
                 </div>

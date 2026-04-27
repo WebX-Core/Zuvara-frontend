@@ -1,21 +1,6 @@
-export type AboutPalette = {
-  accent: string;
-  accentSoft: string;
-  border: string;
-  chip: string;
-  panel: string;
-  page: string;
-  ink: string;
-  body: string;
-};
-
-export const aboutPalette: AboutPalette = {
-  accent: "#45685e",
-  accentSoft: "#6d877f",
-  border: "#84aaa5",
-  chip: "#d7ebe8",
-  panel: "#edf5f1",
-  page: "#f7fbf8",
-  ink: "#1f2c28",
-  body: "#596963",
-};
+/**
+ * Re-exports from the central token file.
+ * @see lib/tokens.ts
+ */
+export type { ListingTheme as AboutPalette } from "@/lib/tokens";
+export { babyCareListingTheme as aboutPalette } from "@/lib/tokens";

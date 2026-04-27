@@ -1,13 +1,10 @@
-import Image from "next/image";
 import PersonalPhotoMosaic from "@/app/components/personalCareProduct/PersonalPhotoMosaic";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 
 type PersonalComfortDetailsSectionProps = {
   theme: ThemePreset;
-  highlights: string[];
   moodboardImages: string[];
-  technicalDetailImages: string[];
 };
 
 const sectionTitle =
@@ -15,9 +12,7 @@ const sectionTitle =
 
 export default function PersonalComfortDetailsSection({
   theme,
-  highlights,
   moodboardImages,
-  technicalDetailImages,
 }: PersonalComfortDetailsSectionProps) {
   return (
     <section className="relative px-6 py-14 lg:px-10 lg:py-16">
@@ -66,7 +61,7 @@ export default function PersonalComfortDetailsSection({
           />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {/* <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {highlights.map((item, idx) => (
             <article
               key={item}
@@ -100,7 +95,7 @@ export default function PersonalComfortDetailsSection({
               </div>
             </article>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

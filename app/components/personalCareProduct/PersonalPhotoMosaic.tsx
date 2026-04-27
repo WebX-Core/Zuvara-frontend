@@ -65,12 +65,10 @@ export default function PersonalPhotoMosaic({
                 current === 0 ? pages.length - 1 : current - 1,
               )
             }
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-              backgroundColor: theme
-                ? hexToRgba(theme.pageBg, 0.72)
-                : undefined,
+
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Previous slide"
@@ -82,12 +80,10 @@ export default function PersonalPhotoMosaic({
             onClick={() =>
               setActivePage((current) => (current + 1) % pages.length)
             }
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-              backgroundColor: theme
-                ? hexToRgba(theme.pageBg, 0.72)
-                : undefined,
+
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Next slide"

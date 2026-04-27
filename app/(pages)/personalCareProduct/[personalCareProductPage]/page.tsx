@@ -16,6 +16,7 @@ import PersonalTrustFusionSection from "@/app/components/personalCareProduct/Per
 import PersonalCarePromiseSection from "@/app/components/personalCareProduct/PersonalCarePromiseSection";
 import PersonalFaqAndCloseViewSection from "@/app/components/personalCareProduct/PersonalFaqAndCloseViewSection";
 import PersonalProductCloseViewSection from "@/app/components/personalCareProduct/PersonalProductCloseViewSection";
+import ProductVideoSection from "@/app/components/babyCareProductPage/ProductVideoSection";
 
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
@@ -136,7 +137,6 @@ export default function Page() {
     personalHeroPackSectionImages[active?.slug ?? ""] ||
     (active ? pickHeroPack(active) : "");
   const variants = active?.variants || [];
-  const highlights = (active?.highlights || []).slice(0, 4);
   const heroAvatars =
     active?.heroAvatars && active.heroAvatars.length > 0
       ? active.heroAvatars
@@ -194,6 +194,9 @@ export default function Page() {
   }, []);
 
   useLayoutEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) return;
+
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
@@ -277,7 +280,7 @@ export default function Page() {
   return (
     <main
       ref={rootRef}
-      className="relative overflow-hidden text-zinc-800 transition-colors duration-500 antialiased"
+      className="relative overflow-hidden text-zinc-800 antialiased md:transition-colors md:duration-500"
       style={{ backgroundColor: theme.pageBg }}
     >
       <div
@@ -308,12 +311,15 @@ export default function Page() {
         theme={theme}
         backgroundImage={whyItMattersImage}
       />
-      <PersonalProductCloseViewSection product={active} theme={theme} />
+      <PersonalProductCloseViewSection
+        product={active}
+        theme={theme}
+        technicalDetailImages={technicalDetailImages}
+      />
+      <ProductVideoSection />
       <PersonalComfortDetailsSection
         theme={theme}
-        highlights={highlights}
         moodboardImages={moodboardImages}
-        technicalDetailImages={technicalDetailImages}
       />
 
       <PersonalSizeGuideSection

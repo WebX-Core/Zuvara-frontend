@@ -11,57 +11,119 @@
   src: url("/font/CinemaCartoon.otf") format("opentype");
 }
 
+/* ─────────────────────────────────────────────
+   RAW TOKENS
+   Single source of truth for all design values.
+   @theme inline reads from here.
+───────────────────────────────────────────── */
 :root {
+  /* ── Base ── */
   --background: #ffffff;
-  --foreground: #45685E;
-  --secondary: #8cd700;
-  --divider: #cadaa9;
-  --babyCare: #BFDDCA;
-  --personalCare: #8200db;
-  --ternary: #9352bf;
+
+  /* ── Baby Care ── */
+  --baby-accent:       #45685e;
+  --baby-accent-soft:  #6d877f;
+  --baby-border:       #84aaa5;
+  --baby-chip:         #d7ebe8;
+  --baby-panel:        #edf5f1;
+  --baby-page:         #f7fbf8;
+  --baby-hero:         #f2f7f5;
+  --baby-deco:         #d3ebe7;
+  --baby-divider:      #cadaa9;
+
+  /* ── Personal Care ── */
+  --personal-accent:       #8200db;
+  --personal-accent-soft:  #a14ce8;
+  --personal-accent-mid:   #9352bf;
+  --personal-border:       #c89cf1;
+  --personal-chip:         #f2e8ff;
+  --personal-panel:        #faf5ff;
+  --personal-page:         #fdfaff;
+
+  /* ── Legacy aliases (keep existing class names working) ── */
+  --foreground:    var(--baby-accent);
+  --secondary:     #8cd700;
+  --divider:       var(--baby-divider);
+  --babyCare:      #bfddca;
+  --personalCare:  var(--personal-accent);
+  --ternary:       var(--personal-accent-mid);
 }
 
+/* ─────────────────────────────────────────────
+   TAILWIND THEME
+   Maps raw tokens → Tailwind utilities.
+   bg-baby-accent, text-personal-accent, etc.
+───────────────────────────────────────────── */
 @theme inline {
+  /* ── Baby Care colors ── */
+  --color-baby-accent:       var(--baby-accent);
+  --color-baby-accent-soft:  var(--baby-accent-soft);
+  --color-baby-border:       var(--baby-border);
+  --color-baby-chip:         var(--baby-chip);
+  --color-baby-panel:        var(--baby-panel);
+  --color-baby-page:         var(--baby-page);
+  --color-baby-hero:         var(--baby-hero);
+  --color-baby-deco:         var(--baby-deco);
+  --color-baby-divider:      var(--baby-divider);
+
+  /* ── Personal Care colors ── */
+  --color-personal-accent:       var(--personal-accent);
+  --color-personal-accent-soft:  var(--personal-accent-soft);
+  --color-personal-accent-mid:   var(--personal-accent-mid);
+  --color-personal-border:       var(--personal-border);
+  --color-personal-chip:         var(--personal-chip);
+  --color-personal-panel:        var(--personal-panel);
+  --color-personal-page:         var(--personal-page);
+
+  /* ── Base colors ── */
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-secondary: var(--secondary);
-  --color-divider: var(--divider);
-  --color-babyCare: var(--babyCare);
-  --color-personalCare: var(--personalCare);
-  --color-ternary: var(--ternary);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-montserrat: var(--montserrat);
-  --font-amatic: var(--font-amatic);
+
+  /* ── Legacy color aliases ── */
+  --color-foreground:    var(--foreground);
+  --color-secondary:     var(--secondary);
+  --color-divider:       var(--divider);
+  --color-babyCare:      var(--babyCare);
+  --color-personalCare:  var(--personalCare);
+  --color-ternary:       var(--ternary);
+
+  /* ── Typography ── */
+  --font-sans:       var(--font-geist-sans);
+  --font-mono:       var(--font-geist-mono);
+  --font-primary:    var(--font-cormorant);
+  --font-secondary:  var(--font-montserrat);
+  --font-amatic:     var(--font-amatic);
+
+  /* ── Border radius scale ──
+     rounded-pill  → all CTAs, pill buttons
+     rounded-card  → structural section panels (≈rounded-4xl)
+     rounded-modal → elevated cards, modals, dropdowns
+     rounded-chip  → category chips, tags
+     rounded-thumb → small UI, thumbnails
+  ── */
+  --radius-pill:   9999px;
+  --radius-card:   2rem;
+  --radius-modal:  1rem;
+  --radius-chip:   0.75rem;
+  --radius-thumb:  0.5rem;
+
+  /* ── Animations ── */
   --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --font-secondary: var(--font-montserrat);
-  --font-primary: var(--font-cormorant);
+  --animate-accordion-up:   accordion-up 0.2s ease-out;
 
   @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
+    from { height: 0; }
+    to   { height: var(--radix-accordion-content-height); }
   }
+
   @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
+    from { height: var(--radix-accordion-content-height); }
+    to   { height: 0; }
   }
 }
 
-/* @layer utilities {
-  section {
-    @apply container h-auto mx-auto py-8 px-4 sm:px-6 lg:px-6 max-w-7xl;
-  }
-} */
-
+/* ─────────────────────────────────────────────
+   BASE STYLES
+───────────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -74,20 +136,11 @@ body {
   font-family: var(--font-montserrat);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1); */
 }
 
-/* Lenis smooth scroll styling */
 html.lenis,
 html.lenis body {
   height: auto;
-}
-
-.baby {
-  font-family: "BabyFont", sans-serif;
-}
-.CinemaCartoon {
-  font-family: "CinemaCartoon", sans-serif;
 }
 
 a {
@@ -101,15 +154,20 @@ button {
   border: none;
 }
 
-/* Smooth transitions */
-/* * {
-  transition-property:
-    background-color, border-color, color, fill, stroke, transform, translate,
-    scale;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-} */
+/* ─────────────────────────────────────────────
+   DECORATIVE FONT CLASSES
+───────────────────────────────────────────── */
+.baby {
+  font-family: "BabyFont", sans-serif;
+}
 
+.CinemaCartoon {
+  font-family: "CinemaCartoon", sans-serif;
+}
+
+/* ─────────────────────────────────────────────
+   WAVE / SECTION DIVIDERS
+───────────────────────────────────────────── */
 .custom-shape-divider-top {
   position: absolute;
   top: 0;
@@ -131,22 +189,14 @@ button {
   fill: #fff;
 }
 
-
-/** For tablet devices **/
 @media (min-width: 768px) and (max-width: 1023px) {
-  .custom-shape-divider-top svg {
-    width: calc(100% + 1.3px);
-    height: 97px;
-  }
+  .custom-shape-divider-top svg { height: 97px; }
 }
 
-/** For mobile devices **/
 @media (max-width: 767px) {
-  .custom-shape-divider-top svg {
-    width: calc(100% + 1.3px);
-    height: 33px;
-  }
+  .custom-shape-divider-top svg { height: 33px; }
 }
+
 .custom-shape-divider-bottom {
   position: absolute;
   bottom: -1px;
@@ -168,41 +218,20 @@ button {
   fill: #ffffff;
 }
 
-/** For tablet devices **/
 @media (min-width: 768px) and (max-width: 1023px) {
-  .custom-shape-divider-bottom svg {
-    width: calc(100% + 1.3px);
-    height: 97px;
-  }
+  .custom-shape-divider-bottom svg { height: 97px; }
 }
 
-/** For mobile devices **/
 @media (max-width: 767px) {
-  .custom-shape-divider-bottom svg {
-    width: calc(100% + 1.3px);
-    height: 33px;
-  }
+  .custom-shape-divider-bottom svg { height: 33px; }
 }
 
-/* Floating animations */
+/* ─────────────────────────────────────────────
+   FLOATING ANIMATIONS
+───────────────────────────────────────────── */
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-@keyframes floatNormal {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-15px); }
 }
 
 .float-animation {
@@ -210,6 +239,6 @@ button {
 }
 
 .float-animation-delayed {
-  animation: floatNormal 5s ease-in-out infinite;
+  animation: float 5s ease-in-out infinite;
   animation-delay: 0.3s;
 }

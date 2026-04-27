@@ -9,17 +9,17 @@ type WhyZuvaraProductsSectionProps = {
 const reasons = [
   {
     title: "Comfort-first design",
-    body: "Zuvara personal care products are shaped to feel lighter, softer, and easier to wear through long routines.",
+    body: "Light, soft, and easy to wear all day.",
     icon: HeartHandshake,
   },
   {
     title: "Reliable protection",
-    body: "Built for dependable daily performance so you can move through work, travel, and rest with less interruption.",
+    body: "Dependable protection for everyday use.",
     icon: ShieldCheck,
   },
   {
     title: "Thoughtful everyday care",
-    body: "Materials, fit, and absorbency are balanced to support confidence without adding unnecessary bulk.",
+    body: "Balanced comfort without extra bulk.",
     icon: Sparkles,
   },
 ];
@@ -67,7 +67,7 @@ export default function WhyZuvaraProductsSection({
           {reasons.map(({ title, body, icon: Icon }) => (
             <article
               key={title}
-              className="rounded-[1.6rem] border p-5"
+              className="rounded-[1.6rem] border p-3 flex gap-4 items-center "
               style={{
                 borderColor: `${theme.border}55`,
                 backgroundColor: hexToRgba(theme.pageBg, 0.98),
@@ -82,18 +82,20 @@ export default function WhyZuvaraProductsSection({
               >
                 <Icon size={20} />
               </div>
-              <h3
-                className="mt-4 text-lg font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {title}
-              </h3>
-              <p
-                className="mt-2 text-sm leading-relaxed md:text-base"
-                style={{ color: hexToRgba(theme.accent, 0.72) }}
-              >
-                {body}
-              </p>
+              <div className="flex flex-col gap-2">
+                <h3
+                  className=" text-lg font-semibold"
+                  style={{ color: theme.accent }}
+                >
+                  {title}
+                </h3>
+                <p
+                  className=" text-sm leading-relaxed md:text-base"
+                  style={{ color: hexToRgba(theme.accent, 0.72) }}
+                >
+                  {body}
+                </p>
+              </div>
             </article>
           ))}
         </div>

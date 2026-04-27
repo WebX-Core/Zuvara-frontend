@@ -72,25 +72,7 @@ export default function PersonalCarePromiseSection({
                 within 7 days and our care team will help you find a better
                 option quickly.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white! shadow-[0_18px_30px_rgba(0,0,0,0.14)]"
-                  style={{ backgroundColor: theme.accent }}
-                >
-                  Talk to a care advisor
-                </Link>
-                <span
-                  className="inline-flex rounded-full border px-5 py-3 text-sm font-semibold"
-                  style={{
-                    borderColor: `${theme.border}55`,
-                    backgroundColor: hexToRgba(theme.pageBg, 0.5),
-                    color: theme.accent,
-                  }}
-                >
-                  7-day support promise
-                </span>
-              </div>
+
               <div
                 className="mt-6 grid gap-2 text-sm md:max-w-xl md:grid-cols-3"
                 style={{ color: hexToRgba(theme.accent, 0.74) }}

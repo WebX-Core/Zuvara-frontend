@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
+import { Section, Container } from "@/app/components/layout";
 
 type AboutHeroSectionProps = {
   palette: AboutPalette;
@@ -26,11 +27,12 @@ export default function AboutHeroSection({
   productHref,
 }: AboutHeroSectionProps) {
   return (
-    <section
-      className="relative px-4 pt-12 sm:px-8 md:px-0 lg:px-0"
+    <Section
+      size="lg"
+      className="relative"
       style={{ backgroundColor: palette.panel }}
     >
-      <div className="mx-auto max-w-7xl">
+      <Container>
         <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-14 lg:px-14">
           <div className="relative z-10 mx-auto max-w-3xl text-center">
             <h1
@@ -127,8 +129,8 @@ export default function AboutHeroSection({
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
 

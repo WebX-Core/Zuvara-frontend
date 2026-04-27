@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { colors } from "@/lib/tokens";
 import { motion } from "framer-motion";
 
 type DestinationId = "baby" | "personal";
@@ -33,8 +34,7 @@ export default function IntroPage() {
         href: "/babyCare",
         color: "var(--babyCare)",
         icon: "/icons/xl.png",
-        description:
-          "Everything your little one needs for a happy, healthy start in life.",
+        description: "Everything your little one needs.",
       },
       {
         id: "personal",
@@ -45,8 +45,7 @@ export default function IntroPage() {
         href: "/personalCare",
         color: "var(--ternary)",
         icon: "/icons/sanitary-napkin.png",
-        description:
-          "Premium essentials formulated to nourish your body and soul.",
+        description: "Premium essentials for nourishment.",
       },
     ],
     [],
@@ -56,14 +55,17 @@ export default function IntroPage() {
     destinations.find((item) => item.id === activeId) ?? destinations[0];
 
   return (
-    <main
-      className={`relative min-h-screen overflow-hidden text-white transition-colors duration-300 ${
-        activeId === "baby" ? "bg-babyCare" : "bg-ternary/50"
-      }`}
-    >
-      <Link href="/" className="absolute top-4 left-1/2 z-30 -translate-x-1/2 sm:top-8">
+    <main className="relative min-h-screen overflow-hidden bg-zinc-100 text-white transition-colors duration-300">
+      <Link
+        href="/"
+        className="absolute top-4 left-1/2 z-30 -translate-x-1/2 sm:top-8"
+      >
         <Image
-          src={activeId === "personal" ? "/logo/logo_secondary.svg" : "/logo/logo.svg"}
+          src={
+            activeId === "personal"
+              ? "/logo/logo_secondary.svg"
+              : "/logo/logo.svg"
+          }
           alt="Zuvara Logo"
           width={80}
           height={60}
@@ -71,14 +73,14 @@ export default function IntroPage() {
           className="h-auto w-24 sm:w-48"
         />
       </Link>
-      <section className="relative z-20 mx-auto flex min-h-screen w-full max-w-360 flex-col justify-center px-4 pt-24 pb-10 sm:px-5 md:px-8 md:pt-28 lg:px-10">
+      <section className="relative z-20 mx-auto flex min-h-screen w-full max-w-360 flex-col justify-center px-4 pt-12 pb-10 sm:px-5 md:px-8 md:pt-28 lg:px-10">
         <div className="flex flex-col items-center justify-center">
           <div className="hidden sm:block max-w-240 text-center">
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white sm:mb-3 sm:text-xs sm:tracking-[0.24em]"
+              className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-black sm:mb-3 sm:text-xs sm:tracking-[0.24em]"
             >
               Welcome to Zuvara
             </motion.p>
@@ -88,7 +90,7 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className="text-[clamp(2rem,10vw,5rem)] font-black uppercase leading-[0.92] tracking-[-0.035em] text-white"
+              className="text-[clamp(2rem,10vw,5rem)] font-black uppercase leading-[0.92] tracking-[-0.035em] text-black"
             >
               {activeDestination.id === "baby" ? "baby care" : "Personal Care"}
             </motion.h1>
@@ -98,7 +100,7 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="mt-3 text-sm leading-6 text-white md:mt-4 md:text-xl font-medium md:leading-7"
+              className="mt-3 text-sm leading-6 text-slate-700 md:mt-4 md:text-xl font-medium md:leading-7"
             >
               {activeDestination.id === "baby"
                 ? "Soft, safe, and thoughtfully made essentials for your little one."
@@ -106,7 +108,7 @@ export default function IntroPage() {
             </motion.p>
           </div>
 
-          <div className="mt-4 grid w-full max-w-6xl grid-cols-1 gap-4 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
+          <div className=" grid w-full max-w-6xl grid-cols-1 gap-4 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
             {destinations.map((section) => {
               const isActive = activeId === section.id;
 
@@ -125,9 +127,11 @@ export default function IntroPage() {
                       scale: isActive ? 1.02 : 1,
                       backgroundColor: isActive
                         ? section.id === "baby"
-                          ? "rgba(69, 104, 94, 0.68)"
-                          : "rgba(130, 0, 219, 0.62)"
-                        : "rgba(255, 255, 255, 0.28)",
+                          ? colors.baby.accent
+                          : colors.personal.accentMid
+                        : section.id === "baby"
+                          ? colors.baby.accent
+                          : colors.personal.accentMid,
                       borderColor: isActive
                         ? "rgba(255,255,255,0.36)"
                         : "rgba(255,255,255,0.45)",
@@ -147,16 +151,14 @@ export default function IntroPage() {
                         <div className="min-w-0">
                           <div className="inline-flex items-center gap-2 rounded-2xl py-1.5">
                             <span
-                              className={`text-[10px] font-black uppercase tracking-wider ${
-                                isActive ? "text-white/85" : "text-zinc-500"
-                              }`}
+                              className={`text-[10px] font-black uppercase tracking-wider text-white`}
                             >
                               {section.subtitle}
                             </span>
                           </div>
 
                           <h2
-                            className={`text-2xl font-black leading-none sm:text-3xl ${
+                            className={`text-2xl font-black leading-none sm:text-3xl text-white ${
                               isActive ? "text-white" : "text-foreground"
                             }`}
                           >
@@ -170,25 +172,23 @@ export default function IntroPage() {
                             </span>
                           </h2>
                         </div>
-                      <motion.div
-                        animate={{ opacity: isActive ? 0.9 : 0.25 }}
-                        transition={{ duration: 0.35 }}
-                        className="pointer-events-none shrink-0"
-                      >
-                        <Image
-                          src={section.icon}
-                          alt={section.title}
-                          width={96}
-                          height={96}
-                          className={`size-14 transition sm:size-20 lg:size-24 ${isActive ? "invert" : ""}`}
-                        />
-                      </motion.div>
+                        <motion.div
+                          animate={{ opacity: isActive ? 0.9 : 0.25 }}
+                          transition={{ duration: 0.35 }}
+                          className="pointer-events-none shrink-0"
+                        >
+                          <Image
+                            src={section.icon}
+                            alt={section.title}
+                            width={96}
+                            height={96}
+                            className={`size-14 transition sm:size-20 lg:size-24 ${isActive ? "invert" : ""}`}
+                          />
+                        </motion.div>
                       </div>
 
                       <p
-                        className={`max-w-40 text-sm font-medium leading-relaxed sm:max-w-72 ${
-                          isActive ? "text-white/80" : "text-zinc-500"
-                        }`}
+                        className={`max-w-40 text-sm font-medium leading-relaxed sm:max-w-72 text-white`}
                       >
                         {section.description}
                       </p>
@@ -198,13 +198,13 @@ export default function IntroPage() {
                             section.id === "baby" ? "w-24" : "w-28"
                           }`}
                         >
-                          <Image
+                          {/* <Image
                             src={section.image}
                             alt={section.title}
                             width={320}
                             height={240}
                             className="h-auto w-full object-contain"
-                          />
+                          /> */}
                         </div>
                       </div>
                       <div className="mt-auto pt-2 sm:pt-3">

@@ -6,17 +6,18 @@ import { motion } from "framer-motion";
 import Button from "../common-ui/Button";
 import { blogLists } from "@/constants";
 import { wave32Svg } from "@/constants/svgs";
+import { Section, Container } from "@/app/components/layout";
 
 const Blog = () => {
   const blogPosts = blogLists.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare/20 px-4 py-16 lg:pb-48">
+    <Section size="md" className="relative overflow-hidden bg-babyCare/20 lg:pb-48">
        <div
               className="absolute -bottom-1 left-1/2 z-20 w-screen  -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
               dangerouslySetInnerHTML={{ __html: wave32Svg.markup }}
             />
-      <div className="container max-w-7xl mx-auto">
+      <Container>
         <div className="mb-10 flex flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="inline-flex items-center rounded-full border border-foreground/20 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground mb-5">
@@ -95,8 +96,8 @@ const Blog = () => {
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 };
 

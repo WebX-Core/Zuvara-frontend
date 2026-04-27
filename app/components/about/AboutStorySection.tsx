@@ -1,4 +1,5 @@
 import type { AboutPalette } from "@/app/components/about/theme";
+import { Section, Container } from "@/app/components/layout";
 
 type StoryItem = {
   title: string;
@@ -15,8 +16,8 @@ export default function AboutStorySection({
   stories,
 }: AboutStorySectionProps) {
   return (
-    <section className="px-5 py-16 sm:px-8 md:px-12 lg:px-16">
-      <div className="mx-auto max-w-7xl flex flex-col justify-center lg:items-center">
+    <Section size="md">
+      <Container className="flex flex-col justify-center lg:items-center">
         <div className="text-center max-w-3xl pb-8 lg:pb-16">
           <p
             className="text-sm font-semibold"
@@ -69,7 +70,7 @@ export default function AboutStorySection({
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

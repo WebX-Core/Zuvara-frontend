@@ -1,20 +1,26 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import type { Product } from "@/type/babyCareProductType";
 import ProductNotFound from "@/app/components/babyCareProductPage/ProductNotFound";
 import BabyCareHeroSection from "@/app/components/babyCareProductPage/BabyCareHeroSection";
-import WhyTouchMattersSection from "@/app/components/babyCareProductPage/WhyTouchMattersSection";
+// import WhyTouchMattersSection from "@/app/components/babyCareProductPage/WhyTouchMattersSection";
 import ComfortDetailsSection from "@/app/components/babyCareProductPage/ComfortDetailsSection";
 import SizeGuideSection from "@/app/components/babyCareProductPage/SizeGuideSection";
 import TrustFusionSection from "@/app/components/babyCareProductPage/TrustFusionSection";
 import CarePromiseSection from "@/app/components/babyCareProductPage/CarePromiseSection";
 import FaqAndCloseViewSection from "@/app/components/babyCareProductPage/FaqAndCloseViewSection";
-import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
-import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
+import ProductVideoSection from "@/app/components/babyCareProductPage/ProductVideoSection";
+import { hexToRgba, type ThemePreset, colors } from "@/lib/tokens";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProductCloseViewSection from "@/app/components/babyCareProductPage/ProductCloseViewSection";
@@ -168,12 +174,12 @@ const comparisonRows = [
 
 const themePresets: ThemePreset[] = [
   {
-    accent: "#45685E",
-    pageBg: "#f3f8f5",
-    containerBg: "#BFDDCA",
-    border: "#84aaa5",
-    chipBg: "#d7ebe8",
-    sectionTint: "#e7f4f1",
+    accent:      colors.baby.accent,
+    pageBg:      colors.baby.hero,
+    containerBg: colors.baby.chip,
+    border:      colors.baby.border,
+    chipBg:      colors.baby.chip,
+    sectionTint: colors.baby.panel,
   },
   {
     accent: "#2d6f9f",
@@ -214,6 +220,15 @@ function pickHeroPack(p: Product) {
   return p.heroImage || p.image || pickHeroBaby(p);
 }
 
+const MOBILE_CAROUSEL_CENTER = -(100 / 3);
+const MOBILE_CAROUSEL_NEXT = -(200 / 3);
+const MOBILE_CAROUSEL_PREV = 0;
+
+function shouldIgnoreCarouselSwipe(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  return target.closest("[data-carousel-swipe-ignore='true']") !== null;
+}
+
 export default function Page() {
   const params = useParams<{ babyCareProductPage: string }>();
   const slug = params?.babyCareProductPage;
@@ -225,24 +240,30 @@ export default function Page() {
   );
   const [activeIdx, setActiveIdx] = useState(initialIndex);
   const rootRef = useRef<HTMLElement | null>(null);
+  const carouselTrackRef = useRef<HTMLDivElement | null>(null);
+  const carouselViewportRef = useRef<HTMLDivElement | null>(null);
+  const carouselTouchStartXRef = useRef<number | null>(null);
+  const carouselTouchStartYRef = useRef<number | null>(null);
+  const carouselTouchDeltaXRef = useRef(0);
+  const carouselSwipeLockRef = useRef<"x" | "y" | null>(null);
+  const carouselAnimatingRef = useRef(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const active =
     products.length > 0
       ? products[clampIndex(activeIdx, products.length)]
       : product || babyCareProducts[0];
   const theme = themePresets[clampIndex(activeIdx, themePresets.length)];
-  const heroPackSrc = active ? pickHeroPack(active) : "";
-  const variants = active?.variants || [];
-  const highlights = (active?.highlights || []).slice(0, 4);
-  const activeImageSet =
-    productImageSets[active?.slug ?? ""] ||
-    productImageSets["supreme-diapers"];
-  const comparisonImage =
-    comparisonImageBySlug[active?.slug ?? ""] || active?.image || heroPackSrc;
-  const trustImages = {
-    comparisonZuvara: comparisonImage,
-    comparisonOrdinary: comparisonImage,
-  };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+  }, []);
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -266,26 +287,14 @@ export default function Page() {
   }, []);
 
   useLayoutEffect(() => {
+    if (isMobile) return;
+
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-
-      gsap.to(".theme-orb", {
-        y: -30,
-        x: 20,
-        duration: 6,
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.35,
-        ease: "sine.inOut",
-      });
-
       const sections = gsap.utils.toArray<HTMLElement>(".immersive-section");
       sections.forEach((section) => {
         const rises = section.querySelectorAll(".fx-rise");
-        const floats = section.querySelectorAll(".fx-float");
-        const parallax = section.querySelectorAll(".fx-parallax");
-      //
+
         if (rises.length) {
           gsap.fromTo(
             rises,
@@ -304,103 +313,298 @@ export default function Page() {
             },
           );
         }
-
-        if (floats.length) {
-          gsap.to(floats, {
-            yPercent: -4,
-            stagger: 0.12,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-            },
-          });
-        }
-
-        if (parallax.length && isDesktop) {
-          gsap.to(parallax, {
-            yPercent: -5,
-            scale: 1.01,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.2,
-            },
-          });
-        }
       });
     }, rootRef);
 
     return () => ctx.revert();
-  }, [active?.id, theme.accent]);
+  }, [active?.id, isMobile, theme.accent]);
+
+  useLayoutEffect(() => {
+    if (!isMobile || !carouselTrackRef.current) return;
+    gsap.set(carouselTrackRef.current, { xPercent: MOBILE_CAROUSEL_CENTER });
+  }, [activeIdx, isMobile]);
 
   if (!product || !active) {
     return <ProductNotFound />;
   }
 
+  const getRenderData = (currentProduct: Product, index: number) => {
+    const currentTheme = themePresets[clampIndex(index, themePresets.length)];
+    const currentHeroPackSrc = pickHeroPack(currentProduct);
+    const currentVariants = currentProduct?.variants || [];
+    const currentImageSet =
+      productImageSets[currentProduct?.slug ?? ""] ||
+      productImageSets["supreme-diapers"];
+    const currentComparisonImage =
+      comparisonImageBySlug[currentProduct?.slug ?? ""] ||
+      currentProduct?.image ||
+      currentHeroPackSrc;
+
+    return {
+      theme: currentTheme,
+      heroPackSrc: currentHeroPackSrc,
+      variants: currentVariants,
+      imageSet: currentImageSet,
+      trustImages: {
+        comparisonZuvara: currentComparisonImage,
+        comparisonOrdinary: currentComparisonImage,
+      },
+    };
+  };
+
+  const renderPageContent = (currentProduct: Product, index: number) => {
+    const {
+      theme: currentTheme,
+      heroPackSrc: currentHeroPackSrc,
+      variants: currentVariants,
+      imageSet,
+      trustImages: currentTrustImages,
+    } = getRenderData(currentProduct, index);
+
+    return (
+      <>
+        <div
+          className="theme-orb pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(currentTheme.accent, 0.2) }}
+        />
+        <div
+          className="theme-orb pointer-events-none absolute top-120 -right-20 h-72 w-72 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(currentTheme.chipBg, 0.44) }}
+        />
+        <div
+          className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(currentTheme.accent, 0.14) }}
+        />
+
+        <BabyCareHeroSection
+          active={currentProduct}
+          products={products}
+          heroPackSrc={currentHeroPackSrc}
+          theme={currentTheme}
+          onPrev={() => setActiveIdx((v) => v - 1)}
+          onNext={() => setActiveIdx((v) => v + 1)}
+          onSelectProduct={setActiveIdx}
+          pickHeroPack={pickHeroPack}
+          enableMobileSwipe={false}
+        />
+
+        {/* <WhyTouchMattersSection
+          theme={currentTheme}
+          backgroundImage={imageSet.moodboardImages[0] || pickHeroBaby(currentProduct)}
+        /> */}
+        <ProductCloseViewSection
+          product={currentProduct}
+          theme={currentTheme}
+          technicalDetailImages={imageSet.technicalDetailImages}
+        />
+        <ProductVideoSection />
+
+        <ComfortDetailsSection
+          theme={currentTheme}
+          moodboardImages={imageSet.moodboardImages}
+        />
+
+        <SizeGuideSection
+          theme={currentTheme}
+          variants={currentVariants}
+          sizeGuideImages={currentProduct?.sizeGuideImages}
+        />
+
+        <TrustFusionSection
+          theme={currentTheme}
+          comparisonRows={comparisonRows}
+          images={currentTrustImages}
+        />
+
+        <CarePromiseSection
+          theme={currentTheme}
+          conceptImages={conceptImages}
+        />
+
+        <FaqAndCloseViewSection active={currentProduct} theme={currentTheme} />
+      </>
+    );
+  };
+
+  const carouselWindowIndexes = [
+    clampIndex(activeIdx - 1, products.length),
+    clampIndex(activeIdx, products.length),
+    clampIndex(activeIdx + 1, products.length),
+  ];
+
+  const handleCarouselTouchStart = (
+    event: React.TouchEvent<HTMLDivElement>,
+  ) => {
+    if (!isMobile || carouselAnimatingRef.current) return;
+    if (shouldIgnoreCarouselSwipe(event.target)) {
+      carouselTouchStartXRef.current = null;
+      carouselTouchStartYRef.current = null;
+      carouselSwipeLockRef.current = null;
+      return;
+    }
+    if (carouselTrackRef.current) {
+      gsap.killTweensOf(carouselTrackRef.current);
+    }
+    carouselAnimatingRef.current = false;
+    carouselTouchStartXRef.current = event.touches[0]?.clientX ?? null;
+    carouselTouchStartYRef.current = event.touches[0]?.clientY ?? null;
+    carouselTouchDeltaXRef.current = 0;
+    carouselSwipeLockRef.current = null;
+  };
+
+  const handleCarouselTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (
+      !isMobile ||
+      carouselTouchStartXRef.current == null ||
+      carouselTouchStartYRef.current == null
+    ) {
+      return;
+    }
+
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - carouselTouchStartXRef.current;
+    const deltaY = touch.clientY - carouselTouchStartYRef.current;
+
+    if (!carouselSwipeLockRef.current) {
+      if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) return;
+      carouselSwipeLockRef.current =
+        Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
+    }
+
+    if (carouselSwipeLockRef.current === "x" && event.cancelable) {
+      event.preventDefault();
+      carouselTouchDeltaXRef.current = deltaX;
+
+      if (carouselTrackRef.current) {
+        const slideWidth = carouselViewportRef.current?.offsetWidth || 1;
+        const deltaPercent = (deltaX / slideWidth) * (100 / 3);
+        const currentPercent = MOBILE_CAROUSEL_CENTER;
+
+        gsap.set(carouselTrackRef.current, {
+          xPercent: currentPercent + deltaPercent,
+        });
+      }
+    }
+  };
+
+  const handleCarouselTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (
+      !isMobile ||
+      carouselAnimatingRef.current ||
+      carouselTouchStartXRef.current == null ||
+      carouselTouchStartYRef.current == null
+    ) {
+      return;
+    }
+
+    const touchEndX =
+      event.changedTouches[0]?.clientX ?? carouselTouchStartXRef.current;
+    const touchEndY =
+      event.changedTouches[0]?.clientY ?? carouselTouchStartYRef.current;
+    const swipeDistanceX = touchEndX - carouselTouchStartXRef.current;
+    const swipeDistanceY = touchEndY - carouselTouchStartYRef.current;
+    carouselTouchStartXRef.current = null;
+    carouselTouchStartYRef.current = null;
+    const swipeLock = carouselSwipeLockRef.current;
+    carouselSwipeLockRef.current = null;
+
+    if (swipeLock !== "x") return;
+    if (Math.abs(swipeDistanceX) < Math.abs(swipeDistanceY)) return;
+
+    if (swipeDistanceX <= -60) {
+      if (carouselTrackRef.current) {
+        carouselAnimatingRef.current = true;
+        gsap.to(carouselTrackRef.current, {
+          xPercent: MOBILE_CAROUSEL_NEXT,
+          duration: 0.28,
+          ease: "power3.out",
+          overwrite: true,
+          onComplete: () => {
+            setActiveIdx((value) => value + 1);
+            carouselAnimatingRef.current = false;
+          },
+        });
+      }
+      return;
+    }
+
+    if (swipeDistanceX >= 60) {
+      if (carouselTrackRef.current) {
+        carouselAnimatingRef.current = true;
+        gsap.to(carouselTrackRef.current, {
+          xPercent: MOBILE_CAROUSEL_PREV,
+          duration: 0.28,
+          ease: "power3.out",
+          overwrite: true,
+          onComplete: () => {
+            setActiveIdx((value) => value - 1);
+            carouselAnimatingRef.current = false;
+          },
+        });
+      }
+      return;
+    }
+
+    if (carouselTrackRef.current) {
+      carouselAnimatingRef.current = true;
+      gsap.to(carouselTrackRef.current, {
+        xPercent: MOBILE_CAROUSEL_CENTER,
+        duration: 0.28,
+        ease: "power3.out",
+        overwrite: true,
+        onComplete: () => {
+          carouselAnimatingRef.current = false;
+        },
+      });
+    }
+  };
+
   return (
     <main
       ref={rootRef}
-      className="relative overflow-hidden text-zinc-800 transition-colors duration-500 antialiased"
+      className="relative overflow-hidden text-zinc-800 antialiased md:transition-colors md:duration-500"
       style={{ backgroundColor: theme.pageBg }}
     >
-      <div
-        className="theme-orb pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
-        style={{ backgroundColor: hexToRgba(theme.accent, 0.2) }}
-      />
-      <div
-        className="theme-orb pointer-events-none absolute top-120 -right-20 h-72 w-72 rounded-full blur-3xl"
-        style={{ backgroundColor: hexToRgba(theme.chipBg, 0.44) }}
-      />
-      <div
-        className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
-        style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
-      />
+      {isMobile ? (
+        <div
+          ref={carouselViewportRef}
+          className="overflow-hidden"
+          onTouchStart={handleCarouselTouchStart}
+          onTouchMove={handleCarouselTouchMove}
+          onTouchEnd={handleCarouselTouchEnd}
+        >
+          <div
+            ref={carouselTrackRef}
+            className="flex w-full"
+            style={{ width: "300%" }}
+          >
+            {carouselWindowIndexes.map((productIndex, windowIndex) => {
+              const carouselProduct = products[productIndex];
+              const { theme: currentTheme } = getRenderData(
+                carouselProduct,
+                productIndex,
+              );
 
-
-      <BabyCareHeroSection
-        active={active}
-        products={products}
-        heroPackSrc={heroPackSrc}
-        theme={theme}
-        onPrev={() => setActiveIdx((v) => v - 1)}
-        onNext={() => setActiveIdx((v) => v + 1)}
-        onSelectProduct={setActiveIdx}
-        pickHeroPack={pickHeroPack}
-      />
-
-      <WhyTouchMattersSection
-        theme={theme}
-        backgroundImage={activeImageSet.moodboardImages[0] || pickHeroBaby(active)}
-      />
-      <ProductCloseViewSection product={active} theme={theme} />
-
-      <ComfortDetailsSection
-        theme={theme}
-        highlights={highlights}
-        moodboardImages={activeImageSet.moodboardImages}
-        technicalDetailImages={activeImageSet.technicalDetailImages}
-      />
-
-      <SizeGuideSection
-        theme={theme}
-        variants={variants}
-        sizeGuideImages={active?.sizeGuideImages}
-      />
-
-      <TrustFusionSection
-        theme={theme}
-        comparisonRows={comparisonRows}
-        images={trustImages}
-      />
-
-      <CarePromiseSection theme={theme} conceptImages={conceptImages} />
-
-      <FaqAndCloseViewSection active={active} theme={theme} />
+              return (
+                <section
+                  key={`${carouselProduct.id}-${windowIndex}`}
+                  className="relative w-full shrink-0 overflow-hidden"
+                  style={{
+                    backgroundColor: currentTheme.pageBg,
+                    width: "33.333333%",
+                  }}
+                >
+                  {renderPageContent(carouselProduct, productIndex)}
+                </section>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="relative">
+          {renderPageContent(active, clampIndex(activeIdx, products.length))}
+        </div>
+      )}
 
       <button
         type="button"

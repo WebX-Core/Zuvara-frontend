@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { colors } from "@/lib/tokens";
 import gsap from "gsap";
 
 const STORAGE_KEY = "babycare-loader-seen-session";
@@ -116,7 +117,7 @@ export default function Loader() {
           <div className="relative h-full w-full overflow-hidden px-4 sm:px-6">
             <div
               className="absolute left-1/2 top-[50%] sm:top-[32%] z-10 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold  sm:text-5xl"
-              style={{ color: "#45685e" }}
+              style={{ color: colors.baby.accent }}
             >
               {progress}%
             </div>

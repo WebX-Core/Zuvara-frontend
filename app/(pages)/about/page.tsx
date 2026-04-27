@@ -8,6 +8,7 @@ import AboutPromisesSection from "@/app/components/about/AboutPromisesSection";
 import AboutTeamSection from "@/app/components/about/AboutTeamSection";
 import AboutCtaSection from "@/app/components/about/AboutCtaSection";
 import { aboutPalette } from "@/app/components/about/theme";
+import { colors } from "@/lib/tokens";
 import { useSection } from "@/app/providers/SectionProvider";
 import { assetWithFill, wave3Svg, wave4Svg } from "@/constants/svgs";
 
@@ -83,14 +84,14 @@ export default function AboutPage() {
   const pagePalette = isPersonal
     ? {
         ...aboutPalette,
-        accent: "#8200db",
-        accentSoft: "#9352bf",
-        border: "#be8fe2",
-        chip: "#eeddfb",
-        panel: "#f7efff",
-        page: "#fcf8ff",
-        ink: "#2d1d3a",
-        body: "#6d5b79",
+        accent:     colors.personal.accent,
+        accentSoft: colors.personal.accentMid,
+        border:     colors.personal.border,
+        chip:       colors.personal.chip,
+        panel:      colors.personal.panel,
+        page:       colors.personal.page,
+        ink:        "#2d1d3a",
+        body:       "#6d5b79",
       }
     : aboutPalette;
   const heroImage = isPersonal
@@ -99,11 +100,11 @@ export default function AboutPage() {
   const productHref = isPersonal ? "/personalCareProduct" : "/babyCareProduct";
 
   const babyAlternatingBg = {
-    hero: "#BFDDCA",
+    hero: colors.baby.chip,
     story: "#ffffff",
     milestones: "#ffffff",
     promises: "#ffffff",
-    team: "#BFDDCA",
+    team: colors.baby.chip,
     cta: "rgba(69,104,94,0.12)",
     footer: "#ffffff",
   };

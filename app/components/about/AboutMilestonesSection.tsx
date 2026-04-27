@@ -1,5 +1,6 @@
 import type { AboutPalette } from "@/app/components/about/theme";
 import PremiumWaveBackground from "@/app/components/common-ui/PremiumWaveBackground";
+import { Section, Container } from "@/app/components/layout";
 
 type Milestone = {
   value: string;
@@ -16,9 +17,10 @@ export default function AboutMilestonesSection({
   milestones,
 }: AboutMilestonesSectionProps) {
   return (
-    <section className="px-5 py-8 sm:px-8 md:px-12 lg:px-16 ">
+    <Section size="sm">
+      <Container>
       <div
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-4xl border px-5 py-6 md:px-8 md:py-8"
+        className="relative overflow-hidden rounded-4xl border px-5 py-6 md:px-8 md:py-8"
         style={{
           borderColor: `${palette.border}44`,
           background: `linear-gradient(135deg, ${palette.accent} 0%, ${palette.accentSoft} 100%)`,
@@ -41,6 +43,7 @@ export default function AboutMilestonesSection({
           ))}
         </div>
       </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

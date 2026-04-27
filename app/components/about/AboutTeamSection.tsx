@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
+import { Section, Container } from "@/app/components/layout";
 
 type TeamMember = {
   name: string;
@@ -18,11 +19,12 @@ export default function AboutTeamSection({
   team,
 }: AboutTeamSectionProps) {
   return (
-    <section
-      className="px-5 py-16 sm:px-8 md:px-12 lg:px-16 lg:pb-40"
+    <Section
+      size="md"
+      className="lg:pb-40"
       style={{ backgroundColor: palette.panel }}
     >
-      <div className="mx-auto max-w-7xl">
+      <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p
             className="text-sm font-semibold"
@@ -82,7 +84,7 @@ export default function AboutTeamSection({
             </article>
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

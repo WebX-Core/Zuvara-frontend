@@ -9,7 +9,6 @@ type PersonalSizeGuideSectionProps = {
   sizeGuideImages: string[];
 };
 
-
 export default function PersonalSizeGuideSection({
   theme,
   variants,
@@ -34,7 +33,10 @@ export default function PersonalSizeGuideSection({
               style={{ color: hexToRgba(theme.accent, 0.9) }}
             >
               Find Your Perfect
-              <span className="font-light italic opacity-60"> Everyday Fit</span>
+              <span className="font-light italic opacity-60">
+                {" "}
+                Everyday Fit
+              </span>
             </h2>
             <p
               className="mt-3 text-sm md:text-base font-medium leading-relaxed"
@@ -64,10 +66,10 @@ export default function PersonalSizeGuideSection({
             backgroundColor: hexToRgba(theme.pageBg, 0.88),
           }}
         >
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 p-8 md:p-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-6 md:gap-12 p-8 md:p-12">
             {sizeGuideImages.map((src, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="relative h-40 w-40 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform hover:scale-105 duration-500"
               >
                 <Image
@@ -91,8 +93,11 @@ export default function PersonalSizeGuideSection({
             color: hexToRgba(theme.accent, 0.8),
           }}
         >
-          <strong className="font-bold" style={{ color: theme.accent }}>Pro tip:</strong> On heavier days or overnight, choose higher
-          absorbency for worry-free movement and sleep.
+          <strong className="font-bold" style={{ color: theme.accent }}>
+            Pro tip:
+          </strong>{" "}
+          On heavier days or overnight, choose higher absorbency for worry-free
+          movement and sleep.
         </p>
       </div>
     </section>

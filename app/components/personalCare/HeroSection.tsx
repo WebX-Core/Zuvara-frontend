@@ -49,7 +49,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="relative mx-auto h-88 w-full max-w-[34rem] sm:h-112 lg:-ml-8 lg:h-[min(72vh,40rem)] lg:max-w-[32rem] lg:self-center xl:-ml-12">
+          <div className="relative mx-auto h-88 w-full max-w-136 sm:h-112 lg:-ml-8 lg:h-[min(72vh,40rem)] lg:max-w-lg lg:self-center xl:-ml-12">
             <Image
               src="/images/personalCare/happy-lady.png"
               alt="Happy woman holding Zuvara personal care product"
@@ -59,7 +59,7 @@ const HeroSection = () => {
             />
           </div>
 
-          <div className="relative z-10 grid gap-4 lg:w-full lg:max-w-[32rem] lg:self-center lg:justify-self-end">
+          <div className="relative z-10 grid gap-4 lg:w-full lg:max-w-lg lg:self-center lg:justify-self-end">
             {/* <div className="rounded-[1.6rem] bg-linear-to-br from-personalCare to-personalCare/80 p-6 text-white shadow-[0_24px_50px_rgba(219,39,119,0.28)]">
               <p className="text-sm font-semibold">
                 Comfort that stays with you
