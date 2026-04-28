@@ -23,7 +23,7 @@ export default function FaqAndCloseViewSection({
   } as CSSProperties;
 
   return (
-    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-16">
+    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-40">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}

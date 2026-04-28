@@ -112,12 +112,12 @@ const HeroSection = () => {
                     Why women choose it
                   </div>
 
-                  <h2 className="mt-4 text-xl font-semibold text-zinc-900">
+                  {/* <h2 className="mt-4 text-xl font-semibold text-zinc-900">
                     Gentle support for busy days
-                  </h2>
+                  </h2> */}
                   <p className="mt-3 text-sm leading-6 text-zinc-600">
                     Built for confidence, with a breathable feel and dependable
-                    protection that does not get in the way of your routine.
+                    protection .
                   </p>
 
                   <div className="mt-5 rounded-[1.2rem] border border-personalCare/12 bg-white px-4 py-4">
@@ -125,7 +125,7 @@ const HeroSection = () => {
                       Best for
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {["Workdays", "Travel", "Overnight", "Active wear"].map(
+                      {["Workdays", "Travel", "Overnight"].map(
                         (item) => (
                           <span
                             key={item}

@@ -31,13 +31,14 @@ export default function WhyZuvaraProductsSection({
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8  lg:pb-36">
+    <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8 lg:pb-36">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl">
+        {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <span
             className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -69,46 +70,41 @@ export default function WhyZuvaraProductsSection({
           </p>
         </div>
 
-        <div className="mt-8 grid gap-1 md:grid-cols-3 md:gap-4">
+        {/* Cards */}
+        <div className="my-10 grid gap-4 md:grid-cols-3 md:gap-6">
           {reasons.map(({ title, body, icon: Icon }) => (
-            <article key={title} className="relative mx-auto w-full max-w-90">
-              <svg
-                viewBox="0 0 400 200"
-                className="block h-42 w-full sm:h-52 md:h-65"
-                aria-hidden="true"
-                preserveAspectRatio="none"
+            <article
+              key={title}
+              className="flex flex-col items-center rounded-2xl px-6 py-8 text-center transition-transform duration-200 hover:-translate-y-1"
+              style={{
+                backgroundColor: hexToRgba(theme.pageBg, 0.96),
+                boxShadow: `0 8px 32px ${hexToRgba(theme.accent, 0.10)}, 0 2px 8px ${hexToRgba(theme.accent, 0.07)}`,
+              }}
+            >
+              {/* Icon */}
+              <div
+                className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl"
+                style={{
+                  backgroundColor: hexToRgba(theme.chipBg, 0.85),
+                  color: theme.accent,
+                }}
               >
-                <path
-                  d="M40 110 C30 70 70 40 120 50 C150 20 220 20 250 50 C300 40 360 70 350 120 C360 160 300 180 240 170 C200 190 130 185 90 165 C50 160 25 135 40 110 Z"
-                  fill={hexToRgba(theme.pageBg, 0.96)}
-                />
-              </svg>
-
-              <div className="absolute inset-0 z-10 flex items-center justify-center px-7 py-5 sm:px-10 sm:py-8">
-                <div className="w-full max-w-44 text-center sm:max-w-57.5">
-                  <div
-                    className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-lg sm:mb-4 sm:h-11 sm:w-11 sm:rounded-xl"
-                    style={{
-                      backgroundColor: hexToRgba(theme.chipBg, 0.85),
-                      color: theme.accent,
-                    }}
-                  >
-                    <Icon size={14} className="sm:h-4.5 sm:w-4.5" />
-                  </div>
-                  <h3
-                    className="text-xs font-semibold sm:text-base"
-                    style={{ color: theme.accent }}
-                  >
-                    {title}
-                  </h3>
-                  <p
-                    className="mt-1 text-[11px] leading-snug sm:mt-2 sm:text-sm sm:leading-relaxed"
-                    style={{ color: hexToRgba(theme.accent, 0.72) }}
-                  >
-                    {body}
-                  </p>
-                </div>
+                <Icon size={22} />
               </div>
+
+              {/* Text */}
+              <h3
+                className="text-base font-semibold"
+                style={{ color: theme.accent }}
+              >
+                {title}
+              </h3>
+              <p
+                className="mt-2 text-sm leading-relaxed"
+                style={{ color: hexToRgba(theme.accent, 0.72) }}
+              >
+                {body}
+              </p>
             </article>
           ))}
         </div>

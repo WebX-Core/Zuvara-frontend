@@ -18,7 +18,7 @@ export default function AboutPromisesSection({
   palette,
   promises,
 }: AboutPromisesSectionProps) {
-  const promisesWave = assetWithFill(wave4Svg, palette.panel);
+  const promisesWave = assetWithFill(wave4Svg, "#D7EBE8");
 
   return (
     <Section size="md" className="relative lg:pb-40">

@@ -122,11 +122,11 @@ export default function AboutPage() {
     : babyAlternatingBg;
 
   const heroWave = assetWithFill(wave3Svg, sectionBg.story);
-  const teamWave = assetWithFill(wave3Svg, sectionBg.cta);
+  const teamWave = assetWithFill(wave3Svg, "#C5DBD7");
   const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
   const waveClass =
-    "pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen";
+    "pointer-events-none absolute -bottom-2 left-1/2 z-20 w-screen -translate-x-1/2 overflow-hidden leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen";
 
   return (
     <main
@@ -164,7 +164,7 @@ export default function AboutPage() {
           dangerouslySetInnerHTML={{ __html: teamWave.markup }}
         />
       </div>
-      <div className="relative" style={{ backgroundColor: sectionBg.cta }}>
+      <div className="relative " style={{ backgroundColor: sectionBg.cta }}>
         <AboutCtaSection palette={pagePalette} productHref={productHref} />
         <div
           className={waveClass}

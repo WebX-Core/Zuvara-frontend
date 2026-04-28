@@ -14,7 +14,7 @@ export default function AboutCtaSection({
   return (
     <Section
       size="sm"
-      className="lg:pb-40"
+      className="lg:pb-40 "
       style={{ backgroundColor: palette.panel }}
     >
       <Container>
