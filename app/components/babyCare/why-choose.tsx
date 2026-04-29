@@ -144,7 +144,7 @@ const WhyChoose = () => {
 
         <div className="relative overflow-hidden   md:py-6 lg:py-8">
           <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 " />
-          <div className="grid grid-cols-2  gap-2 sm:grid-cols-3 lg:grid-cols-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2  gap-2  lg:grid-cols-4 max-w-5xl mx-auto">
             {trustStats.map((item) => {
               const Icon = item.icon;
 
