@@ -281,167 +281,184 @@ export default function PersonalTrustFusionSection({
           </div>
         </div>
 
+        {/* ── MOBILE: sticky feature col + scrollable brand cols ── */}
         <div className="fx-rise overflow-visible md:hidden">
-          <div
-            className="overflow-x-auto overscroll-x-contain px-3 py-4"
-            data-carousel-swipe-ignore="true"
-          >
+          <div className="py-4" data-carousel-swipe-ignore="true">
             <div
-              className="inline-block w-max min-w-full overflow-hidden rounded-[1.4rem] border bg-white/70 align-top"
+              className="overflow-hidden rounded-[1.4rem] border"
               style={{ borderColor: `${theme.border}33` }}
             >
-              <div
-                className="grid min-w-max grid-cols-[10rem_8.5rem_8.5rem]"
-                style={{ borderColor: `${theme.border}33` }}
-              >
+              <div className="flex">
+                {/* Sticky feature column */}
                 <div
-                  className="border-b px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]"
+                  className="shrink-0 border-r"
                   style={{
+                    width: "10rem",
                     borderColor: `${theme.border}33`,
-                    color: hexToRgba(theme.accent, 0.62),
+                    backgroundColor: theme.pageBg,
                   }}
                 >
-                  Feature
-                </div>
-                <div
-                  className="border-b border-l bg-white px-4 py-3 text-center"
-                  style={{
-                    borderColor: `${theme.border}33`,
-                    backgroundColor: "#ffffff",
-                  }}
-                >
-                  <p
-                    className="text-sm font-semibold uppercase tracking-wide"
-                    style={{ color: theme.accent }}
-                  >
-                    Zuvara
-                  </p>
-                </div>
-                <div
-                  className="border-b border-l bg-white px-4 py-3 text-center"
-                  style={{
-                    borderColor: `${theme.border}33`,
-                    backgroundColor: "#ffffff",
-                  }}
-                >
-                  <p
-                    className="text-sm font-semibold uppercase tracking-wide"
-                    style={{ color: hexToRgba(theme.accent, 0.72) }}
-                  >
-                    Ordinary
-                  </p>
-                </div>
-
-                {comparisonRows.map((row, idx) => (
+                  {/* Header */}
                   <div
-                    key={row.label}
-                    className="contents"
+                    className="flex h-[2.75rem] items-center px-4 text-[11px] font-semibold text-white uppercase tracking-[0.18em]"
+                    style={{ backgroundColor: theme.accent }}
                   >
+                    Feature
+                  </div>
+
+                  {/* Feature rows */}
+                  {comparisonRows.map((row, idx) => (
                     <div
-                      className="flex min-h-18 items-center border-b px-4 py-4 text-sm font-medium leading-snug"
+                      key={row.label}
+                      className="flex min-h-[4.5rem] items-center border-t px-4 py-3 text-[13px] font-medium leading-snug"
                       style={{
                         borderColor: `${theme.border}22`,
                         backgroundColor:
                           idx % 2 === 0
-                            ? hexToRgba(theme.pageBg, 0.18)
-                            : "transparent",
+                            ? hexToRgba(theme.pageBg, 0.6)
+                            : theme.pageBg,
                         color: hexToRgba(theme.accent, 0.84),
                       }}
                     >
                       {row.label}
                     </div>
-                    <div
-                      className="flex min-h-18 items-center justify-center border-b border-l bg-white px-4 py-4 text-center text-sm font-semibold"
-                      style={{
-                        borderColor: `${theme.border}33`,
-                        color: theme.accent,
-                      }}
-                    >
-                      {row.zuvara}
+                  ))}
+                </div>
+
+                {/* Scrollable brand columns */}
+                <div
+                  className="overflow-x-auto overscroll-x-contain"
+                  style={{ scrollbarWidth: "none" }}
+                >
+                  <div className="flex" style={{ minWidth: "max-content" }}>
+                    {/* Zuvara column */}
+                    <div className="w-[8.5rem] shrink-0">
+                      {/* Header */}
+                      <div
+                        className="flex h-[2.75rem] items-center justify-center"
+                        style={{ backgroundColor: theme.accent }}
+                      >
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-white">
+                          Zuvara
+                        </p>
+                      </div>
+
+                      {comparisonRows.map((row) => (
+                        <div
+                          key={row.label}
+                          className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px] font-semibold"
+                          style={{
+                            borderColor: `${theme.border}33`,
+                            color: theme.accent,
+                          }}
+                        >
+                          {row.zuvara}
+                        </div>
+                      ))}
                     </div>
-                    <div
-                      className="flex min-h-18 items-center justify-center border-b border-l bg-white px-4 py-4 text-center text-sm"
-                      style={{
-                        borderColor: `${theme.border}33`,
-                        color: hexToRgba(theme.accent, 0.62),
-                      }}
-                    >
-                      {row.ordinary}
+
+                    {/* Ordinary column */}
+                    <div className="w-[8.5rem] shrink-0">
+                      {/* Header */}
+                      <div
+                        className="flex h-[2.75rem] items-center justify-center border-l"
+                        style={{
+                          borderColor: `${theme.border}33`,
+                          backgroundColor: theme.accent,
+                        }}
+                      >
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-white">
+                          Ordinary
+                        </p>
+                      </div>
+
+                      {comparisonRows.map((row) => (
+                        <div
+                          key={row.label}
+                          className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px]"
+                          style={{
+                            borderColor: `${theme.border}33`,
+                            color: hexToRgba(theme.accent, 0.96),
+                          }}
+                        >
+                          {row.ordinary}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="hidden overflow-x-auto md:block">
+        {/* ── DESKTOP ── */}
+        <div
+          className="fx-rise hidden overflow-hidden rounded-3xl md:block"
+          style={{
+            border: `1px solid ${theme.border}33`,
+            backgroundColor: hexToRgba(theme.pageBg, 0.9),
+          }}
+        >
+          {/* Header row */}
           <div
-            className="min-w-125 fx-rise overflow-hidden rounded-3xl border"
-            style={{
-              borderColor: `${theme.border}33`,
-              backgroundColor: hexToRgba(theme.pageBg, 0.9),
-            }}
+            className="grid grid-cols-12 text-[11px] font-semibold uppercase tracking-wide"
+            style={{ backgroundColor: theme.accent }}
           >
+            <div className="col-span-6 px-4 py-3 text-white">Feature</div>
             <div
-              className="grid grid-cols-12 text-[11px] font-semibold uppercase tracking-widest"
-              style={{
-                borderColor: `${theme.border}44`,
-                color: hexToRgba(theme.accent, 0.62),
-              }}
+              className="col-span-3 border-l px-4 py-3 text-center text-white"
+              style={{ borderColor: `${theme.border}33` }}
             >
-              <div className="col-span-6 border-b px-4 py-3">Feature</div>
+              Zuvara
+            </div>
+            <div
+              className="col-span-3 border-l px-4 py-3 text-center text-white"
+              style={{ borderColor: `${theme.border}33` }}
+            >
+              Ordinary
+            </div>
+          </div>
+
+          {/* Data rows */}
+          {comparisonRows.map((row, idx) => (
+            <div
+              key={row.label}
+              className="fx-float grid grid-cols-12 items-stretch text-sm md:text-base"
+            >
               <div
-                className="col-span-3 border-b border-l bg-white px-4 py-3 text-center"
-                style={{ borderColor: `${theme.border}33` }}
+                className="col-span-6 flex min-h-20 items-center border-b px-4 py-4 font-medium"
+                style={{
+                  borderColor: `${theme.border}22`,
+                  backgroundColor:
+                    idx % 2 === 0
+                      ? hexToRgba(theme.pageBg, 0.18)
+                      : "transparent",
+                  color: hexToRgba(theme.accent, 0.82),
+                }}
               >
-                Zuvara
+                {row.label}
               </div>
               <div
-                className="col-span-3 border-b border-l bg-white px-4 py-3 text-center"
-                style={{ borderColor: `${theme.border}33` }}
+                className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center font-bold"
+                style={{
+                  borderColor: `${theme.border}33`,
+                  color: theme.accent,
+                }}
               >
-                Ordinary
+                {row.zuvara}
+              </div>
+              <div
+                className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center"
+                style={{
+                  borderColor: `${theme.border}33`,
+                  color: hexToRgba(theme.accent, 0.5),
+                }}
+              >
+                {row.ordinary}
               </div>
             </div>
-
-            {comparisonRows.map((row, idx) => (
-              <div
-                key={row.label}
-                className="fx-float grid grid-cols-12 items-stretch text-sm md:text-base"
-              >
-                <div
-                  className="col-span-6 flex min-h-20 items-center border-b px-4 py-4 font-medium"
-                  style={{
-                    borderColor: `${theme.border}22`,
-                    backgroundColor:
-                      idx % 2 === 0 ? hexToRgba(theme.pageBg, 0.18) : "transparent",
-                    color: hexToRgba(theme.accent, 0.82),
-                  }}
-                >
-                  {row.label}
-                </div>
-                <div
-                  className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center font-bold"
-                  style={{
-                    borderColor: `${theme.border}33`,
-                    color: theme.accent,
-                  }}
-                >
-                  {row.zuvara}
-                </div>
-                <div
-                  className="col-span-3 flex min-h-20 items-center justify-center border-b border-l bg-white px-4 py-4 text-center"
-                  style={{
-                    borderColor: `${theme.border}33`,
-                    color: hexToRgba(theme.accent, 0.5),
-                  }}
-                >
-                  {row.ordinary}
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
