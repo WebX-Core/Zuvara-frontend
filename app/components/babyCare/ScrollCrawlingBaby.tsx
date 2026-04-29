@@ -30,6 +30,11 @@ export default function ScrollCrawlingBaby({
 
     if (!wrapper || !baby || !target || !startTarget) return;
 
+    // FIX 3: quickSetters — much faster than gsap.set, no object allocation per frame
+    const setX = gsap.quickSetter(baby, "x", "px");
+    const setY = gsap.quickSetter(baby, "y", "px");
+    const setScaleX = gsap.quickSetter(baby, "scaleX");
+
     const state = { progress: 0 };
 
     const render = (progress: number, dir: 1 | -1 = scrollDirRef.current) => {
@@ -62,11 +67,13 @@ export default function ScrollCrawlingBaby({
         verticalEnd,
       );
 
-      // Base direction from leg, flipped when scrolling up
       const baseDirection = movingRight ? 1 : -1;
       const facingDirection = baseDirection * dir;
 
-      gsap.set(baby, { x, y, scaleX: facingDirection });
+      // FIX 3+4: use quickSetters, no ease (ease is a no-op on set anyway)
+      setX(x);
+      setY(y);
+      setScaleX(facingDirection);
     };
 
     const ctx = gsap.context(() => {
@@ -81,7 +88,7 @@ export default function ScrollCrawlingBaby({
           endTrigger: target,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.35,
+          scrub: true, // FIX 1: true = perfect 1:1 scroll sync, no chasing jitter
           invalidateOnRefresh: true,
           onEnter: () => gsap.set(wrapper, { autoAlpha: 1 }),
           onEnterBack: () => gsap.set(wrapper, { autoAlpha: 1 }),
@@ -93,9 +100,7 @@ export default function ScrollCrawlingBaby({
             render(self.progress, dir);
           },
         },
-        onUpdate: () => {
-          render(state.progress);
-        },
+        // FIX 2: removed duplicate onUpdate — ScrollTrigger's onUpdate already calls render
       });
     }, wrapper);
 
