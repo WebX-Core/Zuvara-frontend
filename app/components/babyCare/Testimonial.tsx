@@ -1,21 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
 import { Section, Container } from "@/app/components/layout";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 const palette = {
-  accent:     colors.baby.accent,
+  accent: colors.baby.accent,
   accentSoft: colors.baby.accentSoft,
-  border:     colors.baby.border,
-  chip:       colors.baby.chip,
-  panel:      colors.baby.panel,
-  page:       colors.baby.page,
-  body:       colors.baby.body,
+  border: colors.baby.border,
+  chip: colors.baby.chip,
+  panel: colors.baby.panel,
+  page: colors.baby.page,
+  body: colors.baby.body,
 };
 
 const testimonials = [
@@ -62,54 +67,45 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleCards, setVisibleCards] = useState(3);
-  const maxIndex = Math.max(0, testimonials.length - visibleCards);
-  const safeActiveIndex = Math.min(activeIndex, maxIndex);
-
-  useEffect(() => {
-    const updateVisibleCards = () => {
-      if (window.innerWidth < 1024) {
-        setVisibleCards(1);
-        return;
-      }
-
-      setVisibleCards(2);
-    };
-
-    updateVisibleCards();
-    window.addEventListener("resize", updateVisibleCards);
-
-    return () => window.removeEventListener("resize", updateVisibleCards);
-  }, []);
-
-  useEffect(() => {
-    if (maxIndex === 0) return;
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current >= maxIndex ? 0 : current + 1));
-    }, 4500);
-
-    return () => window.clearInterval(timer);
-  }, [maxIndex]);
-
-  const goPrev = () => {
-    setActiveIndex((current) => (current <= 0 ? maxIndex : current - 1));
-  };
-
-  const goNext = () => {
-    setActiveIndex((current) => (current >= maxIndex ? 0 : current + 1));
-  };
-
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
-    <Section size="md" className="relative overflow-hidden bg-babyCare lg:pb-48">
+    <Section
+      size="md"
+      className="relative overflow-hidden bg-babyCare lg:pb-48"
+    >
       <div
         className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
       <div className="pointer-events-none absolute left-1/2 top-14 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl" />
+
+      <style>{`
+        .testimonials-swiper .swiper-pagination {
+          position: static;
+          margin-top: 1.25rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .testimonials-swiper .swiper-pagination-bullet {
+          width: 0.7rem;
+          height: 0.625rem;
+          border-radius: 9999px;
+          background: rgba(132, 170, 165, 0.35);
+          opacity: 1;
+          transition: width 0.3s, background 0.3s;
+          margin: 0 !important;
+        }
+        .testimonials-swiper .swiper-pagination-bullet-active {
+          width: 2.8rem;
+          background: ${palette.accent};
+        }
+        .testimonials-swiper .swiper-slide {
+          height: auto;
+        }
+      `}</style>
 
       <Container>
         <motion.div
@@ -117,30 +113,22 @@ const Testimonials = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className=""
         >
-          <div className="">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
-                Hear from Our
-                <span className="font-light italic"> Happy Parents</span>
-              </h2>
-              {/* <p className="mt-5 text-sm font-medium leading-relaxed text-foreground lg:text-lg">
-                Real experiences from families who trust Zuvara for comfort,
-                care, and gentle everyday protection.
-              </p> */}
-            </div>
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
+              Hear from Our
+              <span className="font-light italic"> Happy Parents</span>
+            </h2>
           </div>
         </motion.div>
 
-        <div className="rounded-4xl  py-5 sm:px-4 md:py-6">
+        <div className="rounded-4xl py-5 sm:px-4 md:py-6">
+          {/* Header row */}
           <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <span
                 className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
-                style={{
-                  color: palette.accent,
-                }}
+                style={{ color: palette.accent }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -180,11 +168,11 @@ const Testimonials = () => {
               </p>
             </div>
 
+            {/* Custom nav buttons */}
             <div className="flex items-center gap-2 self-end sm:self-auto">
               <button
                 type="button"
-                onClick={goPrev}
-                className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+                className="testimonials-prev flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
                 style={{
                   borderColor: `${palette.border}55`,
                   backgroundColor: "rgba(255,255,255,0.92)",
@@ -192,12 +180,23 @@ const Testimonials = () => {
                 }}
                 aria-label="Previous reviews"
               >
-                <ChevronLeft size={18} />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
               </button>
               <button
                 type="button"
-                onClick={goNext}
-                className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+                className="testimonials-next flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
                 style={{
                   borderColor: `${palette.border}55`,
                   backgroundColor: "rgba(255,255,255,0.92)",
@@ -205,115 +204,119 @@ const Testimonials = () => {
                 }}
                 aria-label="Next reviews"
               >
-                <ChevronRight size={18} />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
               </button>
             </div>
           </div>
 
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-700 ease-out"
-              style={{
-                transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
-              }}
-            >
-              {testimonials.map((item) => (
-                <div key={item.id} className="w-full shrink-0  lg:w-1/2">
-                  <article
-                    className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
-                    style={{
-                      borderColor: `${palette.border}44`,
-                      backgroundColor: "rgba(255,255,255,0.94)",
-                    }}
-                  >
-                    <div className="relative h-16 w-16 overflow-hidden rounded-full md:h-18 md:w-18">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
+          <Swiper
+            className="testimonials-swiper"
+            modules={[Autoplay, Pagination, Navigation, A11y]}
+            spaceBetween={20}
+            slidesPerView={1}
+            grabCursor={true}
+            loop={true}
+            autoplay={{
+              delay: 4500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{ clickable: true }}
+            navigation={{
+              prevEl: ".testimonials-prev",
+              nextEl: ".testimonials-next",
+            }}
+            breakpoints={{
+              1024: { slidesPerView: 2, spaceBetween: 20 },
+            }}
+          >
+            {testimonials.map((item) => (
+              <SwiperSlide key={item.id}>
+                <article
+                  className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
+                  style={{
+                    borderColor: `${palette.border}44`,
+                    backgroundColor: "rgba(255,255,255,0.94)",
+                  }}
+                >
+                  <div className="relative h-16 w-16 overflow-hidden rounded-full md:h-18 md:w-18">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="mt-5 flex flex-col items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: item.rating }).map((_, i) => (
+                        <Star
+                          key={i}
+                          size={17}
+                          fill="#fbbf24"
+                          color="#fbbf24"
+                        />
+                      ))}
                     </div>
 
-                    <div className="mt-5 flex flex-col items-center gap-3">
-                      <div className="flex items-center gap-1">
-                        {Array.from({ length: item.rating }).map((_, index) => (
-                          <Star
-                            key={index}
-                            size={17}
-                            fill="#fbbf24"
-                            color="#fbbf24"
-                          />
-                        ))}
-                      </div>
-
-                      <div>
-                        <p
-                          className="text-base font-semibold md:text-lg"
-                          style={{ color: palette.accent }}
-                        >
-                          {item.name}
-                        </p>
-                        <p className="text-sm text-zinc-500">{item.location}</p>
-                      </div>
-                      <div className="flex justify-between min-w-72">
-                        <span
-                          className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
-                          style={{
-                            backgroundColor: "#e5e7eb",
-                            color: palette.accentSoft,
-                          }}
-                        >
-                          {item.badge}
-                        </span>
-
-                        <span className="text-sm text-zinc-400">
-                          {item.time}
-                        </span>
-                      </div>
+                    <div>
+                      <p
+                        className="text-base font-semibold md:text-lg"
+                        style={{ color: palette.accent }}
+                      >
+                        {item.name}
+                      </p>
+                      <p className="text-sm text-zinc-500">{item.location}</p>
                     </div>
 
-                    <p
-                      className="mt-5 text-base leading-relaxed md:text-lg"
-                      style={{ color: palette.body }}
-                    >
-                      {item.text}
-                    </p>
-
-                    <div
-                      className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
-                      style={{ color: palette.accentSoft }}
-                    >
+                    <div className="flex min-w-72 justify-between">
                       <span
-                        className="inline-block h-2 w-2 rounded-full"
-                        style={{ backgroundColor: "#22c55e" }}
-                      />
-                      Verified review
+                        className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                        style={{
+                          backgroundColor: "#e5e7eb",
+                          color: palette.accentSoft,
+                        }}
+                      >
+                        {item.badge}
+                      </span>
+                      <span className="text-sm text-zinc-400">{item.time}</span>
                     </div>
-                  </article>
-                </div>
-              ))}
-            </div>
-          </div>
+                  </div>
 
-          <div className="mt-5 flex justify-center gap-2">
-            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className="h-2.5 rounded-full transition-all duration-300"
-                style={{
-                  width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
-                  backgroundColor:
-                    safeActiveIndex === index
-                      ? palette.accent
-                      : "rgba(132,170,165,0.35)",
-                }}
-                aria-label={`Go to review slide ${index + 1}`}
-              />
+                  <p
+                    className="mt-5 text-base leading-relaxed md:text-lg"
+                    style={{ color: palette.body }}
+                  >
+                    {item.text}
+                  </p>
+
+                  <div
+                    className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
+                    style={{ color: palette.accentSoft }}
+                  >
+                    <span
+                      className="inline-block h-2 w-2 rounded-full"
+                      style={{ backgroundColor: "#22c55e" }}
+                    />
+                    Verified review
+                  </div>
+                </article>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </Container>
     </Section>

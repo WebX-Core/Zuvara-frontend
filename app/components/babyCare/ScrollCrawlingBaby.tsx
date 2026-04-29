@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
@@ -19,6 +18,7 @@ export default function ScrollCrawlingBaby({
 }: ScrollCrawlingBabyProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const babyRef = useRef<HTMLDivElement | null>(null);
+  const scrollDirRef = useRef<1 | -1>(1);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -30,9 +30,13 @@ export default function ScrollCrawlingBaby({
 
     if (!wrapper || !baby || !target || !startTarget) return;
 
+    const setX = gsap.quickSetter(baby, "x", "px");
+    const setY = gsap.quickSetter(baby, "y", "px");
+    const setScaleX = gsap.quickSetter(baby, "scaleX");
+
     const state = { progress: 0 };
 
-    const render = (progress: number) => {
+    const render = (progress: number, dir: 1 | -1 = scrollDirRef.current) => {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
       const babyWidth = baby.offsetWidth || 140;
@@ -61,9 +65,14 @@ export default function ScrollCrawlingBaby({
         verticalStart,
         verticalEnd,
       );
-      const direction = movingRight ? 1 : -1;
 
-      gsap.set(baby, { x, y, scaleX: direction });
+      const baseDirection = movingRight ? 1 : -1;
+      const facingDirection = baseDirection * dir;
+
+
+      setX(x);
+      setY(y);
+      setScaleX(facingDirection);
     };
 
     const ctx = gsap.context(() => {
@@ -78,27 +87,19 @@ export default function ScrollCrawlingBaby({
           endTrigger: target,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.35,
+          scrub: true, 
           invalidateOnRefresh: true,
-          onEnter: () => {
-            gsap.set(wrapper, { autoAlpha: 1 });
-          },
-          onEnterBack: () => {
-            gsap.set(wrapper, { autoAlpha: 1 });
-          },
-          onLeave: () => {
-            gsap.set(wrapper, { autoAlpha: 0 });
-          },
-          onLeaveBack: () => {
-            gsap.set(wrapper, { autoAlpha: 0 });
-          },
+          onEnter: () => gsap.set(wrapper, { autoAlpha: 1 }),
+          onEnterBack: () => gsap.set(wrapper, { autoAlpha: 1 }),
+          onLeave: () => gsap.set(wrapper, { autoAlpha: 0 }),
+          onLeaveBack: () => gsap.set(wrapper, { autoAlpha: 0 }),
           onUpdate: (self) => {
-            render(self.progress);
+            const dir = self.direction as 1 | -1;
+            scrollDirRef.current = dir;
+            render(self.progress, dir);
           },
         },
-        onUpdate: () => {
-          render(state.progress);
-        },
+       
       });
     }, wrapper);
 
@@ -118,7 +119,7 @@ export default function ScrollCrawlingBaby({
     >
       <div
         ref={babyRef}
-        className="absolute left-0 top-0 will-change-transform"
+        className="absolute left-0 top-0 will-change-transform transform-3d perspective-[1000px]"
         aria-hidden="true"
       >
         <Image
