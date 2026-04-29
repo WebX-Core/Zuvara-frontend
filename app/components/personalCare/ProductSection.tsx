@@ -33,7 +33,7 @@ const ProductCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 shadow-[0_22px_44px_rgba(24,24,27,0.06)] sm:p-6 lg:p-8"
+      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 shadow-[0_22px_44px_rgba(24,24,27,0.06)] sm:p-6 lg:p-10"
     >
       <div className="grid items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
         {/* Left: Text */}

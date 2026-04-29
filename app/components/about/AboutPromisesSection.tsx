@@ -12,13 +12,15 @@ type PromiseItem = {
 type AboutPromisesSectionProps = {
   palette: AboutPalette;
   promises: PromiseItem[];
+  isPersonal:boolean;
 };
 
 export default function AboutPromisesSection({
   palette,
   promises,
+  isPersonal
 }: AboutPromisesSectionProps) {
-  const promisesWave = assetWithFill(wave4Svg, "#D7EBE8");
+  const promisesWave = assetWithFill(wave4Svg, isPersonal ?"#FAF5FF":"#D7EBE8");
 
   return (
     <Section size="md" className="relative lg:pb-40">

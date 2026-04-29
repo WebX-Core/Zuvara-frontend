@@ -122,7 +122,7 @@ export default function AboutPage() {
     : babyAlternatingBg;
 
   const heroWave = assetWithFill(wave3Svg, sectionBg.story);
-  const teamWave = assetWithFill(wave3Svg, "#C5DBD7");
+  const teamWave = assetWithFill(wave3Svg, isPersonal ? "#FAF5FF" :"#C5DBD7" );
   const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
   const waveClass =
@@ -154,11 +154,11 @@ export default function AboutPage() {
         <AboutMilestonesSection palette={pagePalette} milestones={milestones} />
       </div>
       <div className="relative" style={{ backgroundColor: sectionBg.promises }}>
-        <AboutPromisesSection palette={pagePalette} promises={promises} />
+        <AboutPromisesSection palette={pagePalette} promises={promises} isPersonal={isPersonal}/>
       
       </div>
       <div className="relative" style={{ backgroundColor: sectionBg.team }}>
-        <AboutTeamSection palette={pagePalette} team={team} />
+        <AboutTeamSection palette={pagePalette} team={team}  />
         <div
           className={waveClass}
           dangerouslySetInnerHTML={{ __html: teamWave.markup }}
