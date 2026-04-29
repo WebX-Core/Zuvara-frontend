@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Star } from "lucide-react";
@@ -8,7 +7,6 @@ import { assetWithFill, wave3Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
 import { Section, Container } from "@/app/components/layout";
 
-// Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, A11y } from "swiper/modules";
 import "swiper/css";
@@ -70,8 +68,6 @@ const testimonials = [
 
 const Testimonials = () => {
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
 
   return (
     <Section
@@ -84,7 +80,6 @@ const Testimonials = () => {
       />
       <div className="pointer-events-none absolute left-1/2 top-14 h-80 w-80 -translate-x-1/2 rounded-full blur-3xl" />
 
-      {/* Swiper custom pagination styles */}
       <style>{`
         .testimonials-swiper .swiper-pagination {
           position: static;
@@ -176,9 +171,8 @@ const Testimonials = () => {
             {/* Custom nav buttons */}
             <div className="flex items-center gap-2 self-end sm:self-auto">
               <button
-                ref={prevRef}
                 type="button"
-                className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+                className="testimonials-prev flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
                 style={{
                   borderColor: `${palette.border}55`,
                   backgroundColor: "rgba(255,255,255,0.92)",
@@ -201,9 +195,8 @@ const Testimonials = () => {
                 </svg>
               </button>
               <button
-                ref={nextRef}
                 type="button"
-                className="flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
+                className="testimonials-next flex h-11 w-11 items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
                 style={{
                   borderColor: `${palette.border}55`,
                   backgroundColor: "rgba(255,255,255,0.92)",
@@ -241,17 +234,9 @@ const Testimonials = () => {
               pauseOnMouseEnter: true,
             }}
             pagination={{ clickable: true }}
-            onBeforeInit={(swiper) => {
-              if (typeof swiper.params.navigation !== "boolean") {
-                swiper.params.navigation = {
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                };
-              }
-            }}
             navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
+              prevEl: ".testimonials-prev",
+              nextEl: ".testimonials-next",
             }}
             breakpoints={{
               1024: { slidesPerView: 2, spaceBetween: 20 },

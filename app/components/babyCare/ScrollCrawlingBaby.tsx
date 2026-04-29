@@ -30,7 +30,6 @@ export default function ScrollCrawlingBaby({
 
     if (!wrapper || !baby || !target || !startTarget) return;
 
-    // FIX 3: quickSetters — much faster than gsap.set, no object allocation per frame
     const setX = gsap.quickSetter(baby, "x", "px");
     const setY = gsap.quickSetter(baby, "y", "px");
     const setScaleX = gsap.quickSetter(baby, "scaleX");
@@ -70,7 +69,7 @@ export default function ScrollCrawlingBaby({
       const baseDirection = movingRight ? 1 : -1;
       const facingDirection = baseDirection * dir;
 
-      // FIX 3+4: use quickSetters, no ease (ease is a no-op on set anyway)
+
       setX(x);
       setY(y);
       setScaleX(facingDirection);
@@ -88,7 +87,7 @@ export default function ScrollCrawlingBaby({
           endTrigger: target,
           start: "top top",
           end: "bottom bottom",
-          scrub: true, // FIX 1: true = perfect 1:1 scroll sync, no chasing jitter
+          scrub: true, 
           invalidateOnRefresh: true,
           onEnter: () => gsap.set(wrapper, { autoAlpha: 1 }),
           onEnterBack: () => gsap.set(wrapper, { autoAlpha: 1 }),
@@ -100,7 +99,7 @@ export default function ScrollCrawlingBaby({
             render(self.progress, dir);
           },
         },
-        // FIX 2: removed duplicate onUpdate — ScrollTrigger's onUpdate already calls render
+       
       });
     }, wrapper);
 
