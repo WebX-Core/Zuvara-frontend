@@ -342,13 +342,9 @@ export default function TrustFusionSection({
               {comparisonRows.map((row, idx) => (
                 <div
                   key={row.label}
-                  className="flex min-h-[4.5rem] items-center justify-center border-t border-l px-4 py-3 text-center text-[13px] font-semibold"
+                  className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px] font-semibold"
                   style={{
                     borderColor: `${theme.border}33`,
-                    backgroundColor:
-                      idx % 2 === 0
-                        ? hexToRgba(theme.pageBg, 0.6)
-                        : theme.pageBg,
                     color: theme.accent,
                   }}
                 >
@@ -375,14 +371,10 @@ export default function TrustFusionSection({
               {comparisonRows.map((row, idx) => (
                 <div
                   key={row.label}
-                  className="flex min-h-[4.5rem] items-center justify-center border-t border-l px-4 py-3 text-center text-[13px]"
+                  className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px]"
                   style={{
                     borderColor: `${theme.border}33`,
-                    backgroundColor:
-                      idx % 2 === 0
-                        ? hexToRgba(theme.pageBg, 0.6)
-                        : theme.pageBg,
-                    color: hexToRgba(theme.accent, 0.7),
+                    color: hexToRgba(theme.accent, 0.96),
                   }}
                 >
                   {row.ordinary}
@@ -439,7 +431,7 @@ export default function TrustFusionSection({
       }}
     >
       <div
-        className="col-span-6 flex min-h-20 items-center border-b px-4 py-4 text-base font-medium"
+        className="col-span-6  flex min-h-20 items-center border-b px-4 py-4 text-base font-medium"
         style={{
           borderColor: `${theme.border}22`,
           color: theme.accent,
@@ -448,7 +440,7 @@ export default function TrustFusionSection({
         {row.label}
       </div>
       <div
-        className="col-span-3 flex min-h-20 items-center justify-center border-b border-l px-4 py-4 text-center text-base font-semibold"
+        className="col-span-3 bg-white flex  min-h-20 items-center justify-center border-b border-l px-4 py-4 text-center text-base font-semibold"
         style={{
           borderColor: `${theme.border}33`,
           color: theme.accent,
@@ -457,7 +449,7 @@ export default function TrustFusionSection({
         {row.zuvara}
       </div>
       <div
-        className="col-span-3 flex min-h-20 items-center justify-center border-b border-l px-4 py-4 text-center text-base"
+        className="col-span-3 bg-white flex min-h-20 items-center justify-center border-b border-l px-4 py-4 text-center text-base"
         style={{
           borderColor: `${theme.border}33`,
           color: hexToRgba(theme.accent, 0.7),

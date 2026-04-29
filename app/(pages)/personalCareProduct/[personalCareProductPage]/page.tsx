@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as PersonalProduct } from "@/type/personalCareProductType";
 import PersonalProductHeroSection from "@/app/components/personalCareProduct/PersonalProductHeroSection";
-import PersonalWhyItMattersSection from "@/app/components/personalCareProduct/PersonalWhyItMattersSection";
+// import PersonalWhyItMattersSection from "@/app/components/personalCareProduct/PersonalWhyItMattersSection";
 import PersonalComfortDetailsSection from "@/app/components/personalCareProduct/PersonalComfortDetailsSection";
 import PersonalSizeGuideSection from "@/app/components/personalCareProduct/PersonalSizeGuideSection";
 import PersonalTrustFusionSection from "@/app/components/personalCareProduct/PersonalTrustFusionSection";
@@ -307,10 +307,11 @@ export default function Page() {
         onSelectProduct={setActiveIdx}
       />
 
-      <PersonalWhyItMattersSection
+      {/* <PersonalWhyItMattersSection
         theme={theme}
         backgroundImage={whyItMattersImage}
-      />
+      /> */}
+
       <PersonalProductCloseViewSection
         product={active}
         theme={theme}
