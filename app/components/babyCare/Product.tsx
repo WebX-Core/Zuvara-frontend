@@ -91,7 +91,7 @@ const Product = () => {
   // const getDescription = (product: ProductItem) =>
   //   product.description ??
   //   "Premium product designed for everyday comfort and reliable care.";
-  const productBottomWave = assetWithFill(wave4Svg, colors.baby.chip);
+  const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
 
   const getCardImage = (product: ProductItem) => {
     if (activeTab !== "baby") {

@@ -63,7 +63,7 @@ export default function AboutHeroSection({
               <Link
                 href={productHref}
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
-                style={{ backgroundColor: palette.accent, color: palette.page }}
+                style={{ backgroundColor: palette.accent, color: "#ffffff" }}
               >
                 Explore Products
                 <Sparkles size={16} />

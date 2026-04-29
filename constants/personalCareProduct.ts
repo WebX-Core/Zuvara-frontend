@@ -79,7 +79,7 @@ const seeds: ProductSeed[] = [
     reviews: 423,
     description: "Soft, secure disposable period panties for confident day-to-night comfort.",
     subDesc1:
-      "ZUVARA Period Panties are designed for dependable absorbency, breathable comfort, and a flexible fit that moves with your body. They help reduce leak anxiety and support comfortable wear through work, travel, rest, and overnight use.",
+      "ZUVARA Period Panties offer reliable absorbency, breathable comfort, and a flexible fit for confident, leak-free protection throughout your day and night.",
     variants: [
       {
         id: 1,
@@ -166,7 +166,7 @@ const seeds: ProductSeed[] = [
     reviews: 368,
     description: "Ultra-soft sanitary pads with fast absorbency and rash-aware comfort.",
     subDesc1:
-      "ZUVARA Sanitary Pads are built for quick lock-in absorbency and breathable comfort. The top layer stays gentle on skin while the core helps keep you dry and fresh across daily movement.",
+      "ZUVARA Period Panties provide reliable absorbency, breathable comfort, and a flexible fit for confident, leak-free protection day and night.",
     variants: [
       {
         id: 1,
