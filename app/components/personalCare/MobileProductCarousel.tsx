@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
-
+import { personalCareProducts } from "@/constants/personalCareProduct";
 
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,14 +14,18 @@ import "swiper/css/pagination";
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
 
-type Product = (typeof personalCareProducts)[number];
+export type Product = (typeof personalCareProducts)[number];
 
-interface MobileProductCarouselProps {
-  products?: Product[];
-  
+export interface MobileProductCarouselProps {
+  products: Product[];
   getProductHref?: (product: Product) => string;
-
   browseHref?: string;
+}
+
+interface MobileProductCardProps {
+  product: Product;
+  getProductHref: (product: Product) => string;
+  browseHref: string;
 }
 
 // ─── Mobile Card ────────────────────────────────────────────────────────────────
@@ -29,12 +33,8 @@ interface MobileProductCarouselProps {
 const MobileProductCard = ({
   product,
   getProductHref,
-  browseHref = "/personalCareProduct",
-}: {
-  product: Product;
-  getProductHref: (product: Product) => string;
-  browseHref: string;
-}) => {
+  browseHref,
+}: MobileProductCardProps) => {
   const features = (product.highlights ?? product.features ?? []).slice(0, 2);
   const variantLabels = product.variants.slice(0, 3).map((v) => ({
     id: v.id,
@@ -51,24 +51,20 @@ const MobileProductCard = ({
     >
       {/* Product image */}
       <div className="relative mx-auto flex h-52 items-center justify-center">
-        {/* Background circle */}
         <div className="absolute h-44 w-44 rounded-full bg-personalCare/8" />
 
-        {/* Feature tag — top left */}
         {features[0] && (
           <div className="absolute left-0 top-3 z-10 rounded-2xl bg-white px-3 py-2 text-xs font-semibold text-zinc-800 shadow-[0_12px_24px_rgba(24,24,27,0.08)]">
             {features[0]}
           </div>
         )}
 
-        {/* Feature tag — bottom right */}
         {features[1] && (
           <div className="absolute bottom-3 right-0 z-10 rounded-2xl bg-personalCare px-3 py-2 text-xs font-semibold text-white shadow-[0_12px_24px_rgba(219,39,119,0.22)]">
             {features[1]}
           </div>
         )}
 
-        {/* Image */}
         <div className="relative z-20 h-40 w-full max-w-[220px]">
           <Image
             src={product.productImage}
@@ -82,7 +78,6 @@ const MobileProductCard = ({
 
       {/* Text content */}
       <div className="mt-4">
-        {/* Rating + reviews */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1 rounded-full bg-personalCare/8 px-3 py-1 text-xs font-medium text-personalCare">
             <Star size={12} className="fill-current" />
@@ -93,12 +88,10 @@ const MobileProductCard = ({
           </span>
         </div>
 
-        {/* Name */}
         <h3 className="mt-2.5 text-2xl font-semibold leading-tight tracking-tight text-zinc-900">
           {product.name}
         </h3>
 
-        {/* Variants */}
         {variantLabels.length > 0 && (
           <div className="mt-2.5 flex flex-wrap gap-1.5">
             {variantLabels.map((v) => (
@@ -112,13 +105,11 @@ const MobileProductCard = ({
           </div>
         )}
 
-        {/* Description */}
         <p className="mt-2.5 text-sm font-medium leading-6 text-zinc-600">
           {product.subDesc1 ?? product.description}
         </p>
 
-        {/* CTAs */}
-        <div className="mt-4 flex flex-wrap items-center gap-2.5">
+        <div className="mt-4 mb-2 flex flex-wrap items-center gap-2.5">
           <Link
             href={getProductHref(product)}
             className="inline-flex items-center gap-2 rounded-full bg-personalCare px-4 py-2 text-sm font-semibold text-white! shadow-[0_14px_28px_rgba(219,39,119,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"
@@ -141,13 +132,12 @@ const MobileProductCard = ({
 // ─── Mobile Carousel ────────────────────────────────────────────────────────────
 
 const MobileProductCarousel = ({
-  products = personalCareProducts,
+  products,
   getProductHref = (product) => `/personalCareProduct/${product.slug}`,
   browseHref = "/personalCareProduct",
 }: MobileProductCarouselProps) => {
   return (
     <>
-      {/* Scoped pagination styles */}
       <style>{`
         .mobile-product-swiper .swiper-pagination {
           position: static;
@@ -161,14 +151,14 @@ const MobileProductCarousel = ({
           width: 0.5rem;
           height: 0.5rem;
           border-radius: 9999px;
-          background: rgb(219 39 119 / 0.25);
+          background: #8F1ADF40;
           opacity: 1;
           margin: 0 !important;
           transition: all 0.3s;
         }
         .mobile-product-swiper .swiper-pagination-bullet-active {
           width: 1.5rem;
-          background: rgb(219 39 119);
+          background: #8F1ADF;
         }
       `}</style>
 
