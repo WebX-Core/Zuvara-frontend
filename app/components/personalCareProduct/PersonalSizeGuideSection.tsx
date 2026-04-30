@@ -66,18 +66,18 @@ export default function PersonalSizeGuideSection({
             backgroundColor: hexToRgba(theme.pageBg, 0.88),
           }}
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-6 md:gap-12 p-8 md:p-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 p-6 md:p-10 place-items-center">
             {sizeGuideImages.map((src, idx) => (
               <div
                 key={idx}
-                className="relative h-40 w-40 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform hover:scale-105 duration-500"
+                className="relative w-full max-w-40 sm:max-w-45 md:max-w-55 lg:max-w-65 aspect-square transition-transform duration-300 hover:scale-105"
               >
                 <Image
                   src={src}
                   alt={`Size Guide Option ${idx + 1}`}
                   fill
                   className="object-contain"
-                  sizes="(max-width: 768px) 160px, (max-width: 1200px) 240px, 300px"
+                  sizes="(max-width: 768px) 140px, (max-width: 1200px) 220px, 260px"
                 />
               </div>
             ))}
