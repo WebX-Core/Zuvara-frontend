@@ -122,7 +122,9 @@ export default function AboutPage() {
     : babyAlternatingBg;
 
   const heroWave = assetWithFill(wave3Svg, sectionBg.story);
-  const teamWave = assetWithFill(wave3Svg, isPersonal ? "#FAF5FF" :"#C5DBD7" );
+  const ctaBg = isPersonal ? pagePalette.page : "#C5DBD7";
+  const ctaPanelBg = isPersonal ? pagePalette.accent : undefined;
+  const teamWave = assetWithFill(wave3Svg, ctaBg);
   const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
   const waveClass =
@@ -164,8 +166,13 @@ export default function AboutPage() {
           dangerouslySetInnerHTML={{ __html: teamWave.markup }}
         />
       </div>
-      <div className="relative " style={{ backgroundColor: sectionBg.cta }}>
-        <AboutCtaSection palette={pagePalette} productHref={productHref} />
+      <div className="relative " style={{ backgroundColor: ctaBg }}>
+        <AboutCtaSection
+          palette={pagePalette}
+          productHref={productHref}
+          sectionBg={ctaBg}
+          panelBg={ctaPanelBg}
+        />
         <div
           className={waveClass}
           dangerouslySetInnerHTML={{ __html: ctaWave.markup }}

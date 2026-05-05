@@ -9,21 +9,28 @@ import { ArrowRight } from "lucide-react";
 type AboutCtaSectionProps = {
   palette: AboutPalette;
   productHref: string;
+  sectionBg: string;
+  panelBg?: string;
 };
 
 export default function AboutCtaSection({
   palette,
   productHref,
+  sectionBg,
+  panelBg,
 }: AboutCtaSectionProps) {
+  const hasFilledPanel = Boolean(panelBg);
+
   return (
     <Section
       size="sm"
-      className="pt-6 pb-8 md:pt-10 md:pb-12 lg:pb-40 bg-[#c3dbd7]"
+      className="pt-6 pb-8 md:pt-10 md:pb-12 lg:pb-40"
+      style={{ backgroundColor: sectionBg }}
     >
       <Container>
         <div
           className="relative overflow-hidden rounded-[2.4rem] px-5 py-5 md:px-6 md:py-10 md:text-center lg:py-16"
-          // style={{ backgroundColor: palette.accent }}
+          style={panelBg ? { backgroundColor: panelBg } : undefined}
         >
           <div className="pointer-events-none absolute inset-0 opacity-50">
             <div className="absolute left-[-8%] top-[-20%] h-40 w-40 rounded-full bg-white/10 blur-3xl" />
@@ -33,11 +40,22 @@ export default function AboutCtaSection({
           <div className="relative z-10  md:hidden">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] bg-white px-2 py-1 rounded-full w-fit text-baby-accent">
+                <p
+                  className="w-fit rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
+                  style={{
+                    backgroundColor: hasFilledPanel
+                      ? "rgba(255,255,255,0.14)"
+                      : "#ffffff",
+                    color: hasFilledPanel ? "#ffffff" : palette.accent,
+                  }}
+                >
                   Our Promise
                 </p>
 
-                <h2 className="mt-4 text-2xl font-semibold leading-[1.02] text-baby-accent">
+                <h2
+                  className="mt-4 text-2xl font-semibold leading-[1.02]"
+                  style={{ color: hasFilledPanel ? "#ffffff" : palette.accent }}
+                >
                   Products that help families feel calmer, safer, and cared for.
                 </h2>
               </div>
@@ -80,8 +98,10 @@ export default function AboutCtaSection({
                 href="/contact"
                 className="inline-flex rounded-full border px-7 py-3 text-sm font-semibold"
                 style={{
-                  borderColor: "rgba(255,255,255,0.38)",
-                  color: "white",
+                  borderColor: hasFilledPanel
+                    ? "rgba(255,255,255,0.38)"
+                    : `${palette.accent}44`,
+                  color: hasFilledPanel ? "white" : palette.accent,
                 }}
               >
                 Talk to Zuvara

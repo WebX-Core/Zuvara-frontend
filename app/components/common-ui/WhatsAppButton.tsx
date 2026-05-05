@@ -20,11 +20,8 @@ const WhatsAppButton = () => {
         alt=" Zuvara Whatsapp"
         width={60}
         height={60}
-        className="w-12 h-12 sm:w-16 sm:h-16"
+        className="w-10 h-10 sm:w-12 sm:h-12"
       ></Image>
-      <span className="absolute top-0 -left-1 sm:-top-1 sm:-left-1.5 bg-red-500 rounded-full w-4 h-4 sm:w-6 sm:h-6 text-xs sm:text-sm text-white flex items-center justify-center p-2">
-        1
-      </span>
     </Link>
   );
 };

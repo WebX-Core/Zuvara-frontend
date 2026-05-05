@@ -4,7 +4,6 @@ import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 import SectionIntro, {
   sectionContentSpacing,
 } from "@/app/components/common-ui/SectionIntro";

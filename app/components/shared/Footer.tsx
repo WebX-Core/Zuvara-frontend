@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import {
-  FaFacebookSquare,
-  FaInstagramSquare,
-  FaLinkedin,
-  FaWhatsappSquare,
-} from "react-icons/fa";
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from "react-icons/fa6";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
@@ -206,18 +206,19 @@ export default function Footer() {
               </button>
             </div>
 
-            <div className="flex items-center justify-center gap-5 lg:justify-start">
+            <div className="flex items-center justify-center gap-3 lg:justify-start">
               {socialLinks.map((social) => {
                 const title = social.title.toLowerCase();
-                const SocialIcon = title.includes("whatsapp")
-                  ? FaWhatsappSquare
+                const isOutlineIcon = title.includes("facebook") || title.includes("linkedin");
+                const IconComponent = title.includes("whatsapp")
+                  ? FaWhatsapp
                   : title.includes("facebook")
-                    ? FaFacebookSquare
+                    ? FaFacebookF
                     : title.includes("instagram")
-                      ? FaInstagramSquare
+                      ? FaInstagram
                       : title.includes("linkedin")
-                        ? FaLinkedin
-                        : FaWhatsappSquare;
+                        ? FaLinkedinIn
+                        : FaWhatsapp;
 
                 return (
                   <Link
@@ -225,11 +226,20 @@ export default function Footer() {
                     key={social.id}
                     aria-label={social.title}
                     className={cn(
-                      "inline-flex items-center justify-center transition-transform duration-300 hover:scale-110",
-                      "text-zinc-900 opacity-95 hover:opacity-100",
+                      "inline-flex items-center justify-center transition-all duration-300 hover:scale-110",
+                      isOutlineIcon
+                        ? "size-[18px] rounded-[4px] border-[1.5px] border-zinc-800 text-zinc-800"
+                        : "size-[18px] text-zinc-800",
+                      isPersonal
+                        ? isOutlineIcon 
+                          ? "hover:text-personalCare hover:border-personalCare" 
+                          : "hover:text-personalCare"
+                        : isOutlineIcon
+                          ? "hover:text-foreground hover:border-foreground"
+                          : "hover:text-foreground",
                     )}
                   >
-                    <SocialIcon className="size-5" />
+                    <IconComponent className={cn(isOutlineIcon ? "size-[10px]" : "size-[18px]")} />
                   </Link>
                 );
               })}
