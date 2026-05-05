@@ -2,7 +2,9 @@ import type { LucideIcon } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { Section, Container } from "@/app/components/layout";
-import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import SectionIntro, {
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type PromiseItem = {
   title: string;
@@ -13,28 +15,37 @@ type PromiseItem = {
 type AboutPromisesSectionProps = {
   palette: AboutPalette;
   promises: PromiseItem[];
-  isPersonal:boolean;
+  isPersonal: boolean;
 };
 
 export default function AboutPromisesSection({
   palette,
   promises,
-  isPersonal
+  isPersonal,
 }: AboutPromisesSectionProps) {
-  const promisesWave = assetWithFill(wave4Svg, isPersonal ?"#FAF5FF":"#D7EBE8");
+  const promisesWave = assetWithFill(
+    wave4Svg,
+    isPersonal ? "#FAF5FF" : "#edf5f1",
+  );
 
   return (
-    <Section size="md" className="relative lg:pb-40">
-        <div
-          className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
-          dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
-        />
+    <Section
+      size="md"
+      className="relative pt-6 pb-8 md:pt-10 md:pb-12 lg:pb-40"
+    >
+      <div
+        className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+        dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
+      />
       <Container>
         <SectionIntro
           align="center"
-          className="mx-auto max-w-3xl"
+          className={`mx-auto max-w-3xl ${sectionIntroSpacing}`}
           eyebrow={
-            <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
+            <p
+              className="text-sm font-semibold"
+              style={{ color: palette.accentSoft }}
+            >
               Our Promises
             </p>
           }
@@ -52,7 +63,7 @@ export default function AboutPromisesSection({
           titleStyle={{ color: palette.accent }}
         />
 
-        <div className={`${sectionContentSpacing} grid gap-5 md:grid-cols-2 xl:grid-cols-4`}>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {promises.map(({ title, desc, icon: Icon }) => (
             <div
               key={title}

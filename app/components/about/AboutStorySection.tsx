@@ -1,6 +1,8 @@
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
-import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import SectionIntro, {
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type StoryItem = {
   title: string;
@@ -17,11 +19,11 @@ export default function AboutStorySection({
   stories,
 }: AboutStorySectionProps) {
   return (
-    <Section size="md">
+    <Section size="md" className="pt-6 pb-8 md:pt-10 md:pb-12">
       <Container className="flex flex-col justify-center lg:items-center">
         <SectionIntro
           align="center"
-          className="max-w-3xl pb-8 lg:pb-12"
+          className={`max-w-3xl ${sectionIntroSpacing}`}
           eyebrow={
             <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
               Our Story
@@ -42,7 +44,7 @@ export default function AboutStorySection({
           descriptionStyle={{ color: palette.body }}
         />
 
-        <div className={`${sectionContentSpacing} grid gap-4 md:grid-cols-2`}>
+        <div className="grid gap-4 md:grid-cols-2">
           {stories.map((story) => (
             <div
               key={story.title}

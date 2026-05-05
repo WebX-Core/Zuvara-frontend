@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
-import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import SectionIntro, {
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type TeamMember = {
   name: string;
@@ -22,13 +24,13 @@ export default function AboutTeamSection({
   return (
     <Section
       size="md"
-      className="lg:pb-40"
+      className="pt-6 pb-8 md:pt-10 md:pb-12 lg:pb-40"
       style={{ backgroundColor: palette.panel }}
     >
       <Container>
         <SectionIntro
           align="center"
-          className="mx-auto max-w-3xl"
+          className={`mx-auto max-w-3xl ${sectionIntroSpacing}`}
           eyebrow={
             <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
               The Team
@@ -49,7 +51,7 @@ export default function AboutTeamSection({
           descriptionStyle={{ color: palette.body }}
         />
 
-        <div className={`${sectionContentSpacing} grid gap-3 sm:grid-cols-2 xl:grid-cols-3`}>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {team.map((member) => (
             <article
               key={member.name}

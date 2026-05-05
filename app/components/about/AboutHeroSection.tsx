@@ -3,7 +3,9 @@ import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
-import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import SectionIntro, {
+  sectionContentSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type AboutHeroSectionProps = {
   palette: AboutPalette;
@@ -28,14 +30,10 @@ export default function AboutHeroSection({
   productHref,
 }: AboutHeroSectionProps) {
   return (
-    <Section
-      size="lg"
-      className="relative"
-      style={{ backgroundColor: palette.panel }}
-    >
+    <Section className="relative" style={{ backgroundColor: palette.panel }}>
       <Container>
-        <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-14 lg:px-14">
-          <div className="relative z-10 mx-auto max-w-3xl text-center">
+        <div className="relative overflow-hidden   md:px-10  lg:px-14">
+          <div className="relative z-10 mx-auto  max-w-3xl text-center">
             <SectionIntro
               align="center"
               titleAs="h1"
@@ -43,9 +41,10 @@ export default function AboutHeroSection({
                 <>
                   Gentle beginnings,
                   <span
-                    className="ml-3 font-light italic"
+                    className="ml-3 font-light italic "
                     style={{ color: palette.accentSoft }}
                   >
+                    <br />
                     designed with intention.
                   </span>
                 </>
@@ -57,18 +56,12 @@ export default function AboutHeroSection({
               descriptionStyle={{ color: palette.body }}
             />
 
-            <div className={`${sectionContentSpacing} flex flex-wrap justify-center gap-4`}>
-              <Link
-                href={productHref}
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
-                style={{ backgroundColor: palette.accent, color: "#ffffff" }}
-              >
-                Explore Products
-                <Sparkles size={16} />
-              </Link>
+            <div
+              className={`${sectionContentSpacing} flex  justify-center gap-4`}
+            >
               <Link
                 href="/contact"
-                className="inline-flex items-center rounded-full border px-6 py-3 text-sm font-semibold"
+                className="inline-flex items-center rounded-full border px-4  py-3 text-sm font-semibold"
                 style={{
                   borderColor: `${palette.border}66`,
                   color: palette.accent,
@@ -76,6 +69,14 @@ export default function AboutHeroSection({
                 }}
               >
                 Contact Zuvara
+              </Link>
+              <Link
+                href={productHref}
+                className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold"
+                style={{ backgroundColor: palette.accent, color: "#ffffff" }}
+              >
+                Explore Products
+                <Sparkles size={16} />
               </Link>
             </div>
 
