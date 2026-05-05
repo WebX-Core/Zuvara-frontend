@@ -8,6 +8,10 @@ import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as ProductType } from "@/type/personalCareProductType";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, {
+  sectionContentSpacing,
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 const personalDetailPagePaletteBySlug: Record<
   string,
@@ -51,29 +55,33 @@ const ProductList = () => {
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
       />
       <Container>
-        <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-          <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
-            Shop the range
-          </span>
-          <h2 className="mt-5 max-w-4xl text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-personalCare">
-            Best selling
-            <span className="ml-3 font-light italic text-personalCare/70">
-              personal essentials
+        <SectionIntro
+          align="center"
+          className={`${sectionIntroSpacing} max-w-4xl`}
+          eyebrow={
+            <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+              Shop the range
             </span>
-          </h2>
-
-          <p className="mt-4 max-w-2xl text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-            Discover our most loved personal care products, chosen for soft
-            comfort, dependable protection, and a lighter everyday feel.
-          </p>
-        </div>
+          }
+          title={
+            <>
+              Best selling
+              <span className="ml-3 font-light italic text-personalCare/70">
+                personal essentials
+              </span>
+            </>
+          }
+          description="Discover our most loved personal care products, chosen for soft comfort, dependable protection, and a lighter everyday feel."
+          titleClassName="text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-personalCare"
+          descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.35 }}
-          className="mt-8 grid gap-5 md:grid-cols-2"
+          className={`${sectionContentSpacing} grid gap-5 md:grid-cols-2`}
         >
           {personalCareProducts.map((product, index) => {
             const displayImage = product.variants?.[0]?.image || product.image;

@@ -61,6 +61,7 @@
 
 
 import { useSection } from "@/app/providers/SectionProvider";
+import SectionIntro from "@/app/components/common-ui/SectionIntro";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -83,39 +84,33 @@ const Title = ({
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
   return (
-    <div className="flex flex-col gap-4 lg:gap-8">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className={cn(
-          "text-3xl md:text-4xl lg:text-7xl  font-bold",
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+    >
+      <SectionIntro
+        titleAs="h1"
+        title={
+          <>
+            {title} {showBreak ? <br /> : " "}
+            <span className={cn(isPersonal ? "text-personalCare" : "text-secondary")}>
+              {highlighter}
+            </span>
+          </>
+        }
+        description={desc}
+        titleClassName={cn(
+          "text-3xl font-bold md:text-4xl lg:text-7xl",
           isPersonal ? "text-zinc-900" : "text-foreground",
           titleClassName,
         )}
-      >
-        {title} {showBreak && <br />}
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className={cn(isPersonal ? "text-personalCare" : "text-secondary")}
-        >
-          {highlighter}
-        </motion.span>
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className={cn(
-          "text-md lg:text-md text-zinc-600 font-medium max-w-lg leading-relaxed",
+        descriptionClassName={cn(
+          "text-md max-w-lg font-medium leading-relaxed text-zinc-600 lg:text-md",
           descClassName,
         )}
-      >
-        {desc}
-      </motion.p>
-    </div>
+      />
+    </motion.div>
   );
 };
 

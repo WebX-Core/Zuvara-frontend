@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import SectionIntro from "@/app/components/common-ui/SectionIntro";
 
 const HeroSection = () => {
   return (
@@ -8,17 +9,21 @@ const HeroSection = () => {
       <div className="relative mx-auto flex min-h-svh w-[92%] max-w-7xl items-center py-22 sm:py-24 lg:h-full lg:py-8">
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center text-center">
           <div className="max-w-3xl">
-            <h1 className="mt-5 text-4xl font-semibold leading-[0.92] tracking-tight text-personalCare sm:text-5xl lg:text-5xl">
-              Period care that lets you
-              <span className="block italic font-light text-personalCare">
-                move, rest, and live normally.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-4 max-w-2xl text-sm font-medium text-zinc-600 sm:text-base">
-              Designed to support you wherever the day takes you, with reliable
-              comfort that feels light, discreet, and easy to trust.
-            </p>
+            <SectionIntro
+              align="center"
+              titleAs="h1"
+              title={
+                <>
+                  Period care that lets you
+                  <span className="block italic font-light text-personalCare">
+                    move, rest, and live normally.
+                  </span>
+                </>
+              }
+              description="Designed to support you wherever the day takes you, with reliable comfort that feels light, discreet, and easy to trust."
+              titleClassName="text-4xl font-semibold leading-[0.92] tracking-tight text-personalCare sm:text-5xl lg:text-5xl"
+              descriptionClassName="text-sm font-medium text-zinc-600 sm:text-base"
+            />
 
             {/* <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <Button

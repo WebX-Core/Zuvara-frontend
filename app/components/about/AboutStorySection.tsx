@@ -1,5 +1,6 @@
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type StoryItem = {
   title: string;
@@ -18,33 +19,30 @@ export default function AboutStorySection({
   return (
     <Section size="md">
       <Container className="flex flex-col justify-center lg:items-center">
-        <div className="text-center max-w-3xl pb-8 lg:pb-16">
-          <p
-            className="text-sm font-semibold"
-            style={{ color: palette.accentSoft }}
-          >
-            Our Story
-          </p>
-          <h2
-            className="mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]"
-            style={{ color: palette.accent }}
-          >
-            Born from real family questions,
-            <span className="ml-2 font-light italic">
-              refined into thoughtful care.
-            </span>
-          </h2>
+        <SectionIntro
+          align="center"
+          className="max-w-3xl pb-8 lg:pb-12"
+          eyebrow={
+            <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
+              Our Story
+            </p>
+          }
+          title={
+            <>
+              Born from real family questions,
+              <span className="ml-2 font-light italic">
+                refined into thoughtful care.
+              </span>
+            </>
+          }
+          description="Our real experience begin through questining the real problem from real parent."
+          titleClassName="text-2xl font-semibold leading-[0.98] lg:text-5xl"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          titleStyle={{ color: palette.accent }}
+          descriptionStyle={{ color: palette.body }}
+        />
 
-          <p
-            className="mt-4 text-sm leading-relaxed font-medium md:text-base"
-            style={{ color: palette.body }}
-          >
-            Our real experience begin through questining the real problem from
-            real parent.
-          </p>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className={`${sectionContentSpacing} grid gap-4 md:grid-cols-2`}>
           {stories.map((story) => (
             <div
               key={story.title}

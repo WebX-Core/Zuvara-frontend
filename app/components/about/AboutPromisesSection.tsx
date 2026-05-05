@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type PromiseItem = {
   title: string;
@@ -29,28 +30,29 @@ export default function AboutPromisesSection({
           dangerouslySetInnerHTML={{ __html: promisesWave.markup }}
         />
       <Container>
-        <div className="max-w-3xl mx-auto text-center">
-          <p
-            className="text-sm font-semibold"
-            style={{ color: palette.accentSoft }}
-          >
-            Our Promises
-          </p>
-          <h2
-            className="mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]"
-            style={{ color: palette.accent }}
-          >
-            The standards behind{" "}
-            <span className="ml-2 font-light italic">
-              every Zuvara product.
-            </span>
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed font-medium md:text-base">
-            From the softness to purity, we care for your baby.
-          </p>
-        </div>
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          eyebrow={
+            <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
+              Our Promises
+            </p>
+          }
+          title={
+            <>
+              The standards behind{" "}
+              <span className="ml-2 font-light italic">
+                every Zuvara product.
+              </span>
+            </>
+          }
+          description="From the softness to purity, we care for your baby."
+          titleClassName="text-2xl font-semibold leading-[0.98] lg:text-5xl"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          titleStyle={{ color: palette.accent }}
+        />
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className={`${sectionContentSpacing} grid gap-5 md:grid-cols-2 xl:grid-cols-4`}>
           {promises.map(({ title, desc, icon: Icon }) => (
             <div
               key={title}

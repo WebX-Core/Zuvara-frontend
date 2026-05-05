@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@/type/babyCareProductType";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
@@ -130,7 +131,7 @@ const ProductCloseViewSection = ({
 
             {/* Bottom Label */}
             <div
-              className="fx-rise  mt-8 md:mt-10 px-5 py-2 rounded-full border backdrop-blur-sm shadow-sm"
+              className={`fx-rise ${sectionContentSpacing} rounded-full border px-5 py-2 backdrop-blur-sm shadow-sm`}
               style={{
                 borderColor: `${theme.border}66`,
                 backgroundColor: hexToRgba(theme.pageBg, 0.72),

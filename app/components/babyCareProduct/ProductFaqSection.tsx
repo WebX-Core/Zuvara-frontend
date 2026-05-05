@@ -5,6 +5,9 @@ import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/them
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import SectionIntro, {
+  sectionContentSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type ProductFaqSectionProps = {
   theme: BabyCareListingTheme;
@@ -37,7 +40,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
   const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
   return (
     <section
-      className="relative px-4 py-10 sm:px-6 lg:px-8 lg:py-16 lg:pb-40"
+      className="relative px-4 py-6 sm:px-6 lg:px-8 lg:py-16 lg:pb-40"
       style={{
         borderColor: `${theme.border}55`,
       }}
@@ -47,39 +50,30 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
       />
 
-      <div className="mx-auto max-w-3xl text-center">
-        <span
-          className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 0.88),
-            color: theme.accent,
-          }}
-        >
-          Product FAQ
-        </span>
-        <h2
-          className="mt-5 text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-none tracking-tight"
-          style={{ color: theme.accent }}
-        >
-          Questions parents ask
-          <span
-            className="ml-2 italic font-light"
-            style={{ color: theme.accentSoft }}
-          >
-            before they choose.
-          </span>
-        </h2>
-        <p
-          className="mt-4 text-sm font-medium leading-relaxed md:text-base"
-          style={{ color: hexToRgba(theme.accent, 0.74) }}
-        >
-          A quick guide to the most common questions around comfort, sizing, and
-          selecting the right Zuvara product.
-        </p>
-      </div>
+      <SectionIntro
+        align="center"
+        className="mx-auto max-w-3xl"
+        title={
+          <>
+            Questions parents ask
+            <span
+              className="ml-2 italic font-light"
+              style={{ color: theme.accentSoft }}
+            >
+              before they choose.
+            </span>
+          </>
+        }
+        description="A quick guide to the most common questions around comfort, sizing, and selecting the right Zuvara product."
+        titleClassName="text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-none tracking-tight"
+        descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+        titleStyle={{ color: theme.accent }}
+        descriptionStyle={{ color: hexToRgba(theme.accent, 0.74) }}
+      />
 
-      <div className="mx-auto mt-8 grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]">
+      <div
+        className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}
+      >
         <Accordions type="single" className="space-y-3 divide-y-0">
           {faqs.map((faq, index) => (
             <Accordion
@@ -139,7 +133,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
         </div>
 
         {/* Mobile CTA - Hero Style */}
-        <div className="lg:hidden rounded-2xl overflow-hidden shadow-lg bg-linear-to-br from-babyCare to-babyCare/90 p-6">
+        <div className="lg:hidden rounded-2xl overflow-hidden shadow-lg bg-linear-to-br from-babyCare to-babyCare/90 p-4">
           <div className="flex items-start gap-4">
             <div className="flex-1 space-y-4">
               <div className="space-y-2">
@@ -152,17 +146,16 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
                     Need Help?
                   </span>
                 </div>
-                <h3 className="text-xl font-bold leading-tight text-white">
+                <h3 className="text-xl font-bold leading-tight text-baby-accent">
                   Talk to Zuvara before you decide.
                 </h3>
-                <p className="text-sm font-medium text-zinc-100 leading-relaxed">
-                  Get product guidance, sizing help, and recommendations based
-                  on your baby&apos;s routine.
+                <p className="text-sm font-medium text-baby-accent-soft leading-relaxed">
+                  Get product guidance and recommendations.
                 </p>
               </div>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-white text-babyCare px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
+                className="inline-flex items-center gap-2 bg-white text-baby-accent px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
               >
                 <span>Contact Support</span>
                 <Icon
@@ -172,7 +165,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
               </Link>
             </div>
             <div className="relative size-24 shrink-0">
-              <div className="absolute inset-0 bg-white/20 rounded-2xl backdrop-blur-sm" />
+              <div className="absolute inset-0 rounded-2xl backdrop-blur-sm" />
               <div className="relative size-full flex items-center justify-center">
                 <Icon
                   icon="mdi:baby-face-outline"

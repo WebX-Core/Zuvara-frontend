@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import SectionIntro from "@/app/components/common-ui/SectionIntro";
 import { wave1Svg, wave2Svg } from "@/constants/svgs";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
 
@@ -162,17 +163,17 @@ export default function Home() {
           {/* ================= LEFT CONTENT ================= */}
           <div className="relative z-20 flex h-full items-center py-12 lg:w-1/2">
             <div className="flex flex-col gap-2 lg:gap-4">
-              <p className="text-xs lg:text-sm font-semibold tracking-wide text-foreground">
-                Premium Baby Care Essentials
-              </p>
-              <h2 className="mt-5 text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
-                Gentle protection for babies.
-              </h2>
-
-              <p className="text-sm lg:text-lg text-foreground mt-5 font-medium leading-relaxed">
-                Trusted by newly married couples around the world, focusing on
-                comfort and safety for your heart and healthy baby.
-              </p>
+              <SectionIntro
+                eyebrow={
+                  <p className="text-xs font-semibold tracking-wide text-foreground lg:text-sm">
+                    Premium Baby Care Essentials
+                  </p>
+                }
+                title="Gentle protection for babies."
+                description="Trusted by newly married couples around the world, focusing on comfort and safety for your heart and healthy baby."
+                titleClassName="text-2xl font-semibold tracking-tight text-foreground lg:text-5xl"
+                descriptionClassName="text-sm font-medium leading-relaxed text-foreground lg:text-lg"
+              />
 
               <div className="flex items-center w-full gap-4 lg:gap-5 pt-2 lg:pt-4 ">
                 <Link href="/babyCareProduct">

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { A11y, Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../common-ui/Button";
+import SectionIntro, { sectionIntroSpacing } from "../common-ui/SectionIntro";
 import { blogLists } from "@/constants";
 import { wave32Svg } from "@/constants/svgs";
 import { Section, Container } from "@/app/components/layout";
@@ -18,7 +19,7 @@ const Blog = () => {
   return (
     <Section
       size="md"
-      className="relative overflow-hidden bg-babyCare/20 lg:pb-48"
+      className="relative overflow-hidden bg-babyCare/20 pt-6  pb-8 md:pt-4 md:pb-12 lg:pb-48"
     >
       <div
         className="absolute -bottom-2 left-1/2 z-20 w-screen  -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
@@ -51,19 +52,27 @@ const Blog = () => {
         }
       `}</style>
       <Container>
-        <div className="mb-10 flex flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <p className="inline-flex items-center rounded-full border border-foreground/20 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground mb-5">
-              Parenting Journal
-            </p>
-            <h2 className="text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
-              Insights for
-              <span className=" font-light italic"> Modern Parents</span>
-            </h2>
-            <p className="text-sm lg:text-lg text-foreground mt-5 font-medium leading-relaxed">
-              Real experiences from families who trust Zuvara for comfort, care,
-              and gentle everyday protection.
-            </p>
+        <div
+          className={`${sectionIntroSpacing} flex flex-col gap-8 md:flex-row md:items-end md:justify-between`}
+        >
+          <SectionIntro
+            className="max-w-2xl"
+            title={
+              <>
+                Insights for
+                <span className="font-light italic"> Modern Parents</span>
+              </>
+            }
+            description="Real experiences from families who trust Zuvara for comfort, care, and gentle everyday protection."
+            titleClassName="text-2xl font-semibold tracking-tight text-foreground lg:text-5xl"
+            descriptionClassName="text-sm font-medium leading-relaxed text-foreground lg:text-lg"
+          />
+          <div className=" items-center justify-center py-4 pt-6 hidden  sm:flex">
+            <Button
+              link="/blogs"
+              content="Read All Articles"
+              className="text-white! rounded-full"
+            />
           </div>
         </div>
         <div className="block md:hidden">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, { sectionIntroSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type FeatureItem = {
   id: number;
@@ -20,23 +21,28 @@ const WhyUsSection = () => {
   return (
     <Section size="lg" className="relative min-h-screen w-full overflow-hidden bg-personalCare/10">
       <Container className="flex flex-col items-center">
-        <div className="mb-16 max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.22em] text-personalCare">
-            Why Personal Care
-          </span>
-          <h2 className="mt-5 text-4xl sm:text-5xl font-semibold leading-[0.98] tracking-tight text-personalCare">
-            Redefining gentle
-            <span className="ml-2 italic font-light text-personalCare/70">
-              protection and comfort.
+        <SectionIntro
+          align="center"
+          className={`${sectionIntroSpacing} max-w-3xl`}
+          eyebrow={
+            <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-personalCare sm:text-sm">
+              Why Personal Care
             </span>
-          </h2>
-          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-            Experience soft, breathable essentials designed to support your
-            everyday routine with comfort, confidence, and dependable care.
-          </p>
-        </div>
+          }
+          title={
+            <>
+              Redefining gentle
+              <span className="ml-2 italic font-light text-personalCare/70">
+                protection and comfort.
+              </span>
+            </>
+          }
+          description="Experience soft, breathable essentials designed to support your everyday routine with comfort, confidence, and dependable care."
+          titleClassName="text-4xl font-semibold leading-[0.98] tracking-tight text-personalCare sm:text-5xl"
+          descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
+        />
 
-        <div className="w-full relative min-h-125 lg:min-h-175 flex flex-col items-center justify-center isolate gap-10 lg:gap-0">
+        <div className="relative min-h-125 isolate flex w-full flex-col items-center justify-center gap-10 lg:min-h-175 lg:gap-0">
           {/* Mobile Layout - Top Triangle (Features 1, 2, 3) */}
           <div className="lg:hidden w-full space-y-4 z-20">
             {/* Point 1: Top Center */}

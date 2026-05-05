@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "../common-ui/Button";
+import SectionIntro, { sectionIntroSpacing } from "../common-ui/SectionIntro";
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 
@@ -12,21 +13,22 @@ const ContactSection = () => {
   return (
     <section className={cn("container mx-auto h-auto max-w-7xl px-0 lg:px-6")}>
       <div>
-        <div className="mb-4">
-          <div className="max-w-3xl py-2 sm:py-4">
-            <h2
-              className={cn(
-                "mt-2 text-[clamp(2rem,7vw,4rem)] font-semibold leading-[0.98]",
-                isPersonal ? "text-personalCare" : "text-foreground",
-              )}
-            >
-              Let&apos;s
-              <span className="ml-2 font-light italic">Talk</span>
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm font-medium leading-relaxed md:text-base">
-              Our team will get back to you as soon as possible.
-            </p>
-          </div>
+        <div className={sectionIntroSpacing}>
+          <SectionIntro
+            className="max-w-3xl py-2 sm:py-4"
+            title={
+              <>
+                Let&apos;s
+                <span className="ml-2 font-light italic">Talk</span>
+              </>
+            }
+            description="Our team will get back to you as soon as possible."
+            titleClassName={cn(
+              "text-[clamp(2rem,7vw,4rem)] font-semibold leading-[0.98]",
+              isPersonal ? "text-personalCare" : "text-foreground",
+            )}
+            descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          />
         </div>
 
         <div className="w-full flex flex-col gap-4">

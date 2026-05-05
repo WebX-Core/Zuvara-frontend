@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type AboutHeroSectionProps = {
   palette: AboutPalette;
@@ -35,31 +36,28 @@ export default function AboutHeroSection({
       <Container>
         <div className="relative overflow-hidden px-6 py-10 md:px-10 md:py-14 lg:px-14">
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <h1
-              className=" font-semibold text-2xl lg:text-5xl leading-none tracking-tight"
-              style={{
-                color: palette.accent,
-              }}
-            >
-              Gentle beginnings,
-              <span
-                className="ml-3 font-light italic"
-                style={{ color: palette.accentSoft }}
-              >
-                designed with intention.
-              </span>
-            </h1>
+            <SectionIntro
+              align="center"
+              titleAs="h1"
+              title={
+                <>
+                  Gentle beginnings,
+                  <span
+                    className="ml-3 font-light italic"
+                    style={{ color: palette.accentSoft }}
+                  >
+                    designed with intention.
+                  </span>
+                </>
+              }
+              description="We create baby essentials that blend comfort, safety, and a calmer visual world for modern families. Every detail is meant to feel reassuring from first use to everyday routine."
+              titleClassName="text-2xl font-semibold leading-none tracking-tight lg:text-5xl"
+              descriptionClassName="text-base font-medium leading-relaxed md:text-lg"
+              titleStyle={{ color: palette.accent }}
+              descriptionStyle={{ color: palette.body }}
+            />
 
-            <p
-              className="mx-auto mt-5 max-w-2xl font-medium text-base leading-relaxed md:text-lg"
-              style={{ color: palette.body }}
-            >
-              We create baby essentials that blend comfort, safety, and a calmer
-              visual world for modern families. Every detail is meant to feel
-              reassuring from first use to everyday routine.
-            </p>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className={`${sectionContentSpacing} flex flex-wrap justify-center gap-4`}>
               <Link
                 href={productHref}
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"

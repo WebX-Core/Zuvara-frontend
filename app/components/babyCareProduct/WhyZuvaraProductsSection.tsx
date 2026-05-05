@@ -7,6 +7,9 @@ import {
 import { hexToRgba, colors } from "@/lib/tokens";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
+import SectionIntro, {
+  sectionContentSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 type WhyZuvaraProductsSectionProps = {
   theme: BabyCareListingTheme;
@@ -41,7 +44,7 @@ export default function WhyZuvaraProductsSection({
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8 pb-10 lg:pb-36">
+    <section className="relative overflow-hidden bg-babyCare px-4 py-6 pb-16 sm:px-6 lg:px-8  lg:pb-36">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
@@ -49,39 +52,21 @@ export default function WhyZuvaraProductsSection({
 
       <div className="relative z-10 mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <span
-            className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em]"
-            style={{
-              borderColor: `${theme.border}66`,
-              backgroundColor: hexToRgba(theme.pageBg, 0.88),
-              color: theme.accent,
-            }}
-          >
-            Why Zuvara Products
-          </span>
-          <h2
-            className="mt-5 text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight"
-            style={{ color: theme.accent }}
-          >
-            Everyday care that feels
-            <span
-              className="ml-2 italic font-light"
-              style={{ color: theme.accentSoft }}
-            >
-              thoughtful and trusted.
-            </span>
-          </h2>
-          <p
-            className="mt-4 text-sm leading-relaxed font-medium md:text-base"
-            style={{ color: hexToRgba(theme.accent, 0.76) }}
-          >
-            Built for comfort, safety, and easier daily care.
-          </p>
-        </div>
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          title={<>Why Zuvara Products</>}
+          description="Built for comfort, safety, and easier daily care."
+          titleClassName="text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          titleStyle={{ color: theme.accent }}
+          descriptionStyle={{ color: hexToRgba(theme.accent, 0.76) }}
+        />
 
         {/* Cards */}
-        <div className="my-10 max-w-xl mx-auto grid grid-cols-2   md:grid gap-4 md:grid-cols-2 md:gap-6 ">
+        <div
+          className={`mx-auto ${sectionContentSpacing} grid max-w-xl grid-cols-2 gap-2 md:grid md:grid-cols-2 md:gap-6`}
+        >
           {reasons.map(({ title, icon: Icon }) => (
             <article
               key={title}
@@ -92,7 +77,7 @@ export default function WhyZuvaraProductsSection({
             >
               {/* Icon */}
               <div
-                className=" flex h-6 w-6 md:h-12 md:w-12 items-center justify-center rounded-xl"
+                className=" flex h-4 w-4 md:h-12 md:w-12 items-center justify-center rounded-xl"
                 style={{
                   backgroundColor: hexToRgba(theme.chipBg, 0.85),
                   color: theme.accent,
@@ -104,7 +89,7 @@ export default function WhyZuvaraProductsSection({
               {/* Text */}
               <div className="flex flex-col gap-2 text-left">
                 <h3
-                  className="text-sm md:text-base font-semibold"
+                  className="text-xs md:text-base font-medium"
                   style={{ color: theme.accent }}
                 >
                   {title}

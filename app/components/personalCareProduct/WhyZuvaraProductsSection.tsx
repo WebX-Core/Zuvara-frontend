@@ -1,6 +1,7 @@
 import { HeartHandshake, ShieldCheck, Sparkles } from "lucide-react";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { PersonalCareListingTheme } from "@/app/components/personalCareProduct/theme";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type WhyZuvaraProductsSectionProps = {
   theme: PersonalCareListingTheme;
@@ -30,40 +31,40 @@ export default function WhyZuvaraProductsSection({
   return (
     <section className="relative overflow-hidden px-4 py-8 md:px-0 md:py-20 bg-personalCare/10">
       <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <span
-            className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold"
-            style={{
-              borderColor: `${theme.border}66`,
-              backgroundColor: hexToRgba(theme.pageBg, 0.92),
-              color: theme.accent,
-            }}
-          >
-            Why Zuvara Products
-          </span>
-          <h2
-            className="mt-5 text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight"
-            style={{ color: theme.accent }}
-          >
-            Personal care that feels
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          eyebrow={
             <span
-              className="ml-2 italic font-light"
-              style={{ color: theme.accentSoft }}
+              className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold"
+              style={{
+                borderColor: `${theme.border}66`,
+                backgroundColor: hexToRgba(theme.pageBg, 0.92),
+                color: theme.accent,
+              }}
             >
-              discreet and dependable.
+              Why Zuvara Products
             </span>
-          </h2>
-          <p
-            className="mt-4 text-sm font-medium leading-relaxed md:text-base"
-            style={{ color: hexToRgba(theme.accent, 0.76) }}
-          >
-            Zuvara products are designed around the details that matter most:
-            comfort on sensitive days, dependable protection, and ease you can
-            carry into normal life.
-          </p>
-        </div>
+          }
+          title={
+            <>
+              Personal care that feels
+              <span
+                className="ml-2 italic font-light"
+                style={{ color: theme.accentSoft }}
+              >
+                discreet and dependable.
+              </span>
+            </>
+          }
+          description="Zuvara products are designed around the details that matter most: comfort on sensitive days, dependable protection, and ease you can carry into normal life."
+          titleClassName="text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          titleStyle={{ color: theme.accent }}
+          descriptionStyle={{ color: hexToRgba(theme.accent, 0.76) }}
+        />
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className={`${sectionContentSpacing} grid gap-4 md:grid-cols-3`}>
           {reasons.map(({ title, body, icon: Icon }) => (
             <article
               key={title}

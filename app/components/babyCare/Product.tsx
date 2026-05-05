@@ -274,21 +274,21 @@ const Product = () => {
         }
       `}</style>
       {/* ================= PRODUCT SECTION ================= */}
-      <section className="relative py-8 pb-12 lg:pb-28">
+      <section className="relative py-8 pb-12 lg:pb-40">
         <div
           className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
           dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
         />
         <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
-          <div className="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold leading-[0.95] tracking-tight text-baby-accent">
+          <div className="mb-2 flex flex-col items-center justify-center leading-8 gap-2 text-center">
+            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold  tracking-tight text-baby-accent">
               Best selling
-              <span className="ml-3 font-light italic text-baby-accent-soft">
+              <span className="ml-2  font-light italic text-baby-accent-soft">
                 baby essentials
               </span>
             </h2>
 
-            <p className="hero-copy mt-5 max-w-2xl text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
+            <p className="hero-copy mt-2 max-w-2xl text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
               Discover our most loved products, trusted by parents for comfort,
               quality, and everyday care.
             </p>
@@ -300,10 +300,10 @@ const Product = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 lg:px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 shrink-0 border ${
+                className={`px-4 lg:px-5 py-2.5 rounded-full  text-sm  font-semibold transition-all duration-300 flex items-center gap-2 shrink-0 border! ${
                   activeTab === tab.id
-                    ? "bg-babyCare text-foreground border-babyCare shadow-md"
-                    : "bg-white text-foreground border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
+                    ? "bg-babyCare text-foreground border-none border-baby-accent-soft shadow-md"
+                    : "bg-white text-foreground  border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
                 }`}
               >
                 <div className="relative w-6 h-6 shrink-0">
@@ -333,7 +333,7 @@ const Product = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
+            className="mt-4 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
           >
             {featuredProducts.map((product, index) =>
               renderProductCard(product, index),

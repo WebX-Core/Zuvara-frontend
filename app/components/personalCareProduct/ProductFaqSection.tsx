@@ -3,6 +3,7 @@ import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { PersonalCareListingTheme } from "@/app/components/personalCareProduct/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type ProductFaqSectionProps = {
   theme: PersonalCareListingTheme;
@@ -41,39 +42,40 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
       />
-      <div className="mx-auto max-w-3xl text-center">
-        <span
-          className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold"
-          style={{
-            borderColor: `${theme.border}66`,
-            backgroundColor: hexToRgba(theme.pageBg, 0.9),
-            color: theme.accent,
-          }}
-        >
-          Product FAQ
-        </span>
-        <h2
-          className="mt-5 text-5xl font-semibold leading-none tracking-tight"
-          style={{ color: theme.accent }}
-        >
-          Questions women ask
+      <SectionIntro
+        align="center"
+        className="mx-auto max-w-3xl"
+        eyebrow={
           <span
-            className="ml-2 italic font-light"
-            style={{ color: theme.accentSoft }}
+            className="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold"
+            style={{
+              borderColor: `${theme.border}66`,
+              backgroundColor: hexToRgba(theme.pageBg, 0.9),
+              color: theme.accent,
+            }}
           >
-            before they choose.
+            Product FAQ
           </span>
-        </h2>
-        <p
-          className="mt-4 text-sm leading-relaxed font-medium md:text-base"
-          style={{ color: hexToRgba(theme.accent, 0.74) }}
-        >
-          A quick guide to common questions around comfort, protection levels,
-          and choosing the right Zuvara personal care product.
-        </p>
-      </div>
+        }
+        title={
+          <>
+            Questions women ask
+            <span
+              className="ml-2 italic font-light"
+              style={{ color: theme.accentSoft }}
+            >
+              before they choose.
+            </span>
+          </>
+        }
+        description="A quick guide to common questions around comfort, protection levels, and choosing the right Zuvara personal care product."
+        titleClassName="text-5xl font-semibold leading-none tracking-tight"
+        descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+        titleStyle={{ color: theme.accent }}
+        descriptionStyle={{ color: hexToRgba(theme.accent, 0.74) }}
+      />
 
-      <div className="mx-auto mt-8 grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]">
+      <div className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}>
         <Accordions type="single" className="space-y-3 divide-y-0">
           {faqs.map((faq, index) => (
             <Accordion

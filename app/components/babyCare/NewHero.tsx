@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { wave1Svg, wave2Svg, wave4Svg } from "@/constants/svgs";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
+import SectionIntro from "@/app/components/common-ui/SectionIntro";
 import { colors } from "@/lib/tokens";
 
 export default function Home() {
@@ -365,20 +366,24 @@ export default function Home() {
                   />
                 </div>
                 <div className="px-4 pt-8 sm:pt-16 bg-[#bfdec9] sm:bg-white ">
-                  <p className="hero-copy text-xs font-semibold tracking-wide text-foreground lg:text-sm">
-                    Premium Baby Care Essentials
-                  </p>
-                  <h2 className="hero-copy mt-1 text-[1.8rem] font-semibold tracking-tight text-foreground lg:mt-4 lg:text-[2.8rem]">
-                    Tiny giggles,
-                    <span className="block font-light italic ">
-                      big comfort every day.
-                    </span>
-                  </h2>
-
-                  <p className="hero-copy hidden sm:block  max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground lg:mt-4 lg:text-[1.02rem]">
-                    Soft, safe essentials for life’s smallest, most precious
-                    moments.
-                  </p>
+                  <SectionIntro
+                    eyebrow={
+                      <p className="hero-copy text-xs font-semibold tracking-wide text-foreground lg:text-sm">
+                        Premium Baby Care Essentials
+                      </p>
+                    }
+                    title={
+                      <>
+                        Tiny giggles,
+                        <span className="block font-light italic ">
+                          big comfort every day.
+                        </span>
+                      </>
+                    }
+                    description="Soft, safe essentials for life’s smallest, most precious moments."
+                    titleClassName="hero-copy text-[1.8rem] font-semibold tracking-tight text-foreground lg:text-[2.8rem]"
+                    descriptionClassName="hero-copy hidden max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground sm:block lg:text-[1.02rem]"
+                  />
 
                   <div className="hero-copy  flex flex-col sm:flex-row  sm:justify-start gap-3 pt-8 lg:gap-4 lg:pt-3">
                     <Link href="/babyCareProduct">

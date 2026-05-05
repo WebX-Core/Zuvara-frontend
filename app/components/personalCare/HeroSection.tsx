@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 const comfortPoints = [
   "Ultra-thin comfort for everyday confidence",
@@ -17,22 +18,27 @@ const HeroSection = () => {
       <div className="relative mx-auto flex min-h-svh w-[92%] max-w-7xl flex-col justify-center py-12 sm:py-14 lg:py-16">
         <div className="grid items-center gap-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[0.95fr_0.85fr_1.05fr] lg:gap-8">
           <div className="max-w-xl pt-4 lg:self-center lg:pt-0">
-            <p className="inline-flex items-center gap-2 text-[11px] font-semibold text-personalCare/70">
-              <span className="size-1.5 rounded-full bg-personalCare/55" />
-              Feel the confidence
-            </p>
+            <SectionIntro
+              titleAs="h1"
+              className="max-w-xl"
+              eyebrow={
+                <p className="inline-flex items-center gap-2 text-[11px] font-semibold text-personalCare/70">
+                  <span className="size-1.5 rounded-full bg-personalCare/55" />
+                  Feel the confidence
+                </p>
+              }
+              title={
+                <>
+                  Comfort that stays{" "}
+                  <span className="italic font-thin">with you</span>
+                </>
+              }
+              description="Zuvara personal care essentials are made for breathable comfort, secure protection, and easy everyday wear without bulk."
+              titleClassName="text-4xl font-semibold leading-[0.95] tracking-tight text-zinc-900 sm:text-5xl lg:text-5xl"
+              descriptionClassName="max-w-lg text-sm font-medium leading-7 text-zinc-600 sm:text-base"
+            />
 
-            <h1 className="mt-5 text-4xl font-semibold leading-[0.95] tracking-tight text-zinc-900 sm:text-5xl lg:text-5xl">
-              Comfort that stays{" "}
-              <span className="italic font-thin">with you</span>
-            </h1>
-
-            <p className="mt-5 max-w-lg text-sm leading-7 font-medium text-zinc-600 sm:text-base">
-              Zuvara personal care essentials are made for breathable comfort,
-              secure protection, and easy everyday wear without bulk.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className={`${sectionContentSpacing} flex flex-wrap items-center gap-3`}>
               <Link
                 href="/personalCareProduct"
                 className="inline-flex items-center gap-2 rounded-full bg-personalCare px-6 py-3 text-sm font-semibold text-white! shadow-[0_18px_35px_rgba(219,39,119,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type TeamMember = {
   name: string;
@@ -25,32 +26,30 @@ export default function AboutTeamSection({
       style={{ backgroundColor: palette.panel }}
     >
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
-          <p
-            className="text-sm font-semibold"
-            style={{ color: palette.accentSoft }}
-          >
-            The Team
-          </p>
-          <h2
-            className="mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]"
-            style={{ color: palette.accent }}
-          >
-            The people shaping
-            <span className="ml-2 font-light italic">
-              the care behind Zuvara.
-            </span>
-          </h2>
-          <p
-            className="mt-4 text-sm leading-relaxed font-medium md:text-base"
-            style={{ color: palette.body }}
-          >
-            A multidisciplinary team bringing together product thinking, family
-            empathy, and a quieter, more refined standard for baby essentials.
-          </p>
-        </div>
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          eyebrow={
+            <p className="text-sm font-semibold" style={{ color: palette.accentSoft }}>
+              The Team
+            </p>
+          }
+          title={
+            <>
+              The people shaping
+              <span className="ml-2 font-light italic">
+                the care behind Zuvara.
+              </span>
+            </>
+          }
+          description="A multidisciplinary team bringing together product thinking, family empathy, and a quieter, more refined standard for baby essentials."
+          titleClassName="text-2xl font-semibold leading-[0.98] lg:text-5xl"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+          titleStyle={{ color: palette.accent }}
+          descriptionStyle={{ color: palette.body }}
+        />
 
-        <div className="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className={`${sectionContentSpacing} grid gap-3 sm:grid-cols-2 xl:grid-cols-3`}>
           {team.map((member) => (
             <article
               key={member.name}

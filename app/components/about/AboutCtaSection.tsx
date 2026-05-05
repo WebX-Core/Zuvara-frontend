@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 import type { AboutPalette } from "@/app/components/about/theme";
 import { Section, Container } from "@/app/components/layout";
 
@@ -64,16 +65,14 @@ export default function AboutCtaSection({
           </div>
 
           <div className="relative z-10 hidden md:block">
-            <p className="text-sm font-semibold text-white/72">Our Promise</p>
-            <h2 className="mt-4 text-3xl font-semibold leading-[0.98] text-white lg:text-5xl">
-              We make products that help families feel calmer, safer, and more
-              cared for.
-            </h2>
-            <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-white/84 md:text-lg">
-              That means better materials, more thoughtful design, and a standard
-              of everyday comfort parents can genuinely trust.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <SectionIntro
+              eyebrow={<p className="text-sm font-semibold text-white/72">Our Promise</p>}
+              title="We make products that help families feel calmer, safer, and more cared for."
+              description="That means better materials, more thoughtful design, and a standard of everyday comfort parents can genuinely trust."
+              titleClassName="text-3xl font-semibold leading-[0.98] text-white lg:text-5xl"
+              descriptionClassName="max-w-3xl text-sm leading-relaxed text-white/84 md:text-lg"
+            />
+            <div className={`${sectionContentSpacing} flex flex-wrap justify-center gap-4`}>
               <Link
                 href={productHref}
                 className="inline-flex rounded-full bg-white px-7 py-3 text-sm font-semibold"

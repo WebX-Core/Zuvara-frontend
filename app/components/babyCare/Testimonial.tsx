@@ -6,6 +6,10 @@ import { Star } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
 import { Section, Container } from "@/app/components/layout";
+import SectionIntro, {
+  sectionContentSpacing,
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, A11y } from "swiper/modules";
@@ -72,7 +76,7 @@ const Testimonials = () => {
   return (
     <Section
       size="md"
-      className="relative overflow-hidden bg-babyCare lg:pb-48"
+      className="relative overflow-hidden bg-babyCare pt-6 pb-8 md:pt-0 md:pb-12 lg:pb-48"
     >
       <div
         className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
@@ -113,16 +117,22 @@ const Testimonials = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          className={sectionIntroSpacing}
         >
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-2xl font-semibold text-foreground tracking-tight lg:text-5xl">
-              Hear from Our
-              <span className="font-light italic"> Happy Parents</span>
-            </h2>
-          </div>
+          <SectionIntro
+            align="center"
+            className="mx-auto max-w-3xl"
+            title={
+              <>
+                Hear from Our
+                <span className="font-light italic"> Happy Parents</span>
+              </>
+            }
+            titleClassName="text-2xl font-semibold tracking-tight text-foreground lg:text-5xl"
+          />
         </motion.div>
 
-        <div className="rounded-4xl py-5 sm:px-4 md:py-6">
+        <div className={`${sectionContentSpacing} rounded-4xl  sm:px-4 `}>
           {/* Header row */}
           <div className="mb-5 hidden sm:flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">

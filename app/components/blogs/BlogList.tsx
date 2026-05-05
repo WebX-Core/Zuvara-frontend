@@ -4,6 +4,7 @@ import { useSection } from "@/app/providers/SectionProvider";
 import { blogLists } from "@/constants";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import SectionIntro, { sectionIntroSpacing } from "@/app/components/common-ui/SectionIntro";
 
 import Link from "next/link";
 
@@ -13,23 +14,24 @@ const BlogList = () => {
 
   return (
     <section className="container mx-auto py-4 lg:py-8 px-4 sm:px-6 lg:px-8 w-[90%]">
-      <div className="mb-4 lg:mb-8">
-        <div
+      <div className={sectionIntroSpacing}>
+        <SectionIntro
+          align="center"
           className={cn(
-            "max-w-3xl mx-auto text-center py-4",
+            "mx-auto max-w-3xl py-4",
             isPersonal ? "text-personalCare" : "text-foreground",
           )}
-        >
-          <p className="text-sm font-semibold">Our Articles</p>
-          <h2 className="mt-4 text-2xl lg:text-5xl font-semibold leading-[0.98]">
-            Explore Our Expert
-            <span className="ml-2 font-light italic">Suggestions</span>
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed font-medium md:text-base">
-            We post the important articles daily so that you can learn and
-            implement them for your babies life.
-          </p>
-        </div>
+          eyebrow={<p className="text-sm font-semibold">Our Articles</p>}
+          title={
+            <>
+              Explore Our Expert
+              <span className="ml-2 font-light italic">Suggestions</span>
+            </>
+          }
+          description="We post the important articles daily so that you can learn and implement them for your babies life."
+          titleClassName="text-2xl font-semibold leading-[0.98] lg:text-5xl"
+          descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import { Section, Container, Stack } from "@/app/components/layout";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 import MobileProductCarousel from "./MobileProductCarousel";
 
 // Defining it inside caused remounts on every render, breaking Next/Image loading.
@@ -129,23 +130,28 @@ const ProductSection = () => {
     <Section size="md" className="relative overflow-hidden bg-white">
       <Container>
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
-            Signature products
-          </span>
-          <h2 className="mt-5 text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight text-personalCare">
-            Designed for everyday
-            <span className="ml-2 italic font-light text-personalCare/70">
-              comfort and confidence.
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          eyebrow={
+            <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+              Signature products
             </span>
-          </h2>
-          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-            Explore the personal care essentials built to feel soft, stay
-            dependable, and support your routine from day wear to overnight use.
-          </p>
-        </div>
+          }
+          title={
+            <>
+              Designed for everyday
+              <span className="ml-2 italic font-light text-personalCare/70">
+                comfort and confidence.
+              </span>
+            </>
+          }
+          description="Explore the personal care essentials built to feel soft, stay dependable, and support your routine from day wear to overnight use."
+          titleClassName="text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[0.98] tracking-tight text-personalCare"
+          descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
+        />
 
-        <div className="mt-10 lg:hidden">
+        <div className={`${sectionContentSpacing} lg:hidden`}>
           <MobileProductCarousel
             products={personalCareProducts}
             getProductHref={(product) => `/personalCareProduct/${product.slug}`}
@@ -154,7 +160,7 @@ const ProductSection = () => {
         </div>
 
         {/* ── Desktop: stacked layout ── */}
-        <Stack spacing="lg" className="mt-12 hidden lg:flex">
+        <Stack spacing="lg" className={`${sectionContentSpacing} hidden lg:flex`}>
           {personalCareProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

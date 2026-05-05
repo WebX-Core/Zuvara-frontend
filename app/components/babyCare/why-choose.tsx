@@ -2,18 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { colors } from "@/lib/tokens";
 import { Container } from "@/app/components/layout";
+import SectionIntro, {
+  sectionContentSpacing,
+  sectionIntroSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 import {
   Baby,
   Droplets,
   HeartHandshake,
   Leaf,
   ShieldAlert,
+  ShieldCheck,
   Sparkles,
   Star,
 } from "lucide-react";
@@ -68,6 +72,10 @@ const highlightPoints = [
     text: "Premium feel with a warm touch.",
     icon: Sparkles,
   },
+  {
+    text: "Snug, gentle fit.",
+    icon: ShieldCheck,
+  },
 ];
 
 const WhyChoose = () => {
@@ -110,46 +118,30 @@ const WhyChoose = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mx-auto mb-10 max-w-3xl text-center lg:mb-12"
+          className={`mx-auto ${sectionIntroSpacing} `}
         >
-          <p
-            className="inline-flex rounded-full bg-[#45695e] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white md:bg-white/85 md:text-baby-accent"
-            style={{
-              borderColor: `${palette.border}44`,
-            }}
-          >
-            Why Choose Zuvara
-          </p>
-          <h2
-            className="mt-5 text-3xl font-semibold tracking-tight lg:text-5xl"
-            style={{ color: palette.accent }}
-          >
-            Thoughtful baby care,
-            <span
-              className="ml-2 block font-light italic lg:inline"
-              style={{ color: palette.accentSoft }}
-            >
-              made simple.
-            </span>
-          </h2>
-          <p
-            className="mt-4 text-sm leading-relaxed font-medium lg:text-base"
-            style={{ color: palette.body }}
-          >
-            Soft, safe essentials designed to make everyday care easier.
-          </p>
+          <SectionIntro
+            align="center"
+            className="mx-auto max-w-3xl"
+            title="Why Choose Zuvara ?"
+            description="Soft, safe essentials designed to make everyday care easier."
+            titleClassName="text-3xl font-semibold tracking-tight lg:text-5xl"
+            descriptionClassName="text-sm font-medium leading-relaxed lg:text-base"
+            titleStyle={{ color: palette.accent }}
+            descriptionStyle={{ color: palette.body }}
+          />
         </motion.div>
 
-        <div className="relative overflow-hidden   md:py-6 lg:py-8">
+        <div className="relative overflow-hidden  ">
           <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 " />
-          <div className="grid grid-cols-2  gap-2  lg:grid-cols-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 max-w-5xl mx-auto">
             {trustStats.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
                   key={item.label}
-                  className="group flex items-center gap-2 rounded-xl border bg-[#f7fbf8] px-3 py-2 transition-all duration-200 hover:bg-white sm:flex-col sm:gap-4 sm:py-6 md:bg-white/85"
+                  className="group h-20 sm:h-30 flex items-center gap-2 rounded-xl border bg-white px-3 py-2 transition-all duration-200 hover:bg-white sm:flex-col sm:gap-4 sm:py-6 md:bg-white/85"
                   style={{
                     borderColor: `${palette.border}30`,
                   }}
@@ -196,30 +188,32 @@ const WhyChoose = () => {
               );
             })}
           </div>
-          <div className="mt-8 grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="why-rise relative z-10">
+          <div
+            className={`${sectionContentSpacing} flex items-center justify-center max-w-4xl w-full mx-auto`}
+          >
+            <div className="why-riserelative text-center z-10">
               <h3
-                className="text-2xl font-semibold leading-tight lg:text-3xl"
+                className="hidden sm:block text-2xl font-semibold leading-tight lg:text-3xl"
                 style={{ color: palette.accent }}
               >
                 Gentler care, every day
               </h3>
 
               <p
-                className="mt-4 max-w-xl text-sm font-medium leading-relaxed lg:text-base"
+                className="hidden sm:block mt-4  text-sm font-medium leading-relaxed lg:text-base"
                 style={{ color: palette.body }}
               >
                 Soft care and reliable protection for everyday routines.
               </p>
 
-              <div className="mt-6 space-y-3">
+              <div className="md:mt-6  mx-auto grid md:grid-cols-2   gap-2">
                 {highlightPoints.map((point) => {
                   const PointIcon = point.icon;
 
                   return (
                     <div
                       key={point.text}
-                      className="flex items-center gap-3 rounded-3xl border bg-[#f7fbf8] px-4 py-3 transition-all duration-300 hover:bg-white md:bg-white/10 md:hover:bg-white/75"
+                      className="flex gap-2 items-center rounded-3xl border bg-[#f7fbf8] sm:text-center py-2 px-4 transition-all duration-300 hover:bg-white md:bg-white/10 md:hover:bg-white/75"
                       style={{
                         borderColor: `${palette.border}40`,
                         color: palette.accent,
@@ -235,81 +229,17 @@ const WhyChoose = () => {
                   );
                 })}
               </div>
-
-              <Link
-                href="/about"
-                className="mt-7 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white!  transition-all duration-300 hover:-translate-y-px hover:shadow-[0_16px_30px_rgba(69,104,94,0.3)]"
-                style={{ backgroundColor: palette.accent }}
-              >
-                About Zuvara
-              </Link>
-            </div>
-
-            <div className="why-rise relative hidden md:block">
-              <div className="grid gap-4 lg:grid-cols-2">
-                <div className="grid gap-4">
-                  <div
-                    className="rounded-4xl border bg-[#f7fbf8] p-5 md:bg-white/30"
-                    style={{
-                      borderColor: `${palette.border}44`,
-                    }}
-                  >
-                    <p
-                      className="text-xs font-semibold uppercase tracking-[0.16em] "
-                      style={{ color: palette.accentSoft }}
-                    >
-                      Everyday Calm
-                    </p>
-                    <p
-                      className="mt-3 text-lg font-semibold"
-                      style={{ color: palette.accent }}
-                    >
-                      Designed to look softer and feel better in every routine.
-                    </p>
-                  </div>
-
-                  <div
-                    className="relative overflow-hidden rounded-4xl border bg-[#f7fbf8] md:bg-white/80"
-                    style={{
-                      minHeight: "13rem",
-                      borderColor: `${palette.border}44`,
-                    }}
-                  >
-                    <Image
-                      src="/images/baby/baby24.png"
-                      alt="Happy baby portrait"
-                      fill
-                      className="object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                </div>
-
-                <div
-                  className="relative overflow-hidden rounded-4xl border bg-[linear-gradient(180deg,#f7fbf8_0%,#edf5f1_100%)] md:bg-none"
-                  style={{
-                    minHeight: "28rem",
-                    borderColor: `${palette.border}44`,
-                    background:
-                      "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(237,245,241,0.94) 100%)",
-                  }}
-                >
-                  <div
-                    className="pointer-events-none absolute inset-x-8 bottom-3 h-16 rounded-full blur-2xl overflow-hidden"
-                    style={{ backgroundColor: "rgba(255,255,255,0.82)" }}
-                  />
-                  <Image
-                    src="/images/baby/baby20.png"
-                    alt="Zuvara baby care visual"
-                    fill
-                    className="object-cover object-bottom  transition-transform duration-500 hover:scale-105"
-                  />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/85 px-4 py-2 text-xs font-semibold text-baby-accent">
-                    Premium baby care
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <Link
+            href="/about"
+            className="my-4 md:mb-6 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white!  transition-all duration-300 hover:-translate-y-px "
+            style={{ backgroundColor: palette.accent }}
+          >
+            Learn More About Us
+          </Link>
         </div>
       </Container>
     </section>

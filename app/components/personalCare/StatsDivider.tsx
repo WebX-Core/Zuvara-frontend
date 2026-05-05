@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 type StatItem = {
   id: number;
@@ -45,23 +46,28 @@ const StatsDivider = () => {
       </div>
 
       <div className="mx-auto w-[92%] max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-personalCare/20 bg-white/80 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
-            Everyday performance
-          </span>
-          <h2 className="mt-5 text-5xl font-semibold leading-[0.98] tracking-tight text-personalCare">
-            Protection details that feel
-            <span className="ml-2 italic font-light text-personalCare/70">
-              calm, light, and reliable.
+        <SectionIntro
+          align="center"
+          className="mx-auto max-w-3xl"
+          eyebrow={
+            <span className="inline-flex rounded-full border border-personalCare/20 bg-white/80 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
+              Everyday performance
             </span>
-          </h2>
-          <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-            Designed to keep comfort and confidence balanced across long days,
-            active movement, and everyday wear.
-          </p>
-        </div>
+          }
+          title={
+            <>
+              Protection details that feel
+              <span className="ml-2 italic font-light text-personalCare/70">
+                calm, light, and reliable.
+              </span>
+            </>
+          }
+          description="Designed to keep comfort and confidence balanced across long days, active movement, and everyday wear."
+          titleClassName="text-5xl font-semibold leading-[0.98] tracking-tight text-personalCare"
+          descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
+        />
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className={`${sectionContentSpacing} grid gap-4 md:grid-cols-2 xl:grid-cols-3`}>
           {statsLists.map((list) => (
             <article
               key={list.id}

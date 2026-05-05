@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+import SectionIntro from "./SectionIntro";
 
 interface SectionHeadingProps {
-  title: string;
+  title: ReactNode;
   titleClassName?: string;
-  highlight?: string;
-  description?: string;
+  highlight?: ReactNode;
+  description?: ReactNode;
   className?: string;
   descClassName?: string;
   highlighterColor?: string;
@@ -31,25 +33,24 @@ const SectionHeading = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className={`${alignClasses} mb-4 lg:space-y-2 ${className}`}
+      className={className}
     >
-      <h2
-        className={`text-2xl lg:text-4xl font-bold text-foreground font-poppins ${titleClassName}`}
-      >
-        {title}{" "}
-        {highlight && (
-          <span className={`text-[#8cd700] ${highlighterColor}`}>
-            {highlight}
-          </span>
-        )}
-      </h2>
-      {description && (
-        <p
-          className={`text-lg text-zinc-600 text-center max-w-2xl mx-auto ${descClassName}`}
-        >
-          {description}
-        </p>
-      )}
+      <SectionIntro
+        align={align}
+        title={
+          <>
+            {title}{" "}
+            {highlight ? (
+              <span className={`text-[#8cd700] ${highlighterColor ?? ""}`}>
+                {highlight}
+              </span>
+            ) : null}
+          </>
+        }
+        description={description}
+        titleClassName={`text-2xl font-bold text-foreground font-poppins lg:text-4xl ${titleClassName ?? ""}`}
+        descriptionClassName={`text-lg text-zinc-600 ${alignClasses} ${descClassName ?? ""}`}
+      />
     </motion.div>
   );
 };

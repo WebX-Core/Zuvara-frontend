@@ -153,7 +153,9 @@ export default function Footer() {
               : "bg-foreground text-babyCare",
           )}
         >
-          <CrawlingBaby />
+          <div className="hidden md:block">
+            <CrawlingBaby />
+          </div>
           <h3 className="text-lg sm:text-xl md:pl-4 font-medium">
             {isPersonal
               ? "Zuvara would be the perfect choice for your personal care needs!"
