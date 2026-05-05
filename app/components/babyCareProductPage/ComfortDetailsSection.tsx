@@ -36,7 +36,7 @@ export default function ComfortDetailsSection({
               active and sleepy moments.
             </p>
           </div>
-          <div className="flex gap-3 text-xs font-semibold tracking-wide md:text-sm">
+          <div className="flex flex-col sm:flex-row gap-3 text-xs font-semibold tracking-wide md:text-sm">
             {["Dermatologically Tested", "12hr Leak Guard"].map((chip) => (
               <span
                 key={chip}

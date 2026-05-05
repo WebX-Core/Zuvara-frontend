@@ -6,7 +6,9 @@ import { motion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import { Section, Container, Stack } from "@/app/components/layout";
-import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import SectionIntro, {
+  sectionContentSpacing,
+} from "@/app/components/common-ui/SectionIntro";
 import MobileProductCarousel from "./MobileProductCarousel";
 
 // Defining it inside caused remounts on every render, breaking Next/Image loading.
@@ -27,7 +29,7 @@ const ProductCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 shadow-[0_22px_44px_rgba(24,24,27,0.06)] sm:p-6 lg:p-10"
+      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5  sm:p-6 lg:p-10"
     >
       <div className="grid items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 p-2">
         {/* Left: Text */}
@@ -160,7 +162,10 @@ const ProductSection = () => {
         </div>
 
         {/* ── Desktop: stacked layout ── */}
-        <Stack spacing="lg" className={`${sectionContentSpacing} hidden lg:flex`}>
+        <Stack
+          spacing="lg"
+          className={`${sectionContentSpacing} hidden lg:flex`}
+        >
           {personalCareProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

@@ -7,6 +7,7 @@ import { Section, Container } from "@/app/components/layout";
 import { ArrowRight } from "lucide-react";
 
 type AboutCtaSectionProps = {
+  isPersonal: boolean;
   palette: AboutPalette;
   productHref: string;
   sectionBg: string;
@@ -14,13 +15,12 @@ type AboutCtaSectionProps = {
 };
 
 export default function AboutCtaSection({
+  isPersonal,
   palette,
   productHref,
   sectionBg,
   panelBg,
 }: AboutCtaSectionProps) {
-  const hasFilledPanel = Boolean(panelBg);
-
   return (
     <Section
       size="sm"
@@ -43,10 +43,10 @@ export default function AboutCtaSection({
                 <p
                   className="w-fit rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]"
                   style={{
-                    backgroundColor: hasFilledPanel
+                    backgroundColor: isPersonal
                       ? "rgba(255,255,255,0.14)"
                       : "#ffffff",
-                    color: hasFilledPanel ? "#ffffff" : palette.accent,
+                    color: isPersonal ? "#ffffff" : palette.accent,
                   }}
                 >
                   Our Promise
@@ -54,7 +54,7 @@ export default function AboutCtaSection({
 
                 <h2
                   className="mt-4 text-2xl font-semibold leading-[1.02]"
-                  style={{ color: hasFilledPanel ? "#ffffff" : palette.accent }}
+                  style={{ color: isPersonal ? "#ffffff" : palette.accent }}
                 >
                   Products that help families feel calmer, safer, and cared for.
                 </h2>
@@ -98,10 +98,10 @@ export default function AboutCtaSection({
                 href="/contact"
                 className="inline-flex rounded-full border px-7 py-3 text-sm font-semibold"
                 style={{
-                  borderColor: hasFilledPanel
+                  borderColor: isPersonal
                     ? "rgba(255,255,255,0.38)"
                     : `${palette.accent}44`,
-                  color: hasFilledPanel ? "white" : palette.accent,
+                  color: isPersonal ? "white" : palette.accent,
                 }}
               >
                 Talk to Zuvara

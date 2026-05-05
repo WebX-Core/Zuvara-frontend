@@ -174,11 +174,11 @@ const comparisonRows = [
 
 const themePresets: ThemePreset[] = [
   {
-    accent:      colors.baby.accent,
-    pageBg:      colors.baby.hero,
+    accent: colors.baby.accent,
+    pageBg: colors.baby.hero,
     containerBg: colors.baby.chip,
-    border:      colors.baby.border,
-    chipBg:      colors.baby.chip,
+    border: colors.baby.border,
+    chipBg: colors.baby.chip,
     sectionTint: colors.baby.panel,
   },
   {
@@ -220,15 +220,6 @@ function pickHeroPack(p: Product) {
   return p.heroImage || p.image || pickHeroBaby(p);
 }
 
-const MOBILE_CAROUSEL_CENTER = -(100 / 3);
-const MOBILE_CAROUSEL_NEXT = -(200 / 3);
-const MOBILE_CAROUSEL_PREV = 0;
-
-function shouldIgnoreCarouselSwipe(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false;
-  return target.closest("[data-carousel-swipe-ignore='true']") !== null;
-}
-
 export default function Page() {
   const params = useParams<{ babyCareProductPage: string }>();
   const slug = params?.babyCareProductPage;
@@ -240,30 +231,12 @@ export default function Page() {
   );
   const [activeIdx, setActiveIdx] = useState(initialIndex);
   const rootRef = useRef<HTMLElement | null>(null);
-  const carouselTrackRef = useRef<HTMLDivElement | null>(null);
-  const carouselViewportRef = useRef<HTMLDivElement | null>(null);
-  const carouselTouchStartXRef = useRef<number | null>(null);
-  const carouselTouchStartYRef = useRef<number | null>(null);
-  const carouselTouchDeltaXRef = useRef(0);
-  const carouselSwipeLockRef = useRef<"x" | "y" | null>(null);
-  const carouselAnimatingRef = useRef(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const active =
     products.length > 0
       ? products[clampIndex(activeIdx, products.length)]
       : product || babyCareProducts[0];
   const theme = themePresets[clampIndex(activeIdx, themePresets.length)];
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
-
-    updateIsMobile();
-    mediaQuery.addEventListener("change", updateIsMobile);
-
-    return () => mediaQuery.removeEventListener("change", updateIsMobile);
-  }, []);
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -287,8 +260,6 @@ export default function Page() {
   }, []);
 
   useLayoutEffect(() => {
-    if (isMobile) return;
-
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const sections = gsap.utils.toArray<HTMLElement>(".immersive-section");
@@ -317,12 +288,7 @@ export default function Page() {
     }, rootRef);
 
     return () => ctx.revert();
-  }, [active?.id, isMobile, theme.accent]);
-
-  useLayoutEffect(() => {
-    if (!isMobile || !carouselTrackRef.current) return;
-    gsap.set(carouselTrackRef.current, { xPercent: MOBILE_CAROUSEL_CENTER });
-  }, [activeIdx, isMobile]);
+  }, [active?.id, theme.accent]);
 
   if (!product || !active) {
     return <ProductNotFound />;
@@ -385,7 +351,6 @@ export default function Page() {
           onNext={() => setActiveIdx((v) => v + 1)}
           onSelectProduct={setActiveIdx}
           pickHeroPack={pickHeroPack}
-          enableMobileSwipe={false}
         />
 
         {/* <WhyTouchMattersSection
@@ -426,191 +391,21 @@ export default function Page() {
     );
   };
 
-  const carouselWindowIndexes = [
-    clampIndex(activeIdx - 1, products.length),
-    clampIndex(activeIdx, products.length),
-    clampIndex(activeIdx + 1, products.length),
-  ];
-
-  const handleCarouselTouchStart = (
-    event: React.TouchEvent<HTMLDivElement>,
-  ) => {
-    if (!isMobile || carouselAnimatingRef.current) return;
-    if (shouldIgnoreCarouselSwipe(event.target)) {
-      carouselTouchStartXRef.current = null;
-      carouselTouchStartYRef.current = null;
-      carouselSwipeLockRef.current = null;
-      return;
-    }
-    if (carouselTrackRef.current) {
-      gsap.killTweensOf(carouselTrackRef.current);
-    }
-    carouselAnimatingRef.current = false;
-    carouselTouchStartXRef.current = event.touches[0]?.clientX ?? null;
-    carouselTouchStartYRef.current = event.touches[0]?.clientY ?? null;
-    carouselTouchDeltaXRef.current = 0;
-    carouselSwipeLockRef.current = null;
-  };
-
-  const handleCarouselTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (
-      !isMobile ||
-      carouselTouchStartXRef.current == null ||
-      carouselTouchStartYRef.current == null
-    ) {
-      return;
-    }
-
-    const touch = event.touches[0];
-    const deltaX = touch.clientX - carouselTouchStartXRef.current;
-    const deltaY = touch.clientY - carouselTouchStartYRef.current;
-
-    if (!carouselSwipeLockRef.current) {
-      if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) return;
-      carouselSwipeLockRef.current =
-        Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
-    }
-
-    if (carouselSwipeLockRef.current === "x" && event.cancelable) {
-      event.preventDefault();
-      carouselTouchDeltaXRef.current = deltaX;
-
-      if (carouselTrackRef.current) {
-        const slideWidth = carouselViewportRef.current?.offsetWidth || 1;
-        const deltaPercent = (deltaX / slideWidth) * (100 / 3);
-        const currentPercent = MOBILE_CAROUSEL_CENTER;
-
-        gsap.set(carouselTrackRef.current, {
-          xPercent: currentPercent + deltaPercent,
-        });
-      }
-    }
-  };
-
-  const handleCarouselTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (
-      !isMobile ||
-      carouselAnimatingRef.current ||
-      carouselTouchStartXRef.current == null ||
-      carouselTouchStartYRef.current == null
-    ) {
-      return;
-    }
-
-    const touchEndX =
-      event.changedTouches[0]?.clientX ?? carouselTouchStartXRef.current;
-    const touchEndY =
-      event.changedTouches[0]?.clientY ?? carouselTouchStartYRef.current;
-    const swipeDistanceX = touchEndX - carouselTouchStartXRef.current;
-    const swipeDistanceY = touchEndY - carouselTouchStartYRef.current;
-    carouselTouchStartXRef.current = null;
-    carouselTouchStartYRef.current = null;
-    const swipeLock = carouselSwipeLockRef.current;
-    carouselSwipeLockRef.current = null;
-
-    if (swipeLock !== "x") return;
-    if (Math.abs(swipeDistanceX) < Math.abs(swipeDistanceY)) return;
-
-    if (swipeDistanceX <= -60) {
-      if (carouselTrackRef.current) {
-        carouselAnimatingRef.current = true;
-        gsap.to(carouselTrackRef.current, {
-          xPercent: MOBILE_CAROUSEL_NEXT,
-          duration: 0.28,
-          ease: "power3.out",
-          overwrite: true,
-          onComplete: () => {
-            setActiveIdx((value) => value + 1);
-            carouselAnimatingRef.current = false;
-          },
-        });
-      }
-      return;
-    }
-
-    if (swipeDistanceX >= 60) {
-      if (carouselTrackRef.current) {
-        carouselAnimatingRef.current = true;
-        gsap.to(carouselTrackRef.current, {
-          xPercent: MOBILE_CAROUSEL_PREV,
-          duration: 0.28,
-          ease: "power3.out",
-          overwrite: true,
-          onComplete: () => {
-            setActiveIdx((value) => value - 1);
-            carouselAnimatingRef.current = false;
-          },
-        });
-      }
-      return;
-    }
-
-    if (carouselTrackRef.current) {
-      carouselAnimatingRef.current = true;
-      gsap.to(carouselTrackRef.current, {
-        xPercent: MOBILE_CAROUSEL_CENTER,
-        duration: 0.28,
-        ease: "power3.out",
-        overwrite: true,
-        onComplete: () => {
-          carouselAnimatingRef.current = false;
-        },
-      });
-    }
-  };
-
   return (
     <main
       ref={rootRef}
       className="relative overflow-hidden text-zinc-800 antialiased md:transition-colors md:duration-500"
       style={{ backgroundColor: theme.pageBg }}
     >
-      {isMobile ? (
-        <div
-          ref={carouselViewportRef}
-          className="overflow-hidden"
-          onTouchStart={handleCarouselTouchStart}
-          onTouchMove={handleCarouselTouchMove}
-          onTouchEnd={handleCarouselTouchEnd}
-        >
-          <div
-            ref={carouselTrackRef}
-            className="flex w-full"
-            style={{ width: "300%" }}
-          >
-            {carouselWindowIndexes.map((productIndex, windowIndex) => {
-              const carouselProduct = products[productIndex];
-              const { theme: currentTheme } = getRenderData(
-                carouselProduct,
-                productIndex,
-              );
-
-              return (
-                <section
-                  key={`${carouselProduct.id}-${windowIndex}`}
-                  className="relative w-full shrink-0 overflow-hidden"
-                  style={{
-                    backgroundColor: currentTheme.pageBg,
-                    width: "33.333333%",
-                  }}
-                >
-                  {renderPageContent(carouselProduct, productIndex)}
-                </section>
-              );
-            })}
-          </div>
-        </div>
-      ) : (
-        <div className="relative">
-          {renderPageContent(active, clampIndex(activeIdx, products.length))}
-        </div>
-      )}
+      <div className="relative">
+        {renderPageContent(active, clampIndex(activeIdx, products.length))}
+      </div>
 
       <button
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Scroll to top"
-        className={`fixed right-5 bottom-5 z-40 flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_18px_32px_rgba(0,0,0,0.16)] transition-all duration-300 md:right-8 md:bottom-8 ${
+        className={`fixed bottom-4 left-4 z-40 flex h-10 w-10 items-center justify-center rounded-full border shadow-[0_18px_32px_rgba(0,0,0,0.16)] transition-all duration-300 sm:h-12 sm:w-12 ${
           showScrollTop
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0"

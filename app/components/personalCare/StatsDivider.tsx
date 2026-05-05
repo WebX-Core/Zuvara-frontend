@@ -1,5 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import { Pagination, A11y, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
 
 type StatItem = {
   id: number;
@@ -34,6 +40,41 @@ const statsLists: StatItem[] = [
 ];
 
 const StatsDivider = () => {
+  const renderStatCard = (list: StatItem) => (
+    <article
+      key={list.id}
+      className="group relative isolate overflow-hidden rounded-[1.8rem] border border-personalCare/12 bg-linear-to-br from-white via-white to-personalCare/10 p-6 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
+    >
+      <div className="relative z-10">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-linear-to-br from-personalCare to-personalCare/80 shadow-[0_18px_34px_rgba(219,39,119,0.22)]">
+            <Image
+              src={list.icon}
+              alt={list.title}
+              width={34}
+              height={34}
+              className="invert"
+            />
+          </div>
+          <span className="rounded-full bg-personalCare/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-personalCare">
+            {list.eyebrow}
+          </span>
+        </div>
+
+        <h3 className="mt-6 text-2xl font-semibold tracking-tight text-zinc-900">
+          {list.title}
+        </h3>
+        <p className="mt-3 max-w-sm text-sm font-medium leading-6 text-zinc-600">
+          {list.desc}
+        </p>
+
+        <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-personalCare/8">
+          <div className="h-full w-2/3 rounded-full bg-linear-to-r from-personalCare to-personalCare/70 transition-all duration-300 group-hover:w-full" />
+        </div>
+      </div>
+    </article>
+  );
+
   return (
     <section className="relative overflow-hidden bg-personalCare/6 py-16 lg:py-20">
       <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-personalCare/20 to-transparent">
@@ -46,6 +87,32 @@ const StatsDivider = () => {
       </div>
 
       <div className="mx-auto w-[92%] max-w-7xl">
+        <style>{`
+          .stats-swiper .swiper-pagination {
+            position: static;
+            margin-top: 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+          }
+          .stats-swiper .swiper-pagination-bullet {
+            width: 0.7rem;
+            height: 0.625rem;
+            border-radius: 9999px;
+            background: rgba(130, 0, 219, 0.18);
+            opacity: 1;
+            transition: width 0.3s, background 0.3s;
+            margin: 0 !important;
+          }
+          .stats-swiper .swiper-pagination-bullet-active {
+            width: 2.8rem;
+            background: #8200db;
+          }
+          .stats-swiper .swiper-slide {
+            height: auto;
+          }
+        `}</style>
         <SectionIntro
           align="center"
           className="mx-auto max-w-3xl"
@@ -67,41 +134,31 @@ const StatsDivider = () => {
           descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
         />
 
-        <div className={`${sectionContentSpacing} grid gap-4 md:grid-cols-2 xl:grid-cols-3`}>
-          {statsLists.map((list) => (
-            <article
-              key={list.id}
-              className="group relative isolate overflow-hidden rounded-[1.8rem] border border-personalCare/12 bg-linear-to-br from-white via-white to-personalCare/10 p-6 shadow-[0_20px_48px_rgba(24,24,27,0.08)] backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1"
-            >
-              <div className="relative z-10">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-linear-to-br from-personalCare to-personalCare/80 shadow-[0_18px_34px_rgba(219,39,119,0.22)]">
-                    <Image
-                      src={list.icon}
-                      alt={list.title}
-                      width={34}
-                      height={34}
-                      className="invert"
-                    />
-                  </div>
-                  <span className="rounded-full bg-personalCare/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-personalCare">
-                    {list.eyebrow}
-                  </span>
-                </div>
+        <div className={`${sectionContentSpacing} md:hidden`}>
+          <Swiper
+            className="stats-swiper"
+            modules={[Autoplay, Pagination, A11y]}
+            slidesPerView={1.08}
+            spaceBetween={16}
+            grabCursor={true}
+            loop={true}
+            autoplay={{
+              delay: 4200,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{ clickable: true }}
+          >
+            {statsLists.map((list) => (
+              <SwiperSlide key={list.id} className="pb-1">
+                {renderStatCard(list)}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
-                <h3 className="mt-6 text-2xl font-semibold tracking-tight text-zinc-900">
-                  {list.title}
-                </h3>
-                <p className="mt-3 max-w-sm text-sm font-medium leading-6 text-zinc-600">
-                  {list.desc}
-                </p>
-
-                <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-personalCare/8">
-                  <div className="h-full w-2/3 rounded-full bg-linear-to-r from-personalCare to-personalCare/70 transition-all duration-300 group-hover:w-full" />
-                </div>
-              </div>
-            </article>
-          ))}
+        <div className={`${sectionContentSpacing} hidden gap-4 md:grid md:grid-cols-2 xl:grid-cols-3`}>
+          {statsLists.map((list) => renderStatCard(list))}
         </div>
       </div>
     </section>

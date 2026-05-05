@@ -1,7 +1,7 @@
 "use client";
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { Check, ChevronRight, LinkIcon } from "lucide-react";
+import { Check, ChevronDown, LinkIcon } from "lucide-react";
 import {
   forwardRef,
   type ComponentPropsWithoutRef,
@@ -36,10 +36,7 @@ export const Accordions = forwardRef<
 
   const commonProps = {
     ref,
-    className: cn(
-      "divide-y divide-babyCare overflow-hidden",
-      className,
-    ),
+    className: cn("overflow-hidden", className),
     ...props,
   };
 
@@ -89,17 +86,17 @@ export const Accordion = forwardRef<
       >
         <AccordionPrimitive.Trigger
           className={cn(
-            "flex flex-1 items-center gap-2 p-4 text-start",
+            "flex w-full flex-1 items-center justify-between gap-4 px-4 py-3 text-start",
             triggerClassName,
           )}
           style={triggerStyle}
         >
-          <ChevronRight className="-ms-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]/accordion:rotate-90" />
-          {title}
+          <span className="flex-1">{title}</span>
+          <ChevronDown className="h-4 w-4 shrink-0 self-center text-muted-foreground transition-transform duration-200 group-data-[state=open]/accordion:rotate-180" />
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
       <AccordionPrimitive.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-        <div className="text-muted-foreground p-4 pt-0 prose-no-margin">
+        <div className="prose-no-margin px-4 pb-3 pt-0 text-muted-foreground">
           {children}
         </div>
       </AccordionPrimitive.Content>

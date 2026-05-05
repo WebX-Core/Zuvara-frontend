@@ -70,15 +70,14 @@ export default function PersonalProductHeroSection({
       className="relative overflow-hidden px-4"
       animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
       transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
+      drag={isMobile && enableMobileSwipe ? "x" : false}
+      dragElastic={0.22}
+      dragSnapToOrigin
+      onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
+      style={{ touchAction: enableMobileSwipe ? "pan-y" : "auto" }}
     >
       <div className="relative mx-auto max-w-7xl pb-10 md:pt-10 md:pb-14">
-        <motion.div
-          className="relative pt-4 sm:mt-10"
-          drag={isMobile && enableMobileSwipe ? "x" : false}
-          dragElastic={0.22}
-          dragSnapToOrigin
-          onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
-        >
+        <div className="relative pt-4 sm:mt-10">
           <div className="hidden w-full items-center justify-between md:order-0 md:flex md:py-12">
             <div className="min-w-0">
               <h2
@@ -131,7 +130,7 @@ export default function PersonalProductHeroSection({
               </motion.div>
             </AnimatePresence>
           </div>
-        </motion.div>
+        </div>
 
         <div
           className="relative min-h-100 overflow-hidden rounded-4xl px-6 pb-8 pt-8 md:h-100 md:pb-16 md:pt-20 lg:px-10 lg:pt-30 md:transition-colors md:duration-500"

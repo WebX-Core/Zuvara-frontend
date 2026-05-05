@@ -29,22 +29,18 @@ const FaqSection = ({
     <div className="space-y-4">
       <Accordions
         type="single"
-        className="w-full space-y-3 [perspective-distant]"
+        className="w-full space-y-1 [perspective-distant]"
       >
         {faqs.map((faq, index) => (
           <Accordion
             key={index}
             id={`faq-${index}`}
             title={faq.question}
-            className="fx-rise overflow-hidden rounded-2xl border px-4 md:px-5 transition-transform duration-500 hover:-translate-y-1"
-            triggerClassName="py-4 text-left text-sm font-semibold md:text-base hover:no-underline"
+            className="fx-rise overflow-hidden rounded-2xl px-2 md:px-3 transition-transform duration-500 hover:-translate-y-1"
+            triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
             triggerStyle={{ color: headingColor }}
-            style={{
-              borderColor: `${headingColor}33`,
-              backgroundColor: `${headingColor}08`,
-            }}
           >
-            <div className="pb-4 pt-1">
+            <div className="pb-2 pt-1">
               <p
                 className="whitespace-pre-line text-sm font-medium leading-relaxed md:text-base"
                 style={{ color: bodyColor }}

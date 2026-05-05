@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as ProductType } from "@/type/personalCareProductType";
 import SectionIntro, {
@@ -25,16 +26,11 @@ const personalDetailPagePaletteBySlug: Record<
 };
 
 const ProductList = () => {
-  const getDescription = (product: ProductType) =>
-    product.description ??
-    "Premium product designed for everyday comfort and reliable care.";
-
   const getCardTheme = (product: ProductType) => {
-    const detailPalette =
-      personalDetailPagePaletteBySlug[product.slug] ?? {
-        background: "#f0e2fb",
-        foreground: "#7b2cbf",
-      };
+    const detailPalette = personalDetailPagePaletteBySlug[product.slug] ?? {
+      background: "#f0e2fb",
+      foreground: "#7b2cbf",
+    };
 
     return {
       background: detailPalette.background,
@@ -66,7 +62,9 @@ const ProductList = () => {
         titleClassName="text-5xl font-semibold leading-[0.95] tracking-tight text-personalCare"
         descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
       />
-      <div className={`${sectionContentSpacing} flex flex-wrap justify-center gap-5`}>
+      <div
+        className={`${sectionContentSpacing} grid grid-cols-2 gap-2 justify-center `}
+      >
         {personalCareProducts.map((product, index) => {
           const cardTheme = getCardTheme(product);
 
@@ -81,54 +79,40 @@ const ProductList = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.06, duration: 0.45 }}
                 viewport={{ once: true }}
-                className="flex h-full flex-col justify-center rounded-2xl border p-3"
-                style={{
-                  borderColor: cardTheme.border,
-                  backgroundColor: cardTheme.background,
-                }}
+                className="flex h-full  flex-col gap-4 rounded-4xl transition-transform duration-300 group-hover:-translate-y-1"
               >
                 <div
-                  className="relative h-44 overflow-hidden rounded-2xl"
-                  style={{ backgroundColor: cardTheme.chip }}
+                  className="relative flex h-40 items-center justify-center overflow-hidden rounded-[1.75rem] py-2 sm:h-56"
+                  style={{ backgroundColor: cardTheme.background }}
                 >
-                  <span
-                    className="absolute top-3 left-3 z-10 text-[10px] font-semibold uppercase tracking-wider"
-                    style={{ color: `${cardTheme.foreground}cc` }}
-                  >
-                    {product.category}
-                  </span>
+                  <div
+                    className="pointer-events-none absolute inset-x-6 bottom-4 h-9 rounded-full blur-2xl"
+                    style={{ backgroundColor: `${cardTheme.foreground}2e` }}
+                  />
                   <Image
                     src={product.image || product.variants?.[0]?.image}
                     alt={product.name}
                     fill
-                    className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+                    className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
                     sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
                   />
                 </div>
 
-                <h3
-                  className="mt-4 line-clamp-1 text-2xl font-semibold md:text-3xl"
-                  style={{ color: cardTheme.foreground }}
-                >
-                  <span
-                    className="group-hover:underline"
-                    style={{ textDecorationColor: cardTheme.foreground }}
+                <div className="flex flex-1 items-center justify-between px-2 pb-4">
+                  <h3
+                    className="max-w-40 text-sm font-semibold leading-snug sm:max-w-52 sm:text-base"
+                    style={{ color: cardTheme.foreground }}
                   >
                     {product.name}
-                  </span>
-                </h3>
-                {/* <p className="mt-1 text-xs text-zinc-500 leading-relaxed line-clamp-2 min-h-9">
-                  {getDescription(product)}
-                </p> */}
-                <div className="mt-auto flex justify-end pt-4">
+                  </h3>
                   <span
-                    className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors"
+                    className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
                     style={{
-                      borderColor: cardTheme.foreground,
+                      backgroundColor: cardTheme.chip,
                       color: cardTheme.foreground,
                     }}
                   >
-                    Learn more
+                    <ArrowRight size={16} />
                   </span>
                 </div>
               </motion.article>

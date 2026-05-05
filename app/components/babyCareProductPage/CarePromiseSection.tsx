@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
@@ -15,7 +14,7 @@ export default function CarePromiseSection({
   const sideImage = conceptImages[0] || "/images/baby/baby31.png";
 
   return (
-    <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-6 pb-4 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute right-8 top-8 h-48 w-48 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
@@ -91,25 +90,7 @@ export default function CarePromiseSection({
                 within 7 days and our care team will help you find a better size
                 or a better solution.
               </p>
-              {/* <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex rounded-full px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(0,0,0,0.14)]"
-                  style={{ backgroundColor: theme.accent, color: theme.pageBg }}
-                >
-                  Talk to a care expert
-                </Link>
-                <span
-                  className="inline-flex rounded-full border px-5 py-3 text-sm font-semibold"
-                  style={{
-                    borderColor: `${theme.border}55`,
-                    backgroundColor: hexToRgba(theme.pageBg, 0.5),
-                    color: theme.accent,
-                  }}
-                >
-                  7-day support promise
-                </span>
-              </div> */}
+
               <div
                 className="mt-6 grid gap-2 text-sm md:max-w-xl md:grid-cols-3"
                 style={{ color: hexToRgba(theme.accent, 0.74) }}
@@ -120,7 +101,7 @@ export default function CarePromiseSection({
               </div>
             </div>
 
-            <div className="relative lg:col-span-5">
+            <div className="relative hidden md:block lg:col-span-5">
               <div
                 className="fx-float relative mx-auto w-65 rounded-[2.3rem] border-[6px] bg-black p-2 shadow-[0_28px_60px_rgba(0,0,0,0.22)] md:w-75"
                 style={{ borderColor: "#0c0f0d" }}

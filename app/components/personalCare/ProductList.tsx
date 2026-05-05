@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as ProductType } from "@/type/personalCareProductType";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
@@ -29,10 +29,6 @@ const personalDetailPagePaletteBySlug: Record<
 
 const ProductList = () => {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
-
-  const getDescription = (product: ProductType) =>
-    product.description ??
-    "Premium product designed for everyday comfort and reliable care.";
 
   const getCardTheme = (product: ProductType) => {
     const detailPalette = personalDetailPagePaletteBySlug[product.slug] ?? {
@@ -85,10 +81,6 @@ const ProductList = () => {
         >
           {personalCareProducts.map((product, index) => {
             const displayImage = product.variants?.[0]?.image || product.image;
-            const variantLabels = (product.variants ?? [])
-              .map((variant) => variant.size)
-              .filter(Boolean)
-              .slice(0, 3);
             const cardTheme = getCardTheme(product);
 
             return (
@@ -102,100 +94,42 @@ const ProductList = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.06, duration: 0.45 }}
                   viewport={{ once: true }}
-                  className="flex h-full flex-col overflow-hidden rounded-[1.9rem] border p-4 shadow-[0_18px_40px_rgba(24,24,27,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(219,39,119,0.12)] sm:p-5"
-                  style={{
-                    borderColor: cardTheme.border,
-                    backgroundColor: cardTheme.background,
-                  }}
+                  className="flex h-full flex-col gap-4 rounded-4xl transition-transform duration-300 group-hover:-translate-y-1"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <span
-                      className="rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]"
-                      style={{
-                        backgroundColor: cardTheme.chip,
-                        color: cardTheme.foreground,
-                      }}
-                    >
-                      {product.category}
-                    </span>
-                    <span
-                      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium"
-                      style={{
-                        backgroundColor: cardTheme.chip,
-                        color: cardTheme.foreground,
-                      }}
-                    >
-                      <Star size={12} className="fill-current" />
-                      {product.rating.toFixed(1)}
-                    </span>
-                  </div>
-
                   <div
-                    className="relative mt-4 h-56 overflow-hidden rounded-[1.6rem]"
-                    style={{ backgroundColor: cardTheme.chip }}
+                    className="relative flex h-40 items-center justify-center overflow-hidden rounded-[1.75rem] py-2 sm:h-56"
+                    style={{ backgroundColor: cardTheme.background }}
                   >
+                    <div
+                      className="pointer-events-none absolute inset-x-6 bottom-4 h-9 rounded-full blur-2xl"
+                      style={{ backgroundColor: `${cardTheme.foreground}2e` }}
+                    />
                     <Image
                       src={displayImage}
                       alt={product.name}
                       fill
-                      className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
-                      sizes="(min-width: 768px) 42vw, 92vw"
+                      className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
                     />
                   </div>
 
-                  <div className="mt-5 flex flex-1 flex-col">
+                  <div className="flex flex-1 items-center justify-between px-2 pb-4">
                     <h3
-                      className="mt-4 line-clamp-1 text-2xl font-semibold lg:text-3xl"
+                      className="max-w-40 text-sm font-semibold leading-snug sm:max-w-52 sm:text-base"
                       style={{ color: cardTheme.foreground }}
                     >
                       {product.name}
                     </h3>
-                    {/* <p
-                      className="mt-2 text-sm font-medium leading-relaxed line-clamp-2"
-                      style={{ color: `${cardTheme.foreground}bb` }}
+
+                    <span
+                      className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
+                      style={{
+                        backgroundColor: cardTheme.chip,
+                        color: cardTheme.foreground,
+                      }}
                     >
-                      {getDescription(product)}
-                    </p> */}
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {variantLabels.map((label) => (
-                        <span
-                          key={`${product.id}-${label}`}
-                          className="rounded-md border px-2.5 py-1 text-[11px] font-medium"
-                          style={{
-                            borderColor: cardTheme.border,
-                            color: `${cardTheme.foreground}cc`,
-                          }}
-                        >
-                          {label}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-5 flex items-center justify-between">
-                      <div>
-                        <p
-                          className="text-[11px] uppercase tracking-[0.18em]"
-                          style={{ color: `${cardTheme.foreground}88` }}
-                        >
-                          Trusted by
-                        </p>
-                        <p
-                          className="text-sm font-semibold"
-                          style={{ color: cardTheme.foreground }}
-                        >
-                          {product.reviews}+ happy customers
-                        </p>
-                      </div>
-
-                      <span
-                        className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-white transition-colors duration-300"
-                        style={{ backgroundColor: cardTheme.foreground }}
-                      >
-                        View details
-                        <ArrowUpRight size={14} />
-                      </span>
-                    </div>
+                      <ArrowRight size={16} />
+                    </span>
                   </div>
                 </motion.article>
               </Link>

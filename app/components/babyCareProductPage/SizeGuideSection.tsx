@@ -63,13 +63,14 @@ export default function SizeGuideSection({
             {sizeGuideImages.map((src, idx) => (
               <div
                 key={idx}
-                className="relative h-20 w-20 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72 transition-transform duration-500 hover:scale-105"
+                className="relative transition-transform duration-500 hover:scale-105"
               >
                 <Image
                   src={src}
                   alt={`Size Guide Option ${idx + 1}`}
-                  fill
-                  className="object-contain"
+                  width={20}
+                  height={20}
+                  className="h-20 w-28 sm:h-52 sm:w-52 md:h-60 md:w-60 lg:h-72 lg:w-72"
                 />
               </div>
             ))}

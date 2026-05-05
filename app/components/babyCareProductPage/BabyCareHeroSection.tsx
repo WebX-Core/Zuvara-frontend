@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import type { Product } from "@/type/babyCareProductType";
 import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowDown, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
+import Link from "next/link";
 
 type ThemePreset = {
   accent: string;
@@ -70,16 +71,15 @@ export default function BabyCareHeroSection({
       className="relative overflow-hidden px-4"
       animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
       transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
+      drag={isMobile && enableMobileSwipe ? "x" : false}
+      dragElastic={0.22}
+      dragSnapToOrigin
+      onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
+      style={{ touchAction: enableMobileSwipe ? "pan-y" : "auto" }}
     >
       <div className="relative mx-auto max-w-7xl  pb-10 md:pt-10 md:pb-14">
         {/*   */}
-        <motion.div
-          className="relative pt-4 sm:mt-10"
-          drag={isMobile && enableMobileSwipe ? "x" : false}
-          dragElastic={0.22}
-          dragSnapToOrigin
-          onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
-        >
+        <div className="relative pt-4 sm:mt-10">
           <div className="hidden w-full items-center justify-between md:order-0 md:flex md:py-12">
             <div className="min-w-0">
               <h2
@@ -132,7 +132,7 @@ export default function BabyCareHeroSection({
               </motion.div>
             </AnimatePresence>
           </div>
-        </motion.div>
+        </div>
 
         <div
           className="relative min-h-100 overflow-hidden rounded-4xl px-6 pb-8 pt-8 md:h-100 md:pb-16 md:pt-20 lg:px-10 lg:pt-30 md:transition-colors md:duration-500"
@@ -177,22 +177,22 @@ export default function BabyCareHeroSection({
               </button>
             </div>
 
-          <div className="pointer-events-none relative mx-auto mt-6 h-72 w-full max-w-sm">
-            <div className="absolute inset-0">
-              <Image
-                src={heroPackSrc}
-                alt={`${active.name} pack`}
-                fill
-                className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
-                sizes="80vw"
-              />
+            <div className="pointer-events-none relative mx-auto mt-6 h-72 w-full max-w-sm">
+              <div className="absolute inset-0">
+                <Image
+                  src={heroPackSrc}
+                  alt={`${active.name} pack`}
+                  fill
+                  className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
+                  sizes="80vw"
+                />
+              </div>
             </div>
-          </div>
           </div>
 
           <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
-            {/* <div className="w-full text-center md:text-left">
-              <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
+            <div className="w-full hidden sm:block text-center md:text-left">
+              <p className="max-w-xs mx-auto md:mx-0 text-sm md:text-base leading-relaxed text-zinc-700 font-medium">
                 Every cuddle, every giggle, every tiny moment matters. Our care
                 products protect the softness you never want to lose.
               </p>
@@ -203,9 +203,9 @@ export default function BabyCareHeroSection({
               >
                 Find more details <ArrowDown size={16} />
               </Link>
-            </div> */}
+            </div>
 
-            <div className="w-full space-y-4 text-zinc-700 lg:pt-14">
+            <div className="w-full hidden sm:block space-y-4 text-zinc-700 lg:pt-14">
               <div className="w-full md:w-2/3 mx-auto">
                 <div className="flex items-center gap-3">
                   <Check

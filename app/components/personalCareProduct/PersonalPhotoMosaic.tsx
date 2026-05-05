@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type PersonalPhotoMosaicProps = {
   images: string[];
@@ -19,12 +21,18 @@ export default function PersonalPhotoMosaic({
   theme,
 }: PersonalPhotoMosaicProps) {
   const [activePage, setActivePage] = useState(0);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const safeImages = images.filter(Boolean);
-  const pages: string[][] = [];
+  const desktopPages: string[][] = [];
+  const mobilePages = safeImages.map((image) => [image]);
 
   for (let index = 0; index < safeImages.length; index += PAGE_SIZE) {
-    pages.push(safeImages.slice(index, index + PAGE_SIZE));
+    desktopPages.push(safeImages.slice(index, index + PAGE_SIZE));
   }
+
+  const pages = isMobile ? mobilePages : desktopPages;
 
   useEffect(() => {
     if (pages.length <= 1) return;
@@ -36,8 +44,52 @@ export default function PersonalPhotoMosaic({
     return () => window.clearInterval(timer);
   }, [pages.length]);
 
+  useEffect(() => {
+    if (!pages.length) return;
+
+    setActivePage((current) => current % pages.length);
+  }, [pages.length]);
+
   const currentPage =
     pages.length > 0 ? Math.min(activePage, pages.length - 1) : 0;
+
+  const goPrev = () => {
+    setActivePage((current) => (current === 0 ? pages.length - 1 : current - 1));
+  };
+
+  const goNext = () => {
+    setActivePage((current) => (current + 1) % pages.length);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    touchStartYRef.current = event.touches[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!isMobile || touchStartXRef.current == null || touchStartYRef.current == null) {
+      return;
+    }
+
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const touchEndY = event.changedTouches[0]?.clientY ?? touchStartYRef.current;
+    const deltaX = touchEndX - touchStartXRef.current;
+    const deltaY = touchEndY - touchStartYRef.current;
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX < 0) {
+      goNext();
+      return;
+    }
+
+    goPrev();
+  };
 
   if (!pages.length) {
     return null;
@@ -60,11 +112,7 @@ export default function PersonalPhotoMosaic({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() =>
-              setActivePage((current) =>
-                current === 0 ? pages.length - 1 : current - 1,
-              )
-            }
+            onClick={goPrev}
             className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
@@ -73,13 +121,11 @@ export default function PersonalPhotoMosaic({
             }}
             aria-label="Previous slide"
           >
-            {"<"}
+            <ChevronLeft />
           </button>
           <button
             type="button"
-            onClick={() =>
-              setActivePage((current) => (current + 1) % pages.length)
-            }
+            onClick={goNext}
             className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
@@ -88,12 +134,16 @@ export default function PersonalPhotoMosaic({
             }}
             aria-label="Next slide"
           >
-            {">"}
+            <ChevronRight />
           </button>
         </div>
       </div>
 
-      <div className="overflow-hidden">
+      <div
+        className="overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           className="flex h-full transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${currentPage * 100}%)` }}
@@ -101,12 +151,12 @@ export default function PersonalPhotoMosaic({
           {pages.map((page, pageIndex) => (
             <div
               key={`page-${pageIndex}`}
-              className="grid min-w-full flex-none grid-cols-2 gap-4 xl:grid-cols-4"
+              className={`grid min-w-full flex-none gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2 xl:grid-cols-4"}`}
             >
               {page.map((src, cardIndex) => (
                 <article
                   key={`${src}-${cardIndex}`}
-                  className="group relative min-h-52 overflow-hidden rounded-[1.75rem] border md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"
+                  className={`group relative overflow-hidden rounded-[1.75rem] border ${isMobile ? "min-h-[22rem]" : "min-h-52 md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"}`}
                   style={{
                     borderColor: theme ? `${theme.border}44` : undefined,
                     boxShadow: `0 20px 48px ${hexToRgba(theme?.accent ?? "#111827", 0.1)}`,

@@ -46,7 +46,7 @@ const CTA = () => {
                       href="/product"
                       className="inline-flex items-center gap-2 bg-white text-baby-accent px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
                     >
-                      <span>Shop Now</span>
+                      <span>View Products</span>
                       <ArrowRight size={16} />
                     </Link>
                   </div>

@@ -296,7 +296,6 @@ const Testimonials = () => {
                       <span
                         className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
                         style={{
-                          backgroundColor: "#e5e7eb",
                           color: palette.accentSoft,
                         }}
                       >
@@ -312,17 +311,6 @@ const Testimonials = () => {
                   >
                     {item.text}
                   </p>
-
-                  <div
-                    className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
-                    style={{ color: palette.accentSoft }}
-                  >
-                    <span
-                      className="inline-block h-2 w-2 rounded-full"
-                      style={{ backgroundColor: "#22c55e" }}
-                    />
-                    Verified review
-                  </div>
                 </article>
               </SwiperSlide>
             ))}

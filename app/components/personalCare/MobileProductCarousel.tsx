@@ -47,7 +47,7 @@ const MobileProductCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 shadow-[0_22px_44px_rgba(24,24,27,0.06)]"
+      className="w-full h-150 rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5 "
     >
       {/* Product image */}
       <div className="relative mx-auto flex h-52 items-center justify-center">

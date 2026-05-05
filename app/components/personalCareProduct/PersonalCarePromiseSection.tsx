@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 
@@ -15,7 +14,7 @@ export default function PersonalCarePromiseSection({
   const sideImage = conceptImages[0];
 
   return (
-    <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-6 pb-6 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute right-8 top-8 h-48 w-48 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
@@ -83,7 +82,7 @@ export default function PersonalCarePromiseSection({
               </div>
             </div>
 
-            <div className="relative lg:col-span-5">
+            <div className="relative hidden sm:block lg:col-span-5">
               <div
                 className="fx-float relative mx-auto w-65 rounded-[2.3rem] border-[6px] bg-black p-2 shadow-[0_28px_60px_rgba(0,0,0,0.22)] md:w-75"
                 style={{ borderColor: "#0c0f0d" }}

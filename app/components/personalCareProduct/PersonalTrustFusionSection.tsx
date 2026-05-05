@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
@@ -31,6 +31,8 @@ export default function PersonalTrustFusionSection({
 }: PersonalTrustFusionSectionProps) {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [visibleCards, setVisibleCards] = useState(2);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const maxIndex = Math.max(
     0,
     personalTrustFusionTestimonials.length - visibleCards,
@@ -59,6 +61,42 @@ export default function PersonalTrustFusionSection({
 
   const goNext = () => {
     setActiveTestimonial((current) => (current >= maxIndex ? 0 : current + 1));
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+    touchStartYRef.current = event.touches[0]?.clientY ?? null;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (
+      visibleCards !== 1 ||
+      touchStartXRef.current == null ||
+      touchStartYRef.current == null
+    ) {
+      return;
+    }
+
+    const touchEndX =
+      event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const touchEndY =
+      event.changedTouches[0]?.clientY ?? touchStartYRef.current;
+    const deltaX = touchEndX - touchStartXRef.current;
+    const deltaY = touchEndY - touchStartYRef.current;
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX < 0) {
+      goNext();
+      return;
+    }
+
+    goPrev();
   };
 
   return (
@@ -115,7 +153,11 @@ export default function PersonalTrustFusionSection({
           </div>
         </div>
 
-        <div className="overflow-hidden">
+        <div
+          className="overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             className="flex transition-transform duration-700 ease-out"
             style={{
@@ -128,14 +170,32 @@ export default function PersonalTrustFusionSection({
                 className="w-full shrink-0 px-2.5 lg:w-1/2"
               >
                 <article
-                  className="fx-rise fx-float flex h-full min-h-[23rem] flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-[25rem] md:p-7"
+                  className="fx-rise fx-float flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
                   style={{
                     borderColor: `${theme.border}66`,
                     backgroundColor: hexToRgba(theme.pageBg, 0.96),
                   }}
                 >
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <span
+                      className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                      style={{
+                        backgroundColor: hexToRgba(theme.containerBg, 0.36),
+                        color: hexToRgba(theme.accent, 0.75),
+                      }}
+                    >
+                      {testimonial.badge}
+                    </span>
+                    <span
+                      className="shrink-0 text-sm text-right"
+                      style={{ color: hexToRgba(theme.accent, 0.48) }}
+                    >
+                      {testimonial.time}
+                    </span>
+                  </div>
+
                   <div
-                    className="relative h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
+                    className="relative mt-5 h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
                     style={{ borderColor: `${theme.border}66` }}
                   >
                     <Image
@@ -174,24 +234,6 @@ export default function PersonalTrustFusionSection({
                         {testimonial.location}
                       </p>
                     </div>
-
-                    <div className="flex min-w-72 justify-between">
-                      <span
-                        className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
-                        style={{
-                          backgroundColor: hexToRgba(theme.containerBg, 0.36),
-                          color: hexToRgba(theme.accent, 0.75),
-                        }}
-                      >
-                        {testimonial.badge}
-                      </span>
-                      <span
-                        className="text-sm"
-                        style={{ color: hexToRgba(theme.accent, 0.48) }}
-                      >
-                        {testimonial.time}
-                      </span>
-                    </div>
                   </div>
 
                   <p
@@ -200,17 +242,6 @@ export default function PersonalTrustFusionSection({
                   >
                     {testimonial.text}
                   </p>
-
-                  <div
-                    className="mt-6 flex items-center gap-2 text-center text-xs font-semibold uppercase tracking-[0.2em]"
-                    style={{ color: hexToRgba(theme.accent, 0.62) }}
-                  >
-                    <span
-                      className="inline-block h-2 w-2 rounded-full"
-                      style={{ backgroundColor: "#22c55e" }}
-                    />
-                    Verified review
-                  </div>
                 </article>
               </div>
             ))}
@@ -300,7 +331,7 @@ export default function PersonalTrustFusionSection({
                 >
                   {/* Header */}
                   <div
-                    className="flex h-[2.75rem] items-center px-4 text-[11px] font-semibold text-white uppercase tracking-[0.18em]"
+                    className="flex h-11 items-center px-4 text-[11px] font-semibold text-white uppercase tracking-[0.18em]"
                     style={{ backgroundColor: theme.accent }}
                   >
                     Feature
@@ -310,7 +341,7 @@ export default function PersonalTrustFusionSection({
                   {comparisonRows.map((row, idx) => (
                     <div
                       key={row.label}
-                      className="flex min-h-[4.5rem] items-center border-t px-4 py-3 text-[13px] font-medium leading-snug"
+                      className="flex min-h-18 items-center border-t px-4 py-3 text-[13px] font-medium leading-snug"
                       style={{
                         borderColor: `${theme.border}22`,
                         backgroundColor:
@@ -332,10 +363,10 @@ export default function PersonalTrustFusionSection({
                 >
                   <div className="flex" style={{ minWidth: "max-content" }}>
                     {/* Zuvara column */}
-                    <div className="w-[8.5rem] shrink-0">
+                    <div className="w-34 shrink-0">
                       {/* Header */}
                       <div
-                        className="flex h-[2.75rem] items-center justify-center"
+                        className="flex h-11 items-center justify-center"
                         style={{ backgroundColor: theme.accent }}
                       >
                         <p className="text-[11px] font-semibold uppercase tracking-wide text-white">
@@ -346,7 +377,7 @@ export default function PersonalTrustFusionSection({
                       {comparisonRows.map((row) => (
                         <div
                           key={row.label}
-                          className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px] font-semibold"
+                          className="flex min-h-18 bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px] font-semibold"
                           style={{
                             borderColor: `${theme.border}33`,
                             color: theme.accent,
@@ -358,10 +389,10 @@ export default function PersonalTrustFusionSection({
                     </div>
 
                     {/* Ordinary column */}
-                    <div className="w-[8.5rem] shrink-0">
+                    <div className="w-34 shrink-0">
                       {/* Header */}
                       <div
-                        className="flex h-[2.75rem] items-center justify-center border-l"
+                        className="flex h-11 items-center justify-center border-l"
                         style={{
                           borderColor: `${theme.border}33`,
                           backgroundColor: theme.accent,
@@ -375,7 +406,7 @@ export default function PersonalTrustFusionSection({
                       {comparisonRows.map((row) => (
                         <div
                           key={row.label}
-                          className="flex min-h-[4.5rem] bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px]"
+                          className="flex min-h-18 bg-white items-center justify-center border-t border-l px-4 py-3 text-center text-[13px]"
                           style={{
                             borderColor: `${theme.border}33`,
                             color: hexToRgba(theme.accent, 0.96),

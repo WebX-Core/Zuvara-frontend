@@ -123,7 +123,7 @@ export default function AboutPage() {
 
   const heroWave = assetWithFill(wave3Svg, sectionBg.story);
   const ctaBg = isPersonal ? pagePalette.page : "#C5DBD7";
-  const ctaPanelBg = isPersonal ? pagePalette.accent : undefined;
+  const ctaPanelBg = isPersonal ? pagePalette.accent : "#C5DBD7";
   const teamWave = assetWithFill(wave3Svg, ctaBg);
   const footerBg = sectionBg.footer;
   const ctaWave = assetWithFill(wave4Svg, footerBg);
@@ -168,6 +168,7 @@ export default function AboutPage() {
       </div>
       <div className="relative " style={{ backgroundColor: ctaBg }}>
         <AboutCtaSection
+          isPersonal={isPersonal}
           palette={pagePalette}
           productHref={productHref}
           sectionBg={ctaBg}

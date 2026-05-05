@@ -73,21 +73,18 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
       <div
         className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}
       >
-        <Accordions type="single" className="space-y-3 divide-y-0">
+        <Accordions type="single" className="space-y-2 divide-y-0">
           {faqs.map((faq, index) => (
             <Accordion
               key={faq.question}
               id={`listing-faq-${index}`}
               title={faq.question}
-              className="overflow-hidden rounded-[1.4rem] border px-4 transition-transform duration-300 hover:bg-babyCare/50"
-              triggerClassName="py-4 text-left text-sm font-semibold md:text-base hover:no-underline "
+              className="overflow-hidden rounded-[1.4rem] px-2 transition-transform duration-300 hover:bg-babyCare/50"
+              triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
               triggerStyle={{ color: theme.accent }}
-              style={{
-                borderColor: `${theme.border}55`,
-              }}
             >
               <p
-                className="pb-4 text-sm leading-relaxed md:text-base"
+                className="pb-2 text-sm leading-relaxed md:text-base"
                 style={{ color: hexToRgba(theme.accent, 0.72) }}
               >
                 {faq.answer}

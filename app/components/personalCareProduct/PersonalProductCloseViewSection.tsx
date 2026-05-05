@@ -105,7 +105,9 @@ export default function PersonalProductCloseViewSection({
           <div className="lg:col-span-6 relative order-1 lg:order-2 flex flex-col items-center px-6">
             <div
               className={`fx-rise relative z-10 w-full max-w-sm lg:max-w-md mx-auto ${
-                isMobile ? "" : "transform transition-transform duration-700 hover:scale-105"
+                isMobile
+                  ? ""
+                  : "transform transition-transform duration-700 hover:scale-105"
               }`}
             >
               <div className="relative aspect-square w-full">
@@ -134,7 +136,7 @@ export default function PersonalProductCloseViewSection({
                 className="text-[10px] font-bold uppercase tracking-widest"
                 style={{ color: hexToRgba(theme.accent, 0.62) }}
               >
-                Interactive Anatomy
+                Features
               </p>
             </div>
           </div>
