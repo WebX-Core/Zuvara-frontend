@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { wave1Svg, wave2Svg } from "@/constants/svgs";
+import { wave1Svg, wave2Svg, wave4Svg } from "@/constants/svgs";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
 import { colors } from "@/lib/tokens";
 
@@ -305,8 +305,12 @@ export default function Home() {
     <div className="relative w-full overflow-hidden">
       <section
         ref={rootRef}
-        className="relative z-0 pb-24 h-svh bg-[#bfdec9] sm:bg-white  sm:min-h-[90vh] sm:pt-28"
+        className="relative z-0 pb-24 sm:h-svh bg-[#bfdec9] sm:bg-white  sm:min-h-[90vh] sm:pt-28"
       >
+        <div
+          className="pointer-events-none absolute -bottom-2 left-1/2 z-20 w-screen -translate-x-1/2 overflow-hidden leading-none md:hidden [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+          dangerouslySetInnerHTML={{ __html: wave4Svg.markup }}
+        />
         <div
           className="hero-wave1 parallax-wave-back hidden md:block absolute -bottom-1 z-20 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
           dangerouslySetInnerHTML={{ __html: wave1Svg.markup }}
@@ -315,19 +319,7 @@ export default function Home() {
           className="hero-wave2 parallax-wave-front absolute hidden md:block inset-x-0 -bottom-1 z-30 h-auto w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
           dangerouslySetInnerHTML={{ __html: wave2Svg.markup }}
         />
-        <svg
-          viewBox="0 0 822 142"
-          preserveAspectRatio="none"
-          className="hero-wave-fill-1 pointer-events-none hidden md:block absolute -bottom-1 z-40  h-auto w-full opacity-0"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M148.891 65.2047C96.8835 50.5069 28.2939 78.8661 0.5 94.8829V141.509H820.805V77.9925L779.2 52.4855C652.008 -21.0035 524.815 -12.524 408.929 52.4855C293.043 117.495 213.901 83.577 148.891 65.2047Z"
-            fill="#74A788"
-            stroke="#72a685"
-          />
-        </svg>
+
         <svg
           viewBox="0 0 821 126"
           preserveAspectRatio="none"
@@ -372,7 +364,7 @@ export default function Home() {
                     height={40}
                   />
                 </div>
-                <div className="px-4 pt-16 bg-[#bfdec9] sm:bg-white ">
+                <div className="px-4 pt-8 sm:pt-16 bg-[#bfdec9] sm:bg-white ">
                   <p className="hero-copy text-xs font-semibold tracking-wide text-foreground lg:text-sm">
                     Premium Baby Care Essentials
                   </p>
@@ -383,21 +375,21 @@ export default function Home() {
                     </span>
                   </h2>
 
-                  <p className="hero-copy  max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground lg:mt-4 lg:text-[1.02rem]">
+                  <p className="hero-copy hidden sm:block  max-w-md text-[0.95rem] font-medium leading-relaxed text-foreground lg:mt-4 lg:text-[1.02rem]">
                     Soft, safe essentials for life’s smallest, most precious
                     moments.
                   </p>
 
-                  <div className="hero-copy flex flex-col sm:flex-row  sm:justify-start gap-3 pt-2 lg:gap-4 lg:pt-3">
+                  <div className="hero-copy  flex flex-col sm:flex-row  sm:justify-start gap-3 pt-8 lg:gap-4 lg:pt-3">
                     <Link href="/babyCareProduct">
-                      <button className="rounded-full bg-baby-accent px-6 py-2.5 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base">
+                      <button className="rounded-full w-full bg-baby-accent py-2.5 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:shadow-xl lg:px-4 lg:py-3 lg:text-base">
                         Explore Baby Products
                       </button>
                     </Link>
                     <Link href="/babyCareProduct">
                       <button
                         onClick={() => setIsDistributorModalOpen(true)}
-                        className="rounded-full outline-1 outline-baby-accent px-6 py-2.5 text-sm font-medium text-baby-accent transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base"
+                        className="rounded-full w-full sm:w-fit outline-1 outline-baby-accent px-6 py-2.5 text-sm font-medium text-baby-accent transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base"
                       >
                         Become a Distributor
                       </button>

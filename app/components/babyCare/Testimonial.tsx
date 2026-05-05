@@ -124,7 +124,7 @@ const Testimonials = () => {
 
         <div className="rounded-4xl py-5 sm:px-4 md:py-6">
           {/* Header row */}
-          <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-5 hidden sm:flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <span
                 className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"

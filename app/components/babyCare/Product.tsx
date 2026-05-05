@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
@@ -58,6 +59,42 @@ const babyDetailPagePaletteBySlug: Record<
   },
 };
 
+const clothingPaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "co-ord-sets": {
+    background: "#ffe7dc",
+    foreground: "#b8613f",
+  },
+  "hoodies-joggers": {
+    background: "#e8f4dc",
+    foreground: "#5f7d3e",
+  },
+  "polo-t-shirt": {
+    background: "#dff2fb",
+    foreground: "#2e7293",
+  },
+  "t-shirt-shorts": {
+    background: "#f7ebff",
+    foreground: "#7b52a7",
+  },
+};
+
+const strollerPaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "zuvara-zinx-infant-to-toddler-baby-rocker": {
+    background: "#e3efff",
+    foreground: "#3b6b9d",
+  },
+  "zuvara-cheer-baby-stroller": {
+    background: "#ecf3ef",
+    foreground: "#4f6f63",
+  },
+};
+
 const Product = () => {
   const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
     "baby",
@@ -85,12 +122,10 @@ const Product = () => {
     clothing: "clothing",
     stroller: "strollerRockerProduct",
   };
+  const collectionHref = `/${routeMap[activeTab]}`;
+  const featuredProducts = products.slice(0, 4);
+  const shouldShowViewMore = products.length > featuredProducts.length;
 
-  // const browseHref = `/${routeMap[activeTab]}`;
-
-  // const getDescription = (product: ProductItem) =>
-  //   product.description ??
-  //   "Premium product designed for everyday comfort and reliable care.";
   const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
 
   const getCardImage = (product: ProductItem) => {
@@ -117,6 +152,36 @@ const Product = () => {
   };
 
   const getCardTheme = (product: ProductItem) => {
+    if (activeTab === "clothing") {
+      const clothingProduct = product as ClothingProduct;
+      const palette = clothingPaletteBySlug[clothingProduct.slug] ?? {
+        background: "#edf5f1",
+        foreground: colors.baby.accent,
+      };
+
+      return {
+        background: hexToRgba(palette.background, 0.72),
+        foreground: palette.foreground,
+        border: hexToRgba(palette.foreground, 0.16),
+        chip: hexToRgba(palette.background, 0.88),
+      };
+    }
+
+    if (activeTab === "stroller") {
+      const strollerProduct = product as StrollerProduct;
+      const palette = strollerPaletteBySlug[strollerProduct.slug] ?? {
+        background: "#edf5f1",
+        foreground: colors.baby.accent,
+      };
+
+      return {
+        background: hexToRgba(palette.background, 0.72),
+        foreground: palette.foreground,
+        border: hexToRgba(palette.foreground, 0.16),
+        chip: hexToRgba(palette.background, 0.88),
+      };
+    }
+
     if (activeTab !== "baby") {
       return {
         background: "#ffffff",
@@ -148,63 +213,49 @@ const Product = () => {
       <Link
         key={product.id}
         href={`/${routeMap[activeTab]}/${product.slug}`}
-        className="group block w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
+        className="group block w-full lg:w-[calc(25%-0.9375rem)]"
       >
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.06, duration: 0.45 }}
           viewport={{ once: true }}
-          className="flex h-full flex-col rounded-2xl border p-1"
-          style={{
-            borderColor: cardTheme.border,
-            backgroundColor: cardTheme.background,
-          }}
+          className="flex h-full flex-col gap-4 rounded-4xl  transition-transform duration-300 group-hover:-translate-y-1"
         >
           <div
-            className="relative h-44 overflow-hidden rounded-2xl"
-            style={{ backgroundColor: cardTheme.chip }}
+            className="relative flex gap-4 h-40 items-center justify-center overflow-hidden rounded-[1.75rem]  py-2 sm:h-56"
+            style={{ backgroundColor: cardTheme.background }}
           >
-            {/* <span
-              className="absolute top-3 left-3 z-10 text-sm font-semibold uppercase tracking-wider"
-              style={{ color: `${cardTheme.foreground}cc` }}
-            >
-              {product.category}
-            </span> */}
+            <div
+              className="pointer-events-none absolute inset-x-6 bottom-4 h-9 rounded-full blur-2xl"
+              style={{ backgroundColor: hexToRgba(cardTheme.foreground, 0.18) }}
+            />
             <Image
               src={getCardImage(product)}
               alt={product.name}
               fill
-              className="object-contain  transition-transform duration-300 group-hover:scale-105"
+              className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
               sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
             />
           </div>
-          <div className="mt-4 flex  flex-1 flex-col items-center justify-between text-center lg:mt-0 lg:min-h-0 lg:flex-row lg:items-center lg:justify-between lg:text-left">
+
+          <div className="flex flex-1 items-center justify-between  px-2 pb-4  ">
             <h3
-              className="max-w-56 text-md font-semibold line-clamp-2 lg:max-w-40 lg:text-sm"
+              className="max-w-40 text-sm font-semibold leading-snug text-zinc-900 sm:max-w-52 sm:text-base"
               style={{ color: cardTheme.foreground }}
             >
-              <span
-                className="group-hover:underline"
-                style={{
-                  textDecorationColor: cardTheme.foreground,
-                }}
-              >
-                {product.name}
-              </span>
+              {product.name}
             </h3>
 
-            <div className="flex pt-2 justify-center pb-2 lg:mt-auto lg:justify-end lg:pt-4 lg:pb-0">
-              <span
-                className="inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors"
-                style={{
-                  borderColor: cardTheme.foreground,
-                  color: cardTheme.foreground,
-                }}
-              >
-                Learn more
-              </span>
-            </div>
+            <span
+              className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
+              style={{
+                backgroundColor: cardTheme.chip,
+                color: cardTheme.foreground,
+              }}
+            >
+              <ArrowRight size={16} />
+            </span>
           </div>
         </motion.article>
       </Link>
@@ -213,10 +264,19 @@ const Product = () => {
 
   return (
     <>
+      <style>{`
+        .category-tabs {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .category-tabs::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
       {/* ================= PRODUCT SECTION ================= */}
-      <section className="relative py-8 lg:pb-28">
+      <section className="relative py-8 pb-12 lg:pb-28">
         <div
-          className="absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
+          className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
           dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
         />
         <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
@@ -235,7 +295,7 @@ const Product = () => {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-3 py-4 lg:justify-center overflow-x-auto whitespace-nowrap">
+          <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -273,12 +333,24 @@ const Product = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-8 mx-auto flex max-w-7xl flex-wrap justify-center gap-5 pb-10"
+            className="mt-8 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
           >
-            {products.map((product, index) =>
+            {featuredProducts.map((product, index) =>
               renderProductCard(product, index),
             )}
           </motion.div>
+
+          {shouldShowViewMore ? (
+            <div className="flex justify-center">
+              <Link
+                href={collectionHref}
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white! transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                View more
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

@@ -19,13 +19,13 @@ import {
 } from "lucide-react";
 
 const palette = {
-  accent:     colors.baby.accent,
+  accent: colors.baby.accent,
   accentSoft: colors.baby.accentSoft,
-  border:     colors.baby.border,
-  chip:       colors.baby.chip,
-  panel:      colors.baby.panel,
-  page:       colors.baby.page,
-  body:       colors.baby.body,
+  border: colors.baby.border,
+  chip: colors.baby.chip,
+  panel: colors.baby.panel,
+  page: colors.baby.page,
+  body: colors.baby.body,
 };
 
 const trustStats = [
@@ -102,7 +102,7 @@ const WhyChoose = () => {
     <section
       id="babycare-why-choose"
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-babyCare py-12 md:py-16"
+      className="relative w-full overflow-hidden bg-white py-6  md:bg-babyCare md:py-0"
     >
       <Container className="relative">
         <motion.div
@@ -113,11 +113,9 @@ const WhyChoose = () => {
           className="mx-auto mb-10 max-w-3xl text-center lg:mb-12"
         >
           <p
-            className="inline-flex rounded-full  px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]"
+            className="inline-flex rounded-full bg-[#45695e] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white md:bg-white/85 md:text-baby-accent"
             style={{
               borderColor: `${palette.border}44`,
-              backgroundColor: "rgba(255,255,255,0.85)",
-              color: palette.accent,
             }}
           >
             Why Choose Zuvara
@@ -151,10 +149,9 @@ const WhyChoose = () => {
               return (
                 <div
                   key={item.label}
-                  className="group flex sm:flex-col items-center gap-2 sm:gap-4 rounded-xl border px-3  py-2 sm:py-6 transition-all duration-200 hover:bg-white"
+                  className="group flex items-center gap-2 rounded-xl border bg-[#f7fbf8] px-3 py-2 transition-all duration-200 hover:bg-white sm:flex-col sm:gap-4 sm:py-6 md:bg-white/85"
                   style={{
                     borderColor: `${palette.border}30`,
-                    backgroundColor: "rgba(255,255,255,0.85)",
                   }}
                 >
                   <div
@@ -222,10 +219,9 @@ const WhyChoose = () => {
                   return (
                     <div
                       key={point.text}
-                      className="flex items-center gap-3 rounded-3xl border px-4 py-3 transition-all duration-300 bg-white/10  hover:bg-white/75"
+                      className="flex items-center gap-3 rounded-3xl border bg-[#f7fbf8] px-4 py-3 transition-all duration-300 hover:bg-white md:bg-white/10 md:hover:bg-white/75"
                       style={{
                         borderColor: `${palette.border}40`,
-
                         color: palette.accent,
                       }}
                     >
@@ -242,7 +238,7 @@ const WhyChoose = () => {
 
               <Link
                 href="/about"
-                className="mt-7 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white! shadow-[0_12px_28px_rgba(69,104,94,0.25)] transition-all duration-300 hover:-translate-y-px hover:shadow-[0_16px_30px_rgba(69,104,94,0.3)]"
+                className="mt-7 inline-flex items-center rounded-full px-6 py-3 text-sm font-semibold text-white!  transition-all duration-300 hover:-translate-y-px hover:shadow-[0_16px_30px_rgba(69,104,94,0.3)]"
                 style={{ backgroundColor: palette.accent }}
               >
                 About Zuvara
@@ -253,10 +249,9 @@ const WhyChoose = () => {
               <div className="grid gap-4 lg:grid-cols-2">
                 <div className="grid gap-4">
                   <div
-                    className="rounded-4xl border p-5"
+                    className="rounded-4xl border bg-[#f7fbf8] p-5 md:bg-white/30"
                     style={{
                       borderColor: `${palette.border}44`,
-                      backgroundColor: "rgba(255,255,255,0.3)",
                     }}
                   >
                     <p
@@ -274,11 +269,10 @@ const WhyChoose = () => {
                   </div>
 
                   <div
-                    className="relative overflow-hidden rounded-4xl border"
+                    className="relative overflow-hidden rounded-4xl border bg-[#f7fbf8] md:bg-white/80"
                     style={{
                       minHeight: "13rem",
                       borderColor: `${palette.border}44`,
-                      backgroundColor: "rgba(255,255,255,0.8)",
                     }}
                   >
                     <Image
@@ -291,7 +285,7 @@ const WhyChoose = () => {
                 </div>
 
                 <div
-                  className="relative overflow-hidden rounded-4xl border"
+                  className="relative overflow-hidden rounded-4xl border bg-[linear-gradient(180deg,#f7fbf8_0%,#edf5f1_100%)] md:bg-none"
                   style={{
                     minHeight: "28rem",
                     borderColor: `${palette.border}44`,
@@ -317,52 +311,6 @@ const WhyChoose = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="mt-8 hidden  md:grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {values.map((value) => {
-            const Icon = value.icon;
-
-            return (
-              <div
-                key={value.id}
-                className="why-rise relative mx-auto w-full max-w-90"
-              >
-                <svg
-                  viewBox="0 0 400 200"
-                  className="mx-auto block h-55 w-[calc(100%+5px)] sm:h-60 md:h-65"
-                  aria-hidden="true"
-                  preserveAspectRatio="none"
-                  stroke={colors.baby.accent}
-                  strokeWidth={4}
-                >
-                  <path
-                    d="M40 110 C30 70 70 40 120 50 C150 20 220 20 250 50 C300 40 360 70 350 120 C360 160 300 180 240 170 C200 190 130 185 90 165 C50 160 25 135 40 110 Z"
-                    fill="#ffffff"
-                  />
-                </svg>
-                <div className="absolute inset-0 z-10 flex items-center justify-center px-10 py-8 sm:px-12 sm:py-10">
-                  <div className="w-full max-w-57.5 text-center">
-                    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl sm:mb-4 sm:h-11 sm:w-11">
-                      <Icon size={16} className="sm:h-4.5 sm:w-4.5" />
-                    </div>
-                    <h3
-                      className="text-sm font-semibold sm:text-base"
-                      style={{ color: palette.accent }}
-                    >
-                      {value.title}
-                    </h3>
-                    <p
-                      className="mt-2 text-xs leading-relaxed sm:text-sm"
-                      style={{ color: palette.body }}
-                    >
-                      {value.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div> */}
       </Container>
     </section>
   );

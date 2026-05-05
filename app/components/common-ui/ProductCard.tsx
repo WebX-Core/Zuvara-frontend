@@ -11,6 +11,7 @@ import type { Product as BabyProduct } from "@/type/babyCareProductType";
 import type { Product as ClothingProduct } from "@/type/babyClothesType";
 import type { Product as StrollerProduct } from "@/type/strollerRockerProductType";
 import type { Product as PersonalProduct } from "@/type/personalCareProductType";
+import { colors } from "@/lib/tokens";
 
 type ProductType =
   | BabyProduct
@@ -34,6 +35,59 @@ const getVariantLabel = (variant: ProductVariant) => {
   if ("name" in variant && variant.name) return variant.name;
   if ("weight" in variant && variant.weight) return variant.weight;
   return "";
+};
+
+const hexToRgba = (hex: string, alpha: number) => {
+  const normalizedHex = hex.replace("#", "");
+  const fullHex =
+    normalizedHex.length === 3
+      ? normalizedHex
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : normalizedHex;
+
+  const r = Number.parseInt(fullHex.slice(0, 2), 16);
+  const g = Number.parseInt(fullHex.slice(2, 4), 16);
+  const b = Number.parseInt(fullHex.slice(4, 6), 16);
+
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const clothingPaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "co-ord-sets": {
+    background: "#ffe7dc",
+    foreground: "#b8613f",
+  },
+  "hoodies-joggers": {
+    background: "#e8f4dc",
+    foreground: "#5f7d3e",
+  },
+  "polo-t-shirt": {
+    background: "#dff2fb",
+    foreground: "#2e7293",
+  },
+  "t-shirt-shorts": {
+    background: "#f7ebff",
+    foreground: "#7b52a7",
+  },
+};
+
+const strollerPaletteBySlug: Record<
+  string,
+  { background: string; foreground: string }
+> = {
+  "zuvara-zinx-infant-to-toddler-baby-rocker": {
+    background: "#e3efff",
+    foreground: "#3b6b9d",
+  },
+  "zuvara-cheer-baby-stroller": {
+    background: "#ecf3ef",
+    foreground: "#4f6f63",
+  },
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -61,6 +115,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const priceLabel = price
     ? `${price.currency} ${price.amount}`
     : "Explore variants";
+  const mobilePalette =
+    activeTab === "clothing"
+      ? clothingPaletteBySlug[product.slug]
+      : activeTab === "stroller"
+        ? strollerPaletteBySlug[product.slug]
+        : null;
+  const mobileCardTheme = mobilePalette
+    ? {
+        background: hexToRgba(mobilePalette.background, 0.72),
+        foreground: mobilePalette.foreground,
+        chip: hexToRgba(mobilePalette.background, 0.88),
+      }
+    : {
+        background: hexToRgba(colors.baby.chip, 0.28),
+        foreground: colors.baby.accent,
+        chip: hexToRgba(colors.baby.chip, 0.46),
+      };
 
   return (
     <motion.div
@@ -76,9 +147,53 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       <Link href={detailsHref} className="block h-full">
         <motion.article
+          whileHover={{ y: -4 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="group flex h-full flex-col gap-4 rounded-4xl transition-transform duration-300 lg:hidden"
+        >
+          <div
+            className="relative flex h-40 items-center justify-center overflow-hidden rounded-[1.75rem] py-2"
+            style={{ backgroundColor: mobileCardTheme.background }}
+          >
+            <div
+              className="pointer-events-none absolute inset-x-6 bottom-4 h-9 rounded-full blur-2xl"
+              style={{
+                backgroundColor: hexToRgba(mobileCardTheme.foreground, 0.18),
+              }}
+            />
+            <Image
+              src={displayImage}
+              alt={product.name}
+              fill
+              className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+              sizes="(min-width: 640px) 40vw, 90vw"
+            />
+          </div>
+
+          <div className="flex flex-1 items-center justify-between px-2 pb-4">
+            <h3
+              className="max-w-40 text-sm font-semibold leading-snug sm:max-w-52 sm:text-base"
+              style={{ color: mobileCardTheme.foreground }}
+            >
+              {product.name}
+            </h3>
+
+            <span
+              className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
+              style={{
+                backgroundColor: mobileCardTheme.chip,
+                color: mobileCardTheme.foreground,
+              }}
+            >
+              <ArrowUpRight size={16} />
+            </span>
+          </div>
+        </motion.article>
+
+        <motion.article
           whileHover={{ y: -8, scale: 1.02 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="group relative flex h-full min-h-84 flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:border-baby-accent/35 hover:shadow-xl hover:shadow-baby-accent/10 lg:p-6"
+          className="group relative hidden h-full min-h-84 flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:border-baby-accent/35 hover:shadow-xl hover:shadow-baby-accent/10 lg:flex lg:p-6"
         >
           <div className="flex items-start justify-between gap-3">
             <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-700">

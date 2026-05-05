@@ -1,4 +1,9 @@
-import { HeartHandshake, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  BadgeCheck,
+  HeartHandshake,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { hexToRgba, colors } from "@/lib/tokens";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
@@ -23,6 +28,11 @@ const reasons = [
     body: "Balanced fit for longer comfort.",
     icon: Sparkles,
   },
+  {
+    title: "Clinically gentle",
+    body: "Expert-tested for the softest, safest care.",
+    icon: BadgeCheck,
+  },
 ];
 
 export default function WhyZuvaraProductsSection({
@@ -31,7 +41,7 @@ export default function WhyZuvaraProductsSection({
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
 
   return (
-    <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8 lg:pb-36">
+    <section className="relative overflow-hidden bg-babyCare px-4 sm:px-6 lg:px-8 pb-10 lg:pb-36">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
@@ -71,19 +81,18 @@ export default function WhyZuvaraProductsSection({
         </div>
 
         {/* Cards */}
-        <div className="my-10 grid gap-4 md:grid-cols-3 md:gap-6">
-          {reasons.map(({ title, body, icon: Icon }) => (
+        <div className="my-10 max-w-xl mx-auto grid grid-cols-2   md:grid gap-4 md:grid-cols-2 md:gap-6 ">
+          {reasons.map(({ title, icon: Icon }) => (
             <article
               key={title}
-              className="flex flex-col items-center rounded-2xl px-6 py-8 text-center transition-transform duration-200 hover:-translate-y-1"
+              className="flex  items-center justify-start gap-2 rounded-2xl px-3 py-2 md:px-4 md:py-4 text-center  transition-transform duration-200 hover:-translate-y-1"
               style={{
                 backgroundColor: hexToRgba(theme.pageBg, 0.96),
-                boxShadow: `0 8px 32px ${hexToRgba(theme.accent, 0.10)}, 0 2px 8px ${hexToRgba(theme.accent, 0.07)}`,
               }}
             >
               {/* Icon */}
               <div
-                className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl"
+                className=" flex h-6 w-6 md:h-12 md:w-12 items-center justify-center rounded-xl"
                 style={{
                   backgroundColor: hexToRgba(theme.chipBg, 0.85),
                   color: theme.accent,
@@ -93,18 +102,20 @@ export default function WhyZuvaraProductsSection({
               </div>
 
               {/* Text */}
-              <h3
-                className="text-base font-semibold"
-                style={{ color: theme.accent }}
-              >
-                {title}
-              </h3>
-              <p
-                className="mt-2 text-sm leading-relaxed"
-                style={{ color: hexToRgba(theme.accent, 0.72) }}
-              >
-                {body}
-              </p>
+              <div className="flex flex-col gap-2 text-left">
+                <h3
+                  className="text-sm md:text-base font-semibold"
+                  style={{ color: theme.accent }}
+                >
+                  {title}
+                </h3>
+                {/* <p
+                  className="mt-2 text-sm leading-relaxed"
+                  style={{ color: hexToRgba(theme.accent, 0.72) }}
+                >
+                  {body}
+                </p> */}
+              </div>
             </article>
           ))}
         </div>

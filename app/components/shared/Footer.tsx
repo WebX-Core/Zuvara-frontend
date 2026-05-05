@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -21,10 +20,7 @@ export default function Footer() {
   const pathname = usePathname();
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
-  const [isGameOpen, setIsGameOpen] = useState(false);
-  const [gameFrameKey, setGameFrameKey] = useState(0);
-  const [isDiscountOpen, setIsDiscountOpen] = useState(false);
-  const [hasWonGame, setHasWonGame] = useState(false);
+
   const logoSrc = isPersonal ? "/logo/logo_secondary.svg" : "/logo/logo.png";
   const isMounted = true;
 
@@ -98,20 +94,6 @@ export default function Footer() {
     },
   ];
 
-  useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin) return;
-      if (!event.data || event.data.type !== "angry-birds-win") return;
-      if (hasWonGame) return;
-
-      setHasWonGame(true);
-      setIsDiscountOpen(true);
-    };
-
-    window.addEventListener("message", onMessage);
-    return () => window.removeEventListener("message", onMessage);
-  }, [hasWonGame]);
-
   return (
     <footer
       className={cn(
@@ -119,7 +101,7 @@ export default function Footer() {
         isPersonal ? "bg-[#f4e8fc]" : "bg-white",
       )}
     >
-      <div className="relative z-10 container mx-auto max-w-7xl px-4 lg:px-0  pb-16 lg:pb-0">
+      <div className="relative z-10 container mx-auto max-w-7xl px-4 lg:px-0  ">
         {/* Section Switcher */}
         <div className="flex justify-center  w-full py-4">
           <Link
@@ -339,111 +321,32 @@ export default function Footer() {
         </div>
       </div>
 
-      {isGameOpen ? (
-        <div className="fixed inset-0 z-120 flex items-center justify-center bg-black/70 p-4">
-          <div className="relative h-[80vh] w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl">
-            <button
-              onClick={() => {
-                setGameFrameKey((prev) => prev + 1);
-                setHasWonGame(false);
-                setIsDiscountOpen(false);
-              }}
-              className="absolute right-20 top-3 z-10 rounded-full bg-black/70 px-3 py-1.5 text-sm font-semibold text-white hover:bg-black"
-            >
-              Restart
-            </button>
-            <button
-              onClick={() => setIsGameOpen(false)}
-              className="absolute right-3 top-3 z-10 rounded-full bg-black/70 px-3 py-1.5 text-sm font-semibold text-white hover:bg-black"
-            >
-              Close
-            </button>
-            <iframe
-              key={gameFrameKey}
-              src="/games/angry-birds/index.html"
-              title="Angry Birds Game"
-              className="h-full w-full border-0"
-            />
-          </div>
-        </div>
-      ) : null}
-
-      {isDiscountOpen ? (
-        <div className="fixed inset-0 z-130 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-            <h3 className="text-xl font-semibold text-zinc-900">
-              You won 5% discount
-            </h3>
-            {!isPersonal ? (
-              <div className="mt-4 flex justify-center">
-                <Image
-                  src="/PRODUCTS/Baby/premium-diapers/product.png"
-                  alt="Premium diaper pack"
-                  width={180}
-                  height={180}
-                  className="h-auto w-28 drop-shadow-md sm:w-36"
-                />
-              </div>
-            ) : null}
-            <p className="mt-3 text-sm text-zinc-600">
-              You won 5% discount in this product. Use code{" "}
-              <span className="rounded bg-zinc-100 px-2 py-1 font-semibold text-zinc-900">
-                ZUVARA2026
-              </span>{" "}
-              at checkout.
-            </p>
-            <div className="mt-5 flex justify-end gap-3">
-              <button
-                onClick={() => setIsDiscountOpen(false)}
-                className="rounded-full  px-4 py-2 text-sm font-semibold text-red-500 hover:bg-red-500 hover:text-white"
-              >
-                Close
-              </button>
-              <Link
-                href={isPersonal ? "/personalCareProduct" : "/babyCareProduct"}
-                onClick={() => setIsDiscountOpen(false)}
-                className={cn(
-                  "rounded-full px-4 py-2 text-sm font-semibold text-white!",
-                  isPersonal ? "bg-personalCare" : "bg-foreground",
-                )}
-              >
-                Claim Discount
-              </Link>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
       <div
-        className={`relative flex items-center justify-center overflow-hidden h-auto `}
+        className={cn(
+          "relative max-w-7xl mx-auto pt-2 pb-4 text-sm flex flex-col md:flex-row justify-between items-center gap-4",
+          isPersonal ? "text-personalCare" : "text-baby-accent",
+        )}
       >
-        <div
-          className={cn(
-            "absolute bottom-0 w-full mt-10 pt-2 text-sm  px-6 flex flex-col md:flex-row justify-between gap-4",
-            isPersonal ? "text-personalCare" : "text-baby-accent",
-          )}
-        >
-          <div className="absolute inset-0 bg-linear-to-t from-gray-200 via-50% via-transparent to-transparent z-0" />
-          <p className="font-medium z-10">
-            © {new Date().getFullYear()}{" "}
-            <span className="font-bold">ZUVARA</span> — All rights reserved.
-          </p>
-          <div className="flex items-center gap-2">
-            <p className="font-medium z-10">Design and Developed by</p>
-            <Link
-              href="https://webxnepal.com/"
-              target="_blank"
-              className="hover:text-zinc-900 transition flex gap-2 items-center"
-            >
-              <Image
-                src="/webx.png"
-                alt="WebX Nepal Logo"
-                width={50}
-                height={90}
-                className="font-bold group-hover:scale-105 transition-transform"
-              />
-            </Link>
-          </div>
+        <div className="absolute inset-0 bg-linear-to-t from-gray-200 via-50% via-transparent to-transparent z-0" />
+        <p className="font-medium z-10">
+          © {new Date().getFullYear()} <span className="font-bold">ZUVARA</span>{" "}
+          — All rights reserved.
+        </p>
+        <div className="flex items-center gap-2 z-10">
+          <p className="font-medium">Design and Developed by</p>
+          <Link
+            href="https://webxnepal.com/"
+            target="_blank"
+            className="hover:text-zinc-900 transition flex gap-2 items-center"
+          >
+            <Image
+              src="/webx.png"
+              alt="WebX Nepal Logo"
+              width={50}
+              height={90}
+              className="font-bold group-hover:scale-105 transition-transform"
+            />
+          </Link>
         </div>
       </div>
     </footer>

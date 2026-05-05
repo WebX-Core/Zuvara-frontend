@@ -3,6 +3,8 @@ import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import type { BabyCareListingTheme } from "@/app/components/babyCareProduct/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 type ProductFaqSectionProps = {
   theme: BabyCareListingTheme;
@@ -101,8 +103,9 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           ))}
         </Accordions>
 
+        {/* Desktop CTA */}
         <div
-          className="rounded-[1.6rem] border p-5 md:p-6 bg-babyCare/50"
+          className="hidden lg:block rounded-[1.6rem] border p-5 md:p-6 bg-babyCare/50"
           style={{
             borderColor: `${theme.border}55`,
           }}
@@ -133,6 +136,51 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           >
             Contact support
           </Link>
+        </div>
+
+        {/* Mobile CTA - Hero Style */}
+        <div className="lg:hidden rounded-2xl overflow-hidden shadow-lg bg-linear-to-br from-babyCare to-babyCare/90 p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex-1 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 bg-baby-accent-soft backdrop-blur-sm rounded-full px-3 py-1.5">
+                  <Icon
+                    icon="mdi:help-circle-outline"
+                    className="size-4 text-white"
+                  />
+                  <span className="text-xs font-bold text-white uppercase tracking-wider">
+                    Need Help?
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold leading-tight text-white">
+                  Talk to Zuvara before you decide.
+                </h3>
+                <p className="text-sm font-medium text-zinc-100 leading-relaxed">
+                  Get product guidance, sizing help, and recommendations based
+                  on your baby&apos;s routine.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 bg-white text-babyCare px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
+              >
+                <span>Contact Support</span>
+                <Icon
+                  icon="material-symbols:arrow-forward-rounded"
+                  className="size-5"
+                />
+              </Link>
+            </div>
+            <div className="relative size-24 shrink-0">
+              <div className="absolute inset-0 bg-white/20 rounded-2xl backdrop-blur-sm" />
+              <div className="relative size-full flex items-center justify-center">
+                <Icon
+                  icon="mdi:baby-face-outline"
+                  className="size-16 text-white/90"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

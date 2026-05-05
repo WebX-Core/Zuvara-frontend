@@ -13,19 +13,72 @@ const CTA = () => {
         dangerouslySetInnerHTML={{ __html: wave4Svg.markup }}
       />
       <div className="relative z-10 w-full ">
-        <div className="relative w-full border-y border-zinc-200/70 bg-babyCare  py-8 sm:px-8 lg:px-40 lg:pb-40">
-          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 w-full lg:gap-16 items-center px-4 sm:px-0">
-            {/* Content */}
+        <div className="relative w-full  bg-babyCare py-8 pb-12 sm:px-8 lg:px-40 lg:pb-40">
+          {/* Mobile Version - Hero Style */}
+          <div className="px-4 sm:px-0 md:hidden">
+            <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-[#45685e] to-[#5a7d72] shadow-lg">
+              <div className="pointer-events-none absolute inset-0">
+                <div className="absolute -left-10 top-4 h-28 w-28 rounded-full bg-white/20 blur-2xl" />
+                <div className="absolute -right-6 bottom-4 h-24 w-24 rounded-full bg-white/20 blur-2xl" />
+              </div>
+
+              <div className="relative z-10 p-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-1 space-y-4">
+                    <div className="space-y-2">
+                      <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1.5">
+                        <ShieldCheck size={14} className="text-white" />
+                        <span className="text-xs font-bold text-white uppercase tracking-wider">
+                          Premium Comfort
+                        </span>
+                      </div>
+                      <h2 className="text-xl font-bold leading-tight text-white">
+                        Gentle care for your baby&apos;s softest moments
+                      </h2>
+                      <p className="text-sm font-medium text-white/90 leading-relaxed">
+                        Ultra-soft, breathable materials for all-day comfort and
+                        care.
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/product"
+                      className="inline-flex items-center gap-2 bg-white text-foreground px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
+                    >
+                      <span>Shop Now</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+
+                  <div className="relative size-24 shrink-0">
+                    <div className="absolute inset-0 bg-white/10 rounded-2xl backdrop-blur-sm" />
+                    <div className="relative size-full">
+                      <Image
+                        src="/images/baby/baby31.png"
+                        alt="Premium Baby Care"
+                        fill
+                        className="object-contain p-2"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Version */}
+          <div className="relative hidden w-full grid-cols-1 items-center gap-10 px-4 sm:px-0 md:grid lg:grid-cols-2 lg:gap-16">
             <div>
               <p className="inline-flex items-center rounded-full border border-foreground/20 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground">
                 Premium Baby Comfort
               </p>
 
-              <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground font-poppins leading-[1.05]">
+              <h2 className="mt-5 text-3xl font-semibold leading-[1.05] text-foreground sm:text-4xl lg:text-5xl">
                 Gentle care for your baby&apos;s softest moments
               </h2>
 
-              <p className="mt-4 text-zinc-700 text-sm sm:text-base leading-relaxed max-w-xl">
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-700 sm:text-base">
                 Crafted with ultra-soft, breathable materials to keep your baby
                 comfortable, protected, and happy all day long.
               </p>
@@ -44,7 +97,7 @@ const CTA = () => {
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href="/product"
-                  className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm sm:text-base font-semibold text-white! hover:text-foreground! transition-all duration-300 hover:bg-white hover:shadow-lg"
+                  className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white! transition-all duration-300 hover:bg-white hover:text-foreground! hover:shadow-lg sm:text-base"
                 >
                   Shop Premium Diapers
                   <ArrowRight size={16} />
@@ -52,8 +105,7 @@ const CTA = () => {
               </div>
             </div>
 
-            {/* Image */}
-            <div className="relative h-80 sm:h-95 lg:h-90 w-full">
+            <div className="relative h-80 w-full sm:h-95 lg:h-90">
               <div className="absolute inset-0 rounded-[1.6rem] bg-white/60 backdrop-blur-[1px]" />
               <div className="absolute inset-4 rounded-[1.2rem] border border-white/70 bg-white/40" />
               <div className="absolute inset-0">

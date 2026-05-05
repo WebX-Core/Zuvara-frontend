@@ -39,7 +39,13 @@ const VideoSection = () => {
   return (
     <section className="relative">
       <WaveSvg
-        className="pointer-events-none absolute -top-1 left-1/2 z-20 h-auto w-screen max-w-none -translate-x-1/2 rotate-180 overflow-visible md:-top-10"
+        className="pointer-events-none block sm:hidden absolute -top-1 left-1/2 z-20 h-auto w-screen max-w-none -translate-x-1/2 rotate-180 overflow-visible md:-top-10"
+        fill="#ffffff"
+        path="M517.899 31.2641C640.291 -18.0713 772.639 1.83 823.514 17.9476V74.2465H0V31.2641C3.64488 26.2386 32.0217 12.9528 120.751 7.1552C233.341 3.75336 366.983 92.0975 517.899 31.2641Z"
+        viewBox="0 0 824 75"
+      />
+      <WaveSvg
+        className="pointer-events-none hidden sm:block absolute -top-1 left-1/2 z-20 h-auto w-screen max-w-none -translate-x-1/2 rotate-180 overflow-visible md:-top-10"
         fill="#bfdec9"
         path="M517.899 31.2641C640.291 -18.0713 772.639 1.83 823.514 17.9476V74.2465H0V31.2641C3.64488 26.2386 32.0217 12.9528 120.751 7.1552C233.341 3.75336 366.983 92.0975 517.899 31.2641Z"
         viewBox="0 0 824 75"
