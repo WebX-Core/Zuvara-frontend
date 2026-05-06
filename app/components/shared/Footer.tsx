@@ -176,7 +176,7 @@ export default function Footer() {
         </div>
 
         {/* Newsletter & Contact Section */}
-        <div className="py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+        <div className="py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-16">
           {/* Newsletter */}
           <div className="md:col-span-2 lg:col-span-1 flex flex-col gap-4  ">
             <Link href="/" className="flex items-center shrink-0">
@@ -209,7 +209,8 @@ export default function Footer() {
             <div className="flex items-center justify-center gap-3 lg:justify-start">
               {socialLinks.map((social) => {
                 const title = social.title.toLowerCase();
-                const isOutlineIcon = title.includes("facebook") || title.includes("linkedin");
+                const isOutlineIcon =
+                  title.includes("facebook") || title.includes("linkedin");
                 const IconComponent = title.includes("whatsapp")
                   ? FaWhatsapp
                   : title.includes("facebook")
@@ -231,15 +232,19 @@ export default function Footer() {
                         ? "size-[18px] rounded-[4px] border-[1.5px] border-zinc-800 text-zinc-800"
                         : "size-[18px] text-zinc-800",
                       isPersonal
-                        ? isOutlineIcon 
-                          ? "hover:text-personalCare hover:border-personalCare" 
+                        ? isOutlineIcon
+                          ? "hover:text-personalCare hover:border-personalCare"
                           : "hover:text-personalCare"
                         : isOutlineIcon
                           ? "hover:text-foreground hover:border-foreground"
                           : "hover:text-foreground",
                     )}
                   >
-                    <IconComponent className={cn(isOutlineIcon ? "size-[10px]" : "size-[18px]")} />
+                    <IconComponent
+                      className={cn(
+                        isOutlineIcon ? "size-[10px]" : "size-[18px]",
+                      )}
+                    />
                   </Link>
                 );
               })}
