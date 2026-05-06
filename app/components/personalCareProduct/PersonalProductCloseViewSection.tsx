@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 import type { Product } from "@/type/personalCareProductType";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
@@ -102,7 +103,7 @@ export default function PersonalProductCloseViewSection({
             ))}
           </div>
 
-          <div className="lg:col-span-6 relative order-1 lg:order-2 flex flex-col items-center px-6">
+          <div className="lg:col-span-6 relative order-1 lg:order-2 flex flex-col items-center px-6 sm:px-0">
             <div
               className={`fx-rise relative z-10 w-full max-w-sm lg:max-w-md mx-auto ${
                 isMobile
@@ -126,7 +127,7 @@ export default function PersonalProductCloseViewSection({
             </div>
 
             <div
-              className="fx-rise mt-8 px-5 py-2 rounded-full border backdrop-blur-sm shadow-sm"
+              className={`fx-rise ${sectionContentSpacing} rounded-full border px-5 py-2 backdrop-blur-sm shadow-sm`}
               style={{
                 borderColor: `${theme.border}66`,
                 backgroundColor: hexToRgba(theme.pageBg, 0.72),

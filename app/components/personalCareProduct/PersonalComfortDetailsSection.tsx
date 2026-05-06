@@ -36,7 +36,7 @@ export default function PersonalComfortDetailsSection({
               meetings, commutes, and sleep.
             </p>
           </div>
-          <div className="flex gap-3 text-xs font-semibold tracking-wide md:text-sm">
+          <div className="flex flex-col sm:flex-row gap-3 text-xs font-semibold tracking-wide md:text-sm">
             {["Dermatologically Tested", "Overnight Confidence"].map((chip) => (
               <span
                 key={chip}

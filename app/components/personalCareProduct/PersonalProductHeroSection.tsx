@@ -186,7 +186,7 @@ export default function PersonalProductHeroSection({
           </div>
 
           <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
-            <div className="w-full hidden md:block text-center md:text-left">
+            <div className="w-full hidden sm:block text-center md:text-left">
               <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
                 Every cuddle, every giggle, every tiny moment matters. Our care
                 products protect the softness you never want to lose.
@@ -200,8 +200,8 @@ export default function PersonalProductHeroSection({
               </Link>
             </div>
 
-            <div className="w-full space-y-4 text-zinc-700 lg:pt-14">
-              <div className="w-full hidden sm:block md:w-2/3 mx-auto">
+            <div className="w-full hidden sm:block space-y-4 text-zinc-700 lg:pt-14">
+              <div className="w-full md:w-2/3 mx-auto">
                 <div className="flex items-center gap-3">
                   <Check
                     size={18}

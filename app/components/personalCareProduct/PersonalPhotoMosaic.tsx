@@ -44,17 +44,12 @@ export default function PersonalPhotoMosaic({
     return () => window.clearInterval(timer);
   }, [pages.length]);
 
-  useEffect(() => {
-    if (!pages.length) return;
-
-    setActivePage((current) => current % pages.length);
-  }, [pages.length]);
-
-  const currentPage =
-    pages.length > 0 ? Math.min(activePage, pages.length - 1) : 0;
+  const currentPage = pages.length > 0 ? activePage % pages.length : 0;
 
   const goPrev = () => {
-    setActivePage((current) => (current === 0 ? pages.length - 1 : current - 1));
+    setActivePage((current) =>
+      current === 0 ? pages.length - 1 : current - 1,
+    );
   };
 
   const goNext = () => {
@@ -67,12 +62,18 @@ export default function PersonalPhotoMosaic({
   };
 
   const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!isMobile || touchStartXRef.current == null || touchStartYRef.current == null) {
+    if (
+      !isMobile ||
+      touchStartXRef.current == null ||
+      touchStartYRef.current == null
+    ) {
       return;
     }
 
-    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
-    const touchEndY = event.changedTouches[0]?.clientY ?? touchStartYRef.current;
+    const touchEndX =
+      event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const touchEndY =
+      event.changedTouches[0]?.clientY ?? touchStartYRef.current;
     const deltaX = touchEndX - touchStartXRef.current;
     const deltaY = touchEndY - touchStartYRef.current;
 
@@ -99,7 +100,7 @@ export default function PersonalPhotoMosaic({
     <div className={`relative overflow-hidden p-4 md:p-0 ${className ?? ""}`}>
       <div className="mb-5 flex items-start justify-between gap-3 md:mb-6">
         <div
-          className="rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs"
+          className="rounded-full  px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs"
           style={{
             borderColor: theme ? `${theme.border}55` : undefined,
             backgroundColor: theme ? hexToRgba(theme.pageBg, 0.65) : undefined,
@@ -156,7 +157,7 @@ export default function PersonalPhotoMosaic({
               {page.map((src, cardIndex) => (
                 <article
                   key={`${src}-${cardIndex}`}
-                  className={`group relative overflow-hidden rounded-[1.75rem] border ${isMobile ? "min-h-[22rem]" : "min-h-52 md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"}`}
+                  className={`group relative overflow-hidden rounded-[1.75rem] border ${isMobile ? "min-h-88" : "min-h-52 md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"}`}
                   style={{
                     borderColor: theme ? `${theme.border}44` : undefined,
                     boxShadow: `0 20px 48px ${hexToRgba(theme?.accent ?? "#111827", 0.1)}`,

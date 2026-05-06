@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useParams } from "next/navigation";
 import { ArrowUp } from "lucide-react";
 import gsap from "gsap";
@@ -26,7 +32,11 @@ const comparisonRows = [
   { label: "Absorbency Performance", zuvara: "High", ordinary: "Standard" },
   { label: "Odour Control", zuvara: "Advanced", ordinary: "Basic" },
   { label: "Leak Protection", zuvara: "Multi-layer", ordinary: "Regular" },
-  { label: "Everyday Comfort", zuvara: "Adaptive fit", ordinary: "Generic fit" },
+  {
+    label: "Everyday Comfort",
+    zuvara: "Adaptive fit",
+    ordinary: "Generic fit",
+  },
   { label: "Night Support", zuvara: "Overnight-ready", ordinary: "Not always" },
   { label: "Breathability", zuvara: "Airflow layer", ordinary: "Limited" },
 ];
@@ -153,7 +163,7 @@ export default function Page() {
     (active?.sizeGuideImages && active.sizeGuideImages.length > 0
       ? active.sizeGuideImages
       : [active.image]);
-  const whyItMattersImage = active?.whyItMattersImage || active.image;
+  // const whyItMattersImage = active?.whyItMattersImage || active.image;
   const baseTrustImages = active?.trustImages || {
     testimonialPrimary: active.image,
     testimonialSecondary: active.image,

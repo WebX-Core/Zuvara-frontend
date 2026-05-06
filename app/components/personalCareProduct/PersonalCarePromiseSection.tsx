@@ -14,7 +14,7 @@ export default function PersonalCarePromiseSection({
   const sideImage = conceptImages[0];
 
   return (
-    <section className="immersive-section relative px-4 pb-6 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-4 pb-4 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute right-8 top-8 h-48 w-48 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
