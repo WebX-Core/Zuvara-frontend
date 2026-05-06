@@ -15,12 +15,12 @@ export default function PersonalComfortDetailsSection({
   moodboardImages,
 }: PersonalComfortDetailsSectionProps) {
   return (
-    <section className="relative px-6 py-14 lg:px-10 lg:py-16">
+    <section className="relative px-4 py-14 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-7xl space-y-8 perspective-1200px">
         <div className="fx-rise flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className={sectionTitle} style={{ color: theme.accent }}>
-              Thoughtful Details, {" "}
+              Thoughtful Details,{" "}
               <span
                 className="italic font-light"
                 style={{ color: hexToRgba(theme.accent, 0.56) }}

@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import type { Product } from "@/type/personalCareProductType";
 import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowDown, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
+import Link from "next/link";
 
 type PersonalProductHeroSectionProps = {
   active: Product;
@@ -189,22 +186,22 @@ export default function PersonalProductHeroSection({
           </div>
 
           <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
-            {/* <div className="w-full text-center md:text-left">
-                      <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
-                        Every cuddle, every giggle, every tiny moment matters. Our care
-                        products protect the softness you never want to lose.
-                      </p>
-                      <Link
-                        href="#touch"
-                        className="mt-4 inline-flex items-center gap-2 font-semibold"
-                        style={{ color: theme.accent }}
-                      >
-                        Find more details <ArrowDown size={16} />
-                      </Link>
-                    </div> */}
+            <div className="w-full hidden md:block text-center md:text-left">
+              <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
+                Every cuddle, every giggle, every tiny moment matters. Our care
+                products protect the softness you never want to lose.
+              </p>
+              <Link
+                href="#touch"
+                className="mt-4 inline-flex items-center gap-2 font-semibold"
+                style={{ color: theme.accent }}
+              >
+                Find more details <ArrowDown size={16} />
+              </Link>
+            </div>
 
             <div className="w-full space-y-4 text-zinc-700 lg:pt-14">
-              <div className="w-full md:w-2/3 mx-auto">
+              <div className="w-full hidden sm:block md:w-2/3 mx-auto">
                 <div className="flex items-center gap-3">
                   <Check
                     size={18}

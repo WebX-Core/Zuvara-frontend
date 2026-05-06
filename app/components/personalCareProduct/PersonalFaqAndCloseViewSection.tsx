@@ -24,7 +24,7 @@ export default function PersonalFaqAndCloseViewSection({
   } as CSSProperties;
 
   return (
-    <section className="immersive-section relative px-6 pb-14 pt-6 lg:px-10 lg:pb-16">
+    <section className="immersive-section relative px-4 pb-14 pt-6 lg:px-10 lg:pb-16">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
@@ -42,8 +42,8 @@ export default function PersonalFaqAndCloseViewSection({
             className="mt-2 text-sm md:text-base"
             style={{ color: hexToRgba(theme.accent, 1) }}
           >
-            Clear answers about comfort, skin safety, flow support, and
-            everyday confidence.
+            Clear answers about comfort, skin safety, flow support, and everyday
+            confidence.
           </p>
         </div>
 

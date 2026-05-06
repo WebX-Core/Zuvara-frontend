@@ -100,7 +100,7 @@ export default function PersonalTrustFusionSection({
   };
 
   return (
-    <section className="immersive-section relative px-6 py-14 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-4 py-14 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute left-1/2 top-6 h-44 w-60 -translate-x-1/2 rounded-full blur-3xl opacity-50"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
