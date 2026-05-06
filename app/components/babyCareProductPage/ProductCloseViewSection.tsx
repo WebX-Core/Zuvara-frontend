@@ -37,7 +37,7 @@ const ProductCloseViewSection = ({
   const rightDetailImages = detailImages.slice(midIndex);
 
   return (
-    <section className="relative px-2 py-8 lg:px-4 lg:py-10 overflow-hidden">
+    <section className="relative px-4 py-8 lg:px-4 lg:py-10 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         {/* Header - Setting the technical context */}
         <div className="text-center mb-10 space-y-3 fx-rise">

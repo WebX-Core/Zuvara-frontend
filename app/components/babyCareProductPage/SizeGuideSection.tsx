@@ -17,7 +17,7 @@ export default function SizeGuideSection({
   void variants;
 
   return (
-    <section className="immersive-section relative px-6 py-10 md:py-14 lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-4 py-10 md:py-14 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute right-4 md:right-10 top-10 h-32 w-32 md:h-44 md:w-44 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.42) }}

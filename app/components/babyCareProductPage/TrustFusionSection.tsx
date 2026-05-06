@@ -98,7 +98,7 @@ export default function TrustFusionSection({
   };
 
   return (
-    <section className="immersive-section relative px-6  lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-4  lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute left-1/2 top-6 h-44 w-60 -translate-x-1/2 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
