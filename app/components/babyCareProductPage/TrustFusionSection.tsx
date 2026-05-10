@@ -334,13 +334,13 @@ export default function TrustFusionSection({
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
           <div className="w-full">
-            <div className="relative h-55 w-full overflow-hidden rounded-2xl md:rounded-3xl sm:h-75 md:h-115 lg:h-140">
+            <div className="relative h-55 w-full overflow-hidden rounded-2xl md:rounded-3xl sm:h-75 md:h-115 lg:h-100">
               <Image
                 src={images.comparisonZuvara}
                 alt="Zuvara care"
                 width={1000}
                 height={1000}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </div>
           </div>

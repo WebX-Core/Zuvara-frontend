@@ -104,21 +104,6 @@ export default function SizeGuideSection({
                 style={{ backgroundColor: hexToRgba(theme.accent, 0.15) }}
               />
 
-              {/* Icon */}
-              <div className="mb-3 md:mb-4 relative">
-                <div
-                  className="absolute inset-0 rounded-full blur-xl md:blur-2xl opacity-30"
-                  style={{ backgroundColor: theme.accent }}
-                />
-                <Image
-                  src={variant.icon || "/icons/default.png"}
-                  alt={variant.size || "Size"}
-                  width={80}
-                  height={80}
-                  className="w-12 h-12 md:w-20 md:h-20 object-contain relative z-10 group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-
               {/* Size Badge */}
               <div
                 className="px-3 py-1 md:px-4 md:py-1.5 rounded-full mb-2 md:mb-3"

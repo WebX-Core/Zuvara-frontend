@@ -3,16 +3,14 @@ import type { Product } from "@/type/babyCareProductType";
 import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import {
-  ArrowDown,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Heart,
-  MoveRight,
   MoveRightIcon,
   Star,
 } from "lucide-react";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
-import Link from "next/link";
 
 type ThemePreset = {
   accent: string;
@@ -47,6 +45,7 @@ export default function BabyCareHeroSection({
   void _products;
   const [isMobile, setIsMobile] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right" | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -65,18 +64,49 @@ export default function BabyCareHeroSection({
     if (!isMobile) return;
 
     if (info.offset.x <= -50) {
+      setDirection("left");
       onNext();
       return;
     }
 
     if (info.offset.x >= 50) {
+      setDirection("right");
       onPrev();
     }
   };
 
+  const handlePrevClick = () => {
+    setDirection("right");
+    onPrev();
+  };
+
+  const handleNextClick = () => {
+    setDirection("left");
+    onNext();
+  };
+
+  // Carousel animation variants
+  const carouselVariants = {
+    enter: (direction: "left" | "right" | null) => ({
+      opacity: 0,
+      x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
+      scale: 0.9,
+    }),
+    center: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    exit: (direction: "left" | "right" | null) => ({
+      opacity: 0,
+      x: direction === "left" ? -100 : direction === "right" ? 100 : 0,
+      scale: 0.9,
+    }),
+  };
+
   return (
     <motion.section
-      className="relative overflow-hidden h-screen flex flex-col"
+      className="relative overflow-hidden h-auto flex flex-col"
       animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
       transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
       drag={isMobile && enableMobileSwipe ? "x" : false}
@@ -273,11 +303,13 @@ export default function BabyCareHeroSection({
       </div>
 
       {/* Mobile Layout - App-like Design */}
-      <div className="md:hidden flex flex-col h-full">
-        {/* Top Section - Product Image (60% height) */}
+      <div className="md:hidden flex flex-col h-[80vh]">
+        {/* Top Section - Product Image (flexible height) */}
         <div
           className="relative flex-1 flex items-center justify-center"
-          style={{ backgroundColor: theme.containerBg }}
+          style={{
+            backgroundColor: theme.containerBg,
+          }}
         >
           {/* Category Badge - Top Left */}
           <div className="absolute top-4 left-4 z-10">
@@ -304,13 +336,18 @@ export default function BabyCareHeroSection({
 
           {/* Product Image */}
           <div className="relative w-full h-full max-w-md px-8">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active.id + "-pack-mobile"}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
+                custom={direction}
+                variants={carouselVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  duration: 0.4,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
                 className="relative w-full h-full"
               >
                 <Image
@@ -326,15 +363,17 @@ export default function BabyCareHeroSection({
           </div>
         </div>
 
-        {/* Bottom Section - Product Info (40% height) */}
-        <div className="relative bg-white rounded-t-[2rem] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-6 py-6 flex flex-col">
+        {/* Bottom Section - Product Info (auto height at bottom) */}
+        <div className="relative bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-4 flex flex-col">
           {/* Drag Handle */}
           <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 rounded-full bg-zinc-300" />
 
           {/* Product Name */}
           <motion.h1
-            initial={{ opacity: 0, y: 10 }}
+            key={active.id + "-name"}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="text-2xl font-bold leading-tight mb-2 mt-2"
             style={{ color: theme.accent }}
           >
@@ -344,9 +383,10 @@ export default function BabyCareHeroSection({
           {/* Rating & Reviews - Compact */}
           {active.rating && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              key={active.id + "-rating"}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="flex items-center gap-2 mb-4"
             >
               <div className="flex items-center gap-0.5">
@@ -366,9 +406,10 @@ export default function BabyCareHeroSection({
 
           {/* Safety Badge - Compact */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            key={active.id + "-safety"}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className="flex items-center gap-2 p-3 rounded-xl mb-4"
             style={{
               backgroundColor: `${theme.accent}08`,
@@ -387,19 +428,20 @@ export default function BabyCareHeroSection({
 
           {/* CTA Buttons - Full Width */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            key={active.id + "-cta"}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="space-y-3 mt-auto"
+            transition={{ duration: 0.4, delay: 0.25 }}
+            className="space-y-2.5"
           >
             <button
               type="button"
               onClick={() => setIsInquiryModalOpen(true)}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl px-6 py-4 text-base font-bold text-white shadow-lg active:scale-95 transition-transform"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-bold text-white shadow-lg active:scale-95 transition-transform"
               style={{ backgroundColor: theme.accent }}
             >
               <span>Inquiry Now</span>
-              <MoveRightIcon />
+              <ArrowRight />
             </button>
           </motion.div>
 
@@ -407,17 +449,16 @@ export default function BabyCareHeroSection({
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.3 }}
             className="flex items-center justify-center gap-2 mt-4"
           >
             <button
               type="button"
-              onClick={onPrev}
+              onClick={handlePrevClick}
               className="py-2 px-4 rounded-full flex items-center active:scale-90 transition-transform"
               style={{ backgroundColor: `${theme.accent}15` }}
               aria-label="Previous product"
             >
-
               <ChevronLeft size={20} style={{ color: theme.accent }} />
               <span className="text-sm font-medium">Prev</span>
             </button>
@@ -435,7 +476,7 @@ export default function BabyCareHeroSection({
             </div>
             <button
               type="button"
-              onClick={onNext}
+              onClick={handleNextClick}
               className="py-2 px-4 flex items-center rounded-full active:scale-90 transition-transform"
               style={{ backgroundColor: `${theme.accent}15` }}
               aria-label="Next product"

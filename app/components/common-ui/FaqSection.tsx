@@ -26,23 +26,21 @@ const FaqSection = ({
   const bodyColor = answerColor || "#52525b";
 
   return (
-    <div className="space-y-4">
-      <Accordions
-        type="single"
-        className="w-full space-y-1 [perspective-distant]"
-      >
+    <div className="space-y-3">
+      <Accordions type="single" className="w-full space-y-3">
         {faqs.map((faq, index) => (
           <Accordion
             key={index}
             id={`faq-${index}`}
             title={faq.question}
-            className="fx-rise overflow-hidden rounded-2xl px-2 md:px-3 transition-transform duration-500 hover:-translate-y-1"
-            triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
+            className="overflow-hidden rounded-2xl bg-white/60 backdrop-blur-sm px-4 py-1 md:px-6 transition-all duration-300 hover:shadow-lg hover:bg-white/80 border border-transparent hover:border-opacity-20"
+            triggerClassName="text-left text-base font-bold hover:no-underline md:text-lg py-4"
             triggerStyle={{ color: headingColor }}
+            style={{ borderColor: `${headingColor}15` }}
           >
-            <div className="pb-2 pt-1">
+            <div className="pb-4 pt-1 px-1">
               <p
-                className="whitespace-pre-line text-sm font-medium leading-relaxed md:text-base"
+                className="whitespace-pre-line text-sm font-medium leading-relaxed md:text-base opacity-90"
                 style={{ color: bodyColor }}
               >
                 {faq.answer}

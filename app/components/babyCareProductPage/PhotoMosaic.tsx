@@ -97,13 +97,11 @@ export default function PhotoMosaic({
   };
 
   return (
-    <div className={`relative overflow-hidden p-4 md:p-0 ${className ?? ""}`}>
-      <div className="mb-5 flex items-start justify-between gap-3 md:mb-6">
+    <div className={`relative overflow-hidden md:p-0 ${className ?? ""}`}>
+      <div className="mb-5 flex items-center justify-between gap-3 md:mb-6">
         <div
-          className="rounded-full sm:border px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs"
+          className="rounded-full text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs"
           style={{
-            borderColor: theme ? `${theme.border}55` : undefined,
-            backgroundColor: theme ? hexToRgba(theme.pageBg, 0.65) : undefined,
             color: theme ? theme.accent : "#111827",
           }}
         >

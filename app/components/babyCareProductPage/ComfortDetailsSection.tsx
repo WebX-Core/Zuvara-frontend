@@ -17,26 +17,24 @@ export default function ComfortDetailsSection({
   return (
     <section className="relative px-4 py-14 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-7xl space-y-8 perspective-1200px">
-        <div className="fx-rise flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className={sectionTitle} style={{ color: theme.accent }}>
-              Small Details,{" "}
-              <span
-                className="italic font-light"
-                style={{ color: hexToRgba(theme.accent, 0.56) }}
-              >
-                Big Comfort.
-              </span>
-            </h2>
-            <p
+        <div className="fx-rise text-center flex gap-5 lg:flex-row items-center justify-center">
+          <h2 className={sectionTitle} style={{ color: theme.accent }}>
+            Small Details,{" "}
+            <span
+              className="italic font-light"
+              style={{ color: hexToRgba(theme.accent, 0.56) }}
+            >
+              Big Comfort.
+            </span>
+          </h2>
+          {/* <p
               className="mt-3 text-sm md:text-base"
               style={{ color: hexToRgba(theme.accent, 1) }}
             >
               Designed to feel light, fit better, and stay comfortable through
               active and sleepy moments.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-3 text-xs font-semibold tracking-wide md:text-sm">
+            </p> */}
+          {/* <div className="flex flex-col sm:flex-row gap-3 text-xs font-semibold tracking-wide md:text-sm">
             {["Dermatologically Tested", "12hr Leak Guard"].map((chip) => (
               <span
                 key={chip}
@@ -50,7 +48,7 @@ export default function ComfortDetailsSection({
                 {chip}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div className="fx-rise overflow-hidden">

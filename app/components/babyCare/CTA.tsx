@@ -15,54 +15,59 @@ const CTA = () => {
       />
       <div className="relative z-10 w-full ">
         <div className="relative w-full bg-babyCare py-8 pb-12 sm:px-8 md:pt-4 md:pb-12 lg:px-40 lg:pb-40">
-          {/* Mobile Version - Hero Style */}
+          {/* Mobile Version - Improved Design */}
           <div className="px-4 sm:px-0 md:hidden">
-            <div className="relative overflow-hidden rounded-2xl ">
+            <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-white/30 to-white/10 backdrop-blur-md border border-white/40 shadow-xl">
+              {/* Decorative Background Elements */}
               <div className="pointer-events-none absolute inset-0">
-                <div className="absolute -left-10 top-4 h-28 w-28 rounded-full bg-white/20 blur-2xl" />
-                <div className="absolute -right-6 bottom-4 h-24 w-24 rounded-full bg-white/20 blur-2xl" />
+                <div className="absolute -left-10 top-4 h-32 w-32 rounded-full bg-white/30 blur-3xl" />
+                <div className="absolute -right-6 bottom-4 h-28 w-28 rounded-full bg-white/30 blur-3xl" />
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
               </div>
 
-              <div className="relative z-10 ">
-                <div className="flex items-start gap-4">
-                  <div className="flex-1 space-y-4">
-                    <div className="space-y-2">
-                      <div className="inline-flex items-center gap-2 bg-white/60 text-baby-accent  backdrop-blur-sm rounded-full px-2 py-1.5">
-                        <ShieldCheck size={14} />
-                        <span className="text-xs font-bold text-baby-accent uppercase tracking-wider">
-                          Premium Comfort
-                        </span>
-                      </div>
-                      <h2 className="text-xl font-bold leading-tight text-baby-accent">
-                        Gentle care for your baby&apos;s softest moments
-                      </h2>
-                      <p className="text-md font-medium text-baby-accent-soft leading-relaxed">
-                        Ultra-soft, breathable materials for all-day comfort and
-                        care.
-                      </p>
+              <div className="relative z-10 p-5">
+                {/* Content Layout */}
+                <div className="space-y-5">
+                  {/* Text Content */}
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
+                      <ShieldCheck size={14} className="text-baby-accent" />
+                      <span className="text-xs font-bold text-baby-accent uppercase tracking-wider">
+                        Premium Comfort
+                      </span>
                     </div>
 
-                    <Link
-                      href="/product"
-                      className="inline-flex items-center gap-2 bg-white text-baby-accent px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:scale-105 active:scale-95 shadow-md"
+                    <h2 className="text-2xl font-bold leading-tight text-baby-accent">
+                      Gentle care for your baby&apos;s softest moments
+                    </h2>
+
+                    <p className="text-sm font-medium text-baby-accent-soft leading-relaxed">
+                      Ultra-soft, breathable materials for all-day comfort and
+                      care.
+                    </p>
+                  </div>
+
+                  {/* Video Section - Clean without background box */}
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="h-48 w-full object-cover"
                     >
-                      <span>View Products</span>
-                      <ArrowRight size={16} />
-                    </Link>
+                      <source src="/videos/baby-care.mp4" type="video/mp4" />
+                    </video>
                   </div>
 
-                  <div className="relative size-24 shrink-0">
-                    <div className="absolute inset-0  rounded-2xl backdrop-blur-sm" />
-                    <div className="relative size-full">
-                      <Image
-                        src="/images/baby/baby31.png"
-                        alt="Premium Baby Care"
-                        fill
-                        className="object-contain p-2"
-                        priority
-                      />
-                    </div>
-                  </div>
+                  {/* CTA Button */}
+                  <Link
+                    href="/product"
+                    className="flex items-center justify-center gap-2 bg-white text-baby-accent px-6 py-3.5 rounded-full text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-lg hover:shadow-xl w-full"
+                  >
+                    <span>View Products</span>
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -107,18 +112,17 @@ const CTA = () => {
               </div>
             </div>
 
-            <div className="relative h-80 w-full sm:h-95 lg:h-90">
-              <div className="absolute inset-0 rounded-[1.6rem] bg-white/60 backdrop-blur-[1px]" />
-              <div className="absolute inset-4 rounded-[1.2rem] border border-white/70 bg-white/40" />
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/baby/baby31.png"
-                  alt="Premium Baby Care"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
+            {/* Desktop Video Section - Clean without background box */}
+            <div className="relative h-80 w-full sm:h-95 lg:h-[450px] rounded-[2rem] overflow-hidden">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              >
+                <source src="/videos/baby-care.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
