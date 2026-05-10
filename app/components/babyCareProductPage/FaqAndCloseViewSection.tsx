@@ -33,7 +33,7 @@ export default function FaqAndCloseViewSection({
         style={{ backgroundColor: hexToRgba(theme.chipBg, 0.4) }}
       />
       <div className="mx-auto max-w-7xl space-y-6 perspective-1200px">
-        <div className="fx-rise">
+        <div className="fx-rise text-center">
           <h2 className={sectionTitle} style={{ color: theme.accent }}>
             Questions You Ask With Love
           </h2>

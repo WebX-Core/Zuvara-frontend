@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { colors } from "@/lib/tokens";
@@ -80,12 +80,12 @@ export default function IntroPage() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-black sm:mb-3 sm:text-xs sm:tracking-[0.24em]"
+              className="mb-2 text-xl font-bold uppercase text-black sm:mb-3 sm:text-4xl"
             >
               Welcome to Zuvara
             </motion.p>
 
-            <motion.h1
+            {/* <motion.h1
               key={activeDestination.id}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -105,10 +105,10 @@ export default function IntroPage() {
               {activeDestination.id === "baby"
                 ? "Soft, safe, and thoughtfully made essentials for your little one."
                 : "Premium personal care designed for comfort, confidence, and daily ease."}
-            </motion.p>
+            </motion.p> */}
           </div>
 
-          <div className=" grid w-full max-w-6xl grid-cols-1 gap-4 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
+          <div className=" grid w-full max-w-5xl grid-cols-1 gap-4 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-10">
             {destinations.map((section) => {
               const isActive = activeId === section.id;
 
@@ -140,25 +140,23 @@ export default function IntroPage() {
                       duration: 0.4,
                       ease: [0.23, 1, 0.32, 1],
                     }}
-                    className="relative z-10 flex h-full  w-full flex-col overflow-hidden rounded-4xl border p-5 shadow-2xl backdrop-blur-xl sm:p-6  lg:rounded-[2.5rem] lg:p-8"
+                    className="relative z-10 flex h-full  w-full flex-col overflow-hidden rounded-4xl border p-5 hover:shadow-2xl backdrop-blur-xl sm:p-6  lg:rounded-[2.5rem] lg:p-8"
                   >
                     <div className="pointer-events-none absolute inset-0 rounded-4xl border border-white/12 lg:rounded-[2.5rem]" />
-                    <div className="pointer-events-none absolute inset-x-0 top-[48%] h-px bg-white/12" />
-                    <div className="pointer-events-none absolute bottom-[18%] left-[62%] top-[48%] w-px bg-white/8" />
 
                     <div className="relative z-10 flex h-full flex-col space-y-4 pb-1 sm:pb-0">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <div className="inline-flex items-center gap-2 rounded-2xl py-1.5">
+                        <div className="w-full z-20">
+                          {/* <div className="inline-flex items-center gap-2 rounded-2xl py-1.5">
                             <span
-                              className={`text-[10px] font-black uppercase tracking-wider text-white`}
+                              className={`text-[10px] text-nowrap font-black uppercase tracking-wider text-white`}
                             >
                               {section.subtitle}
                             </span>
-                          </div>
+                          </div> */}
 
                           <h2
-                            className={`text-2xl font-black leading-none sm:text-3xl text-white ${
+                            className={`text-2xl font-bold leading-none sm:text-4xl text-white ${
                               isActive ? "text-white" : "text-foreground"
                             }`}
                           >
@@ -182,7 +180,7 @@ export default function IntroPage() {
                             alt={section.title}
                             width={96}
                             height={96}
-                            className={`size-14 transition sm:size-20 lg:size-24 ${isActive ? "invert" : ""}`}
+                            className={`size-14 z-10 transition sm:size-20 lg:size-24 ${isActive ? "invert" : ""}`}
                           />
                         </motion.div>
                       </div>
@@ -236,8 +234,8 @@ export default function IntroPage() {
                     }}
                     className={`pointer-events-none absolute hidden md:block ${
                       section.id === "baby"
-                        ? "md:z-20 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:w-34 lg:bottom-10 lg:-left-46 lg:w-72"
-                        : "md:z-20 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-right-6 md:w-44 lg:-bottom-6 lg:-right-60 lg:w-120"
+                        ? "md:z-0 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:w-34 lg:bottom-10 lg:-left-46 lg:w-72"
+                        : "md:z-0 md:left-auto md:top-auto md:translate-x-0 md:bottom-14 md:-right-6 md:w-44 lg:-bottom-6 lg:-right-60 lg:w-120"
                     }`}
                   >
                     <Image

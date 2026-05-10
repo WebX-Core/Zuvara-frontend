@@ -1,10 +1,16 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Play, Volume2, VolumeX } from "lucide-react";
+import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
+import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
-const ProductVideoSection = () => {
+interface ProductVideoSectionProps {
+  theme?: ThemePreset;
+}
+
+const ProductVideoSection = ({ theme }: ProductVideoSectionProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -34,24 +40,19 @@ const ProductVideoSection = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="relative group">
           {/* Section Header */}
-          <div className="mb-4 lg:mb-8 text-center">
+          <div className="mb-10 text-center space-y-3">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-lg lg:text-3xl font-semibold tracking-tight"
+              className="text-3xl lg:text-5xl font-bold tracking-tight"
+              style={{
+                color: theme ? hexToRgba(theme.accent, 0.9) : "#18181b",
+              }}
             >
-              Watch in Action
+              Watch in{" "}
+              <span className="font-light italic opacity-60">Action.</span>
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-zinc-600 lg:text-lg leading-relaxed max-w-5xl mx-auto"
-            >
-              Experience the comfort and quality firsthand.
-            </motion.p>
           </div>
 
           {/* Video Container */}
@@ -59,7 +60,7 @@ const ProductVideoSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative aspect-video rounded-3xl lg:rounded-[3rem] overflow-hidden bg-zinc-100 shadow-2xl shadow-zinc-200"
+            className="relative aspect-video rounded-3xl lg:rounded-[3rem] overflow-hidden bg-zinc-100 "
           >
             <video
               ref={videoRef}

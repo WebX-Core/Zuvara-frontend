@@ -133,11 +133,7 @@ export default function PersonalProductHeroSection({
           className="relative min-h-100 overflow-hidden rounded-4xl px-6 pb-8 pt-8 md:h-100 md:pb-16 md:pt-20 lg:px-10 lg:pt-30 md:transition-colors md:duration-500"
           style={{ backgroundColor: theme.containerBg }}
         >
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-24 top-10 h-56 w-56 rounded-full bg-white/20" />
-            <div className="absolute right-8 -top-24 h-56 w-56 rounded-full bg-white/20" />
-            <div className="absolute right-28 -bottom-32 h-64 w-64 rounded-full bg-white/20" />
-          </div>
+         z
 
           <div className="relative z-10 md:hidden">
             <div className="flex items-start justify-between gap-4">

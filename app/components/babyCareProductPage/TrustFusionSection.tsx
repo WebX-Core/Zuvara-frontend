@@ -22,9 +22,6 @@ type TrustFusionSectionProps = {
   };
 };
 
-// const sectionTitle =
-//   "text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold tracking-tight leading-[1.08]";
-
 export default function TrustFusionSection({
   theme,
   comparisonRows,
@@ -32,6 +29,7 @@ export default function TrustFusionSection({
 }: TrustFusionSectionProps) {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [visibleCards, setVisibleCards] = useState(2);
+  const [isDragging, setIsDragging] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const maxIndex = Math.max(0, trustFusionTestimonials.length - visibleCards);
@@ -62,11 +60,14 @@ export default function TrustFusionSection({
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
     touchStartXRef.current = event.touches[0]?.clientX ?? null;
     touchStartYRef.current = event.touches[0]?.clientY ?? null;
   };
 
   const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+
     if (
       visibleCards !== 1 ||
       touchStartXRef.current == null ||
@@ -85,7 +86,8 @@ export default function TrustFusionSection({
     touchStartXRef.current = null;
     touchStartYRef.current = null;
 
-    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY)) {
+    // Reduced threshold for better responsiveness
+    if (Math.abs(deltaX) < 30 || Math.abs(deltaX) < Math.abs(deltaY)) {
       return;
     }
 
@@ -98,119 +100,145 @@ export default function TrustFusionSection({
   };
 
   return (
-    <section className="immersive-section relative px-4  lg:px-10 lg:py-16">
+    <section className="immersive-section relative px-4 py-10 lg:px-10 lg:py-16">
       <div
         className="pointer-events-none absolute left-1/2 top-6 h-44 w-60 -translate-x-1/2 rounded-full blur-3xl"
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
       <div className="mx-auto max-w-7xl perspective-1200px">
-        <div className=" flex flex-col  sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-            <span
-              className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
-              style={{ color: theme.accent }}
-            >
-              Hear from our wonderful customers
-            </span>
-            <p
-              className="text-sm hidden sm:block"
-              style={{ color: hexToRgba(theme.accent, 0.68) }}
-            >
-              Swipe through real feedback from people who trust
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 self-end sm:self-auto">
-            <button
-              type="button"
-              onClick={goPrev}
-              className="flex h-11 w-11 bg-white! items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
-              style={{
-                borderColor: `${theme.border}66`,
-                backgroundColor: hexToRgba(theme.pageBg, 0.92),
-                color: theme.accent,
-              }}
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              className="flex h-11 w-11 bg-white! items-center justify-center rounded-full border transition-transform duration-300 hover:scale-[1.04]"
-              style={{
-                borderColor: `${theme.border}66`,
-                backgroundColor: hexToRgba(theme.pageBg, 0.92),
-                color: theme.accent,
-              }}
-              aria-label="Next testimonial"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+        {/* Header Section - More Prominent */}
+        <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
+          <h2
+            className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+            style={{ color: hexToRgba(theme.accent, 0.9) }}
+          >
+            What Parents
+            <span className="font-light italic opacity-60"> Are Saying</span>
+          </h2>
+          <p
+            className="text-xs md:text-base font-medium max-w-2xl mx-auto"
+            style={{ color: hexToRgba(theme.accent, 0.68) }}
+          >
+            Real experiences from families who trust Zuvara for their little
+            ones
+          </p>
         </div>
 
-        <div
-          className="overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className="flex transition-transform duration-700 ease-out"
+        {/* Testimonials Carousel */}
+        <div className="relative">
+          {/* Desktop Navigation Buttons */}
+          <button
+            type="button"
+            onClick={goPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
             style={{
-              transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
+              borderColor: theme.accent,
+              backgroundColor: "white",
+              color: theme.accent,
+            }}
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft size={24} strokeWidth={3} />
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
+            style={{
+              borderColor: theme.accent,
+              backgroundColor: "white",
+              color: theme.accent,
+            }}
+            aria-label="Next testimonial"
+          >
+            <ChevronRight size={24} strokeWidth={3} />
+          </button>
+
+          {/* Carousel Container */}
+          <div
+            className="overflow-hidden px-0 lg:px-16 cursor-grab active:cursor-grabbing"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            style={{
+              touchAction: "pan-y",
+              userSelect: isDragging ? "none" : "auto",
             }}
           >
-            {trustFusionTestimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="w-full shrink-0  pt-2 lg:w-1/2"
-              >
-                <article
-                  className="fx-rise fx-float  flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
-                  style={{
-                    borderColor: `${theme.border}66`,
-                    backgroundColor: hexToRgba(theme.pageBg, 0.96),
-                  }}
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{
+                transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
+              }}
+            >
+              {trustFusionTestimonials.map((testimonial, idx) => (
+                <div
+                  key={testimonial.id}
+                  className="w-full shrink-0 lg:w-1/2 px-2 md:px-3"
                 >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <span
-                      className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
-                      style={{
-                        backgroundColor: hexToRgba(theme.containerBg, 0.36),
-                        color: hexToRgba(theme.accent, 0.75),
-                      }}
-                    >
-                      {testimonial.badge}
-                    </span>
-                    <span
-                      className="shrink-0 text-sm text-right"
-                      style={{ color: hexToRgba(theme.accent, 0.48) }}
-                    >
-                      {testimonial.time}
-                    </span>
-                  </div>
-
-                  <div
-                    className="relative mt-5 h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
-                    style={{ borderColor: `${theme.border}66` }}
+                  <article
+                    className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                    style={{
+                      borderColor: `${theme.border}88`,
+                      minHeight: "360px",
+                    }}
                   >
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+                    {/* Header with Badge and Time */}
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                      <span
+                        className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                        style={{
+                          backgroundColor: hexToRgba(theme.accent, 0.1),
+                          color: theme.accent,
+                        }}
+                      >
+                        {testimonial.badge}
+                      </span>
+                      <span
+                        className="text-xs md:text-sm font-medium"
+                        style={{ color: hexToRgba(theme.accent, 0.5) }}
+                      >
+                        {testimonial.time}
+                      </span>
+                    </div>
 
-                  <div className="mt-5 flex flex-col items-center gap-3">
-                    <div className="flex items-center gap-1">
+                    {/* Profile Section */}
+                    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                      <div
+                        className="relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full border-2 shrink-0"
+                        style={{ borderColor: theme.accent }}
+                      >
+                        <Image
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className="text-base md:text-lg font-bold mb-0.5 md:mb-1 truncate"
+                          style={{ color: theme.accent }}
+                        >
+                          {testimonial.name}
+                        </p>
+                        <p
+                          className="text-xs md:text-sm font-medium truncate"
+                          style={{ color: hexToRgba(theme.accent, 0.6) }}
+                        >
+                          {testimonial.location}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Star Rating */}
+                    <div className="flex items-center gap-0.5 md:gap-1 mb-4 md:mb-6">
                       {Array.from({ length: testimonial.rating }).map(
                         (_, index) => (
                           <Star
                             key={index}
-                            size={17}
+                            size={16}
+                            className="md:w-[20px] md:h-[20px]"
                             fill="#fbbf24"
                             color="#fbbf24"
                           />
@@ -218,64 +246,83 @@ export default function TrustFusionSection({
                       )}
                     </div>
 
-                    <div>
-                      <p
-                        className="text-base font-semibold md:text-lg"
-                        style={{ color: theme.accent }}
-                      >
-                        {testimonial.name}
-                      </p>
-                      <p
-                        className="text-sm"
-                        style={{ color: hexToRgba(theme.accent, 0.62) }}
-                      >
-                        {testimonial.location}
-                      </p>
-                    </div>
-                  </div>
+                    {/* Testimonial Text */}
+                    <p
+                      className="text-sm md:text-base lg:text-lg leading-relaxed flex-1"
+                      style={{ color: hexToRgba(theme.accent, 0.85) }}
+                    >
+                      &ldquo;{testimonial.text}&rdquo;
+                    </p>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                  <p
-                    className="mt-5 text-base leading-relaxed md:text-lg"
-                    style={{ color: hexToRgba(theme.accent, 0.82) }}
-                  >
-                    {testimonial.text}
-                  </p>
-                </article>
-              </div>
-            ))}
+          {/* Mobile Navigation Buttons */}
+          <div className="flex lg:hidden items-center justify-center gap-4 mt-6">
+            <button
+              type="button"
+              onClick={goPrev}
+              className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+              style={{
+                borderColor: theme.accent,
+                backgroundColor: "white",
+                color: theme.accent,
+              }}
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={20} strokeWidth={3} />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+              style={{
+                borderColor: theme.accent,
+                backgroundColor: "white",
+                color: theme.accent,
+              }}
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={20} strokeWidth={3} />
+            </button>
           </div>
         </div>
 
-        <div className="mt-5 flex justify-center gap-2">
+        {/* Pagination Dots - Larger & More Visible */}
+        <div className="mt-6 md:mt-8 flex justify-center gap-2 md:gap-3">
           {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <button
               key={index}
               type="button"
               onClick={() => setActiveTestimonial(index)}
-              className="h-2.5 rounded-full transition-all duration-300"
+              className="h-2.5 md:h-3 rounded-full transition-all duration-300 hover:scale-110"
               style={{
-                width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
+                width: safeActiveIndex === index ? "2.5rem" : "0.75rem",
                 backgroundColor:
                   safeActiveIndex === index
                     ? theme.accent
-                    : "rgba(132,170,165,0.35)",
+                    : hexToRgba(theme.accent, 0.25),
               }}
               aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
       </div>
-      <div className="mx-auto mt-12 max-w-7xl space-y-8">
-        <div className="fx-rise">
+
+      {/* Comparison Section */}
+      <div className="mx-auto mt-16 md:mt-20 max-w-7xl space-y-8">
+        <div className="fx-rise text-center">
           <h2
-            className="text-3xl lg:text-5xl font-bold tracking-tight"
+            className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight"
             style={{ color: hexToRgba(theme.accent, 0.9) }}
           >
             Why Zuvara
             <span className="font-light italic opacity-60"> Wins</span>
           </h2>
           <p
-            className="mt-2 text-sm font-medium"
+            className="mt-2 text-xs md:text-sm font-medium"
             style={{ color: hexToRgba(theme.accent, 0.68) }}
           >
             A quick side-by-side look at the care your baby deserves.
@@ -283,17 +330,11 @@ export default function TrustFusionSection({
         </div>
 
         <div
-          className="flex items-center justify-center rounded-4xl px-2 sm:px-4"
+          className="flex items-center justify-center rounded-3xl md:rounded-4xl px-2 sm:px-4"
           style={{ backgroundColor: hexToRgba(theme.containerBg, 0.2) }}
         >
           <div className="w-full">
-            <div className="relative h-55 w-full overflow-hidden rounded-3xl sm:h-75 md:h-115 lg:h-140">
-              <h2
-                className="absolute left-3 top-3 z-10 text-2xl font-bold uppercase sm:left-4 sm:top-4 sm:text-4xl md:text-6xl lg:text-7xl"
-                style={{ color: hexToRgba(theme.accent, 0.75) }}
-              >
-                Zuvara
-              </h2>
+            <div className="relative h-55 w-full overflow-hidden rounded-2xl md:rounded-3xl sm:h-75 md:h-115 lg:h-140">
               <Image
                 src={images.comparisonZuvara}
                 alt="Zuvara care"
@@ -301,18 +342,15 @@ export default function TrustFusionSection({
                 height={1000}
                 className="h-full w-full object-cover"
               />
-              <h2 className="absolute right-3 top-3 z-10 text-2xl font-bold uppercase text-zinc-500/70 sm:right-4 sm:top-4 sm:text-4xl md:text-6xl lg:text-7xl">
-                Ordinary
-              </h2>
             </div>
           </div>
         </div>
 
-        {/* ── MOBILE: sticky feature col + scrollable brand cols ── */}
+        {/* MOBILE: sticky feature col + scrollable brand cols */}
         <div className="fx-rise overflow-visible md:hidden">
           <div className="py-4" data-carousel-swipe-ignore="true">
             <div
-              className="overflow-hidden rounded-[1.4rem] border"
+              className="overflow-hidden rounded-2xl border"
               style={{ borderColor: `${theme.border}33` }}
             >
               <div className="flex">
@@ -419,7 +457,7 @@ export default function TrustFusionSection({
           </div>
         </div>
 
-        {/* ── DESKTOP ── */}
+        {/* DESKTOP */}
         <div
           className="fx-rise hidden overflow-hidden rounded-3xl md:block"
           style={{

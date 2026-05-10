@@ -362,7 +362,7 @@ export default function Page() {
           theme={currentTheme}
           technicalDetailImages={imageSet.technicalDetailImages}
         />
-        <ProductVideoSection />
+        <ProductVideoSection theme={currentTheme} />
 
         <ComfortDetailsSection
           theme={currentTheme}
