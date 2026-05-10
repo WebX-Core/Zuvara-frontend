@@ -112,7 +112,7 @@ export default function SizeGuideSection({
                 />
                 <Image
                   src={variant.icon || "/icons/default.png"}
-                  alt={variant.size}
+                  alt={variant.size || "Size"}
                   width={80}
                   height={80}
                   className="w-12 h-12 md:w-20 md:h-20 object-contain relative z-10 group-hover:scale-110 transition-transform duration-300"
