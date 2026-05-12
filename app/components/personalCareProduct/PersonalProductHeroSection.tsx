@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import type { Product } from "@/type/personalCareProductType";
 import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
-import { ArrowDown, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Star,
+} from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import ContactIntentModal from "@/app/components/common-ui/ContactIntentModal";
-import Link from "next/link";
 
 type PersonalProductHeroSectionProps = {
   active: Product;
@@ -18,8 +23,6 @@ type PersonalProductHeroSectionProps = {
   onSelectProduct: (index: number) => void;
   enableMobileSwipe?: boolean;
 };
-
-const bodyText = "text-sm md:text-base leading-relaxed text-zinc-700";
 
 export default function PersonalProductHeroSection({
   enableMobileSwipe = true,
@@ -35,6 +38,7 @@ export default function PersonalProductHeroSection({
   void _heroAvatars;
   const [isMobile, setIsMobile] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right" | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -53,18 +57,49 @@ export default function PersonalProductHeroSection({
     if (!isMobile) return;
 
     if (info.offset.x <= -50) {
+      setDirection("left");
       onNext();
       return;
     }
 
     if (info.offset.x >= 50) {
+      setDirection("right");
       onPrev();
     }
   };
 
+  const handlePrevClick = () => {
+    setDirection("right");
+    onPrev();
+  };
+
+  const handleNextClick = () => {
+    setDirection("left");
+    onNext();
+  };
+
+  // Carousel animation variants
+  const carouselVariants = {
+    enter: (direction: "left" | "right" | null) => ({
+      opacity: 0,
+      x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
+      scale: 0.9,
+    }),
+    center: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    exit: (direction: "left" | "right" | null) => ({
+      opacity: 0,
+      x: direction === "left" ? -100 : direction === "right" ? 100 : 0,
+      scale: 0.9,
+    }),
+  };
+
   return (
     <motion.section
-      className="relative overflow-hidden px-4"
+      className="relative overflow-hidden h-auto flex flex-col"
       animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
       transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
       drag={isMobile && enableMobileSwipe ? "x" : false}
@@ -73,192 +108,379 @@ export default function PersonalProductHeroSection({
       onDragEnd={enableMobileSwipe ? handleHeroSwipe : undefined}
       style={{ touchAction: enableMobileSwipe ? "pan-y" : "auto" }}
     >
-      <div className="relative mx-auto max-w-7xl pb-10 md:pt-10 md:pb-14">
-        <div className="relative pt-4 sm:mt-10">
-          <div className="hidden w-full items-center justify-between md:order-0 md:flex md:py-12">
-            <div className="min-w-0">
-              <h2
-                className="text-2xl font-semibold leading-[1.02] line-clamp-2 sm:text-4xl md:font-bold"
-                style={{ color: theme.accent }}
+      {/* Desktop Layout */}
+      <div className="hidden md:flex md:items-center md:h-full px-4">
+        <div className="relative mx-auto max-w-7xl w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
+            {/* Left Column - Product Image */}
+            <div className="lg:col-span-6 order-2 lg:order-1">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
               >
-                {active.name}
-              </h2>
-              <p className="mt-2 text-base md:text-sm font-medium text-zinc-600">
-                {active.category}
-              </p>
+                <div className="relative">
+                  {/* Category Badge */}
+                  <div className="absolute top-0 left-0 z-10">
+                    <span
+                      className="inline-block px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg"
+                      style={{
+                        backgroundColor: theme.accent,
+                        color: "white",
+                      }}
+                    >
+                      {active.category}
+                    </span>
+                  </div>
+
+                  {/* Product Image */}
+                  <div className="pointer-events-none relative mx-auto h-96 lg:h-[500px] w-full">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={active.id + "-pack"}
+                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute inset-0"
+                      >
+                        <Image
+                          src={heroPackSrc}
+                          alt={`${active.name} pack`}
+                          fill
+                          className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+                          sizes="(max-width: 1024px) 90vw, 50vw"
+                          priority
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* Decorative Background */}
+                    <div
+                      className="absolute inset-0 -z-10 rounded-full blur-3xl opacity-20"
+                      style={{ backgroundColor: theme.accent }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setIsInquiryModalOpen(true)}
-              className="mt-8 flex shrink-0 gap-2 rounded-full px-2 sm:px-5 py-2.5 text-sm font-semibold tracking-wide text-white md:px-6 md:py-3 md:text-base"
-              style={{ backgroundColor: theme.accent }}
-            >
-              <span>Inquiry </span>
-              <span>
-                <Image
-                  src="/icons/share.png"
-                  alt="Inquiry"
-                  width={28}
-                  height={28}
-                  className="invert-100 w-5"
+            {/* Right Column - Product Details */}
+            <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
+              {/* Product Name & Rating */}
+              <div>
+                <motion.h1
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-3"
+                  style={{ color: theme.accent }}
+                >
+                  {active.name}
+                </motion.h1>
+
+                {/* Rating & Reviews */}
+                {active.rating && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex items-center gap-3 mb-4"
+                  >
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          key={i}
+                          className="w-5 h-5"
+                          fill={
+                            i < Math.floor(active.rating || 0)
+                              ? theme.accent
+                              : "#e5e7eb"
+                          }
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className="text-sm font-semibold text-zinc-700">
+                      {active.rating}{" "}
+                      <span className="font-normal text-zinc-500">
+                        ({active.reviews} reviews)
+                      </span>
+                    </span>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Safety Info */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex items-start gap-3 p-4 rounded-xl border"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: `${theme.accent}08`,
+                }}
+              >
+                <Heart
+                  size={20}
+                  style={{ color: theme.accent }}
+                  className="shrink-0 mt-0.5"
                 />
-              </span>
-            </button>
+                <div>
+                  <h4 className="text-sm font-bold text-zinc-800 mb-1">
+                    100% Safe & Gentle
+                  </h4>
+                  <p className="text-xs text-zinc-600">
+                    Dermatologically tested and designed for sensitive skin.
+                    Free from harsh chemicals and fragrances.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="flex flex-wrap gap-4"
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsInquiryModalOpen(true)}
+                  className="flex items-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  style={{ backgroundColor: theme.accent }}
+                >
+                  <span>Inquiry Now</span>
+                  <ArrowRight size={18} />
+                </button>
+              </motion.div>
+
+              {/* Navigation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex items-center gap-3 pt-4 border-t"
+                style={{ borderColor: `${theme.border}44` }}
+              >
+                <span className="text-sm font-medium text-zinc-600">
+                  Browse Products:
+                </span>
+                <button
+                  type="button"
+                  onClick={handlePrevClick}
+                  className="rounded-full border-2 bg-white px-4 py-2 font-medium hover:bg-zinc-50 transition-all duration-300 flex items-center gap-2"
+                  style={{ borderColor: theme.border, color: theme.accent }}
+                  aria-label="Previous product"
+                >
+                  <ChevronLeft size={18} />
+                  <span className="text-sm">Previous</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextClick}
+                  className="rounded-full border-2 bg-white px-4 py-2 font-medium hover:bg-zinc-50 transition-all duration-300 flex items-center gap-2"
+                  style={{ borderColor: theme.border, color: theme.accent }}
+                  aria-label="Next product"
+                >
+                  <span className="text-sm">Next</span>
+                  <ChevronRight size={18} />
+                </button>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Layout - App-like Design */}
+      <div className="md:hidden flex flex-col h-screen">
+        {/* Top Section - Product Image (flexible height) */}
+        <div
+          className="relative flex-1 flex items-center justify-center"
+          style={{
+            backgroundColor: theme.containerBg,
+          }}
+        >
+          {/* Category Badge - Top Left */}
+          <div className="absolute top-4 left-4 z-10">
+            <span
+              className="inline-block px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-md"
+              style={{
+                backgroundColor: theme.accent,
+                color: "white",
+              }}
+            >
+              {active.category}
+            </span>
           </div>
 
-          <div className="pointer-events-none relative left-1/2 z-20 mt-8 hidden h-80 w-full -translate-x-1/2 md:absolute md:-top-30 md:block md:h-160 md:w-110 md:mt-0">
-            <AnimatePresence mode="wait">
+          {/* Swipe Indicator */}
+          <div className="absolute top-4 right-4 z-10 flex gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <div
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ backgroundColor: theme.accent }}
+            />
+            <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+          </div>
+
+          {/* Product Image */}
+          <div className="relative w-full h-full max-w-md px-8">
+            <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={active.id + "-pack"}
-                initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.35 }}
-                className="absolute inset-0"
+                key={active.id + "-pack-mobile"}
+                custom={direction}
+                variants={carouselVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  duration: 0.4,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+                className="relative w-full h-full"
               >
                 <Image
                   src={heroPackSrc}
                   alt={`${active.name} pack`}
                   fill
-                  className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
-                  sizes="(max-width: 1024px) 80vw, 22vw"
+                  className="object-contain drop-shadow-2xl"
+                  sizes="90vw"
+                  priority
                 />
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
 
-        <div
-          className="relative min-h-100 overflow-hidden rounded-4xl px-6 pb-8 pt-8 md:h-100 md:pb-16 md:pt-20 lg:px-10 lg:pt-30 md:transition-colors md:duration-500"
-          style={{ backgroundColor: theme.containerBg }}
-        >
-         z
+        {/* Bottom Section - Product Info (auto height at bottom) */}
+        <div className="relative bg-white rounded-t-[2rem] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] px-5 py-4 flex flex-col">
+          {/* Drag Handle */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 rounded-full bg-zinc-300" />
 
-          <div className="relative z-10 md:hidden">
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <h2
-                  className="text-2xl font-semibold leading-[1.02] line-clamp-2"
+          {/* Product Name */}
+          <motion.h1
+            key={active.id + "-name"}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-2xl font-bold leading-tight mb-2 mt-2"
+            style={{ color: theme.accent }}
+          >
+            {active.name}
+          </motion.h1>
+
+          {/* Rating & Reviews - Compact */}
+          {active.rating && (
+            <motion.div
+              key={active.id + "-rating"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              className="flex items-center gap-2 mb-4"
+            >
+              <div className="flex items-center gap-0.5">
+                <Star size={14} fill={theme.accent} color={theme.accent} />
+                <span
+                  className="text-sm font-bold"
                   style={{ color: theme.accent }}
                 >
-                  {active.name}
-                </h2>
-                <p className="mt-2 text-sm font-medium text-zinc-600">
-                  {active.category}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsInquiryModalOpen(true)}
-                className="flex shrink-0 gap-2 rounded-full px-5 py-2.5 text-sm font-semibold tracking-wide text-white"
-                style={{ backgroundColor: theme.accent }}
-              >
-                <span>Inquiry</span>
-                <span>
-                  <Image
-                    src="/icons/share.png"
-                    alt="Inquiry"
-                    width={28}
-                    height={28}
-                    className="w-4 shrink-0 invert-100"
-                  />
+                  {active.rating}
                 </span>
-              </button>
-            </div>
+              </div>
+              <span className="text-xs text-zinc-500">
+                ({active.reviews} reviews)
+              </span>
+            </motion.div>
+          )}
 
-            <div className="pointer-events-none relative mx-auto mt-6 h-72 w-full max-w-sm">
-              <div className="absolute inset-0">
-                <Image
-                  src={heroPackSrc}
-                  alt={`${active.name} pack`}
-                  fill
-                  className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
-                  sizes="80vw"
+          {/* Safety Badge - Compact */}
+          <motion.div
+            key={active.id + "-safety"}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="flex items-center gap-2 p-3 rounded-xl mb-4"
+            style={{
+              backgroundColor: `${theme.accent}08`,
+              borderLeft: `3px solid ${theme.accent}`,
+            }}
+          >
+            <Heart
+              size={16}
+              style={{ color: theme.accent }}
+              className="shrink-0"
+            />
+            <p className="text-xs font-semibold text-zinc-700">
+              100% Safe & Gentle Formula
+            </p>
+          </motion.div>
+
+          {/* CTA Buttons - Full Width */}
+          <motion.div
+            key={active.id + "-cta"}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
+            className="space-y-2.5"
+          >
+            <button
+              type="button"
+              onClick={() => setIsInquiryModalOpen(true)}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-bold text-white shadow-lg active:scale-95 transition-transform"
+              style={{ backgroundColor: theme.accent }}
+            >
+              <span>Inquiry Now</span>
+              <ArrowRight />
+            </button>
+          </motion.div>
+
+          {/* Navigation Dots */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex items-center justify-center gap-2 mt-4"
+          >
+            <button
+              type="button"
+              onClick={handlePrevClick}
+              className="py-2 px-4 rounded-full flex items-center active:scale-90 transition-transform"
+              style={{ backgroundColor: `${theme.accent}15` }}
+              aria-label="Previous product"
+            >
+              <ChevronLeft size={20} style={{ color: theme.accent }} />
+              <span className="text-sm font-medium">Prev</span>
+            </button>
+            <div className="flex gap-1.5">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-2 h-2 rounded-full"
+                  style={{
+                    backgroundColor:
+                      i === 1 ? theme.accent : `${theme.accent}30`,
+                  }}
                 />
-              </div>
+              ))}
             </div>
-          </div>
-
-          <div className="w-full relative flex flex-col md:flex-row justify-between items-center md:items-end gap-10 md:gap-6">
-            <div className="w-full hidden sm:block text-center md:text-left">
-              <p className={`max-w-xs mx-auto md:mx-0 ${bodyText} font-medium`}>
-                Every cuddle, every giggle, every tiny moment matters. Our care
-                products protect the softness you never want to lose.
-              </p>
-              <Link
-                href="#touch"
-                className="mt-4 inline-flex items-center gap-2 font-semibold"
-                style={{ color: theme.accent }}
-              >
-                Find more details <ArrowDown size={16} />
-              </Link>
-            </div>
-
-            <div className="w-full hidden sm:block space-y-4 text-zinc-700 lg:pt-14">
-              <div className="w-full md:w-2/3 mx-auto">
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">
-                    Pure ingredients.
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">Pure comfort.</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check
-                    size={18}
-                    style={{ color: theme.accent }}
-                    strokeWidth={3}
-                  />
-                  <span className="text-base font-medium">
-                    Designed for delicate skin.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center pt-8 md:pt-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-3 py-2">
-              <button
-                type="button"
-                onClick={onPrev}
-                className="rounded-full border bg-white/70 px-5 py-2.5 font-medium hover:bg-white/20 flex items-center justify-center gap-2 md:px-6 md:py-3"
-                style={{ borderColor: theme.border, color: theme.accent }}
-                aria-label="Previous product"
-              >
-                <ChevronLeft size={18} />
-                <span className="flex flex-col items-start leading-none">
-                  <span>Prev</span>
-                </span>
-              </button>
-              <button
-                type="button"
-                onClick={onNext}
-                className="rounded-full border bg-white/70 px-5 py-2.5 font-medium hover:bg-white/20 flex items-center justify-center gap-2 md:px-6 md:py-3"
-                style={{ borderColor: theme.border, color: theme.accent }}
-                aria-label="Next product"
-              >
-                <span className="flex flex-col items-end leading-none">
-                  <span>Next</span>
-                </span>
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
+            <button
+              type="button"
+              onClick={handleNextClick}
+              className="py-2 px-4 flex items-center rounded-full active:scale-90 transition-transform"
+              style={{ backgroundColor: `${theme.accent}15` }}
+              aria-label="Next product"
+            >
+              <span className="text-sm font-medium">Next</span>
+              <ChevronRight size={20} style={{ color: theme.accent }} />
+            </button>
+          </motion.div>
         </div>
       </div>
+
       {isInquiryModalOpen ? (
         <ContactIntentModal
           intent="inquiry"

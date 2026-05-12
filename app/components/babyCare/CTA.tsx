@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Truck } from "lucide-react";
 import SectionIntro, { sectionContentSpacing } from "../common-ui/SectionIntro";
@@ -56,7 +55,7 @@ const CTA = () => {
                       playsInline
                       className="h-48 w-full object-cover"
                     >
-                      <source src="/videos/baby-care.mp4" type="video/mp4" />
+                      <source src="/videos/new-zuv.mp4" type="video/mp4" />
                     </video>
                   </div>
 
@@ -121,7 +120,7 @@ const CTA = () => {
                 playsInline
                 className="h-full w-full object-cover"
               >
-                <source src="/videos/baby-care.mp4" type="video/mp4" />
+                <source src="/videos/new-zuv.mp4" type="video/mp4" />
               </video>
             </div>
           </div>
