@@ -35,9 +35,11 @@ const faqs = [
 
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
+  const faqCardBg = hexToRgba(theme.pageBg, 0.82);
+  const faqCardBorder = `${theme.border}66`;
 
   return (
-    <section className="relative px-4 py-8 md:px-8 md:py-20 md:pb-40">
+    <section className="relative px-4 py-10 md:px-8 md:py-20 md:pb-40">
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
         dangerouslySetInnerHTML={{ __html: footerWave.markup }}
@@ -69,25 +71,35 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
           </>
         }
         description="A quick guide to common questions around comfort, protection levels, and choosing the right Zuvara personal care product."
-        titleClassName="text-5xl font-semibold leading-none tracking-tight"
-        descriptionClassName="text-sm font-medium leading-relaxed md:text-base"
+        titleClassName="text-center text-4xl font-semibold leading-[0.95] tracking-tight sm:text-5xl"
+        descriptionClassName="mx-auto max-w-2xl text-center text-sm font-medium leading-relaxed md:text-base"
         titleStyle={{ color: theme.accent }}
         descriptionStyle={{ color: hexToRgba(theme.accent, 0.74) }}
       />
 
-      <div className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}>
-        <Accordions type="single" className="space-y-1 divide-y-0">
+      <div
+        className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.25fr_0.75fr]`}
+      >
+        <Accordions
+          type="single"
+          defaultValue="personal-listing-faq-0"
+          className="space-y-3 divide-y-0"
+        >
           {faqs.map((faq, index) => (
             <Accordion
               key={faq.question}
               id={`personal-listing-faq-${index}`}
               title={faq.question}
-              className="overflow-hidden rounded-[1.4rem] px-2 transition-colors duration-300"
-              triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
+              className="overflow-hidden rounded-[1.2rem] border px-4 py-1 transition-colors duration-300 md:px-5"
+              style={{
+                borderColor: faqCardBorder,
+                backgroundColor: faqCardBg,
+              }}
+              triggerClassName="text-left text-sm font-semibold leading-relaxed hover:no-underline md:text-base"
               triggerStyle={{ color: theme.accent }}
             >
               <p
-                className="pb-2 text-sm leading-relaxed md:text-base"
+                className="pb-3 text-sm leading-relaxed md:text-base"
                 style={{ color: hexToRgba(theme.accent, 0.72) }}
               >
                 {faq.answer}
@@ -97,7 +109,7 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
         </Accordions>
 
         <div
-          className="rounded-[1.6rem] border p-5 md:p-6"
+          className="h-fit rounded-[1.6rem] border p-5 md:p-6 lg:sticky lg:top-24"
           style={{
             borderColor: `${theme.border}55`,
             backgroundColor: hexToRgba(theme.accent, 0.06),
@@ -122,9 +134,17 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
             Get product guidance, help comparing options, and recommendations
             based on your comfort needs and daily routine.
           </p>
+          <ul
+            className="mt-4 space-y-2 text-sm font-medium"
+            style={{ color: hexToRgba(theme.accent, 0.82) }}
+          >
+            <li>Comfort-first recommendations</li>
+            <li>Help choosing for day or night use</li>
+            <li>Quick answers from support</li>
+          </ul>
           <Link
             href="/contact"
-            className="mt-6 inline-flex rounded-full px-5 py-3 text-sm font-semibold transition-opacity duration-300 hover:opacity-90"
+            className="mt-6 inline-flex rounded-full px-5 py-3 text-sm font-semibold transition-opacity duration-300 hover:opacity-90 lg:ml-auto"
             style={{ backgroundColor: theme.accent, color: theme.pageBg }}
           >
             Contact support

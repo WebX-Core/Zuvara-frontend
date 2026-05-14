@@ -41,48 +41,50 @@ const ProductList = () => {
   };
 
   return (
-    <section className="container lg:min-h-screen mx-auto py-8 lg:py-20 px-4 sm:px-6 lg:px-6 max-w-7xl">
+    <section className="container mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:min-h-screen lg:px-6 lg:py-20">
       <SectionIntro
         align="center"
-        className={`${sectionIntroSpacing} max-w-4xl`}
+        className={`${sectionIntroSpacing} mx-auto w-full max-w-4xl`}
         eyebrow={
           <span className="inline-flex rounded-full border border-personalCare/20 bg-personalCare/6 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-personalCare">
             Shop the range
           </span>
         }
         title={
-          <>
-            Best selling
-            <span className="ml-3 font-light italic text-personalCare/70">
+          <span className="block text-center">
+            <span className="block">Best selling</span>
+            <span className="mt-1 block font-light italic text-personalCare/70">
               personal essentials
             </span>
-          </>
+          </span>
         }
         description="Discover our most loved personal care products, chosen for soft comfort, dependable protection, and a lighter everyday feel."
-        titleClassName="text-5xl font-semibold leading-[0.95] tracking-tight text-personalCare"
-        descriptionClassName="text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
+        titleClassName="mx-auto max-w-3xl text-center text-4xl font-semibold leading-[0.95] tracking-tight text-personalCare sm:text-5xl"
+        descriptionClassName="mx-auto text-center text-sm font-medium leading-relaxed text-zinc-600 md:text-base"
       />
       <div
-        className={`${sectionContentSpacing} grid grid-cols-2 gap-2 justify-center `}
+        className={`${sectionContentSpacing} flex flex-wrap justify-center gap-4 lg:gap-5`}
       >
         {personalCareProducts.map((product, index) => {
+          const displayImage = product.image || product.variants?.[0]?.image;
           const cardTheme = getCardTheme(product);
 
           return (
             <Link
               key={product.id}
               href={`/personalCareProduct/${product.slug}`}
-              className="group block w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-0.9375rem)]"
+              className="group block h-full w-full min-[430px]:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)] xl:w-[calc(25%-0.9375rem)]"
             >
               <motion.article
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.06, duration: 0.45 }}
                 viewport={{ once: true }}
-                className="flex h-full  flex-col gap-4 rounded-4xl transition-transform duration-300 group-hover:-translate-y-1"
+                className="flex h-full flex-col rounded-[1.75rem] border p-2 transition-transform duration-300 group-hover:-translate-y-1"
+                style={{ borderColor: cardTheme.border }}
               >
                 <div
-                  className="relative flex h-40 items-center justify-center overflow-hidden rounded-[1.75rem] py-2 sm:h-56"
+                  className="relative flex h-44 items-center justify-center overflow-hidden rounded-[1.35rem] py-2 sm:h-52 lg:h-56"
                   style={{ backgroundColor: cardTheme.background }}
                 >
                   <div
@@ -90,7 +92,7 @@ const ProductList = () => {
                     style={{ backgroundColor: `${cardTheme.foreground}2e` }}
                   />
                   <Image
-                    src={product.image || product.variants?.[0]?.image}
+                    src={displayImage}
                     alt={product.name}
                     fill
                     className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
@@ -98,9 +100,9 @@ const ProductList = () => {
                   />
                 </div>
 
-                <div className="flex flex-1 items-center justify-between px-2 pb-4">
+                <div className="flex flex-1 items-center justify-between gap-3 px-2 pb-3 pt-3 sm:pb-4">
                   <h3
-                    className="max-w-40 text-sm font-semibold leading-snug sm:max-w-52 sm:text-base"
+                    className="max-w-[75%] text-sm font-semibold leading-snug sm:text-base"
                     style={{ color: cardTheme.foreground }}
                   >
                     {product.name}

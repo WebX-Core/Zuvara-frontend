@@ -11,7 +11,6 @@ import SectionIntro, {
 } from "@/app/components/common-ui/SectionIntro";
 import MobileProductCarousel from "./MobileProductCarousel";
 
-// Defining it inside caused remounts on every render, breaking Next/Image loading.
 const ProductCard = ({
   product,
 }: {
@@ -29,20 +28,19 @@ const ProductCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full rounded-[2rem] border border-personalCare/10 bg-linear-to-br from-white to-personalCare/4 p-5  sm:p-6 lg:p-10"
+      className="w-full rounded-[2rem] border border-personalCare/12 bg-white p-5 sm:p-6 lg:p-9"
     >
-      <div className="grid items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 p-2">
-        {/* Left: Text */}
+      <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
         <div className="max-w-2xl">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="hidden lg:block text-sm font-semibold text-personalCare/75">
+            <span className="hidden text-sm font-semibold text-personalCare/75 lg:block">
               Exclusive Features
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-personalCare/8 px-3 py-1 text-xs font-medium text-personalCare">
               <Star size={13} className="fill-current" />
               {product.rating.toFixed(1)}
             </span>
-            <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-zinc-500 shadow-sm">
+            <span className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-500">
               {product.reviews}+ reviews
             </span>
           </div>
@@ -50,7 +48,8 @@ const ProductCard = ({
           <h3 className="mt-3 text-3xl font-semibold leading-[0.96] tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl">
             {product.name}
           </h3>
-          <div className="mt-4 flex flex-wrap gap-2 ">
+
+          <div className="mt-4 flex flex-wrap gap-2">
             {variantLabels.map((variant) => (
               <span
                 key={variant.id}
@@ -61,25 +60,14 @@ const ProductCard = ({
             ))}
           </div>
 
-          <p className="mt-3 max-w-xl text-sm font-medium leading-7 text-zinc-600 md:text-base">
+          <p className="mt-4 max-w-xl text-sm font-medium leading-7 text-zinc-600 md:text-base">
             {product.subDesc1 ?? product.description}
           </p>
 
-          {/* <div className="mt-4 flex flex-wrap gap-2 ">
-            {variantLabels.map((variant) => (
-              <span
-                key={variant.id}
-                className="rounded-full border border-personalCare/15 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700"
-              >
-                {variant.label}
-              </span>
-            ))}
-          </div> */}
-
-          <div className="hidden mt-5 lg:flex flex-wrap items-center gap-3">
+          <div className="mt-6 hidden flex-wrap items-center gap-3 lg:flex">
             <Link
               href={`/personalCareProduct/${product.slug}`}
-              className="inline-flex items-center gap-2 rounded-full bg-personalCare px-4 py-2 text-sm font-semibold text-white! shadow-[0_18px_35px_rgba(219,39,119,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"
+              className="inline-flex items-center gap-2 rounded-full bg-personalCare px-4 py-2 text-sm font-semibold text-white! transition-all duration-300 hover:bg-personalCare/90"
             >
               View product
               <ArrowRight size={16} />
@@ -93,29 +81,24 @@ const ProductCard = ({
           </div>
         </div>
 
-        {/* Right: Image */}
         <div className="relative">
-          <div className="relative mx-auto flex h-56 items-center justify-center sm:min-h-96 lg:min-h-120">
-            {/* Background circle */}
-            <div className="absolute h-48 w-48 rounded-full bg-personalCare/8 sm:h-80 sm:w-80 lg:h-112 lg:w-md" />
+          <div className="relative mx-auto flex h-56 items-center justify-center sm:min-h-96 lg:min-h-[30rem]">
+            <div className="absolute h-48 w-48 rounded-full bg-personalCare/8 sm:h-80 sm:w-80 lg:h-96 lg:w-96" />
 
-            {/* Feature tag top-left */}
-            <div className="absolute left-0 top-4 z-10 rounded-2xl bg-white px-3 py-2 text-xs font-semibold text-zinc-800 shadow-[0_16px_30px_rgba(24,24,27,0.08)] sm:top-10 sm:px-4 sm:py-3 sm:text-sm">
+            <div className="absolute left-0 top-4 z-10 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-700 sm:top-10 sm:px-4 sm:py-3 sm:text-sm">
               {features[0] ?? "Soft-touch comfort"}
             </div>
 
-            {/* Feature tag bottom-right */}
-            <div className="absolute bottom-4 right-0  rounded-2xl bg-personalCare z-100 px-3 py-2 text-xs font-semibold text-white shadow-[0_18px_34px_rgba(219,39,119,0.22)] sm:bottom-8 sm:px-4 sm:py-3 sm:text-sm">
+            <div className="absolute bottom-4 right-0 z-10 rounded-xl bg-personalCare px-3 py-2 text-xs font-semibold text-white sm:bottom-8 sm:px-4 sm:py-3 sm:text-sm">
               {features[1] ?? "Reliable protection"}
             </div>
 
-            {/* Product image — use a sized wrapper so Next/Image fill works */}
-            <div className="relative z-20 h-44 w-full max-w-xs sm:h-64 lg:h-112">
+            <div className="relative z-20 h-44 w-full max-w-xs sm:h-64 lg:h-[26rem]">
               <Image
                 src={product.productImage}
                 alt={product.name}
                 fill
-                className="object-contain drop-shadow-[0_30px_45px_rgba(45,19,68,0.16)]"
+                className="object-contain"
                 sizes="(min-width: 1024px) 36vw, 90vw"
               />
             </div>
@@ -126,12 +109,10 @@ const ProductCard = ({
   );
 };
 
-// ─── Main section ───────────────────────────────────────────────────────────────
 const ProductSection = () => {
   return (
     <Section size="md" className="relative overflow-hidden bg-white">
       <Container>
-        {/* Header */}
         <SectionIntro
           align="center"
           className="mx-auto max-w-3xl"
@@ -161,11 +142,7 @@ const ProductSection = () => {
           />
         </div>
 
-        {/* ── Desktop: stacked layout ── */}
-        <Stack
-          spacing="lg"
-          className={`${sectionContentSpacing} hidden lg:flex`}
-        >
+        <Stack spacing="lg" className={`${sectionContentSpacing} hidden lg:flex`}>
           {personalCareProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

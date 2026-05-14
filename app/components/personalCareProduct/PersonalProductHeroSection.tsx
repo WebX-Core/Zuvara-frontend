@@ -121,7 +121,7 @@ export default function PersonalProductHeroSection({
               >
                 <div className="relative">
                   {/* Category Badge */}
-                  <div className="absolute top-0 left-0 z-10">
+                  <div className="absolute top-16 left-0 z-10 lg:top-10">
                     <span
                       className="inline-block px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg"
                       style={{
@@ -296,16 +296,16 @@ export default function PersonalProductHeroSection({
       </div>
 
       {/* Mobile Layout - App-like Design */}
-      <div className="md:hidden flex flex-col h-screen">
+      <div className="md:hidden flex min-h-[100svh] flex-col pt-[calc(env(safe-area-inset-top)+2.5rem)]">
         {/* Top Section - Product Image (flexible height) */}
         <div
-          className="relative flex-1 flex items-center justify-center"
+          className="relative flex min-h-[42svh] flex-1 items-center justify-center"
           style={{
             backgroundColor: theme.containerBg,
           }}
         >
           {/* Category Badge - Top Left */}
-          <div className="absolute top-4 left-4 z-10">
+          <div className="absolute left-4 top-[calc(env(safe-area-inset-top)+1.25rem)] z-10">
             <span
               className="inline-block px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-md"
               style={{
@@ -318,7 +318,7 @@ export default function PersonalProductHeroSection({
           </div>
 
           {/* Swipe Indicator */}
-          <div className="absolute top-4 right-4 z-10 flex gap-1.5">
+          <div className="absolute right-4 top-[calc(env(safe-area-inset-top)+1.25rem)] z-10 flex gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
             <div
               className="w-1.5 h-1.5 rounded-full"
@@ -328,7 +328,7 @@ export default function PersonalProductHeroSection({
           </div>
 
           {/* Product Image */}
-          <div className="relative w-full h-full max-w-md px-8">
+          <div className="relative h-[42svh] min-h-[260px] w-full max-w-md px-8">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active.id + "-pack-mobile"}

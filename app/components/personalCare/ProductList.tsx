@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -56,6 +57,8 @@ const ProductList = () => {
     };
   };
 
+  const filteredProducts = useMemo(() => personalCareProducts, []);
+
   return (
     <section className="relative py-8 pb-12 lg:pb-40">
       <div
@@ -64,8 +67,7 @@ const ProductList = () => {
       />
 
       <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
-        {/* Title Section - Matching BabyCare Style */}
-        <div className="mb-2 flex flex-col items-center justify-center leading-8 gap-2 text-center">
+        <div className="mb-5 flex flex-col items-center justify-center gap-2 text-center sm:mb-6">
           <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold tracking-tight text-personalCare">
             Best selling
             <span className="ml-2 font-light italic text-personalCare/70">
@@ -79,15 +81,13 @@ const ProductList = () => {
           </p>
         </div>
 
-        {/* Product Grid - Matching BabyCare Layout */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="mt-4 mx-auto max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2 pb-10 lg:gap-4"
+          className="mx-auto mt-4 flex max-w-7xl flex-wrap justify-center gap-x-4 gap-y-6 pb-10 lg:gap-x-5 lg:gap-y-8"
         >
-          {personalCareProducts.map((product, index) => {
+          {filteredProducts.map((product, index) => {
             const displayImage = product.variants?.[0]?.image || product.image;
             const cardTheme = getCardTheme(product);
 
@@ -95,18 +95,17 @@ const ProductList = () => {
               <Link
                 key={product.id}
                 href={`/personalCareProduct/${product.slug}`}
-                className="group block w-full lg:w-[calc(25%-0.9375rem)]"
+                className="group block h-full w-full min-[430px]:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.75rem)] lg:w-[calc(25%-1rem)]"
               >
                 <motion.article
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.06, duration: 0.45 }}
                   viewport={{ once: true }}
-                  className="flex h-full flex-col gap-4 rounded-4xl transition-transform duration-300 group-hover:-translate-y-1"
+                  className="flex h-full flex-col rounded-3xl transition-transform duration-300 group-hover:-translate-y-1"
                 >
-                  {/* Card Image Container */}
                   <div
-                    className="relative flex h-40 items-center justify-center overflow-hidden rounded-[1.75rem] py-2 sm:h-56"
+                    className="relative flex h-48 items-center justify-center overflow-hidden rounded-[1.75rem] py-2 sm:h-56"
                     style={{ backgroundColor: cardTheme.background }}
                   >
                     <div
@@ -124,17 +123,16 @@ const ProductList = () => {
                     />
                   </div>
 
-                  {/* Card Footer */}
-                  <div className="flex flex-1 items-center justify-between px-2 pb-4">
+                  <div className="flex flex-1 items-center justify-between px-1.5 pb-1 pt-3 sm:px-2">
                     <h3
-                      className="max-w-40 text-sm font-semibold leading-snug sm:max-w-52 sm:text-base"
+                      className="max-w-[75%] text-sm font-semibold leading-snug sm:text-base"
                       style={{ color: cardTheme.foreground }}
                     >
                       {product.name}
                     </h3>
 
                     <span
-                      className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
+                      className="shrink-0 rounded-full p-2 transition-transform duration-300 group-hover:translate-x-1"
                       style={{
                         backgroundColor: cardTheme.chip,
                         color: cardTheme.foreground,

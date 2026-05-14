@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
 import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
 
 const comfortPoints = [
@@ -12,137 +12,123 @@ const comfortPoints = [
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-svh overflow-hidden bg-personalCare/8">
-      <div className="absolute inset-y-0 right-0 hidden w-[44%] bg-linear-to-b from-personalCare/90 via-personalCare to-personalCare/80 lg:block" />
-
-      <div className="relative mx-auto flex min-h-svh w-[92%] max-w-7xl flex-col justify-center py-12 sm:py-14 lg:py-16">
-        <div className="grid items-center gap-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[0.95fr_0.85fr_1.05fr] lg:gap-8">
-          <div className="max-w-xl pt-4 lg:self-center lg:pt-0">
+    <section className="relative overflow-hidden bg-[#fff8fc]">
+      <div className="relative mx-auto flex w-[92%] max-w-7xl flex-col justify-center py-10 sm:py-12 lg:min-h-svh lg:py-16">
+        <div className="grid items-center gap-8 md:gap-10 lg:min-h-[calc(100svh-8rem)] lg:grid-cols-[1fr_1fr_1fr] lg:gap-10 xl:gap-12">
+          <div className="max-w-xl pt-2 md:pt-4 lg:self-center lg:pt-0">
             <SectionIntro
               titleAs="h1"
               className="max-w-xl"
               eyebrow={
-                <p className="inline-flex items-center gap-2 text-[11px] font-semibold text-personalCare/70">
-                  <span className="size-1.5 rounded-full bg-personalCare/55" />
-                  Feel the confidence
+                <p className="inline-flex items-center gap-2 rounded-full border border-personalCare/20 bg-white px-3 py-1.5 text-[11px] font-semibold text-personalCare/80">
+                  <Sparkles size={12} />
+                  Everyday confidence
                 </p>
               }
               title={
                 <>
-                  Comfort that stays{" "}
-                  <span className="italic font-thin">with you</span>
+                  Designed for{" "}
+                  <span className="font-light italic text-personalCare">
+                    comfort first
+                  </span>
                 </>
               }
               description="Zuvara personal care essentials are made for breathable comfort, secure protection, and easy everyday wear without bulk."
-              titleClassName="text-4xl font-semibold leading-[0.95] tracking-tight text-zinc-900 sm:text-5xl lg:text-5xl"
+              titleClassName="text-4xl font-semibold leading-[0.95] tracking-tight text-zinc-900 sm:text-5xl lg:text-[3.3rem]"
               descriptionClassName="max-w-lg text-sm font-medium leading-7 text-zinc-600 sm:text-base"
             />
 
-            <div className={`${sectionContentSpacing} flex flex-wrap items-center gap-3`}>
+            <div className={`${sectionContentSpacing} flex flex-row items-center gap-3`}>
               <Link
                 href="/personalCareProduct"
-                className="inline-flex items-center gap-2 rounded-full bg-personalCare px-6 py-3 text-sm font-semibold text-white! shadow-[0_18px_35px_rgba(219,39,119,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90"
+                className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-personalCare px-4 py-3 text-sm font-semibold text-white! transition-all duration-300 hover:-translate-y-0.5 hover:bg-personalCare/90 sm:flex-none sm:px-6"
               >
                 Shop now
                 <ArrowRight size={16} />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-700 shadow-[0_10px_28px_rgba(24,24,27,0.08)] transition-all duration-300 hover:bg-zinc-50"
+                className="inline-flex min-w-0 flex-1 items-center justify-center rounded-full border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition-all duration-300 hover:bg-zinc-50 sm:flex-none sm:px-6"
               >
                 Learn more
               </Link>
             </div>
-          </div>
 
-          <div className="relative mx-auto h-88 w-full max-w-136 sm:h-112 lg:-ml-8 lg:h-[min(72vh,40rem)] lg:max-w-lg lg:self-center xl:-ml-12">
-            <Image
-              src="/images/personalCare/happy-lady.png"
-              alt="Happy woman holding Zuvara personal care product"
-              fill
-              priority
-              className="object-contain object-bottom drop-shadow-[0_26px_45px_rgba(67,33,120,0.26)]"
-            />
-          </div>
-
-          <div className="relative z-10 grid gap-4 lg:w-full lg:max-w-lg lg:self-center lg:justify-self-end">
-            {/* <div className="rounded-[1.6rem] bg-linear-to-br from-personalCare to-personalCare/80 p-6 text-white shadow-[0_24px_50px_rgba(219,39,119,0.28)]">
-              <p className="text-sm font-semibold">
-                Comfort that stays with you
-              </p>
-              <p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/78">
-                Designed to stay light, soft, and secure through workdays,
-                travel, and long hours on the move.
-              </p>
-
-              <div className="mt-7 flex items-center justify-between rounded-full bg-white/16 px-4 py-2.5 backdrop-blur-sm">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-white/70">
-                    Daily comfort
-                  </p>
-                  <p className="mt-1 text-sm font-semibold">
-                    Feel fresh longer
+            <div className="mt-7 hidden max-w-md grid-cols-3 gap-3 text-center sm:grid">
+              {[
+                { label: "Absorption", value: "Absorbs 15x" },
+                { label: "Comfort", value: "Thin & Soft" },
+                { label: "Protection", value: "12 hour+" },
+              ].map((item) => (
+                <div key={item.label} className="rounded-2xl border border-zinc-200/70 bg-white px-3 py-3">
+                  <p className="text-base font-semibold text-zinc-900">{item.value}</p>
+                  <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-500">
+                    {item.label}
                   </p>
                 </div>
-                <div className="flex h-8 w-16 items-center rounded-full bg-white/24 px-1">
-                  <span className="ml-auto flex size-6 items-center justify-center rounded-full bg-white text-[10px] font-bold text-personalCare">
-                    On
-                  </span>
-                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative mx-auto h-72 w-full max-w-md sm:h-96 sm:max-w-xl lg:h-[min(72vh,41rem)] lg:max-w-lg lg:self-center">
+            <div className="absolute inset-x-0 bottom-0 rounded-[2rem] bg-white/60 p-3 sm:rounded-[2.2rem] sm:p-5">
+              <div className="relative h-64 sm:h-80 lg:h-[30rem]">
+                <Image
+                  src="/images/personalCare/happy-lady.png"
+                  alt="Happy woman holding Zuvara personal care product"
+                  fill
+                  priority
+                  className="object-contain object-bottom"
+                />
               </div>
-            </div> */}
+            </div>
+          </div>
 
-            <div className="rounded-[1.6rem] bg-white/80 p-6 shadow-[0_24px_50px_rgba(24,24,27,0.08)] sm:p-7">
-              <div className="grid gap-6">
-                <div>
-                  <p className="text-[11px] font-semibold uppercase text-zinc-400">
-                    Zuvara features
-                  </p>
-                  <ul className="mt-4 space-y-3">
-                    {comfortPoints.map((point) => (
-                      <li key={point} className="flex items-start gap-3">
-                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-personalCare/12 text-personalCare">
-                          <Check size={12} strokeWidth={3} />
-                        </span>
-                        <span className="text-sm font-medium leading-6 text-zinc-700">
-                          {point}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          <div className="relative z-10 grid gap-6 lg:w-full lg:max-w-lg lg:self-center lg:justify-self-end">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-zinc-400">
+                Zuvara features
+              </p>
+              <ul className="mt-4 space-y-3">
+                {comfortPoints.map((point) => (
+                  <li key={point} className="flex items-start gap-3">
+                    <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-personalCare/12 text-personalCare">
+                      <Check size={12} strokeWidth={3} />
+                    </span>
+                    <span className="text-sm font-medium leading-6 text-zinc-700">
+                      {point}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-                <div className="rounded-[1.35rem] bg-personalCare/5 p-5">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-personalCare shadow-sm">
-                    <Sparkles size={12} />
-                    Why women choose it
-                  </div>
+            <div className="rounded-[1.35rem] bg-personalCare/6 p-5">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-personalCare">
+                <ShieldCheck size={12} />
+                Trusted daily support
+              </div>
 
-                  {/* <h2 className="mt-4 text-xl font-semibold text-zinc-900">
-                    Gentle support for busy days
-                  </h2> */}
-                  <p className="mt-3 text-sm leading-6 text-zinc-600">
-                    Built for confidence, with a breathable feel and dependable
-                    protection .
-                  </p>
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                Built to stay breathable and secure through long workdays,
+                travel, and overnight rest.
+              </p>
 
-                  <div className="mt-5 rounded-[1.2rem] border border-personalCare/12 bg-white px-4 py-4">
-                    <p className="text-[11px] font-semibold uppercase text-zinc-400">
-                      Best for
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {["Workdays", "Travel", "Overnight"].map(
-                        (item) => (
-                          <span
-                            key={item}
-                            className="rounded-full bg-personalCare/10 px-3 py-1.5 text-xs font-semibold text-personalCare"
-                          >
-                            {item}
-                          </span>
-                        ),
-                      )}
-                    </div>
-                  </div>
+              <div className="mt-5 rounded-[1.2rem] border border-personalCare/12 bg-white px-4 py-4">
+                <p className="text-[11px] font-semibold uppercase text-zinc-400">
+                  Best for
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {["Workdays", "Travel", "Overnight"].map(
+                    (item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-personalCare/10 px-3 py-1.5 text-xs font-semibold text-personalCare"
+                      >
+                        {item}
+                      </span>
+                    ),
+                  )}
                 </div>
               </div>
             </div>
