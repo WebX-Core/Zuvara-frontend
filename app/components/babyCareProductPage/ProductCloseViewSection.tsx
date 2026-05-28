@@ -20,7 +20,7 @@ const ProductCloseViewSection = ({
   const detailImages = technicalDetailImages.slice(0, 4);
 
   return (
-    <section className="relative px-4 py-8 lg:px-4 lg:py-10 overflow-hidden">
+    <section className="relative px-4 py-8 lg:px-4 lg:py-10 min-h-[80vh] overflow-hidden">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-10 space-y-3">

@@ -344,7 +344,7 @@ export default function Home() {
           <Image src="/waves/fern.svg" alt="fern" width={60} height={40} />
         </div>
 
-        <div className="mx-auto max-w-7xl ">
+        <div className="mx-auto max-w-7xl sm:-translate-y-12 lg:-translate-y-16">
           <div className="relative  flex flex-col items-center justify-between gap-2 sm:flex-row sm:items-center">
             <div className="relative  z-30 flex w-full max-w-xl flex-col gap-1.5 text-left lg:max-w-lg lg:gap-3">
               <div className="relative">
@@ -431,30 +431,29 @@ export default function Home() {
               </div> */}
             </div>
 
-            <div className="relative z-30 hidden min-h-115 lg:block" />
-          </div>
-        </div>
-        {/* Video/Image fallback */}
-        <div className="pointer-events-none bg-white absolute bottom-50 right-[10%] z-10 hidden lg:block">
-          <div className="hero-baby-right parallax-card relative h-105 w-105 rounded-[2.6rem] p-4">
-            <div className="hero-sun parallax-sun pointer-events-none absolute -inset-x-16 bottom-full mb-6 z-20 h-52">
-              <div className="hero-sun-halo hero-sun-halo-desktop float-idle absolute bottom-0 left-1/2 -translate-x-1/2 ">
-                <Image
-                  src="/waves/solar.gif"
-                  alt="sun"
-                  width={120}
-                  height={120}
-                  className="h-auto w-28"
-                />
-              </div>
-            </div>
-            <div className="relative h-full w-full overflow-hidden rounded-[2.2rem]">
-               <Image
+            {/* Desktop Baby & Sun Column */}
+            <div className="pointer-events-none relative z-10 hidden lg:block">
+              <div className="hero-baby-right parallax-card relative w-[24rem] h-[24rem] xl:w-[28rem] xl:h-[28rem] rounded-[2.6rem]  ">
+                <div className="hero-sun parallax-sun pointer-events-none absolute -inset-x-16 bottom-full mb-6 z-20 h-52">
+                  <div className="hero-sun-halo hero-sun-halo-desktop float-idle absolute bottom-0 left-1/2 -translate-x-1/2 ">
+                    <Image
+                      src="/waves/solar.gif"
+                      alt="sun"
+                      width={120}
+                      height={120}
+                      className="h-auto w-28"
+                    />
+                  </div>
+                </div>
+                <div className="relative h-full w-full overflow-hidden rounded-[2.2rem]">
+                  <Image
                     src="/1080x1080_AME/Zuv_0200clip_bgoff_v01.gif"
                     alt="baby"
                     fill
                     className="object-cover object-top"
                   />
+                </div>
+              </div>
             </div>
           </div>
         </div>

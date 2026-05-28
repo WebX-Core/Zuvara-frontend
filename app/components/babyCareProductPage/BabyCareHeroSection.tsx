@@ -116,7 +116,7 @@ export default function BabyCareHeroSection({
       style={{ touchAction: enableMobileSwipe ? "pan-y" : "auto" }}
     >
       {/* Desktop Layout */}
-      <div className="hidden md:flex md:items-center md:h-full px-4">
+      <div className="hidden md:flex md:items-center md:h-screen px-4">
         <div className="relative mx-auto max-w-7xl w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             {/* Left Column - Product Image */}

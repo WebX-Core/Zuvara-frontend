@@ -20,7 +20,7 @@ export default function FaqAndCloseViewSection({
   const footerWave = assetWithFill(wave4Svg, "#ffffff");
 
   return (
-    <section className="relative px-4 py-16 md:px-6 lg:px-10 lg:py-24">
+    <section className="relative px-4 py-16 md:px-6 lg:px-10 lg:py-30">
       {/* Footer Wave */}
       <div
         className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"

@@ -168,7 +168,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
         </div>
 
         <div
-          className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[48px] font-black uppercase leading-none text-foreground/70 sm:text-[72px] md:text-[120px] xl:text-[170px]"
+          className="pointer-events-none absolute bottom-16 left-1/2 z-10 -translate-x-1/2 text-[48px] font-black uppercase leading-none text-foreground/70 sm:text-[72px] md:text-[120px] xl:text-[170px]"
         >
           zuvara
         </div>
