@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, Loader2 } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
 import { Section, Container } from "@/app/components/layout";
@@ -17,6 +17,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+// Import the custom hook
+import { useFeaturedReviews } from "@/hooks/useReviews";
+
 const palette = {
   accent: colors.baby.accent,
   accentSoft: colors.baby.accentSoft,
@@ -27,51 +30,29 @@ const palette = {
   body: colors.baby.body,
 };
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Priya Sharma",
-    location: "Kathmandu",
-    text: "Zuvara products have been a game-changer for my baby's sensitive skin. I've tried many brands, but nothing compares to the natural ingredients.",
-    rating: 5,
-    image: "/images/parent/parent2.png",
-    badge: "Sensitive skin",
-    time: "2 weeks ago",
-  },
-  {
-    id: 2,
-    name: "Anita Poudel",
-    location: "Pokhara",
-    text: "My daughter has extremely sensitive skin, and Zuvara is the only brand that doesn't cause any irritation. Highly recommended for all Nepali mothers.",
-    rating: 5,
-    image: "/images/parent/parent.png",
-    badge: "Verified parent",
-    time: "1 month ago",
-  },
-  {
-    id: 3,
-    name: "Sneha Gurung",
-    location: "Bhaktapur",
-    text: "Affordable, trustworthy, and effective. I love that Zuvara is a Nepali brand that understands our needs and delivers quality products.",
-    rating: 5,
-    image: "/images/parent/parent2.png",
-    badge: "Daily use",
-    time: "3 weeks ago",
-  },
-  {
-    id: 4,
-    name: "Mamata Karki",
-    location: "Lalitpur",
-    text: "The fit is comfortable, the quality feels premium, and overnight protection has been far more reliable for our routine.",
-    rating: 5,
-    image: "/images/parent/parent.png",
-    badge: "Overnight care",
-    time: "6 days ago",
-  },
-];
-
 const Testimonials = () => {
   const productBottomWave = assetWithFill(wave3Svg, colors.baby.hero);
+  
+  // Fetch featured reviews from API
+  const { reviews, loading, error } = useFeaturedReviews();
+
+  // Helper function to calculate relative time
+  const getRelativeTime = (dateString: string): string => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) return "Today";
+    if (diffInDays === 1) return "1 day ago";
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`;
+    }
+    const months = Math.floor(diffInDays / 30);
+    return months === 1 ? "1 month ago" : `${months} months ago`;
+  };
 
   return (
     <Section
@@ -133,8 +114,29 @@ const Testimonials = () => {
         </motion.div>
 
         <div className={`${sectionContentSpacing} rounded-4xl  sm:px-4 `}>
-          {/* Header row */}
-          <div className="mb-5 hidden sm:flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <Loader2 className="h-12 w-12 animate-spin" style={{ color: palette.accent }} />
+              <p className="mt-4 text-lg" style={{ color: palette.body }}>
+                Loading reviews...
+              </p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <p className="text-lg text-red-500">Failed to load reviews</p>
+              <p className="mt-2 text-sm text-zinc-500">{error}</p>
+            </div>
+          )}
+
+          {/* Reviews Content */}
+          {!loading && !error && reviews.length > 0 && (
+            <>
+              {/* Header row */}
+              <div className="mb-5 hidden sm:flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <span
                 className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
@@ -229,92 +231,105 @@ const Testimonials = () => {
                 </svg>
               </button>
             </div>
-          </div>
+              </div>
 
-          <Swiper
-            className="testimonials-swiper"
-            modules={[Autoplay, Pagination, Navigation, A11y]}
-            spaceBetween={20}
-            slidesPerView={1}
-            grabCursor={true}
-            loop={true}
-            autoplay={{
-              delay: 4500,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true,
-            }}
-            pagination={{ clickable: true }}
-            navigation={{
-              prevEl: ".testimonials-prev",
-              nextEl: ".testimonials-next",
-            }}
-            breakpoints={{
-              1024: { slidesPerView: 2, spaceBetween: 20 },
-            }}
-          >
-            {testimonials.map((item) => (
-              <SwiperSlide key={item.id}>
-                <article
-                  className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
-                  style={{
-                    borderColor: `${palette.border}44`,
-                    backgroundColor: "rgba(255,255,255,0.94)",
-                  }}
-                >
-                  <div className="relative h-16 w-16 overflow-hidden rounded-full md:h-18 md:w-18">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div className="mt-5 flex flex-col items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: item.rating }).map((_, i) => (
-                        <Star
-                          key={i}
-                          size={17}
-                          fill="#fbbf24"
-                          color="#fbbf24"
+              <Swiper
+                className="testimonials-swiper"
+                modules={[Autoplay, Pagination, Navigation, A11y]}
+                spaceBetween={20}
+                slidesPerView={1}
+                grabCursor={true}
+                loop={reviews.length > 2}
+                autoplay={{
+                  delay: 4500,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
+                pagination={{ clickable: true }}
+                navigation={{
+                  prevEl: ".testimonials-prev",
+                  nextEl: ".testimonials-next",
+                }}
+                breakpoints={{
+                  1024: { slidesPerView: 2, spaceBetween: 20 },
+                }}
+              >
+                {reviews.map((review) => (
+                  <SwiperSlide key={review.id}>
+                    <article
+                      className="flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
+                      style={{
+                        borderColor: `${palette.border}44`,
+                        backgroundColor: "rgba(255,255,255,0.94)",
+                      }}
+                    >
+                      <div className="relative h-16 w-16 overflow-hidden rounded-full md:h-18 md:w-18">
+                        <Image
+                          src={review.avatar}
+                          alt={review.fullName}
+                          fill
+                          className="object-cover"
                         />
-                      ))}
-                    </div>
+                      </div>
 
-                    <div>
+                      <div className="mt-5 flex flex-col items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          {Array.from({ length: review.rating }).map((_, i) => (
+                            <Star
+                              key={i}
+                              size={17}
+                              fill="#fbbf24"
+                              color="#fbbf24"
+                            />
+                          ))}
+                        </div>
+
+                        <div>
+                          <p
+                            className="text-base font-semibold md:text-lg"
+                            style={{ color: palette.accent }}
+                          >
+                            {review.fullName}
+                          </p>
+                          <p className="text-sm text-zinc-500">{review.location}</p>
+                        </div>
+
+                        <div className="flex min-w-72 justify-between">
+                          <span
+                            className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                            style={{
+                              color: palette.accentSoft,
+                            }}
+                          >
+                            {review.isFeatured ? "Featured" : "Verified"}
+                          </span>
+                          <span className="text-sm text-zinc-400">
+                            {getRelativeTime(review.createdAt)}
+                          </span>
+                        </div>
+                      </div>
+
                       <p
-                        className="text-base font-semibold md:text-lg"
-                        style={{ color: palette.accent }}
+                        className="mt-5 text-base leading-relaxed md:text-lg"
+                        style={{ color: palette.body }}
                       >
-                        {item.name}
+                        {review.comment}
                       </p>
-                      <p className="text-sm text-zinc-500">{item.location}</p>
-                    </div>
+                    </article>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </>
+          )}
 
-                    <div className="flex min-w-72 justify-between">
-                      <span
-                        className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
-                        style={{
-                          color: palette.accentSoft,
-                        }}
-                      >
-                        {item.badge}
-                      </span>
-                      <span className="text-sm text-zinc-400">{item.time}</span>
-                    </div>
-                  </div>
-
-                  <p
-                    className="mt-5 text-base leading-relaxed md:text-lg"
-                    style={{ color: palette.body }}
-                  >
-                    {item.text}
-                  </p>
-                </article>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {/* Empty State */}
+          {!loading && !error && reviews.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-16">
+              <p className="text-lg" style={{ color: palette.body }}>
+                No reviews available yet
+              </p>
+            </div>
+          )}
         </div>
       </Container>
     </Section>

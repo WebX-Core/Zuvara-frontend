@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
@@ -7,36 +9,16 @@ import { Icon } from "@iconify/react";
 import SectionIntro, {
   sectionContentSpacing,
 } from "@/app/components/common-ui/SectionIntro";
+import { useFaqsByPortal } from "@/hooks/useFaq";
 
 type ProductFaqSectionProps = {
   theme: BabyCareListingTheme;
 };
 
-const faqs = [
-  {
-    question: "Which Zuvara baby product is best for everyday use?",
-    answer:
-      "Start with the product that matches your baby's age, skin sensitivity, and daily routine. Most parents choose diapers and wipes first, then add other care essentials as needed.",
-  },
-  {
-    question: "Are Zuvara products designed for delicate baby skin?",
-    answer:
-      "Zuvara baby care products are selected and designed with softness, comfort, and everyday skin sensitivity in mind so they feel gentle during regular use.",
-  },
-  {
-    question: "How do I choose the right diaper size?",
-    answer:
-      "Use your baby's current weight as the starting point, then size up if you are near the upper limit or need a little more overnight comfort and absorbency.",
-  },
-  {
-    question: "Where can I get help choosing the right product?",
-    answer:
-      "If you are unsure what to pick, our team can help you compare options and guide you toward the best fit for your baby's stage and routine.",
-  },
-];
-
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
+  const { faqs, isLoading, isError } = useFaqsByPortal("baby-care");
   const productBottomWave = assetWithFill(wave4Svg, "#ffffff");
+
   return (
     <section
       className="relative px-4 py-6 sm:px-6 lg:px-8 lg:py-16 lg:pb-40"
@@ -73,25 +55,60 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
       <div
         className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}
       >
-        <Accordions type="single" className="space-y-2 divide-y-0">
-          {faqs.map((faq, index) => (
-            <Accordion
-              key={faq.question}
-              id={`listing-faq-${index}`}
-              title={faq.question}
-              className="overflow-hidden rounded-[1.4rem] px-2 transition-transform duration-300 hover:bg-babyCare/50"
-              triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
-              triggerStyle={{ color: theme.accent }}
-            >
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex items-center gap-3">
+              <Icon
+                icon="eos-icons:loading"
+                className="size-6"
+                style={{ color: theme.accent }}
+              />
               <p
-                className="pb-2 text-sm leading-relaxed md:text-base"
-                style={{ color: hexToRgba(theme.accent, 0.72) }}
+                className="text-sm font-medium"
+                style={{ color: hexToRgba(theme.accent, 0.7) }}
               >
-                {faq.answer}
+                Loading FAQs...
               </p>
-            </Accordion>
-          ))}
-        </Accordions>
+            </div>
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-12">
+            <p
+              className="text-sm font-medium"
+              style={{ color: hexToRgba(theme.accent, 0.7) }}
+            >
+              Failed to load FAQs. Please try again later.
+            </p>
+          </div>
+        ) : faqs.length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <p
+              className="text-sm font-medium"
+              style={{ color: hexToRgba(theme.accent, 0.7) }}
+            >
+              No FAQs available at the moment.
+            </p>
+          </div>
+        ) : (
+          <Accordions type="single" className="space-y-2 divide-y-0">
+            {faqs.map((faq, index) => (
+              <Accordion
+                key={faq.id}
+                id={`listing-faq-${index}`}
+                title={faq.question}
+                className="overflow-hidden rounded-[1.4rem] px-2 transition-transform duration-300 hover:bg-babyCare/50"
+                triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
+                triggerStyle={{ color: theme.accent }}
+              >
+                <div
+                  className="pb-2 text-sm leading-relaxed md:text-base prose prose-sm max-w-none [&_p]:mb-2"
+                  style={{ color: hexToRgba(theme.accent, 0.72) }}
+                  dangerouslySetInnerHTML={{ __html: faq.answer }}
+                />
+              </Accordion>
+            ))}
+          </Accordions>
+        )}
 
         {/* Desktop CTA */}
         <div

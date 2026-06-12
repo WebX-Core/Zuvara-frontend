@@ -1,39 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import { Accordion, Accordions } from "@/app/components/ui/accordion";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { PersonalCareListingTheme } from "@/app/components/personalCareProduct/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import SectionIntro, { sectionContentSpacing } from "@/app/components/common-ui/SectionIntro";
+import { useFaqsByPortal } from "@/hooks/useFaq";
+import { Icon } from "@iconify/react";
 
 type ProductFaqSectionProps = {
   theme: PersonalCareListingTheme;
 };
 
-const faqs = [
-  {
-    question: "Which Zuvara product is best for everyday period care?",
-    answer:
-      "It depends on the level of protection, comfort, and routine you need most. Some customers prefer lighter daily options, while others choose products designed for longer wear or overnight support.",
-  },
-  {
-    question:
-      "Are Zuvara personal care products comfortable for sensitive skin?",
-    answer:
-      "Zuvara personal care products are designed with softness and comfort in mind so they feel gentler during regular use and on more sensitive days.",
-  },
-  {
-    question: "How do I choose between pads and period panties?",
-    answer:
-      "Pads are often chosen for familiar daily use and easy switching, while period panties can be better when you want integrated protection with less shifting during long wear.",
-  },
-  {
-    question: "Can someone help me decide which product fits my routine?",
-    answer:
-      "Yes. If you are unsure which option makes sense for your day, overnight use, or activity level, Zuvara can help you compare products and choose the right fit.",
-  },
-];
-
 export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
+  const { faqs, isLoading, isError } = useFaqsByPortal("personal-care");
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
 
   return (
@@ -76,25 +57,60 @@ export default function ProductFaqSection({ theme }: ProductFaqSectionProps) {
       />
 
       <div className={`mx-auto ${sectionContentSpacing} grid max-w-7xl gap-6 overflow-hidden lg:grid-cols-[1.2fr_0.8fr]`}>
-        <Accordions type="single" className="space-y-1 divide-y-0">
-          {faqs.map((faq, index) => (
-            <Accordion
-              key={faq.question}
-              id={`personal-listing-faq-${index}`}
-              title={faq.question}
-              className="overflow-hidden rounded-[1.4rem] px-2 transition-colors duration-300"
-              triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
-              triggerStyle={{ color: theme.accent }}
-            >
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex items-center gap-3">
+              <Icon
+                icon="eos-icons:loading"
+                className="size-6"
+                style={{ color: theme.accent }}
+              />
               <p
-                className="pb-2 text-sm leading-relaxed md:text-base"
-                style={{ color: hexToRgba(theme.accent, 0.72) }}
+                className="text-sm font-medium"
+                style={{ color: hexToRgba(theme.accent, 0.7) }}
               >
-                {faq.answer}
+                Loading FAQs...
               </p>
-            </Accordion>
-          ))}
-        </Accordions>
+            </div>
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-12">
+            <p
+              className="text-sm font-medium"
+              style={{ color: hexToRgba(theme.accent, 0.7) }}
+            >
+              Failed to load FAQs. Please try again later.
+            </p>
+          </div>
+        ) : faqs.length === 0 ? (
+          <div className="flex items-center justify-center py-12">
+            <p
+              className="text-sm font-medium"
+              style={{ color: hexToRgba(theme.accent, 0.7) }}
+            >
+              No FAQs available at the moment.
+            </p>
+          </div>
+        ) : (
+          <Accordions type="single" className="space-y-1 divide-y-0">
+            {faqs.map((faq, index) => (
+              <Accordion
+                key={faq.id}
+                id={`personal-listing-faq-${index}`}
+                title={faq.question}
+                className="overflow-hidden rounded-[1.4rem] px-2 transition-colors duration-300"
+                triggerClassName="text-left text-sm font-semibold hover:no-underline md:text-base"
+                triggerStyle={{ color: theme.accent }}
+              >
+                <div
+                  className="pb-2 text-sm leading-relaxed md:text-base prose prose-sm max-w-none [&_p]:mb-2"
+                  style={{ color: hexToRgba(theme.accent, 0.72) }}
+                  dangerouslySetInnerHTML={{ __html: faq.answer }}
+                />
+              </Accordion>
+            ))}
+          </Accordions>
+        )}
 
         <div
           className="rounded-[1.6rem] border p-5 md:p-6"

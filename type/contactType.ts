@@ -1,9 +1,20 @@
+// Data submitted to the API
 export interface ContactFormData {
-  name: string;
-  phone: string;
-  address: string;
+  fullName: string;
   email: string;
   message: string;
+  phone: string;
+  location: string;
+  status?: string;
+}
+
+// Form data including all fields
+export interface ContactFormInput {
+  fullName: string;
+  email: string;
+  message: string;
+  phone: string;
+  location: string;
 }
 
 export interface ContactResponse {

@@ -14,7 +14,7 @@ import {
 import { useSection } from "@/app/providers/SectionProvider";
 import { cn } from "@/lib/utils";
 import { contactLists, socialLinks } from "@/constants";
-import { api } from "@/config/axios-config";
+import { newsletterService } from "@/services/newsletter";
 
 import CrawlingBaby from "./CrawlingBaby";
 
@@ -35,10 +35,10 @@ export default function Footer() {
 
     setStatus("loading");
     try {
-      await api.post("/newsletter/create", { email });
+      const response = await newsletterService.subscribe({ email });
       setStatus("success");
       setEmail("");
-      alert("Subscribed successfully!");
+      alert(response.message || "Subscribed successfully!");
     } catch (error) {
       console.error("Subscription error:", error);
       setStatus("error");
