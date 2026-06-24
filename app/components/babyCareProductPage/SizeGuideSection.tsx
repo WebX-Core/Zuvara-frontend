@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Variant } from "@/type/babyCareProductType";
+import type { BackendAvailableSize } from "@/type/productType";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 
@@ -8,12 +9,23 @@ type SizeGuideSectionProps = {
   theme: ThemePreset;
   variants: Variant[];
   sizeGuideImages?: string[];
+  availableSizes?: BackendAvailableSize[];
 };
 
 export default function SizeGuideSection({
   theme,
   variants,
+  availableSizes,
 }: SizeGuideSectionProps) {
+  // Hide this section if size data does not come from backend
+  if (!availableSizes || availableSizes.length === 0) {
+    return null;
+  }
+
+  void variants;
+
+  const sizes: { id: string | number; size: string; weight: string }[] =
+    availableSizes.map((s) => ({ id: s.id, size: s.size, weight: s.weight }));
   return (
     <section className="immersive-section relative px-4 py-10 md:py-14 lg:px-10 lg:py-16">
       {/* Decorative Background Elements */}
@@ -83,9 +95,9 @@ export default function SizeGuideSection({
 
         {/* Size Cards Grid */}
         <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
-          {variants.map((variant, idx) => (
+          {sizes.map((s, idx) => (
             <motion.div
-              key={variant.id}
+              key={s.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -115,14 +127,14 @@ export default function SizeGuideSection({
                   className="text-xl md:text-3xl font-black"
                   style={{ color: theme.accent }}
                 >
-                  {variant.size}
+                  {s.size}
                 </span>
               </div>
 
               {/* Weight Range */}
               <div className="text-center">
                 <div className="text-sm md:text-xl font-bold text-zinc-800 mb-0.5 md:mb-1">
-                  {variant.weight} kg
+                  {s.weight}
                 </div>
                 <div
                   className="text-[10px] md:text-xs font-semibold uppercase tracking-wider"

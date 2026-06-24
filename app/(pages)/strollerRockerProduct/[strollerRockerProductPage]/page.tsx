@@ -7,21 +7,24 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
 import type { Product, Variant } from "@/type/strollerRockerProductType";
+import type { BackendProduct } from "@/type/productType";
 import { ChevronRight, Star, ArrowLeft } from "lucide-react";
 import { useMediaQuery } from "react-responsive";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import productService from "@/services/productService";
 
 const StrollerRockerProductDetailPage = () => {
   const params = useParams();
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
+  const [apiProduct, setApiProduct] = useState<BackendProduct | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [activeTab, setActiveTab] = useState("reviews");
   const [showFullDescription, setShowFullDescription] = useState(false);
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   useEffect(() => {
-    const productSlug = params.strollerRockerProductPage;
+    const productSlug = params.strollerRockerProductPage as string;
     const foundProduct = strollerRockerProducts.find(
       (p) => p.slug === productSlug,
     );
@@ -31,6 +34,14 @@ const StrollerRockerProductDetailPage = () => {
       if (foundProduct.variants && foundProduct.variants.length > 0) {
         setSelectedVariant(foundProduct.variants[0]);
       }
+    }
+
+    // Fetch live API data
+    if (productSlug) {
+      productService
+        .getProductBySlug(productSlug)
+        .then((data) => setApiProduct(data))
+        .catch(() => setApiProduct(null));
     }
   }, [params.strollerRockerProductPage]);
 
@@ -144,7 +155,7 @@ const StrollerRockerProductDetailPage = () => {
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.4, ease: "circOut" }}
                     >
-                      {activeTab === "reviews" && (
+                  {activeTab === "reviews" && (
                         <div className="space-y-4 lg:space-y-8">
                           <div>
                             <h2 className="text-lg lg:text-3xl font-semibold text-zinc-900">
@@ -154,11 +165,33 @@ const StrollerRockerProductDetailPage = () => {
                               What others are saying about this product.
                             </p>
                           </div>
-                          <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
-                            <p className="text-zinc-400 font-bold">
-                              No reviews yet for this product.
-                            </p>
-                          </div>
+                          {apiProduct?.reviews && apiProduct.reviews.length > 0 ? (
+                            <div className="space-y-4">
+                              {apiProduct.reviews.map((review) => (
+                                <div
+                                  key={review.id}
+                                  className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100"
+                                >
+                                  <div className="flex items-center justify-between mb-2">
+                                    <p className="font-bold text-zinc-800">{review.fullName}</p>
+                                    <span className="text-xs text-zinc-400">{review.location}</span>
+                                  </div>
+                                  <div className="flex gap-0.5 mb-2">
+                                    {Array.from({ length: review.rating }).map((_, i) => (
+                                      <Star key={i} size={13} fill="#fbbf24" color="#fbbf24" />
+                                    ))}
+                                  </div>
+                                  <p className="text-sm text-zinc-600">{review.comment}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
+                              <p className="text-zinc-400 font-bold">
+                                No reviews yet for this product.
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
                     </motion.div>
@@ -415,11 +448,33 @@ const StrollerRockerProductDetailPage = () => {
                           What others are saying about this product.
                         </p>
                       </div>
-                      <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
-                        <p className="text-zinc-400 font-bold">
-                          No reviews yet for this product.
-                        </p>
-                      </div>
+                      {apiProduct?.reviews && apiProduct.reviews.length > 0 ? (
+                        <div className="space-y-4">
+                          {apiProduct.reviews.map((review) => (
+                            <div
+                              key={review.id}
+                              className="p-4 rounded-2xl bg-zinc-50 border border-zinc-100"
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="font-bold text-sm text-zinc-800">{review.fullName}</p>
+                                <span className="text-xs text-zinc-400">{review.location}</span>
+                              </div>
+                              <div className="flex gap-0.5 mb-2">
+                                {Array.from({ length: review.rating }).map((_, i) => (
+                                  <Star key={i} size={12} fill="#fbbf24" color="#fbbf24" />
+                                ))}
+                              </div>
+                              <p className="text-xs text-zinc-600">{review.comment}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
+                          <p className="text-zinc-400 font-bold">
+                            No reviews yet for this product.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </motion.div>

@@ -42,7 +42,7 @@ const ContactSection = () => {
         message: formData.message,
         phone: formData.phone,
         location: formData.location,
-        status: "pending", // Default status
+        
       },
       {
         onSuccess: () => {

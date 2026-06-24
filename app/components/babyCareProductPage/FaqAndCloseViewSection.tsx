@@ -1,12 +1,16 @@
+"use client";
+
 import type { Product } from "@/type/babyCareProductType";
 import FaqSection from "@/app/components/common-ui/FaqSection";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { useFaqsByProduct } from "@/hooks/useFaq";
 
 type FaqAndCloseViewSectionProps = {
   active: Product;
   theme: ThemePreset;
+  productId?: string; // Product ID from API
 };
 
 const sectionTitle =
@@ -16,8 +20,17 @@ const sectionSubtitle = "text-[clamp(0.95rem,1.8vw,1.125rem)] leading-relaxed";
 export default function FaqAndCloseViewSection({
   active,
   theme,
+  productId,
 }: FaqAndCloseViewSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#ffffff");
+  
+  // Fetch product-specific FAQs from API
+  const { faqs, isLoading } = useFaqsByProduct(productId);
+  
+  // Don't render section if no FAQs (or still loading)
+  if (isLoading || !faqs || faqs.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative px-4 py-16 md:px-6 lg:px-10 lg:py-30">
@@ -63,7 +76,7 @@ export default function FaqAndCloseViewSection({
           <div className="relative px-3 py-6 md:px-8 md:py-10">
             <FaqSection
               product={active}
-              faqs={active.faqs}
+              faqs={faqs}
               questionColor={theme.accent}
               answerColor={hexToRgba(theme.accent, 0.76)}
             />

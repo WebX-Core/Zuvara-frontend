@@ -3,17 +3,14 @@
 import React, {
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import { useParams } from "next/navigation";
-import { ArrowUp } from "lucide-react";
-import { babyCareProducts } from "@/constants/babyCareProduct";
+import { ArrowUp, Loader2 } from "lucide-react";
 import type { Product } from "@/type/babyCareProductType";
 import ProductNotFound from "@/app/components/babyCareProductPage/ProductNotFound";
 import BabyCareHeroSection from "@/app/components/babyCareProductPage/BabyCareHeroSection";
-// import WhyTouchMattersSection from "@/app/components/babyCareProductPage/WhyTouchMattersSection";
 import ComfortDetailsSection from "@/app/components/babyCareProductPage/ComfortDetailsSection";
 import SizeGuideSection from "@/app/components/babyCareProductPage/SizeGuideSection";
 import TrustFusionSection from "@/app/components/babyCareProductPage/TrustFusionSection";
@@ -24,123 +21,9 @@ import { hexToRgba, type ThemePreset, colors } from "@/lib/tokens";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProductCloseViewSection from "@/app/components/babyCareProductPage/ProductCloseViewSection";
+import { useProductBySlug } from "@/hooks/useProduct";
 
-const productImageSets: Record<
-  string,
-  { moodboardImages: string[]; technicalDetailImages: string[] }
-> = {
-  "supreme-diapers": {
-    moodboardImages: [
-      "/PRODUCTS/Baby/supreme-diapers/technology.jpg",
-      "/images/baby/baby29.png",
-      "/images/baby/baby24.png",
-      "/images/baby/baby31.png",
-      "/images/baby/baby30.png",
-      "/images/baby/baby14.png",
-      "/images/baby/baby32.png",
-      "/images/baby/baby33.png",
-      "/images/baby/baby10.png",
-      "/images/baby/baby23.png",
-      "/images/baby/baby20.png",
-      "/images/baby/baby12.png",
-    ],
-    technicalDetailImages: [
-      "/PRODUCTS/Baby/supreme-diapers/tech1.jpg",
-      "/PRODUCTS/Baby/supreme-diapers/tech2.jpg",
-      "/PRODUCTS/Baby/supreme-diapers/tech3.jpg",
-      "/PRODUCTS/Baby/supreme-diapers/tech4.jpg",
-    ],
-  },
-  "premium-diapers-pants": {
-    moodboardImages: [
-      "/PRODUCTS/Baby/premium-diapers/technology.jpg",
-      "/images/baby/baby29.png",
-      "/images/baby/baby24.png",
-      "/images/baby/baby31.png",
-      "/images/baby/baby30.png",
-      "/images/baby/baby14.png",
-      "/images/baby/baby32.png",
-      "/images/baby/baby33.png",
-      "/images/baby/baby10.png",
-      "/images/baby/baby23.png",
-      "/images/baby/baby20.png",
-      "/images/baby/baby12.png",
-    ],
-    technicalDetailImages: [
-      "/PRODUCTS/Baby/premium-diapers/tech1.jpg",
-      "/PRODUCTS/Baby/premium-diapers/tech2.jpg",
-      "/PRODUCTS/Baby/premium-diapers/tech3.jpg",
-      "/PRODUCTS/Baby/premium-diapers/tech4.jpg",
-    ],
-  },
-  "value-diapers-pants": {
-    moodboardImages: [
-      "/PRODUCTS/Baby/value-diapers/technology.jpg",
-      "/images/baby/baby29.png",
-      "/images/baby/baby24.png",
-      "/images/baby/baby31.png",
-      "/images/baby/baby30.png",
-      "/images/baby/baby14.png",
-      "/images/baby/baby32.png",
-      "/images/baby/baby33.png",
-      "/images/baby/baby10.png",
-      "/images/baby/baby23.png",
-      "/images/baby/baby20.png",
-      "/images/baby/baby12.png",
-    ],
-    technicalDetailImages: [
-      "/PRODUCTS/Baby/value-diapers/tech1.jpg",
-      "/PRODUCTS/Baby/value-diapers/tech2.jpg",
-      "/PRODUCTS/Baby/value-diapers/tech3.jpg",
-      "/PRODUCTS/Baby/value-diapers/tech4.jpg",
-    ],
-  },
-  "moisturising-tissue": {
-    moodboardImages: [
-      "/PRODUCTS/Baby/tissue/technology.jpg",
-      "/images/baby/baby29.png",
-      "/images/baby/baby24.png",
-      "/images/baby/baby31.png",
-      "/images/baby/baby30.png",
-      "/images/baby/baby14.png",
-      "/images/baby/baby32.png",
-      "/images/baby/baby33.png",
-      "/images/baby/baby10.png",
-      "/images/baby/baby23.png",
-      "/images/baby/baby20.png",
-      "/images/baby/baby12.png",
-    ],
-    technicalDetailImages: [
-      "/PRODUCTS/Baby/tissue/tech1.jpg",
-      "/PRODUCTS/Baby/tissue/tech2.jpg",
-      "/PRODUCTS/Baby/tissue/tech3.jpg",
-      "/PRODUCTS/Baby/tissue/tech4.jpg",
-    ],
-  },
-  "value-wet-wipes": {
-    moodboardImages: [
-      "/PRODUCTS/Baby/wet-wipes/product2.jpg",
-      "/images/baby/baby29.png",
-      "/images/baby/baby24.png",
-      "/images/baby/baby31.png",
-      "/images/baby/baby30.png",
-      "/images/baby/baby14.png",
-      "/images/baby/baby32.png",
-      "/images/baby/baby33.png",
-      "/images/baby/baby10.png",
-      "/images/baby/baby23.png",
-      "/images/baby/baby20.png",
-      "/images/baby/baby12.png",
-    ],
-    technicalDetailImages: [
-      "/PRODUCTS/Baby/wet-wipes/tech1.jpg",
-      "/PRODUCTS/Baby/wet-wipes/tech2.jpg",
-      "/PRODUCTS/Baby/wet-wipes/tech3.jpg",
-      "/PRODUCTS/Baby/wet-wipes/tech4.jpg",
-    ],
-  },
-};
-
+// Static fallback images for sections that don't have API equivalents
 const conceptImages = [
   "/images/baby/baby14.png",
   "/images/baby/baby10.png",
@@ -153,14 +36,6 @@ const conceptImages = [
   "/images/baby/baby22.png",
   "/images/baby/baby27.png",
 ];
-
-const comparisonImageBySlug: Record<string, string> = {
-  "supreme-diapers": "/comparison-diapers/supreme-diaper.png",
-  "premium-diapers-pants": "/comparison-diapers/premium-diaper.png",
-  "value-diapers-pants": "/comparison-diapers/value-diaper.png",
-  "moisturising-tissue": "/comparison-diapers/tissue.png",
-  "value-wet-wipes": "/comparison-diapers/wet-wipes.png",
-};
 
 const comparisonRows = [
   { label: "Dermatologically Tested", zuvara: "Yes", ordinary: "Not Always" },
@@ -181,62 +56,18 @@ const themePresets: ThemePreset[] = [
     chipBg: colors.baby.chip,
     sectionTint: colors.baby.panel,
   },
-  {
-    accent: "#2d6f9f",
-    pageBg: "#f1f7fd",
-    containerBg: "#dbeefe",
-    border: "#8eb9dd",
-    chipBg: "#d4e8fb",
-    sectionTint: "#e8f1fb",
-  },
-  {
-    accent: "#8b6b00",
-    pageBg: "#fff9ea",
-    containerBg: "#fff1bf",
-    border: "#d5bd6d",
-    chipBg: "#ffe8a0",
-    sectionTint: "#fff5d8",
-  },
-  {
-    accent: "#6a4aa3",
-    pageBg: "#f6f2ff",
-    containerBg: "#e8defd",
-    border: "#b49cdc",
-    chipBg: "#decef9",
-    sectionTint: "#efe7ff",
-  },
 ];
-
-function clampIndex(i: number, len: number) {
-  if (len <= 0) return 0;
-  return ((i % len) + len) % len;
-}
-
-function pickHeroBaby(p: Product) {
-  return p.heroImage2 || p.heroImage || p.image;
-}
-
-function pickHeroPack(p: Product) {
-  return p.heroImage || p.image || pickHeroBaby(p);
-}
 
 export default function Page() {
   const params = useParams<{ babyCareProductPage: string }>();
   const slug = params?.babyCareProductPage;
-  const products = useMemo(() => babyCareProducts, []);
-  const product = products.find((item) => item.slug === slug);
-  const initialIndex = Math.max(
-    0,
-    products.findIndex((item) => item.slug === slug),
-  );
-  const [activeIdx, setActiveIdx] = useState(initialIndex);
+  
+  // Fetch product from API
+  const { data: apiProduct, isLoading, error } = useProductBySlug(slug ?? "");
+  
   const rootRef = useRef<HTMLElement | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const active =
-    products.length > 0
-      ? products[clampIndex(activeIdx, products.length)]
-      : product || babyCareProducts[0];
-  const theme = themePresets[clampIndex(activeIdx, themePresets.length)];
+  const theme = themePresets[0];
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -260,6 +91,8 @@ export default function Page() {
   }, []);
 
   useLayoutEffect(() => {
+    if (!apiProduct) return;
+    
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const sections = gsap.utils.toArray<HTMLElement>(".immersive-section");
@@ -288,117 +121,140 @@ export default function Page() {
     }, rootRef);
 
     return () => ctx.revert();
-  }, [active?.id, theme.accent]);
+  }, [apiProduct]);
 
-  if (!product || !active) {
+  // Loading state
+  if (isLoading) {
+    return (
+      <main
+        className="relative min-h-screen overflow-hidden text-zinc-800 antialiased"
+        style={{ backgroundColor: theme.pageBg }}
+      >
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="text-center space-y-4">
+            <Loader2
+              className="w-12 h-12 animate-spin mx-auto"
+              style={{ color: theme.accent }}
+            />
+            <p className="text-sm font-medium" style={{ color: theme.accent }}>
+              Loading product…
+            </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // Error or not found
+  if (error || !apiProduct) {
     return <ProductNotFound />;
   }
 
-  const getRenderData = (currentProduct: Product, index: number) => {
-    const currentTheme = themePresets[clampIndex(index, themePresets.length)];
-    const currentHeroPackSrc = pickHeroPack(currentProduct);
-    const currentVariants = currentProduct?.variants || [];
-    const currentImageSet =
-      productImageSets[currentProduct?.slug ?? ""] ||
-      productImageSets["supreme-diapers"];
-    const currentComparisonImage =
-      comparisonImageBySlug[currentProduct?.slug ?? ""] ||
-      currentProduct?.image ||
-      currentHeroPackSrc;
-
-    return {
-      theme: currentTheme,
-      heroPackSrc: currentHeroPackSrc,
-      variants: currentVariants,
-      imageSet: currentImageSet,
-      trustImages: {
-        comparisonZuvara: currentComparisonImage,
-        comparisonOrdinary: currentComparisonImage,
-      },
-    };
+  // Convert API product to Product interface for components
+  const product: Product = {
+    id: 0,
+    name: apiProduct.productName,
+    slug: apiProduct.slug,
+    category: apiProduct.category?.categoryName ?? "Baby Care",
+    rating: 4.8,
+    reviews: apiProduct.reviews?.length ?? 0,
+    image: apiProduct.coverImage,
+    heroImage: apiProduct.coverImage,
+    heroImage2: apiProduct.media?.[0] ?? apiProduct.coverImage,
+    video: apiProduct.videoUrl ?? undefined,
+    description: apiProduct.description ?? "",
+    productCloseView: [],
+    faqs: [],
+    variants: (apiProduct.availableSizes ?? []).map((s, idx) => ({
+      id: idx + 1,
+      image: apiProduct.coverImage,
+      size: s.size,
+      weight: s.weight,
+    })),
   };
 
-  const renderPageContent = (currentProduct: Product, index: number) => {
-    const {
-      theme: currentTheme,
-      heroPackSrc: currentHeroPackSrc,
-      variants: currentVariants,
-      imageSet,
-      trustImages: currentTrustImages,
-    } = getRenderData(currentProduct, index);
-
-    return (
-      <>
-        <div
-          className="theme-orb pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
-          style={{ backgroundColor: hexToRgba(currentTheme.accent, 0.2) }}
-        />
-        <div
-          className="theme-orb pointer-events-none absolute top-120 -right-20 h-72 w-72 rounded-full blur-3xl"
-          style={{ backgroundColor: hexToRgba(currentTheme.chipBg, 0.44) }}
-        />
-        <div
-          className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
-          style={{ backgroundColor: hexToRgba(currentTheme.accent, 0.14) }}
-        />
-
-        <BabyCareHeroSection
-          active={currentProduct}
-          products={products}
-          heroPackSrc={currentHeroPackSrc}
-          theme={currentTheme}
-          onPrev={() => setActiveIdx((v) => v - 1)}
-          onNext={() => setActiveIdx((v) => v + 1)}
-          onSelectProduct={setActiveIdx}
-          pickHeroPack={pickHeroPack}
-        />
-
-        {/* <WhyTouchMattersSection
-          theme={currentTheme}
-          backgroundImage={imageSet.moodboardImages[0] || pickHeroBaby(currentProduct)}
-        /> */}
-        <ProductCloseViewSection
-          product={currentProduct}
-          theme={currentTheme}
-          technicalDetailImages={imageSet.technicalDetailImages}
-        />
-        <ProductVideoSection theme={currentTheme} />
-
-        <ComfortDetailsSection
-          theme={currentTheme}
-          moodboardImages={imageSet.moodboardImages}
-        />
-
-        <SizeGuideSection
-          theme={currentTheme}
-          variants={currentVariants}
-          sizeGuideImages={currentProduct?.sizeGuideImages}
-        />
-
-        <TrustFusionSection
-          theme={currentTheme}
-          comparisonRows={comparisonRows}
-          images={currentTrustImages}
-        />
-
-        <CarePromiseSection
-          theme={currentTheme}
-          conceptImages={conceptImages}
-        />
-
-        <FaqAndCloseViewSection active={currentProduct} theme={currentTheme} />
-      </>
-    );
-  };
+  // Extract dynamic data from API
+  const heroPackSrc = apiProduct.coverImage;
+  const moodboardImages = apiProduct.media ?? [];
+  const technicalDetailImages = apiProduct.media?.slice(0, 4) ?? [];
+  const highlightImages = apiProduct.highlights
+    ?.filter((h) => h.isActive)
+    .flatMap((h) => h.highlightImages) ?? [];
+  const comparisonImage = apiProduct.coverImage;
 
   return (
     <main
       ref={rootRef}
-      className="relative overflow-hidden text-zinc-800 antialiased md:transition-colors md:duration-500"
+      className="relative overflow-hidden text-zinc-800 antialiased"
       style={{ backgroundColor: theme.pageBg }}
     >
       <div className="relative">
-        {renderPageContent(active, clampIndex(activeIdx, products.length))}
+        {/* Theme orbs */}
+        <div
+          className="theme-orb pointer-events-none absolute -top-24 -left-16 h-64 w-64 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(theme.accent, 0.2) }}
+        />
+        <div
+          className="theme-orb pointer-events-none absolute top-120 -right-20 h-72 w-72 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(theme.chipBg, 0.44) }}
+        />
+        <div
+          className="theme-orb pointer-events-none absolute top-360 left-1/4 h-80 w-80 rounded-full blur-3xl"
+          style={{ backgroundColor: hexToRgba(theme.accent, 0.14) }}
+        />
+
+        <BabyCareHeroSection
+          active={product}
+          products={[product]}
+          heroPackSrc={heroPackSrc}
+          theme={theme}
+          onPrev={() => {}}
+          onNext={() => {}}
+          onSelectProduct={() => {}}
+          pickHeroPack={() => heroPackSrc}
+        />
+
+        <ProductCloseViewSection
+          product={product}
+          theme={theme}
+          technicalDetailImages={technicalDetailImages}
+          highlightImages={highlightImages.length > 0 ? highlightImages : undefined}
+        />
+
+        <ProductVideoSection theme={theme} videoUrl={apiProduct.videoUrl} />
+
+        <ComfortDetailsSection
+          theme={theme}
+          moodboardImages={moodboardImages}
+        />
+
+        <SizeGuideSection
+          theme={theme}
+          variants={product.variants}
+          sizeGuideImages={undefined}
+          availableSizes={apiProduct.availableSizes}
+        />
+
+        <TrustFusionSection
+          theme={theme}
+          comparisonRows={comparisonRows}
+          images={{
+            comparisonZuvara: comparisonImage,
+            comparisonOrdinary: comparisonImage,
+          }}
+          reviews={apiProduct.reviews}
+        />
+
+        <CarePromiseSection
+          theme={theme}
+          conceptImages={conceptImages}
+        />
+
+        <FaqAndCloseViewSection 
+          active={product} 
+          theme={theme} 
+          productId={apiProduct.id}
+        />
       </div>
 
       <button

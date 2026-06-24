@@ -1,20 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
-import type { Product as BabyProduct } from "@/type/babyCareProductType";
-import type { Product as ClothingProduct } from "@/type/babyClothesType";
-import type { Product as StrollerProduct } from "@/type/strollerRockerProductType";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
+import { categoryService } from "@/services/categoryService";
+import { productService } from "@/services/productService";
 
-type ProductItem = BabyProduct | ClothingProduct | StrollerProduct;
+interface AdaptedProduct {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+  heroImage: string;
+  category: string;
+}
+
+interface DynamicCategory {
+  id: string;
+  categoryName: string;
+  slug: string;
+}
 
 const hexToRgba = (hex: string, alpha: number) => {
   const normalizedHex = hex.replace("#", "");
@@ -95,66 +107,170 @@ const strollerPaletteBySlug: Record<
   },
 };
 
+const categoryIconMap: Record<string, string> = {
+  "baby-products": "/icons/l.png",
+  "clothing": "/icons/clothes.png",
+  "strollers-rockers": "/icons/stroller.png",
+};
+
+const categoryRouteMap: Record<string, string> = {
+  "baby-products": "babyCareProduct",
+  "clothing": "clothing",
+  "strollers-rockers": "strollerRockerProduct",
+};
+
+const ProductSkeleton = () => (
+  <div className="w-full lg:w-[calc(25%-0.9375rem)] flex flex-col gap-4 rounded-4xl animate-pulse">
+    <div className="h-40 sm:h-56 bg-zinc-100 rounded-[1.75rem] w-full" />
+    <div className="flex justify-between items-center px-2 pb-4">
+      <div className="h-5 bg-zinc-100 rounded w-2/3" />
+      <div className="h-8 w-8 bg-zinc-100 rounded-full shrink-0" />
+    </div>
+  </div>
+);
+
+const TabsSkeleton = () => (
+  <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center animate-pulse">
+    {[1, 2, 3].map((n) => (
+      <div key={n} className="w-36 h-11 bg-zinc-100 rounded-full shrink-0" />
+    ))}
+  </div>
+);
+
 const Product = () => {
-  const [activeTab, setActiveTab] = useState<"baby" | "clothing" | "stroller">(
-    "baby",
-  );
+  const [categories, setCategories] = useState<DynamicCategory[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("");
+  const [products, setProducts] = useState<AdaptedProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const products: ProductItem[] =
-    activeTab === "baby"
-      ? babyCareProducts
-      : activeTab === "clothing"
-        ? clothingProducts
-        : strollerRockerProducts;
+  useEffect(() => {
+    let active = true;
 
-  const tabs = [
-    { id: "baby", label: "Baby Products", icon: "/icons/l.png" },
-    { id: "clothing", label: "Clothing", icon: "/icons/clothes.png" },
-    {
-      id: "stroller",
-      label: "Strollers & Rockers",
-      icon: "/icons/stroller.png",
-    },
-  ] as const;
+    async function loadData() {
+      try {
+        setLoading(true);
+        setError(null);
 
-  const routeMap: Record<typeof activeTab, string> = {
-    baby: "babyCareProduct",
-    clothing: "clothing",
-    stroller: "strollerRockerProduct",
-  };
-  const collectionHref = `/${routeMap[activeTab]}`;
-  const featuredProducts = products.slice(0, 4);
-  const shouldShowViewMore = products.length > featuredProducts.length;
+        // Fetch categories and products from backend
+        const [catData, prodData] = await Promise.all([
+          categoryService.getCategories(),
+          productService.getProducts(),
+        ]);
 
-  const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
+        if (!active) return;
 
-  const getCardImage = (product: ProductItem) => {
-    if (activeTab !== "baby") {
-      return product.image;
+        // Filter categories under "baby-care" portal
+        const babyCareCats = catData.category
+          .filter((c) => c.portal?.slug === "baby-care")
+          .sort((a, b) => a.sortOrder - b.sortOrder);
+
+        if (babyCareCats.length > 0) {
+          setCategories(babyCareCats.map(c => ({
+            id: c.id,
+            categoryName: c.categoryName,
+            slug: c.slug,
+          })));
+          setActiveTab(babyCareCats[0].slug);
+        } else {
+          useStaticFallback();
+          return;
+        }
+
+        if (prodData && prodData.length > 0) {
+          const adapted = prodData.map((p) => ({
+            id: p.id,
+            name: p.productName,
+            slug: p.slug,
+            image: p.coverImage,
+            heroImage: p.coverImage,
+            category: p.category?.slug || "",
+          }));
+          setProducts(adapted);
+        } else {
+          useStaticFallback();
+        }
+      } catch (err) {
+        console.error("Failed to load dynamic data, falling back to static constants:", err);
+        if (!active) return;
+        useStaticFallback();
+      } finally {
+        if (active) setLoading(false);
+      }
     }
 
-    const babyProduct = product as BabyProduct;
+    function useStaticFallback() {
+      const fallbackCats = [
+        { id: "baby-products", categoryName: "Baby Products", slug: "baby-products" },
+        { id: "clothing", categoryName: "Clothing", slug: "clothing" },
+        { id: "strollers-rockers", categoryName: "Strollers & Rockers", slug: "strollers-rockers" },
+      ];
+      setCategories(fallbackCats);
+      setActiveTab("baby-products");
 
-    if (babyProduct.slug === "moisturising-tissue") {
+      const staticBaby = babyCareProducts.map((p) => ({
+        id: String(p.id),
+        name: p.name,
+        slug: p.slug,
+        image: p.variants?.[0]?.image || p.image || p.heroImage || "/images/placeholder.png",
+        heroImage: p.heroImage || p.image || "/images/placeholder.png",
+        category: "baby-products",
+      }));
+
+      const staticClothing = clothingProducts.map((p) => ({
+        id: String(p.id),
+        name: p.name,
+        slug: p.slug,
+        image: p.image || "/images/placeholder.png",
+        heroImage: p.image || "/images/placeholder.png",
+        category: "clothing",
+      }));
+
+      const staticStroller = strollerRockerProducts.map((p) => ({
+        id: String(p.id),
+        name: p.name,
+        slug: p.slug,
+        image: p.image || "/images/placeholder.png",
+        heroImage: p.image || "/images/placeholder.png",
+        category: "strollers-rockers",
+      }));
+
+      setProducts([...staticBaby, ...staticClothing, ...staticStroller]);
+    }
+
+    loadData();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const filteredProducts = products.filter((p) => p.category === activeTab);
+  const featuredProducts = filteredProducts.slice(0, 4);
+  const shouldShowViewMore = filteredProducts.length > featuredProducts.length;
+
+  const collectionHref = `/${categoryRouteMap[activeTab] || "babyCareProduct"}`;
+  const productBottomWave = assetWithFill(wave4Svg, "#BFDDCA");
+
+  const getCardImage = (product: AdaptedProduct) => {
+    if (activeTab !== "baby-products") {
+      return product.image || "/images/placeholder.png";
+    }
+
+    if (product.slug === "moisturising-tissue") {
       return "/PRODUCTS/Baby/tissue/product.png";
     }
 
-    if (babyProduct.slug === "value-wet-wipes") {
+    if (product.slug === "value-wet-wipes") {
       return "/PRODUCTS/Baby/wet-wipes/product.png";
     }
 
-    return (
-      babyProduct.variants?.[0]?.image ||
-      babyProduct.image ||
-      babyProduct.heroImage ||
-      "/images/placeholder.png"
-    );
+    return product.image || product.heroImage || "/images/placeholder.png";
   };
 
-  const getCardTheme = (product: ProductItem) => {
+  const getCardTheme = (product: AdaptedProduct) => {
     if (activeTab === "clothing") {
-      const clothingProduct = product as ClothingProduct;
-      const palette = clothingPaletteBySlug[clothingProduct.slug] ?? {
+      const palette = clothingPaletteBySlug[product.slug] ?? {
         background: "#edf5f1",
         foreground: colors.baby.accent,
       };
@@ -167,9 +283,8 @@ const Product = () => {
       };
     }
 
-    if (activeTab === "stroller") {
-      const strollerProduct = product as StrollerProduct;
-      const palette = strollerPaletteBySlug[strollerProduct.slug] ?? {
+    if (activeTab === "strollers-rockers") {
+      const palette = strollerPaletteBySlug[product.slug] ?? {
         background: "#edf5f1",
         foreground: colors.baby.accent,
       };
@@ -182,7 +297,7 @@ const Product = () => {
       };
     }
 
-    if (activeTab !== "baby") {
+    if (activeTab !== "baby-products") {
       return {
         background: "#ffffff",
         foreground: "#111827",
@@ -191,12 +306,9 @@ const Product = () => {
       };
     }
 
-    const babyProduct = product as BabyProduct;
-    const detailPalette = babyDetailPagePaletteBySlug[babyProduct.slug] ?? null;
-    const background =
-      detailPalette?.background || babyProduct.background || colors.baby.chip;
-    const foreground =
-      detailPalette?.foreground || babyProduct.foreground || "#111827";
+    const detailPalette = babyDetailPagePaletteBySlug[product.slug] ?? null;
+    const background = detailPalette?.background || colors.baby.chip;
+    const foreground = detailPalette?.foreground || "#111827";
 
     return {
       background: hexToRgba(background, 0.28),
@@ -206,13 +318,13 @@ const Product = () => {
     };
   };
 
-  const renderProductCard = (product: ProductItem, index: number) => {
+  const renderProductCard = (product: AdaptedProduct, index: number) => {
     const cardTheme = getCardTheme(product);
 
     return (
       <Link
         key={product.id}
-        href={`/${routeMap[activeTab]}/${product.slug}`}
+        href={`/${categoryRouteMap[activeTab] || "babyCareProduct"}/${product.slug}`}
         className="group block w-full lg:w-[calc(25%-0.9375rem)]"
       >
         <motion.article
@@ -295,52 +407,69 @@ const Product = () => {
           </div>
 
           {/* Tabs */}
-          <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 lg:px-5 py-2.5 rounded-full  text-sm  font-semibold transition-all duration-300 flex items-center gap-2 shrink-0 border! ${
-                  activeTab === tab.id
-                    ? "bg-babyCare text-foreground border-none border-baby-accent-soft shadow-md"
-                    : "bg-white text-foreground  border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
-                }`}
-              >
-                <div className="relative w-6 h-6 shrink-0">
-                  <Image
-                    src={tab.icon}
-                    alt={tab.label}
-                    fill
-                    className={`object-contain transition-all duration-300 ${
-                      activeTab === tab.id ? "text-foreground" : ""
-                    }`}
-                  />
-                </div>
-
-                <motion.span
-                  initial={{ opacity: 0.8 }}
-                  animate={{ opacity: 1 }}
-                  className="overflow-hidden whitespace-nowrap"
+          {loading ? (
+            <TabsSkeleton />
+          ) : (
+            <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center">
+              {categories.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.slug)}
+                  className={`px-4 lg:px-5 py-2.5 rounded-full  text-sm  font-semibold transition-all duration-300 flex items-center gap-2 shrink-0 border! ${
+                    activeTab === tab.slug
+                      ? "bg-babyCare text-foreground border-none border-baby-accent-soft shadow-md"
+                      : "bg-white text-foreground  border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
+                  }`}
                 >
-                  {tab.label}
-                </motion.span>
-              </button>
-            ))}
-          </div>
+                  <div className="relative w-6 h-6 shrink-0">
+                    <Image
+                      src={categoryIconMap[tab.slug] || "/icons/l.png"}
+                      alt={tab.categoryName}
+                      fill
+                      className={`object-contain transition-all duration-300 ${
+                        activeTab === tab.slug ? "text-foreground" : ""
+                      }`}
+                    />
+                  </div>
 
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-4 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
-          >
-            {featuredProducts.map((product, index) =>
-              renderProductCard(product, index),
-            )}
-          </motion.div>
+                  <motion.span
+                    initial={{ opacity: 0.8 }}
+                    animate={{ opacity: 1 }}
+                    className="overflow-hidden whitespace-nowrap"
+                  >
+                    {tab.categoryName}
+                  </motion.span>
+                </button>
+              ))}
+            </div>
+          )}
 
-          {shouldShowViewMore ? (
+          {loading ? (
+            <div className="mt-4 mx-auto max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2 pb-10 lg:gap-4">
+              {[1, 2, 3, 4].map((n) => (
+                <ProductSkeleton key={n} />
+              ))}
+            </div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
+            >
+              {featuredProducts.map((product, index) =>
+                renderProductCard(product, index),
+              )}
+              {!loading && featuredProducts.length === 0 && (
+                <div className="col-span-full w-full py-12 text-center text-zinc-500 text-sm">
+                  No products found in this category.
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {!loading && shouldShowViewMore ? (
             <div className="flex justify-center">
               <Link
                 href={collectionHref}

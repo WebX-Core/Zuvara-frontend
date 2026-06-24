@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import { personalTrustFusionTestimonials } from "@/app/components/personalCareProduct/personalTrustFusionTestimonials";
+import type { BackendReview } from "@/type/productType";
 
 type ComparisonRow = {
   label: string;
@@ -22,20 +23,41 @@ type PersonalTrustFusionSectionProps = {
     comparisonZuvara: string;
     comparisonOrdinary: string;
   };
+  reviews?: BackendReview[];
 };
 
 export default function PersonalTrustFusionSection({
   theme,
   comparisonRows,
   images,
+  reviews,
 }: PersonalTrustFusionSectionProps) {
+  // Normalise API reviews into the same shape as static testimonials
+  const displayTestimonials =
+    reviews && reviews.length > 0
+      ? reviews.map((r, idx) => ({
+          id: idx,
+          name: r.fullName,
+          location: r.location,
+          text: r.comment,
+          rating: r.rating,
+          image: r.avatar ?? "/images/personalCare/period-panties.png",
+          badge: "Verified Customer",
+          time: new Date(r.createdAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }),
+        }))
+      : [];
+
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [visibleCards, setVisibleCards] = useState(2);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const maxIndex = Math.max(
     0,
-    personalTrustFusionTestimonials.length - visibleCards,
+    displayTestimonials.length - visibleCards,
   );
   const safeActiveIndex = Math.min(activeTestimonial, maxIndex);
 
@@ -106,167 +128,169 @@ export default function PersonalTrustFusionSection({
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
-      <div className="mx-auto max-w-7xl perspective-1200px">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-            <span
-              className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
-              style={{ color: theme.accent }}
-            >
-              Stories
-            </span>
-            <p
-              className="text-sm hidden sm:block"
-              style={{ color: hexToRgba(theme.accent, 0.68) }}
-            >
-              Swipe through real feedback from customers
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 self-end sm:self-auto">
-            <button
-              type="button"
-              onClick={goPrev}
-              className="flex h-11 w-11 items-center justify-center rounded-full border bg-white/70 transition-transform duration-300 hover:scale-[1.04]"
-              style={{
-                borderColor: `${theme.border}66`,
-                backgroundColor: hexToRgba(theme.pageBg, 0.92),
-                color: theme.accent,
-              }}
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              className="flex h-11 w-11 items-center justify-center rounded-full border bg-white/70 transition-transform duration-300 hover:scale-[1.04]"
-              style={{
-                borderColor: `${theme.border}66`,
-                backgroundColor: hexToRgba(theme.pageBg, 0.92),
-                color: theme.accent,
-              }}
-              aria-label="Next testimonial"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className="flex transition-transform duration-700 ease-out"
-            style={{
-              transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
-            }}
-          >
-            {personalTrustFusionTestimonials.map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="w-full shrink-0 pt-2 lg:w-1/2"
+      {displayTestimonials.length > 0 && (
+        <div className="mx-auto max-w-7xl perspective-1200px">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+              <span
+                className="flex items-center gap-2 py-2 text-lg font-semibold sm:text-xl"
+                style={{ color: theme.accent }}
               >
-                <article
-                  className="fx-rise fx-float flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
-                  style={{
-                    borderColor: `${theme.border}66`,
-                    backgroundColor: hexToRgba(theme.pageBg, 0.96),
-                  }}
+                Stories
+              </span>
+              <p
+                className="text-sm hidden sm:block"
+                style={{ color: hexToRgba(theme.accent, 0.68) }}
+              >
+                Swipe through real feedback from customers
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <button
+                type="button"
+                onClick={goPrev}
+                className="flex h-11 w-11 items-center justify-center rounded-full border bg-white/70 transition-transform duration-300 hover:scale-[1.04]"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.92),
+                  color: theme.accent,
+                }}
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="flex h-11 w-11 items-center justify-center rounded-full border bg-white/70 transition-transform duration-300 hover:scale-[1.04]"
+                style={{
+                  borderColor: `${theme.border}66`,
+                  backgroundColor: hexToRgba(theme.pageBg, 0.92),
+                  color: theme.accent,
+                }}
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="flex transition-transform duration-700 ease-out"
+              style={{
+                transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
+              }}
+            >
+              {displayTestimonials.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="w-full shrink-0 pt-2 lg:w-1/2"
                 >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <span
-                      className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
-                      style={{
-                        backgroundColor: hexToRgba(theme.containerBg, 0.36),
-                        color: hexToRgba(theme.accent, 0.75),
-                      }}
-                    >
-                      {testimonial.badge}
-                    </span>
-                    <span
-                      className="shrink-0 text-sm text-right"
-                      style={{ color: hexToRgba(theme.accent, 0.48) }}
-                    >
-                      {testimonial.time}
-                    </span>
-                  </div>
-
-                  <div
-                    className="relative mt-5 h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
-                    style={{ borderColor: `${theme.border}66` }}
+                  <article
+                    className="fx-rise fx-float flex h-full min-h-92 flex-col items-center rounded-[2.25rem] border p-6 text-center md:min-h-100 md:p-7"
+                    style={{
+                      borderColor: `${theme.border}66`,
+                      backgroundColor: hexToRgba(theme.pageBg, 0.96),
+                    }}
                   >
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div className="mt-5 flex flex-col items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: testimonial.rating }).map(
-                        (_, index) => (
-                          <Star
-                            key={index}
-                            size={17}
-                            fill="#fbbf24"
-                            color="#fbbf24"
-                          />
-                        ),
-                      )}
+                    <div className="flex w-full items-start justify-between gap-3">
+                      <span
+                        className="w-fit rounded-full px-3.5 py-1.5 text-xs font-semibold"
+                        style={{
+                          backgroundColor: hexToRgba(theme.containerBg, 0.36),
+                          color: hexToRgba(theme.accent, 0.75),
+                        }}
+                      >
+                        {testimonial.badge}
+                      </span>
+                      <span
+                        className="shrink-0 text-sm text-right"
+                        style={{ color: hexToRgba(theme.accent, 0.48) }}
+                      >
+                        {testimonial.time}
+                      </span>
                     </div>
 
-                    <div>
-                      <p
-                        className="text-base font-semibold md:text-lg"
-                        style={{ color: theme.accent }}
-                      >
-                        {testimonial.name}
-                      </p>
-                      <p
-                        className="text-sm"
-                        style={{ color: hexToRgba(theme.accent, 0.62) }}
-                      >
-                        {testimonial.location}
-                      </p>
+                    <div
+                      className="relative mt-5 h-16 w-16 overflow-hidden rounded-full border md:h-18 md:w-18"
+                      style={{ borderColor: `${theme.border}66` }}
+                    >
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
-                  </div>
 
-                  <p
-                    className="mt-5 text-base leading-relaxed md:text-lg"
-                    style={{ color: hexToRgba(theme.accent, 0.82) }}
-                  >
-                    {testimonial.text}
-                  </p>
-                </article>
-              </div>
+                    <div className="mt-5 flex flex-col items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: testimonial.rating }).map(
+                          (_, index) => (
+                            <Star
+                              key={index}
+                              size={17}
+                              fill="#fbbf24"
+                              color="#fbbf24"
+                            />
+                          ),
+                        )}
+                      </div>
+
+                      <div>
+                        <p
+                          className="text-base font-semibold md:text-lg"
+                          style={{ color: theme.accent }}
+                        >
+                          {testimonial.name}
+                        </p>
+                        <p
+                          className="text-sm"
+                          style={{ color: hexToRgba(theme.accent, 0.62) }}
+                        >
+                          {testimonial.location}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p
+                      className="mt-5 text-base leading-relaxed md:text-lg"
+                      style={{ color: hexToRgba(theme.accent, 0.82) }}
+                    >
+                      {testimonial.text}
+                    </p>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 flex justify-center gap-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setActiveTestimonial(index)}
+                className="h-2.5 rounded-full transition-all duration-300"
+                style={{
+                  width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
+                  backgroundColor:
+                    safeActiveIndex === index
+                      ? theme.accent
+                      : "rgba(132,170,165,0.35)",
+                }}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
             ))}
           </div>
         </div>
-
-        <div className="mt-5 flex justify-center gap-2">
-          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => setActiveTestimonial(index)}
-              className="h-2.5 rounded-full transition-all duration-300"
-              style={{
-                width: safeActiveIndex === index ? "2.8rem" : "0.7rem",
-                backgroundColor:
-                  safeActiveIndex === index
-                    ? theme.accent
-                    : "rgba(132,170,165,0.35)",
-              }}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
-      </div>
+      )}
 
       <div className="mx-auto mt-12 max-w-7xl space-y-8">
         <div className="fx-rise">

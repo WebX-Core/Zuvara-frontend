@@ -39,12 +39,11 @@ const FaqSection = ({
             style={{ borderColor: `${headingColor}15` }}
           >
             <div className="pb-4 pt-1 px-1">
-              <p
-                className="whitespace-pre-line text-sm font-medium leading-relaxed md:text-base opacity-90"
+              <div
+                className="text-sm font-medium leading-relaxed md:text-base opacity-90"
                 style={{ color: bodyColor }}
-              >
-                {faq.answer}
-              </p>
+                dangerouslySetInnerHTML={{ __html: faq.answer }}
+              />
             </div>
           </Accordion>
         ))}

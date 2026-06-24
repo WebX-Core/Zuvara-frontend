@@ -10,12 +10,14 @@ type PersonalProductCloseViewSectionProps = {
   product: Product;
   theme: ThemePreset;
   technicalDetailImages: string[];
+  highlightImages?: string[];
 };
 
 export default function PersonalProductCloseViewSection({
   product,
   theme,
   technicalDetailImages,
+  highlightImages,
 }: PersonalProductCloseViewSectionProps) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -29,9 +31,15 @@ export default function PersonalProductCloseViewSection({
     return () => mediaQuery.removeEventListener("change", updateIsMobile);
   }, []);
 
-  if (!product.productCloseView) return null;
+  // Prefer API highlight images if available
+  const resolvedImages =
+    highlightImages && highlightImages.length > 0
+      ? highlightImages
+      : technicalDetailImages;
 
-  const detailImages = technicalDetailImages.slice(0, 4);
+  if (!product.productCloseView && resolvedImages.length === 0) return null;
+
+  const detailImages = resolvedImages.slice(0, 4);
   const midIndex = Math.ceil(detailImages.length / 2);
   const leftDetailImages = detailImages.slice(0, midIndex);
   const rightDetailImages = detailImages.slice(midIndex);

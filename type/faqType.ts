@@ -12,6 +12,7 @@ export interface ApiFaqItem {
   answer: string; // HTML content
   portalId: string;
   portal: FaqPortal;
+  productId?: string | null; // Optional: if FAQ is product-specific
   seoMetadata: any | null;
 }
 

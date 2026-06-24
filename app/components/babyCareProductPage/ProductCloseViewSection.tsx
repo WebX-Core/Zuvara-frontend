@@ -8,16 +8,24 @@ interface ProductCloseViewProps {
   product: Product;
   theme: ThemePreset;
   technicalDetailImages: string[];
+  highlightImages?: string[];
 }
 
 const ProductCloseViewSection = ({
   product,
   theme,
   technicalDetailImages,
+  highlightImages,
 }: ProductCloseViewProps) => {
-  if (!product.productCloseView) return null;
+  // Prefer API highlight images if available, otherwise fall back to static ones
+  const resolvedImages =
+    highlightImages && highlightImages.length > 0
+      ? highlightImages
+      : technicalDetailImages;
 
-  const detailImages = technicalDetailImages.slice(0, 4);
+  if (!product.productCloseView && resolvedImages.length === 0) return null;
+
+  const detailImages = resolvedImages.slice(0, 4);
 
   return (
     <section className="relative px-4 py-8 lg:px-4 lg:py-10 min-h-[80vh] overflow-hidden">

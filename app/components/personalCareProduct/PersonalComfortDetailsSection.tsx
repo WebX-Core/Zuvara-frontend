@@ -14,6 +14,9 @@ export default function PersonalComfortDetailsSection({
   theme,
   moodboardImages,
 }: PersonalComfortDetailsSectionProps) {
+  if (!moodboardImages || moodboardImages.length === 0) {
+    return null;
+  }
   return (
     <section className="relative px-4 py-14 lg:px-10 lg:py-16">
       <div className="mx-auto max-w-7xl space-y-8 perspective-1200px">

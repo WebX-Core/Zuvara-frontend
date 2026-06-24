@@ -36,3 +36,25 @@ export function useFaqsByPortal(portalSlug: "baby-care" | "personal-care") {
     isError,
   };
 }
+
+/**
+ * Hook to fetch FAQs filtered by product ID
+ * Only returns FAQs that are specifically assigned to this product
+ * @param productId - The product ID to filter FAQs
+ */
+export function useFaqsByProduct(productId: string | undefined) {
+  const { data, isLoading, isError } = useFaqs();
+
+  const filteredFaqs = useMemo(() => {
+    if (!data?.faqs || !productId) return [];
+    // Filter FAQs that have this specific productId
+    return data.faqs.filter((faq) => faq.productId === productId);
+  }, [data, productId]);
+
+  return {
+    faqs: filteredFaqs,
+    total: filteredFaqs.length,
+    isLoading,
+    isError,
+  };
+}

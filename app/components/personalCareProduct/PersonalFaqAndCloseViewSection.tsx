@@ -4,10 +4,12 @@ import FaqSection from "@/app/components/common-ui/FaqSection";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import { assetWithFill, wave4Svg } from "@/constants/svgs";
+import { useFaqsByProduct } from "@/hooks/useFaq";
 
 type PersonalFaqAndCloseViewSectionProps = {
   active: Product;
   theme: ThemePreset;
+  productId?: string;
 };
 
 const sectionTitle =
@@ -16,8 +18,18 @@ const sectionTitle =
 export default function PersonalFaqAndCloseViewSection({
   active,
   theme,
+  productId,
 }: PersonalFaqAndCloseViewSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
+  
+  // Fetch product-specific FAQs from API
+  const { faqs, isLoading } = useFaqsByProduct(productId);
+  
+  // Don't render section if no FAQs (or still loading)
+  if (isLoading || !faqs || faqs.length === 0) {
+    return null;
+  }
+
   const cardStyle = {
     borderColor: `${theme.border}66`,
     backgroundColor: hexToRgba(theme.pageBg, 0.78),
@@ -50,7 +62,7 @@ export default function PersonalFaqAndCloseViewSection({
         <div className="fx-rise" style={cardStyle}>
           <FaqSection
             product={active}
-            faqs={active.faqs}
+            faqs={faqs}
             questionColor={theme.accent}
             answerColor={hexToRgba(theme.accent, 0.76)}
           />

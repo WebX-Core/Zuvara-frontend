@@ -5,7 +5,6 @@ export interface ContactFormData {
   message: string;
   phone: string;
   location: string;
-  status?: string;
 }
 
 // Form data including all fields

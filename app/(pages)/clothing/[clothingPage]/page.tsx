@@ -7,20 +7,23 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { clothingProducts } from "@/constants/babyClothes";
 import type { Product, Variant } from "@/type/babyClothesType";
+import type { BackendProduct } from "@/type/productType";
 import { ChevronRight, Star, ArrowLeft } from "lucide-react";
 import { useMediaQuery } from "react-responsive";
+import productService from "@/services/productService";
 
 const ClothingProductDetailPage = () => {
   const params = useParams();
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
+  const [apiProduct, setApiProduct] = useState<BackendProduct | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [activeTab, setActiveTab] = useState("reviews");
   const [showFullDescription, setShowFullDescription] = useState(false);
   const isSmallerDevice = useMediaQuery({ maxWidth: 1000 });
 
   useEffect(() => {
-    const productSlug = params.clothingPage;
+    const productSlug = params.clothingPage as string;
     const foundProduct = clothingProducts.find((p) => p.slug === productSlug);
 
     if (foundProduct) {
@@ -28,6 +31,14 @@ const ClothingProductDetailPage = () => {
       if (foundProduct.variants && foundProduct.variants.length > 0) {
         setSelectedVariant(foundProduct.variants[0]);
       }
+    }
+
+    // Fetch live API data
+    if (productSlug) {
+      productService
+        .getProductBySlug(productSlug)
+        .then((data) => setApiProduct(data))
+        .catch(() => setApiProduct(null));
     }
   }, [params.clothingPage]);
 
@@ -151,11 +162,33 @@ const ClothingProductDetailPage = () => {
                               Real stories from parents like you.
                             </p>
                           </div>
-                          <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
-                            <p className="text-zinc-400 font-bold">
-                              No reviews yet for this product.
-                            </p>
-                          </div>
+                          {apiProduct?.reviews && apiProduct.reviews.length > 0 ? (
+                            <div className="space-y-4">
+                              {apiProduct.reviews.map((review) => (
+                                <div
+                                  key={review.id}
+                                  className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100"
+                                >
+                                  <div className="flex items-center justify-between mb-2">
+                                    <p className="font-bold text-zinc-800">{review.fullName}</p>
+                                    <span className="text-xs text-zinc-400">{review.location}</span>
+                                  </div>
+                                  <div className="flex gap-0.5 mb-2">
+                                    {Array.from({ length: review.rating }).map((_, i) => (
+                                      <Star key={i} size={13} fill="#fbbf24" color="#fbbf24" />
+                                    ))}
+                                  </div>
+                                  <p className="text-sm text-zinc-600">{review.comment}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
+                              <p className="text-zinc-400 font-bold">
+                                No reviews yet for this product.
+                              </p>
+                            </div>
+                          )}
                         </div>
                       )}
                     </motion.div>
@@ -380,13 +413,35 @@ const ClothingProductDetailPage = () => {
                           Real stories from parents like you.
                         </p>
                       </div>
-                      <div className="grid grid-cols-1 gap-4 lg:gap-8">
-                        <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
-                          <p className="text-zinc-400 font-bold">
-                            No reviews yet for this product.
-                          </p>
+                      {apiProduct?.reviews && apiProduct.reviews.length > 0 ? (
+                        <div className="grid grid-cols-1 gap-4 lg:gap-8">
+                          {apiProduct.reviews.map((review) => (
+                            <div
+                              key={review.id}
+                              className="p-4 rounded-2xl bg-zinc-50 border border-zinc-100"
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="font-bold text-sm text-zinc-800">{review.fullName}</p>
+                                <span className="text-xs text-zinc-400">{review.location}</span>
+                              </div>
+                              <div className="flex gap-0.5 mb-2">
+                                {Array.from({ length: review.rating }).map((_, i) => (
+                                  <Star key={i} size={12} fill="#fbbf24" color="#fbbf24" />
+                                ))}
+                              </div>
+                              <p className="text-xs text-zinc-600">{review.comment}</p>
+                            </div>
+                          ))}
                         </div>
-                      </div>
+                      ) : (
+                        <div className="grid grid-cols-1 gap-4 lg:gap-8">
+                          <div className="col-span-full py-12 text-center bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
+                            <p className="text-zinc-400 font-bold">
+                              No reviews yet for this product.
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </motion.div>

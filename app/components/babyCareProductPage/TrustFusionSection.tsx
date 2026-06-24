@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { ThemePreset } from "@/app/components/babyCareProductPage/theme";
 import { hexToRgba } from "@/app/components/babyCareProductPage/theme";
 import { trustFusionTestimonials } from "@/app/components/babyCareProductPage/trustFusionTestimonials";
+import type { BackendReview } from "@/type/productType";
 
 type ComparisonRow = {
   label: string;
@@ -20,19 +21,40 @@ type TrustFusionSectionProps = {
     comparisonZuvara: string;
     comparisonOrdinary: string;
   };
+  reviews?: BackendReview[];
 };
 
 export default function TrustFusionSection({
   theme,
   comparisonRows,
   images,
+  reviews,
 }: TrustFusionSectionProps) {
+  // Normalise API reviews into the same shape as static testimonials
+  const displayTestimonials =
+    reviews && reviews.length > 0
+      ? reviews.map((r, idx) => ({
+          id: idx,
+          name: r.fullName,
+          location: r.location,
+          text: r.comment,
+          rating: r.rating,
+          image: r.avatar ?? "/images/baby/baby15.png",
+          badge: "Verified Parent",
+          time: new Date(r.createdAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }),
+        }))
+      : [];
+
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [visibleCards, setVisibleCards] = useState(2);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
-  const maxIndex = Math.max(0, trustFusionTestimonials.length - visibleCards);
+  const maxIndex = Math.max(0, displayTestimonials.length - visibleCards);
   const safeActiveIndex = Math.min(activeTestimonial, maxIndex);
 
   useEffect(() => {
@@ -106,165 +128,33 @@ export default function TrustFusionSection({
         style={{ backgroundColor: hexToRgba(theme.accent, 0.12) }}
       />
 
-      <div className="mx-auto max-w-7xl perspective-1200px">
-        {/* Header Section - More Prominent */}
-        <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
-          <h2
-            className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight"
-            style={{ color: hexToRgba(theme.accent, 0.9) }}
-          >
-            What Parents
-            <span className="font-light italic opacity-60"> Are Saying</span>
-          </h2>
-          <p
-            className="text-xs md:text-base font-medium max-w-2xl mx-auto"
-            style={{ color: hexToRgba(theme.accent, 0.68) }}
-          >
-            Real experiences from families who trust Zuvara for their little
-            ones
-          </p>
-        </div>
-
-        {/* Testimonials Carousel */}
-        <div className="relative">
-          {/* Desktop Navigation Buttons */}
-          <button
-            type="button"
-            onClick={goPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
-            style={{
-              borderColor: theme.accent,
-              backgroundColor: "white",
-              color: theme.accent,
-            }}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft size={24} strokeWidth={3} />
-          </button>
-          <button
-            type="button"
-            onClick={goNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
-            style={{
-              borderColor: theme.accent,
-              backgroundColor: "white",
-              color: theme.accent,
-            }}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight size={24} strokeWidth={3} />
-          </button>
-
-          {/* Carousel Container */}
-          <div
-            className="overflow-hidden px-0 lg:px-16 cursor-grab active:cursor-grabbing"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            style={{
-              touchAction: "pan-y",
-              userSelect: isDragging ? "none" : "auto",
-            }}
-          >
-            <div
-              className="flex transition-transform duration-500 ease-out"
-              style={{
-                transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
-              }}
+      {displayTestimonials.length > 0 && (
+        <div className="mx-auto max-w-7xl perspective-1200px">
+          {/* Header Section - More Prominent */}
+          <div className="text-center mb-8 md:mb-12 space-y-3 md:space-y-4">
+            <h2
+              className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+              style={{ color: hexToRgba(theme.accent, 0.9) }}
             >
-              {trustFusionTestimonials.map((testimonial, idx) => (
-                <div
-                  key={testimonial.id}
-                  className="w-full shrink-0 lg:w-1/2 px-2 md:px-3"
-                >
-                  <article
-                    className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
-                    style={{
-                      borderColor: `${theme.border}88`,
-                      minHeight: "360px",
-                    }}
-                  >
-                    {/* Header with Badge and Time */}
-                    <div className="flex items-center justify-between mb-4 md:mb-6">
-                      <span
-                        className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
-                        style={{
-                          backgroundColor: hexToRgba(theme.accent, 0.1),
-                          color: theme.accent,
-                        }}
-                      >
-                        {testimonial.badge}
-                      </span>
-                      <span
-                        className="text-xs md:text-sm font-medium"
-                        style={{ color: hexToRgba(theme.accent, 0.5) }}
-                      >
-                        {testimonial.time}
-                      </span>
-                    </div>
-
-                    {/* Profile Section */}
-                    <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-                      <div
-                        className="relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full border-2 shrink-0"
-                        style={{ borderColor: theme.accent }}
-                      >
-                        <Image
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p
-                          className="text-base md:text-lg font-bold mb-0.5 md:mb-1 truncate"
-                          style={{ color: theme.accent }}
-                        >
-                          {testimonial.name}
-                        </p>
-                        <p
-                          className="text-xs md:text-sm font-medium truncate"
-                          style={{ color: hexToRgba(theme.accent, 0.6) }}
-                        >
-                          {testimonial.location}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Star Rating */}
-                    <div className="flex items-center gap-0.5 md:gap-1 mb-4 md:mb-6">
-                      {Array.from({ length: testimonial.rating }).map(
-                        (_, index) => (
-                          <Star
-                            key={index}
-                            size={16}
-                            className="md:w-[20px] md:h-[20px]"
-                            fill="#fbbf24"
-                            color="#fbbf24"
-                          />
-                        ),
-                      )}
-                    </div>
-
-                    {/* Testimonial Text */}
-                    <p
-                      className="text-sm md:text-base lg:text-lg leading-relaxed flex-1"
-                      style={{ color: hexToRgba(theme.accent, 0.85) }}
-                    >
-                      &ldquo;{testimonial.text}&rdquo;
-                    </p>
-                  </article>
-                </div>
-              ))}
-            </div>
+              What Parents
+              <span className="font-light italic opacity-60"> Are Saying</span>
+            </h2>
+            <p
+              className="text-xs md:text-base font-medium max-w-2xl mx-auto"
+              style={{ color: hexToRgba(theme.accent, 0.68) }}
+            >
+              Real experiences from families who trust Zuvara for their little
+              ones
+            </p>
           </div>
 
-          {/* Mobile Navigation Buttons */}
-          <div className="flex lg:hidden items-center justify-center gap-4 mt-6">
+          {/* Testimonials Carousel */}
+          <div className="relative">
+            {/* Desktop Navigation Buttons */}
             <button
               type="button"
               onClick={goPrev}
-              className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
               style={{
                 borderColor: theme.accent,
                 backgroundColor: "white",
@@ -272,12 +162,12 @@ export default function TrustFusionSection({
               }}
               aria-label="Previous testimonial"
             >
-              <ChevronLeft size={20} strokeWidth={3} />
+              <ChevronLeft size={24} strokeWidth={3} />
             </button>
             <button
               type="button"
               onClick={goNext}
-              className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden lg:flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-xl transition-all duration-300 hover:scale-110 active:scale-95"
               style={{
                 borderColor: theme.accent,
                 backgroundColor: "white",
@@ -285,31 +175,165 @@ export default function TrustFusionSection({
               }}
               aria-label="Next testimonial"
             >
-              <ChevronRight size={20} strokeWidth={3} />
+              <ChevronRight size={24} strokeWidth={3} />
             </button>
+
+            {/* Carousel Container */}
+            <div
+              className="overflow-hidden px-0 lg:px-16 cursor-grab active:cursor-grabbing"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              style={{
+                touchAction: "pan-y",
+                userSelect: isDragging ? "none" : "auto",
+              }}
+            >
+              <div
+                className="flex transition-transform duration-500 ease-out"
+                style={{
+                  transform: `translateX(-${safeActiveIndex * (100 / visibleCards)}%)`,
+                }}
+              >
+                {displayTestimonials.map((testimonial, idx) => (
+                  <div
+                    key={testimonial.id}
+                    className="w-full shrink-0 lg:w-1/2 px-2 md:px-3"
+                  >
+                    <article
+                      className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                      style={{
+                        borderColor: `${theme.border}88`,
+                        minHeight: "360px",
+                      }}
+                    >
+                      {/* Header with Badge and Time */}
+                      <div className="flex items-center justify-between mb-4 md:mb-6">
+                        <span
+                          className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider"
+                          style={{
+                            backgroundColor: hexToRgba(theme.accent, 0.1),
+                            color: theme.accent,
+                          }}
+                        >
+                          {testimonial.badge}
+                        </span>
+                        <span
+                          className="text-xs md:text-sm font-medium"
+                          style={{ color: hexToRgba(theme.accent, 0.5) }}
+                        >
+                          {testimonial.time}
+                        </span>
+                      </div>
+
+                      {/* Profile Section */}
+                      <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                        <div
+                          className="relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full border-2 shrink-0"
+                          style={{ borderColor: theme.accent }}
+                        >
+                          <Image
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p
+                            className="text-base md:text-lg font-bold mb-0.5 md:mb-1 truncate"
+                            style={{ color: theme.accent }}
+                          >
+                            {testimonial.name}
+                          </p>
+                          <p
+                            className="text-xs md:text-sm font-medium truncate"
+                            style={{ color: hexToRgba(theme.accent, 0.6) }}
+                          >
+                            {testimonial.location}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Star Rating */}
+                      <div className="flex items-center gap-0.5 md:gap-1 mb-4 md:mb-6">
+                        {Array.from({ length: testimonial.rating }).map(
+                          (_, index) => (
+                            <Star
+                              key={index}
+                              size={16}
+                              className="md:w-[20px] md:h-[20px]"
+                              fill="#fbbf24"
+                              color="#fbbf24"
+                            />
+                          ),
+                        )}
+                      </div>
+
+                      {/* Testimonial Text */}
+                      <p
+                        className="text-sm md:text-base lg:text-lg leading-relaxed flex-1"
+                        style={{ color: hexToRgba(theme.accent, 0.85) }}
+                      >
+                        &ldquo;{testimonial.text}&rdquo;
+                      </p>
+                    </article>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Navigation Buttons */}
+            <div className="flex lg:hidden items-center justify-center gap-4 mt-6">
+              <button
+                type="button"
+                onClick={goPrev}
+                className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+                style={{
+                  borderColor: theme.accent,
+                  backgroundColor: "white",
+                  color: theme.accent,
+                }}
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft size={20} strokeWidth={3} />
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+                style={{
+                  borderColor: theme.accent,
+                  backgroundColor: "white",
+                  color: theme.accent,
+                }}
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={20} strokeWidth={3} />
+              </button>
+            </div>
+          </div>
+
+          {/* Pagination Dots - Larger & More Visible */}
+          <div className="mt-6 md:mt-8 flex justify-center gap-2 md:gap-3">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setActiveTestimonial(index)}
+                className="h-2.5 md:h-3 rounded-full transition-all duration-300 hover:scale-110"
+                style={{
+                  width: safeActiveIndex === index ? "2.5rem" : "0.75rem",
+                  backgroundColor:
+                    safeActiveIndex === index
+                      ? theme.accent
+                      : hexToRgba(theme.accent, 0.25),
+                }}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Pagination Dots - Larger & More Visible */}
-        <div className="mt-6 md:mt-8 flex justify-center gap-2 md:gap-3">
-          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => setActiveTestimonial(index)}
-              className="h-2.5 md:h-3 rounded-full transition-all duration-300 hover:scale-110"
-              style={{
-                width: safeActiveIndex === index ? "2.5rem" : "0.75rem",
-                backgroundColor:
-                  safeActiveIndex === index
-                    ? theme.accent
-                    : hexToRgba(theme.accent, 0.25),
-              }}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Comparison Section */}
       <div className="mx-auto mt-16 md:mt-20 max-w-7xl space-y-8">

@@ -14,8 +14,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { personalCareProducts } from "@/constants/personalCareProduct";
 import type { Product as PersonalProduct } from "@/type/personalCareProductType";
+import type { BackendProduct } from "@/type/productType";
 import PersonalProductHeroSection from "@/app/components/personalCareProduct/PersonalProductHeroSection";
-// import PersonalWhyItMattersSection from "@/app/components/personalCareProduct/PersonalWhyItMattersSection";
 import PersonalComfortDetailsSection from "@/app/components/personalCareProduct/PersonalComfortDetailsSection";
 import PersonalSizeGuideSection from "@/app/components/personalCareProduct/PersonalSizeGuideSection";
 import PersonalTrustFusionSection from "@/app/components/personalCareProduct/PersonalTrustFusionSection";
@@ -23,6 +23,7 @@ import PersonalCarePromiseSection from "@/app/components/personalCareProduct/Per
 import PersonalFaqAndCloseViewSection from "@/app/components/personalCareProduct/PersonalFaqAndCloseViewSection";
 import PersonalProductCloseViewSection from "@/app/components/personalCareProduct/PersonalProductCloseViewSection";
 import ProductVideoSection from "@/app/components/babyCareProductPage/ProductVideoSection";
+import productService from "@/services/productService";
 
 import { hexToRgba } from "@/app/components/personalCareProduct/theme";
 import type { ThemePreset } from "@/app/components/personalCareProduct/theme";
@@ -137,6 +138,17 @@ export default function Page() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const rootRef = useRef<HTMLElement | null>(null);
 
+  // Dynamic API data
+  const [apiProduct, setApiProduct] = useState<BackendProduct | null>(null);
+
+  useEffect(() => {
+    if (!slug) return;
+    productService
+      .getProductBySlug(slug)
+      .then((data) => setApiProduct(data))
+      .catch(() => setApiProduct(null));
+  }, [slug]);
+
   const active =
     mappedProducts.length > 0
       ? mappedProducts[clampIndex(activeIdx, mappedProducts.length)]
@@ -152,9 +164,9 @@ export default function Page() {
       ? active.heroAvatars
       : [active.image, active.image, active.image, active.image];
   const moodboardImages =
-    active?.moodboardImages && active.moodboardImages.length > 0
-      ? active.moodboardImages
-      : [active.image];
+    apiProduct?.media && apiProduct.media.length > 0
+      ? apiProduct.media
+      : [];
   const technicalDetailImages =
     personalTechnicalDetailImages[active?.slug ?? ""] ||
     moodboardImages.slice(0, 4);
@@ -326,23 +338,33 @@ export default function Page() {
         product={active}
         theme={theme}
         technicalDetailImages={technicalDetailImages}
+        highlightImages={
+          (apiProduct?.highlights
+            ?.filter((h) => h.isActive)
+            .flatMap((h) => h.highlightImages) ?? []).length > 0
+            ? apiProduct!.highlights!.filter((h) => h.isActive).flatMap((h) => h.highlightImages)
+            : undefined
+        }
       />
-      <ProductVideoSection />
+      <ProductVideoSection videoUrl={apiProduct?.videoUrl} />
       <PersonalComfortDetailsSection
         theme={theme}
         moodboardImages={moodboardImages}
       />
 
-      <PersonalSizeGuideSection
-        theme={theme}
-        variants={variants}
-        sizeGuideImages={sizeGuideImages}
-      />
+      {apiProduct?.availableSizes && apiProduct.availableSizes.length > 0 && (
+        <PersonalSizeGuideSection
+          theme={theme}
+          variants={variants}
+          sizeGuideImages={sizeGuideImages}
+        />
+      )}
 
       <PersonalTrustFusionSection
         theme={theme}
         comparisonRows={comparisonRows}
         images={trustImages}
+        reviews={apiProduct?.reviews}
       />
 
       <PersonalCarePromiseSection
@@ -350,7 +372,7 @@ export default function Page() {
         conceptImages={carePromiseImages}
       />
 
-      <PersonalFaqAndCloseViewSection active={active} theme={theme} />
+      <PersonalFaqAndCloseViewSection active={active} theme={theme} productId={apiProduct?.id} />
 
       <button
         type="button"
