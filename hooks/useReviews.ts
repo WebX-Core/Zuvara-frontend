@@ -69,10 +69,58 @@ export const useReviews = (
 };
 
 /**
- * Hook to fetch only featured reviews
+ * Hook to fetch only featured reviews (general reviews with no product association)
+ * Filters out product-specific reviews (productId = null)
  */
 export const useFeaturedReviews = (): UseReviewsReturn => {
-  return useReviews({ isFeatured: true });
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [total, setTotal] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await reviewService.getAllReviews({ isFeatured: true });
+
+      if (response.status === 200 && response.data) {
+        // Filter to only show general reviews (productId is null)
+        const generalReviews = response.data.reviews.filter(
+          (review) => review.productId === null
+        );
+        
+        setReviews(generalReviews);
+        setTotal(generalReviews.length);
+        setPage(response.data.page);
+        setTotalPages(response.data.totalPages);
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to fetch reviews";
+      setError(errorMessage);
+      console.error("Error fetching reviews:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  return {
+    reviews,
+    loading,
+    error,
+    total,
+    page,
+    totalPages,
+    refetch: fetchReviews,
+  };
 };
 
 /**

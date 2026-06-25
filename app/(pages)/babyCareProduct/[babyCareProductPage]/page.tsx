@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { useParams } from "next/navigation";
-import { ArrowUp, Loader2 } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import type { Product } from "@/type/babyCareProductType";
 import ProductNotFound from "@/app/components/babyCareProductPage/ProductNotFound";
 import BabyCareHeroSection from "@/app/components/babyCareProductPage/BabyCareHeroSection";
@@ -123,23 +123,53 @@ export default function Page() {
     return () => ctx.revert();
   }, [apiProduct]);
 
-  // Loading state
+  // Loading state with skeleton
   if (isLoading) {
     return (
       <main
         className="relative min-h-screen overflow-hidden text-zinc-800 antialiased"
         style={{ backgroundColor: theme.pageBg }}
       >
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="text-center space-y-4">
-            <Loader2
-              className="w-12 h-12 animate-spin mx-auto"
-              style={{ color: theme.accent }}
-            />
-            <p className="text-sm font-medium" style={{ color: theme.accent }}>
-              Loading product…
-            </p>
+        {/* Hero Skeleton */}
+        <div className="container mx-auto px-4 py-8 lg:py-16">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+            {/* Left - Product Image Skeleton */}
+            <div className="flex items-center justify-center">
+              <div className="relative h-96 w-96 animate-pulse rounded-3xl bg-gray-200/50" />
+            </div>
+            
+            {/* Right - Product Info Skeleton */}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <div className="h-8 w-48 animate-pulse rounded-lg bg-gray-200/50" />
+                <div className="h-12 w-3/4 animate-pulse rounded-lg bg-gray-200/50" />
+                <div className="h-6 w-full animate-pulse rounded-lg bg-gray-200/50" />
+                <div className="h-6 w-5/6 animate-pulse rounded-lg bg-gray-200/50" />
+              </div>
+              
+              <div className="flex gap-3">
+                <div className="h-12 w-32 animate-pulse rounded-full bg-gray-200/50" />
+                <div className="h-12 w-32 animate-pulse rounded-full bg-gray-200/50" />
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Section Skeletons */}
+        <div className="space-y-16">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="container mx-auto px-4">
+              <div className="mx-auto max-w-4xl space-y-6">
+                <div className="h-10 w-64 animate-pulse rounded-lg bg-gray-200/50 mx-auto" />
+                <div className="h-6 w-96 animate-pulse rounded-lg bg-gray-200/50 mx-auto" />
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+                  {[1, 2, 3].map((j) => (
+                    <div key={j} className="h-48 animate-pulse rounded-2xl bg-gray-200/50" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     );

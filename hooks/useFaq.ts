@@ -18,7 +18,7 @@ export function useFaqById(id: string) {
 }
 
 /**
- * Hook to fetch FAQs filtered by portal slug
+ * Hook to fetch FAQs filtered by portal slug (general FAQs only, not product-specific)
  * @param portalSlug - "baby-care" or "personal-care"
  */
 export function useFaqsByPortal(portalSlug: "baby-care" | "personal-care") {
@@ -26,7 +26,10 @@ export function useFaqsByPortal(portalSlug: "baby-care" | "personal-care") {
 
   const filteredFaqs = useMemo(() => {
     if (!data?.faqs) return [];
-    return data.faqs.filter((faq) => faq.portal?.slug === portalSlug);
+    // Filter by portal AND only general FAQs (productId is null)
+    return data.faqs.filter(
+      (faq) => faq.portal?.slug === portalSlug && faq.productId === null
+    );
   }, [data, portalSlug]);
 
   return {
