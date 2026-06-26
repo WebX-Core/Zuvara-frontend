@@ -22,6 +22,7 @@ type PersonalProductHeroSectionProps = {
   onNext: () => void;
   onSelectProduct: (index: number) => void;
   enableMobileSwipe?: boolean;
+  productId?: string;
 };
 
 export default function PersonalProductHeroSection({
@@ -33,6 +34,7 @@ export default function PersonalProductHeroSection({
   theme,
   onPrev,
   onNext,
+  productId,
 }: PersonalProductHeroSectionProps) {
   void _products;
   void _heroAvatars;
@@ -486,6 +488,7 @@ export default function PersonalProductHeroSection({
           intent="inquiry"
           onClose={() => setIsInquiryModalOpen(false)}
           productName={active.name}
+          productId={productId}
           themeColor={theme.accent}
         />
       ) : null}

@@ -327,6 +327,7 @@ export default function Page() {
         onPrev={() => setActiveIdx((v) => v - 1)}
         onNext={() => setActiveIdx((v) => v + 1)}
         onSelectProduct={setActiveIdx}
+        productId={apiProduct?.id}
       />
 
       {/* <PersonalWhyItMattersSection

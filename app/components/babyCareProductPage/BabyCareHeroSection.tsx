@@ -31,6 +31,7 @@ type BabyCareHeroSectionProps = {
   onSelectProduct: (index: number) => void;
   pickHeroPack: (product: Product) => string;
   enableMobileSwipe?: boolean;
+  productId?: string;
 };
 
 export default function BabyCareHeroSection({
@@ -41,6 +42,7 @@ export default function BabyCareHeroSection({
   onPrev,
   onNext,
   enableMobileSwipe = true,
+  productId,
 }: BabyCareHeroSectionProps) {
   void _products;
   const [isMobile, setIsMobile] = useState(false);
@@ -493,6 +495,7 @@ export default function BabyCareHeroSection({
           intent="inquiry"
           onClose={() => setIsInquiryModalOpen(false)}
           productName={active.name}
+          productId={productId}
           themeColor={theme.accent}
         />
       ) : null}

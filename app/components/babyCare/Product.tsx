@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
@@ -142,7 +142,6 @@ const Product = () => {
   const [activeTab, setActiveTab] = useState<string>("");
   const [products, setProducts] = useState<AdaptedProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -150,7 +149,6 @@ const Product = () => {
     async function loadData() {
       try {
         setLoading(true);
-        setError(null);
 
         // Fetch categories and products from backend
         const [catData, prodData] = await Promise.all([

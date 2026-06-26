@@ -5,6 +5,7 @@ export interface ContactFormData {
   message: string;
   phone: string;
   location: string;
+  productId?: string;
 }
 
 // Form data including all fields
@@ -14,6 +15,7 @@ export interface ContactFormInput {
   message: string;
   phone: string;
   location: string;
+  productId?: string;
 }
 
 export interface ContactResponse {

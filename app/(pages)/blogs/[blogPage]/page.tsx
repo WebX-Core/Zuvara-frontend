@@ -7,11 +7,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useSection } from "@/app/providers/SectionProvider";
-import { ArrowLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronRight, Clock, Calendar } from "lucide-react";
 import DOMPurify from "dompurify";
 import { useBlogBySlug, useBlogs } from "@/hooks/useBlog";
 
 const formatDate = (isoString: string) => {
+  try {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return "Recent";
+  }
+};
+
+const formatDateShort = (isoString: string) => {
   try {
     const date = new Date(isoString);
     return date.toLocaleDateString("en-US", {
@@ -24,11 +37,18 @@ const formatDate = (isoString: string) => {
   }
 };
 
+const getReadingTime = (html?: string) => {
+  if (!html) return 1;
+  const text = html.replace(/<[^>]+>/g, " ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+};
+
 const BlogDetailPage = () => {
   const params = useParams();
   const blogPage = params?.blogPage;
   const slug = Array.isArray(blogPage) ? blogPage[0] : blogPage;
-  
+
   const { activeSection } = useSection();
   const isPersonal = activeSection === "personal";
 
@@ -37,96 +57,48 @@ const BlogDetailPage = () => {
 
   const relatedBlogs = useMemo(() => {
     if (!blog || !allBlogsData?.blogs) return [];
-    
+
     const matches = allBlogsData.blogs.filter(
       (b) => b.id !== blog.id && b.portal?.slug === blog.portal?.slug
     );
-    
-    const candidates = matches.length > 0 
-      ? matches 
-      : allBlogsData.blogs.filter((b) => b.id !== blog.id);
 
-    return candidates.slice(0, 3).map((item) => {
-      const authorName = "Zuvara Team";
-      return {
-        id: item.id,
-        slug: item.slug,
-        title: item.title,
-        desc: item.excerpt,
-        image: item.coverImage?.[0] || "/images/placeholder.png",
-        category: item.portal?.name || "General",
-        author: authorName,
-        date: formatDate(item.createdAt),
-      };
-    });
+    const candidates =
+      matches.length > 0
+        ? matches
+        : allBlogsData.blogs.filter((b) => b.id !== blog.id);
+
+    return candidates.slice(0, 4).map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      title: item.title,
+      desc: item.excerpt,
+      image: Array.isArray(item.coverImage)
+        ? item.coverImage[0] || "/images/placeholder.png"
+        : item.coverImage || "/images/placeholder.png",
+      category: item.portal?.name || "General",
+      date: formatDateShort(item.createdAt),
+    }));
   }, [blog, allBlogsData]);
 
   if (isBlogLoading) {
     return (
-      <div className="min-h-screen bg-zinc-50 lg:mt-5 animate-pulse">
-        {/* Hero Section Skeleton */}
-        <section className="px-4 pb-6 pt-4 sm:px-6 lg:px-0 lg:pb-10">
-          <div className="container mx-auto max-w-7xl">
-            <div className="relative h-[62vh] rounded-4xl bg-zinc-200 lg:h-[74vh] flex items-end p-5 sm:p-8 lg:p-10">
-              <div className="w-full max-w-4xl space-y-4">
-                {/* Breadcrumbs */}
-                <div className="flex gap-2">
-                  <div className="h-6 w-16 bg-zinc-300 rounded-full" />
-                  <div className="h-6 w-16 bg-zinc-300 rounded-full" />
-                  <div className="h-6 w-32 bg-zinc-300 rounded-full" />
-                </div>
-                {/* Category tag */}
-                <div className="h-7 w-24 bg-zinc-300 rounded-full" />
-                {/* Title lines */}
-                <div className="h-10 bg-zinc-300 rounded-xl w-3/4 sm:h-12" />
-                <div className="h-10 bg-zinc-300 rounded-xl w-1/2 sm:h-12" />
-                {/* Author info */}
-                <div className="flex items-center gap-3 pt-2">
-                  <div className="size-10 rounded-full bg-zinc-300 lg:size-12" />
-                  <div className="space-y-2">
-                    <div className="h-3 w-16 bg-zinc-300 rounded" />
-                    <div className="h-4 w-28 bg-zinc-300 rounded" />
-                  </div>
-                  <div className="h-8 w-px bg-zinc-300 mx-2" />
-                  <div className="space-y-2">
-                    <div className="h-3 w-20 bg-zinc-300 rounded" />
-                    <div className="h-4 w-24 bg-zinc-300 rounded" />
-                  </div>
-                </div>
+      <div className="min-h-screen animate-pulse bg-white lg:mt-5">
+        <section className="px-4 pt-10 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl space-y-6">
+            <div className="h-4 w-48 rounded-full bg-zinc-200" />
+            <div className="h-6 w-28 rounded-full bg-zinc-200" />
+            <div className="space-y-3">
+              <div className="h-10 w-full rounded-xl bg-zinc-200 sm:w-3/4" />
+              <div className="h-10 w-2/3 rounded-xl bg-zinc-200 sm:w-1/2" />
+            </div>
+            <div className="flex items-center gap-4 pt-2">
+              <div className="size-11 rounded-full bg-zinc-200" />
+              <div className="space-y-2">
+                <div className="h-4 w-32 rounded bg-zinc-200" />
+                <div className="h-3 w-24 rounded bg-zinc-200" />
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Content Section Skeleton */}
-        <section className="bg-white pb-12 pt-6 lg:pb-16 lg:pt-10">
-          <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-0 space-y-6">
-            <div className="border-b border-zinc-200 pb-4 flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="size-10 rounded-full bg-zinc-200" />
-                <div className="space-y-1.5">
-                  <div className="h-4 w-24 bg-zinc-200 rounded" />
-                  <div className="h-3 w-16 bg-zinc-200 rounded" />
-                </div>
-              </div>
-              <div className="h-4 w-16 bg-zinc-200 rounded" />
-            </div>
-            
-            {/* Paragraph lines */}
-            <div className="space-y-3">
-              <div className="h-4 bg-zinc-200 rounded w-full" />
-              <div className="h-4 bg-zinc-200 rounded w-full" />
-              <div className="h-4 bg-zinc-200 rounded w-11/12" />
-              <div className="h-4 bg-zinc-200 rounded w-5/6" />
-            </div>
-
-            <div className="h-8 bg-zinc-200 rounded w-1/3 mt-8" />
-            
-            <div className="space-y-3">
-              <div className="h-4 bg-zinc-200 rounded w-full" />
-              <div className="h-4 bg-zinc-200 rounded w-full" />
-              <div className="h-4 bg-zinc-200 rounded w-4/5" />
-            </div>
+            <div className="h-[50vh] w-full rounded-2xl bg-zinc-200" />
           </div>
         </section>
       </div>
@@ -135,9 +107,9 @@ const BlogDetailPage = () => {
 
   if (!blog) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Blog Not Found</h1>
+          <h1 className="mb-4 text-4xl font-bold">Blog Not Found</h1>
           <Link href="/blogs" className="text-foreground hover:underline">
             Back to Blogs
           </Link>
@@ -148,133 +120,80 @@ const BlogDetailPage = () => {
 
   const authorName = "Zuvara Team";
   const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(
-    authorName,
+    authorName
   )}&top=straight01&hairColor=724133&facialHairProbability=0&mouth=smile&clothing=blazerAndShirt`;
 
   const coverImg = Array.isArray(blog.coverImage)
-    ? (blog.coverImage[0] || "/images/placeholder.png")
-    : (blog.coverImage || "/images/placeholder.png");
+    ? blog.coverImage[0] || "/images/placeholder.png"
+    : blog.coverImage || "/images/placeholder.png";
+
+  const readingTime = getReadingTime(blog.content);
+  const accentText = isPersonal ? "text-personal-accent" : "text-baby-accent";
+  const accentBg = isPersonal ? "bg-personal-accent" : "bg-baby-accent";
+  const accentChip = isPersonal ? "bg-personal-chip" : "bg-baby-chip";
+  const accentHover = isPersonal ? "hover:text-personal-accent" : "hover:text-baby-accent";
 
   return (
-    <div className="min-h-screen bg-zinc-50 lg:mt-5">
-      {/* Hero Section */}
-      <section className="px-4 pb-6 pt-4 sm:px-6 lg:px-0 lg:pb-10">
-        <div className="container mx-auto max-w-7xl">
-          <div className="relative h-[62vh] overflow-hidden rounded-4xl border border-white/20 shadow-2xl lg:h-[74vh]">
-            <motion.div
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute inset-0"
+    <div className="min-h-screen bg-white lg:mt-5">
+      {/* Header / Hero */}
+      <header className="px-4 pt-8 sm:px-6 lg:px-8 lg:pt-12">
+        <div className="mx-auto max-w-7xl">
+          {/* Breadcrumb */}
+          <motion.nav
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6 flex items-center gap-2 text-xs font-medium text-zinc-500"
+          >
+            <Link href="/" className={cn("transition-colors", accentHover)}>
+              Home
+            </Link>
+            <ChevronRight size={13} className="text-zinc-300" />
+            <Link
+              href="/blogs"
+              className={cn("transition-colors", accentHover)}
             >
-              <Image
-                src={coverImg}
-                alt={blog.title}
-                fill
-                className="object-cover object-top"
-                priority
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/45 to-black/30" />
-            </motion.div>
+              Blogs
+            </Link>
+            <ChevronRight size={13} className="text-zinc-300" />
+            <span className={cn("max-w-[10rem] truncate sm:max-w-xs", accentText)}>
+              {blog.title}
+            </span>
+          </motion.nav>
 
-            <div className="absolute inset-0 flex items-end">
-              <div className="w-full p-5 sm:p-8 lg:p-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.45, duration: 0.8 }}
-                  className="max-w-4xl"
-                >
-                  <nav className="mb-6 flex items-center gap-2 text-xs font-medium text-white/85 sm:text-sm">
-                    <Link
-                      href="/"
-                      className="rounded-full bg-white/10 px-3 py-1 backdrop-blur-sm"
-                    >
-                      Home
-                    </Link>
-                    <ChevronRight size={14} />
-                    <Link
-                      href="/blogs"
-                      className="rounded-full bg-white/10 px-3 py-1 backdrop-blur-sm"
-                    >
-                      Blogs
-                    </Link>
-                    <ChevronRight size={14} />
-                    <span className="max-w-56 truncate rounded-full bg-white/10 px-3 py-1 text-white/90 backdrop-blur-sm sm:max-w-none">
-                      {blog.title}
-                    </span>
-                  </nav>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={cn(
-                          "rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest backdrop-blur-md text-white",
-                          isPersonal
-                            ? "border-personalCare/35 bg-personalCare/65"
-                            : "border-babyCare/40 bg-babyCare/65",
-                        )}
-                      >
-                        {blog.portal?.name || "General"}
-                      </span>
-                    </div>
-
-                    <h1 className="text-3xl font-bold leading-[1.05] tracking-tight text-white md:text-5xl lg:text-6xl">
-                      {blog.title}
-                    </h1>
-
-                    <div className="flex flex-wrap items-center gap-6 text-white/90">
-                      <div className="flex items-center gap-3">
-                        <div className="relative size-10 overflow-hidden rounded-full border-2 border-white/50 bg-white/10 backdrop-blur-sm lg:size-12">
-                          <Image
-                            src={avatarUrl}
-                            alt={authorName}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-xs font-bold uppercase tracking-widest opacity-65">
-                            Written by
-                          </span>
-                          <span className="text-sm font-bold lg:text-base">
-                            {authorName}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="hidden h-10 w-px bg-white/20 sm:block" />
-
-                      <div className="flex flex-col">
-                        <span className="text-xs font-bold uppercase tracking-widest opacity-65">
-                          Published on
-                        </span>
-                        <span className="text-sm font-bold lg:text-base">
-                          {formatDate(blog.createdAt)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Content Section */}
-      <section className="bg-white pb-12 pt-6 lg:pb-16 lg:pt-10">
-        <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="w-full"
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="max-w-4xl"
           >
-            <div className="mb-8 flex items-center justify-between border-b border-zinc-200 pb-4">
+            {/* Category */}
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full px-3.5 py-1 text-[11px] font-bold uppercase tracking-[0.15em]",
+                accentChip,
+                accentText
+              )}
+            >
+              {blog.portal?.name || "General"}
+            </span>
+
+            {/* Title */}
+            <h1 className="mt-5 text-3xl font-bold leading-[1.15] tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl">
+              {blog.title}
+            </h1>
+
+            {/* Excerpt */}
+            {blog.excerpt && (
+              <p className="mt-5 max-w-3xl text-lg leading-relaxed text-zinc-500">
+                {blog.excerpt}
+              </p>
+            )}
+
+            {/* Author + Meta */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-b border-zinc-100 pb-6">
               <div className="flex items-center gap-3">
-                <div className="relative size-10 overflow-hidden rounded-full border border-zinc-200 bg-zinc-100">
+                <div className="relative size-10 overflow-hidden rounded-full ring-1 ring-zinc-200">
                   <Image
                     src={avatarUrl}
                     alt={authorName}
@@ -286,113 +205,188 @@ const BlogDetailPage = () => {
                   <p className="text-sm font-semibold text-zinc-900">
                     {authorName}
                   </p>
-                  <p className="text-xs text-zinc-500">{formatDate(blog.createdAt)}</p>
+                  <p className="text-xs text-zinc-500">Editorial Desk</p>
                 </div>
               </div>
-              <span className="text-xs font-medium uppercase tracking-wider text-zinc-500">
-                {blog.portal?.name || "General"}
-              </span>
+
+              <span className="hidden h-8 w-px bg-zinc-200 sm:block" />
+
+              <div className="flex items-center gap-1.5 text-sm text-zinc-500">
+                <Calendar size={14} className="text-zinc-400" />
+                {formatDate(blog.createdAt)}
+              </div>
+
+              <div className="flex items-center gap-1.5 text-sm text-zinc-500">
+                <Clock size={14} className="text-zinc-400" />
+                {readingTime} min read
+              </div>
             </div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(blog.content || "") || "",
-              }}
-              className={cn(
-                "text-[1.12rem] leading-8 text-foreground font-medium",
-                "[&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:text-[1.95rem] [&_h2]:font-semibold [&_h2]:leading-tight",
-                isPersonal
-                  ? "[&_h2]:text-personalCare"
-                  : "[&_h2]:text-foreground",
-                "[&_p]:mb-7 [&_p]:leading-8",
-                "[&_ul]:mb-7 [&_ul]:list-disc [&_ul]:pl-6",
-                "[&_ol]:mb-7 [&_ol]:list-decimal [&_ol]:pl-6",
-                "[&_li]:mb-2 [&_li]:leading-8",
-                "[&_strong]:font-bold",
-                isPersonal
-                  ? "[&_strong]:text-personalCare"
-                  : "[&_strong]:text-zinc-900",
-              )}
-            />
-            <footer className="mt-12 border-t border-zinc-200 pt-8">
-              <Link
-                href="/blogs"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-zinc-700 transition-colors hover:text-zinc-900"
-              >
-                <ArrowLeft
-                  size={18}
-                  className="transition-transform group-hover:-translate-x-1"
-                />
-                Back to all articles
-              </Link>
-            </footer>
           </motion.div>
+
+          {/* Cover Image */}
+          <motion.figure
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="relative mt-8 aspect-[2/1] w-full overflow-hidden rounded-2xl bg-zinc-100 shadow-lg lg:aspect-[2.4/1]"
+          >
+            <Image
+              src={coverImg}
+              alt={blog.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </motion.figure>
         </div>
-      </section>
+      </header>
 
-      {/* Related Blogs Section */}
-      <section
-        className={cn(
-          "border-t border-zinc-200 bg-white py-10 lg:py-14",
-          isPersonal ? "bg-personalCare/0" : "bg-white",
-        )}
-      >
-        <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-0">
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">
-              More from Zuvara Blog
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            {relatedBlogs.map((item, idx) => (
+      {/* Main content with sidebar */}
+      <section className="px-4 pb-16 pt-10 sm:px-6 lg:px-8 lg:pb-24 lg:pt-14">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
+            {/* Article Content */}
+            <article className="min-w-0 flex-1">
               <motion.div
-                key={item.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group border-b border-zinc-200 pb-6 last:border-0 last:pb-0"
-              >
+                transition={{ duration: 0.7 }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(blog.content || "") || "",
+                }}
+                className={cn(
+                  "prose prose-lg max-w-none text-zinc-700",
+                  // Headings
+                  "[&_h2]:mb-4 [&_h2]:mt-12 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:leading-snug [&_h2]:tracking-tight [&_h2]:text-zinc-900 sm:[&_h2]:text-3xl",
+                  "[&_h3]:mb-3 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:leading-snug [&_h3]:text-zinc-900",
+                  // Paragraphs
+                  "[&_p]:mb-6 [&_p]:leading-[1.85] [&_p]:text-zinc-600",
+                  // Lists
+                  "[&_ul]:mb-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6",
+                  "[&_ol]:mb-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6",
+                  "[&_li]:leading-[1.8] [&_li]:text-zinc-600 [&_li]:marker:text-zinc-400",
+                  // Emphasis
+                  "[&_strong]:font-semibold [&_strong]:text-zinc-800",
+                  "[&_a]:font-medium [&_a]:underline [&_a]:underline-offset-4",
+                  isPersonal
+                    ? "[&_a]:text-personal-accent [&_a]:decoration-personal-border"
+                    : "[&_a]:text-baby-accent [&_a]:decoration-baby-border",
+                  // Blockquote
+                  "[&_blockquote]:my-8 [&_blockquote]:rounded-r-xl [&_blockquote]:border-l-4 [&_blockquote]:py-4 [&_blockquote]:pl-6 [&_blockquote]:pr-4 [&_blockquote]:text-lg [&_blockquote]:italic [&_blockquote]:text-zinc-600",
+                  isPersonal
+                    ? "[&_blockquote]:border-personal-accent [&_blockquote]:bg-personal-panel"
+                    : "[&_blockquote]:border-baby-accent [&_blockquote]:bg-baby-panel",
+                  // Media
+                  "[&_img]:my-8 [&_img]:w-full [&_img]:rounded-xl",
+                  "[&_hr]:my-10 [&_hr]:border-zinc-200"
+                )}
+              />
+
+              {/* Back link */}
+              <footer className="mt-12 border-t border-zinc-200 pt-8">
                 <Link
-                  href={`/blogs/${item.slug}`}
-                  className="flex items-start gap-4 sm:gap-5"
+                  href="/blogs"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-zinc-700 transition-colors hover:text-zinc-900"
                 >
-                  <div className="relative aspect-square w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-200 sm:w-28">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="min-w-0 space-y-2">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
-                      {item.category}
-                    </p>
-                    <h3
+                  <ArrowLeft
+                    size={18}
+                    className="transition-transform group-hover:-translate-x-1"
+                  />
+                  Back to all articles
+                </Link>
+              </footer>
+            </article>
+
+            {/* Right Sidebar - Related Blogs */}
+            {relatedBlogs.length > 0 && (
+              <aside className="w-full shrink-0 lg:w-80 xl:w-96">
+                <div className="lg:sticky lg:top-20">
+                  <div className="mb-5 flex items-center justify-between">
+                    <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900">
+                      Related Articles
+                    </h2>
+                    <Link
+                      href="/blogs"
                       className={cn(
-                        "line-clamp-2 text-xl font-semibold leading-[1.25] text-zinc-900 transition-colors group-hover:underline",
-                        isPersonal
-                          ? "group-hover:text-personalCare"
-                          : "group-hover:text-zinc-900",
+                        "text-xs font-semibold transition-colors hover:underline",
+                        accentText
                       )}
                     >
-                      {item.title}
-                    </h3>
-                    <p className="line-clamp-2 text-sm leading-relaxed text-zinc-600">
-                      {item.desc}
-                    </p>
-                    <div className="flex items-center gap-2 text-xs text-zinc-500">
-                      <span className="font-semibold text-zinc-700">
-                        {item.author}
-                      </span>
-                      <span className="size-1 rounded-full bg-zinc-300" />
-                      <span>{item.date}</span>
-                    </div>
+                      View all
+                    </Link>
                   </div>
-                </Link>
-              </motion.div>
-            ))}
+
+                  <div className="space-y-5">
+                    {relatedBlogs.map((item, idx) => (
+                      <motion.article
+                        key={item.id}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.08, duration: 0.4 }}
+                        className="group"
+                      >
+                        <Link
+                          href={`/blogs/${item.slug}`}
+                          className="flex gap-4"
+                        >
+                          <div className="relative aspect-square w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100">
+                            <Image
+                              src={item.image}
+                              alt={item.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="flex min-w-0 flex-col justify-center">
+                            <p
+                              className={cn(
+                                "mb-1 text-[10px] font-bold uppercase tracking-wider",
+                                accentText
+                              )}
+                            >
+                              {item.category}
+                            </p>
+                            <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-zinc-900 transition-colors group-hover:text-zinc-600">
+                              {item.title}
+                            </h3>
+                            <p className="mt-1 text-xs text-zinc-400">
+                              {item.date}
+                            </p>
+                          </div>
+                        </Link>
+                      </motion.article>
+                    ))}
+                  </div>
+
+                  {/* Newsletter or CTA box */}
+                  <div
+                    className={cn(
+                      "mt-8 rounded-2xl p-5",
+                      isPersonal ? "bg-personal-panel" : "bg-baby-panel"
+                    )}
+                  >
+                    <h3 className="mb-2 text-sm font-bold text-zinc-900">
+                      Stay Updated
+                    </h3>
+                    <p className="mb-4 text-xs leading-relaxed text-zinc-600">
+                      Get the latest tips and guides on baby care delivered to
+                      your inbox.
+                    </p>
+                    <Link
+                      href="/contact"
+                      className={cn(
+                        "inline-flex w-full items-center justify-center rounded-full py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90",
+                        accentBg
+                      )}
+                    >
+                      Contact Us
+                    </Link>
+                  </div>
+                </div>
+              </aside>
+            )}
           </div>
         </div>
       </section>

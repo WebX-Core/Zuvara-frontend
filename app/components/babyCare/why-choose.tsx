@@ -20,7 +20,6 @@ import {
   ShieldCheck,
   Sparkles,
   Star,
-  Loader2,
 } from "lucide-react";
 import { useStatsByPortal } from "@/hooks/useStat";
 
@@ -121,10 +120,27 @@ const WhyChoose = () => {
         <div className="relative overflow-hidden  ">
           <div className="pointer-events-none absolute right-0 top-0 h-56 w-56 " />
           
-          {/* Loading State */}
+          {/* Loading State - Skeleton */}
           {isLoading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin" style={{ color: palette.accent }} />
+            <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 max-w-5xl mx-auto">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-20 sm:h-30 flex items-center gap-2 rounded-xl border bg-white px-3 py-2 sm:flex-col sm:gap-4 sm:py-6 md:bg-white/85"
+                  style={{
+                    borderColor: `${palette.border}30`,
+                  }}
+                >
+                  {/* Icon skeleton */}
+                  <div className="h-7 w-7 sm:h-12 sm:w-12 md:hidden animate-pulse rounded-lg bg-gray-200/60" />
+                  
+                  {/* Content skeleton */}
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="h-6 sm:h-10 w-16 sm:w-24 animate-pulse rounded bg-gray-200/60 ml-2" />
+                    <div className="h-4 sm:h-6 w-24 sm:w-32 animate-pulse rounded bg-gray-200/60" />
+                  </div>
+                </div>
+              ))}
             </div>
           )}
           

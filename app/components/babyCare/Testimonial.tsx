@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Star, Loader2 } from "lucide-react";
+import { Star } from "lucide-react";
 import { assetWithFill, wave3Svg } from "@/constants/svgs";
 import { colors } from "@/lib/tokens";
 import { Section, Container } from "@/app/components/layout";
@@ -114,14 +114,99 @@ const Testimonials = () => {
         </motion.div>
 
         <div className={`${sectionContentSpacing} rounded-4xl  sm:px-4 `}>
-          {/* Loading State */}
+          {/* Loading State - Skeleton */}
           {loading && (
-            <div className="flex flex-col items-center justify-center py-16">
-              <Loader2 className="h-12 w-12 animate-spin" style={{ color: palette.accent }} />
-              <p className="mt-4 text-lg" style={{ color: palette.body }}>
-                Loading reviews...
-              </p>
-            </div>
+            <>
+              {/* Header Skeleton */}
+              <div className="mb-5 hidden sm:flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-32 animate-pulse rounded bg-gray-200/60" />
+                  <div className="h-4 w-48 animate-pulse rounded bg-gray-200/60" />
+                </div>
+                <div className="flex gap-2">
+                  <div className="h-11 w-11 animate-pulse rounded-full bg-gray-200/60" />
+                  <div className="h-11 w-11 animate-pulse rounded-full bg-gray-200/60" />
+                </div>
+              </div>
+
+              {/* Skeleton Cards - Desktop */}
+              <div className="hidden lg:grid lg:grid-cols-2 gap-5">
+                {[1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center rounded-[2.25rem] border p-6 md:p-7 min-h-100"
+                    style={{
+                      borderColor: `${palette.border}44`,
+                      backgroundColor: "rgba(255,255,255,0.94)",
+                    }}
+                  >
+                    {/* Avatar skeleton */}
+                    <div className="h-18 w-18 animate-pulse rounded-full bg-gray-200/60" />
+                    
+                    {/* Stars skeleton */}
+                    <div className="mt-5 flex gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <div key={s} className="h-4 w-4 animate-pulse rounded bg-gray-200/60" />
+                      ))}
+                    </div>
+
+                    {/* Name and location skeleton */}
+                    <div className="mt-3 flex flex-col items-center gap-2 w-full">
+                      <div className="h-5 w-32 animate-pulse rounded bg-gray-200/60" />
+                      <div className="h-4 w-24 animate-pulse rounded bg-gray-200/60" />
+                    </div>
+
+                    {/* Badge and time skeleton */}
+                    <div className="mt-3 flex justify-between w-full min-w-72">
+                      <div className="h-7 w-24 animate-pulse rounded-full bg-gray-200/60" />
+                      <div className="h-4 w-20 animate-pulse rounded bg-gray-200/60" />
+                    </div>
+
+                    {/* Comment skeleton */}
+                    <div className="mt-5 w-full space-y-2">
+                      <div className="h-4 w-full animate-pulse rounded bg-gray-200/60" />
+                      <div className="h-4 w-5/6 animate-pulse rounded bg-gray-200/60" />
+                      <div className="h-4 w-4/6 animate-pulse rounded bg-gray-200/60" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Skeleton Cards - Mobile Swiper */}
+              <div className="block lg:hidden">
+                <div className="flex gap-4 overflow-hidden">
+                  {[1, 2].map((i) => (
+                    <div
+                      key={i}
+                      className="flex-shrink-0 w-[85%] flex flex-col items-center rounded-[2.25rem] border p-6 min-h-92"
+                      style={{
+                        borderColor: `${palette.border}44`,
+                        backgroundColor: "rgba(255,255,255,0.94)",
+                      }}
+                    >
+                      <div className="h-16 w-16 animate-pulse rounded-full bg-gray-200/60" />
+                      <div className="mt-5 flex gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <div key={s} className="h-4 w-4 animate-pulse rounded bg-gray-200/60" />
+                        ))}
+                      </div>
+                      <div className="mt-3 flex flex-col items-center gap-2 w-full">
+                        <div className="h-5 w-32 animate-pulse rounded bg-gray-200/60" />
+                        <div className="h-4 w-24 animate-pulse rounded bg-gray-200/60" />
+                      </div>
+                      <div className="mt-3 flex justify-between w-full">
+                        <div className="h-7 w-24 animate-pulse rounded-full bg-gray-200/60" />
+                        <div className="h-4 w-20 animate-pulse rounded bg-gray-200/60" />
+                      </div>
+                      <div className="mt-5 w-full space-y-2">
+                        <div className="h-4 w-full animate-pulse rounded bg-gray-200/60" />
+                        <div className="h-4 w-5/6 animate-pulse rounded bg-gray-200/60" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
           )}
 
           {/* Error State */}

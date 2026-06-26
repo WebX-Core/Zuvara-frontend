@@ -242,6 +242,7 @@ export default function Page() {
           onNext={() => {}}
           onSelectProduct={() => {}}
           pickHeroPack={() => heroPackSrc}
+          productId={apiProduct.id}
         />
 
         <ProductCloseViewSection
