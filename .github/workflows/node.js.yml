@@ -2,7 +2,9 @@ name: Zuvara Frontend CI/CD (VPS)
 
 on:
   push:
-    branches: ["master", "main"]
+    branches:
+      - master
+      - main
 
 concurrency:
   group: zuvara-frontend
@@ -11,78 +13,106 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}   # aditya
+          username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script_stop: true
           script: |
-            set -euo pipefail
+            set -euxo pipefail
 
-            echo "✅ SSH connection successful!"
-            echo "👤 User: $(whoami)"
+            echo "========================================="
+            echo "🚀 Zuvara Frontend Deployment"
+            echo "========================================="
 
             APP_DIR="/var/www/Zuvara-frontend"
-            BRANCH="${{ github.ref_name }}"
-            REPO_URL="${{ github.server_url }}/${{ github.repository }}.git"
+            REPO_URL="https://github.com/${{ github.repository }}.git"
 
-            echo "📦 Deploying branch: $BRANCH"
-
-            # Bootstrap the app directory on first deploy.
-            if [ ! -d "$APP_DIR/.git" ]; then
-              echo "📁 $APP_DIR not found or not a git repo — cloning..."
-              # Create the parent dir (sudo only if we lack write permission).
-              if [ ! -w "$(dirname "$APP_DIR")" ]; then
-                sudo mkdir -p "$APP_DIR"
-                sudo chown -R "$(whoami)":"$(whoami)" "$APP_DIR"
-              else
-                mkdir -p "$APP_DIR"
-              fi
-              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
-              cd "$APP_DIR"
+            # Determine branch
+            if [ "${{ github.ref_name }}" = "main" ]; then
+              BRANCH="main"
             else
-              cd "$APP_DIR"
+              BRANCH="master"
             fi
 
+            echo "User      : $(whoami)"
+            echo "Directory : $APP_DIR"
+            echo "Branch    : $BRANCH"
+            echo "Repository: $REPO_URL"
+
+            # Clone if first deployment
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "📥 First deployment..."
+
+              sudo mkdir -p "$APP_DIR"
+              sudo chown -R "$(whoami):$(whoami)" "$APP_DIR"
+
+              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+            fi
+
+            cd "$APP_DIR"
+
+            echo "Current directory:"
+            pwd
+
+            echo "Git remotes:"
+            git remote -v
+
+            echo "Fetching latest code..."
             git fetch origin "$BRANCH"
+
+            echo "Resetting..."
             git reset --hard "origin/$BRANCH"
 
-            # Ensure pnpm path for non-interactive ssh
+            echo "Cleaning..."
+            git clean -fd
+
             export NPM_CONFIG_PREFIX="$HOME/.npm-global"
             export PATH="$HOME/.npm-global/bin:$PATH"
 
-            echo "🧰 Node: $(node -v)"
-            echo "🧰 npm: $(npm -v)"
+            echo "Node Version:"
+            node -v
 
-            # Install pnpm if missing
+            echo "NPM Version:"
+            npm -v
+
             if ! command -v pnpm >/dev/null 2>&1; then
-              echo "📦 pnpm not found, installing..."
-              npm i -g pnpm@10.15.0
+              echo "Installing pnpm..."
+              npm install -g pnpm@10.15.0
             fi
-            echo "🧰 pnpm: $(pnpm -v)"
 
-            echo "📥 Installing dependencies..."
+            echo "PNPM Version:"
+            pnpm -v
+
+            echo "Installing dependencies..."
             pnpm install --no-frozen-lockfile
 
-            echo "🛠 Building..."
+            echo "Building project..."
             pnpm build
 
-            # Ensure pm2 exists
             if ! command -v pm2 >/dev/null 2>&1; then
-              echo "📦 pm2 not found, installing..."
-              npm i -g pm2
+              echo "Installing PM2..."
+              npm install -g pm2
             fi
 
-            echo "🔄 Restarting PM2..."
-            if pm2 describe "zuvara-frontend" >/dev/null 2>&1; then
-              pm2 restart "zuvara-frontend" --time
+            if pm2 describe zuvara-frontend >/dev/null 2>&1; then
+              echo "Restarting PM2..."
+              pm2 restart zuvara-frontend --update-env --time
             else
-              pm2 start pnpm --name "zuvara-frontend" --time --cwd "$APP_DIR" -- start
+              echo "Starting PM2..."
+              pm2 start "pnpm start" \
+                --name zuvara-frontend \
+                --cwd "$APP_DIR" \
+                --time
             fi
 
             pm2 save
-            echo "✅ Deploy complete!"
+
+            echo "========================================="
+            echo "✅ Deployment Successful"
+            echo "========================================="
