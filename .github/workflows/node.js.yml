@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - main
 
 concurrency:
   group: zuvara-frontend
@@ -24,95 +23,55 @@ jobs:
           port: 22
           script_stop: true
           script: |
-            set -euxo pipefail
+            set -e
 
-            echo "========================================="
-            echo "🚀 Zuvara Frontend Deployment"
-            echo "========================================="
+            echo "🚀 Zuvara Frontend Deployment Started"
 
             APP_DIR="/var/www/Zuvara-frontend"
-            REPO_URL="https://github.com/${{ github.repository }}.git"
+            BRANCH="master"
+            REPO_URL="https://github.com/WebX-Core/Zuvara-frontend.git"
 
-            # Determine branch
-            if [ "${{ github.ref_name }}" = "main" ]; then
-              BRANCH="main"
-            else
-              BRANCH="master"
-            fi
+            echo "User: $(whoami)"
+            echo "Branch: $BRANCH"
 
-            echo "User      : $(whoami)"
-            echo "Directory : $APP_DIR"
-            echo "Branch    : $BRANCH"
-            echo "Repository: $REPO_URL"
-
-            # Clone if first deployment
             if [ ! -d "$APP_DIR/.git" ]; then
-              echo "📥 First deployment..."
-
+              echo "📥 Cloning repository..."
               sudo mkdir -p "$APP_DIR"
               sudo chown -R "$(whoami):$(whoami)" "$APP_DIR"
-
               git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
             fi
 
             cd "$APP_DIR"
 
-            echo "Current directory:"
-            pwd
-
-            echo "Git remotes:"
-            git remote -v
-
-            echo "Fetching latest code..."
             git fetch origin "$BRANCH"
-
-            echo "Resetting..."
             git reset --hard "origin/$BRANCH"
-
-            echo "Cleaning..."
             git clean -fd
 
             export NPM_CONFIG_PREFIX="$HOME/.npm-global"
             export PATH="$HOME/.npm-global/bin:$PATH"
 
-            echo "Node Version:"
-            node -v
-
-            echo "NPM Version:"
-            npm -v
+            echo "Node: $(node -v)"
+            echo "NPM: $(npm -v)"
 
             if ! command -v pnpm >/dev/null 2>&1; then
-              echo "Installing pnpm..."
               npm install -g pnpm@10.15.0
             fi
 
-            echo "PNPM Version:"
-            pnpm -v
+            echo "PNPM: $(pnpm -v)"
 
-            echo "Installing dependencies..."
             pnpm install --no-frozen-lockfile
-
-            echo "Building project..."
             pnpm build
 
             if ! command -v pm2 >/dev/null 2>&1; then
-              echo "Installing PM2..."
               npm install -g pm2
             fi
 
             if pm2 describe zuvara-frontend >/dev/null 2>&1; then
-              echo "Restarting PM2..."
               pm2 restart zuvara-frontend --update-env --time
             else
-              echo "Starting PM2..."
-              pm2 start "pnpm start" \
-                --name zuvara-frontend \
-                --cwd "$APP_DIR" \
-                --time
+              pm2 start pnpm --name zuvara-frontend --cwd "$APP_DIR" -- start
             fi
 
             pm2 save
 
-            echo "========================================="
-            echo "✅ Deployment Successful"
-            echo "========================================="
+            echo "✅ Zuvara Frontend Deployment Successful"
