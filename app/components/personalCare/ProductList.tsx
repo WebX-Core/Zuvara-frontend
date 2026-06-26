@@ -81,7 +81,7 @@ const ProductList = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const productBottomWave = assetWithFill(wave4Svg, "#fce7f3");
+  const productBottomWave = assetWithFill(wave4Svg, "#f4e8fc");
 
   useEffect(() => {
     let active = true;

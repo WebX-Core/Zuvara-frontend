@@ -1,7 +1,7 @@
 import ProductList from "@/app/components/personalCare/ProductList";
 import HeroSection from "@/app/components/personalCare/HeroSection";
 import ProductSection from "@/app/components/personalCare/ProductSection";
-import StatsDivider from "@/app/components/personalCare/StatsDivider";
+import WhyChoose from "@/app/components/personalCare/WhyChoose";
 import WhyUsSection from "@/app/components/personalCare/WhyUsSection";
 
 const page = () => {
@@ -9,7 +9,7 @@ const page = () => {
     <div className="">
       <HeroSection />
       <WhyUsSection />
-      <StatsDivider />
+      <WhyChoose />
       <ProductSection />
       <ProductList />
     </div>
