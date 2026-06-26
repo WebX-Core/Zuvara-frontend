@@ -261,7 +261,7 @@ export default function Page() {
 
         <SizeGuideSection
           theme={theme}
-          variants={product.variants}
+          variants={product.variants || []}
           sizeGuideImages={undefined}
           availableSizes={apiProduct.availableSizes}
         />

@@ -117,7 +117,7 @@ const CTA = () => {
 
             {/* Desktop Video Section - Clean without background box */}
             <div className="relative h-80 w-full sm:h-95 lg:h-112.5 bg-transparent rounded-[2rem] overflow-hidden">
-              <Image src="/1080x1080_AME/050_clip-0400blink-comp-v05.gif" alt="Baby Care Video" fill className="object-contain object-bottom" />
+              <Image src="/gif/eye.gif" alt="Baby Care Video" fill className="object-contain object-bottom" />
             </div>
           </div>
         </div>

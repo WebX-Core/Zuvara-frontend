@@ -139,7 +139,7 @@ const HeroSection = ({ theme = babyCareListingTheme }: HeroSectionProps) => {
             <div className="hero-float relative mx-auto h-56 w-full max-w-4xl overflow-visible rounded-[2.6rem] sm:h-72 md:h-80 lg:h-96">
               <div className="absolute inset-0 -translate-y-12 sm:-translate-y-16 md:-translate-y-20 lg:-translate-y-24">
                 <Image
-                  src="/1080x1080_AME/050_clip-0500-comp-v04.gif"
+                  src="/gif/producthero.gif"
                   alt="Baby with product"
                   fill
                   priority

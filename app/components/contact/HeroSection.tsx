@@ -89,7 +89,7 @@ const HeroSection = () => {
         src={
           isPersonal
             ? "/new/contacpagemom.png"
-            : "/1080x1080_AME/050_clip-0400Wave-comp-v04.gif"
+            : "/gif/hii.gif"
         }
         alt={isPersonal ? "mom calling" : "baby calling"}
         width={imageSize}
