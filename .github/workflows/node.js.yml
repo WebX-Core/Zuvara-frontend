@@ -28,9 +28,25 @@ jobs:
 
             APP_DIR="/var/www/Zuvara-frontend"
             BRANCH="${{ github.ref_name }}"
+            REPO_URL="${{ github.server_url }}/${{ github.repository }}.git"
 
-            cd "$APP_DIR"
             echo "📦 Deploying branch: $BRANCH"
+
+            # Bootstrap the app directory on first deploy.
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "📁 $APP_DIR not found or not a git repo — cloning..."
+              # Create the parent dir (sudo only if we lack write permission).
+              if [ ! -w "$(dirname "$APP_DIR")" ]; then
+                sudo mkdir -p "$APP_DIR"
+                sudo chown -R "$(whoami)":"$(whoami)" "$APP_DIR"
+              else
+                mkdir -p "$APP_DIR"
+              fi
+              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+              cd "$APP_DIR"
+            else
+              cd "$APP_DIR"
+            fi
 
             git fetch origin "$BRANCH"
             git reset --hard "origin/$BRANCH"
@@ -62,10 +78,10 @@ jobs:
             fi
 
             echo "🔄 Restarting PM2..."
-            if pm2 describe "zuvara—frontend" >/dev/null 2>&1; then
-              pm2 restart "zuvara—frontend" --time
+            if pm2 describe "zuvara-frontend" >/dev/null 2>&1; then
+              pm2 restart "zuvara-frontend" --time
             else
-              pm2 start pnpm --name "zuvara—frontend" --time --cwd "$APP_DIR" -- start
+              pm2 start pnpm --name "zuvara-frontend" --time --cwd "$APP_DIR" -- start
             fi
 
             pm2 save
