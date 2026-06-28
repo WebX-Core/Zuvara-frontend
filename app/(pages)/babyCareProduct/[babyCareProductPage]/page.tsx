@@ -285,6 +285,7 @@ export default function Page() {
           active={product} 
           theme={theme} 
           productId={apiProduct.id}
+          faqs={apiProduct.faqs}
         />
       </div>
 

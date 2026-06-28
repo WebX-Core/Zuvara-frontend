@@ -11,6 +11,7 @@ type FaqAndCloseViewSectionProps = {
   active: Product;
   theme: ThemePreset;
   productId?: string; // Product ID from API
+  faqs?: any[]; // FAQs from API (optional)
 };
 
 const sectionTitle =
@@ -21,14 +22,18 @@ export default function FaqAndCloseViewSection({
   active,
   theme,
   productId,
+  faqs: propFaqs,
 }: FaqAndCloseViewSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#ffffff");
   
-  // Fetch product-specific FAQs from API
-  const { faqs, isLoading } = useFaqsByProduct(productId);
+  // Fetch product-specific FAQs from API if not provided
+  const { faqs: apiFaqs, isLoading } = useFaqsByProduct(productId);
+  
+  // Use prop FAQs if available, otherwise use API FAQs
+  const faqs = propFaqs ?? apiFaqs;
   
   // Don't render section if no FAQs (or still loading)
-  if (isLoading || !faqs || faqs.length === 0) {
+  if ((isLoading && !propFaqs) || !faqs || faqs.length === 0) {
     return null;
   }
 
