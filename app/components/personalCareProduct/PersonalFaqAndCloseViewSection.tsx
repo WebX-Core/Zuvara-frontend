@@ -10,6 +10,12 @@ type PersonalFaqAndCloseViewSectionProps = {
   active: Product;
   theme: ThemePreset;
   productId?: string;
+  faqs?: Array<{
+    id: string;
+    question: string;
+    answer: string;
+    isActive?: boolean;
+  }>;
 };
 
 const sectionTitle =
@@ -19,14 +25,36 @@ export default function PersonalFaqAndCloseViewSection({
   active,
   theme,
   productId,
+  faqs: propFaqs,
 }: PersonalFaqAndCloseViewSectionProps) {
   const footerWave = assetWithFill(wave4Svg, "#f4e8fc");
   
-  // Fetch product-specific FAQs from API
-  const { faqs, isLoading } = useFaqsByProduct(productId);
+  // Fetch product-specific FAQs from API as fallback
+  const { faqs: apiFaqs, isLoading } = useFaqsByProduct(productId);
   
-  // Don't render section if no FAQs (or still loading)
-  if (isLoading || !faqs || faqs.length === 0) {
+  // Use FAQs from props first (from product detail endpoint), fallback to separate API call
+  const faqs = propFaqs && propFaqs.length > 0 ? propFaqs : apiFaqs;
+  
+  // Show loading state only if no prop FAQs and API is loading
+  if (!propFaqs && isLoading) {
+    return (
+      <section className="relative px-4 py-8 lg:px-4 lg:py-10 overflow-hidden">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center mb-8">
+            <h2 className={sectionTitle} style={{ color: theme.accent }}>
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-3 text-sm md:text-base" style={{ color: hexToRgba(theme.accent, 0.7) }}>
+              Loading FAQs...
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+  
+  // Don't render section if no FAQs
+  if (!faqs || faqs.length === 0) {
     return null;
   }
 

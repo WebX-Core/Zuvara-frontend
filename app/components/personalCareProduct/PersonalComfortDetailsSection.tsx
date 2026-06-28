@@ -63,42 +63,6 @@ export default function PersonalComfortDetailsSection({
             theme={theme}
           />
         </div>
-
-        {/* <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {highlights.map((item, idx) => (
-            <article
-              key={item}
-              className="group fx-rise fx-float relative overflow-hidden rounded-[1.6rem] transition-transform duration-500 hover:-translate-y-1 h-100"
-            >
-              <div className="absolute inset-0 h-100">
-                <Image
-                  src={technicalDetailImages[idx] || technicalDetailImages[0]}
-                  alt={item}
-                  fill
-                  className="rounded-[1.6rem] object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-              </div>
-
-              <div className="relative flex h-full flex-col justify-end p-5 md:p-6">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em]"
-                    style={{
-                      backgroundColor: hexToRgba("#ffffff", 0.55),
-                      color: hexToRgba(theme.accent, 0.78),
-                    }}
-                  >
-                    Detail {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: hexToRgba(theme.accent, 0.58) }}
-                  />
-                </div>
-              </div>
-            </article>
-          ))}
-        </div> */}
       </div>
     </section>
   );

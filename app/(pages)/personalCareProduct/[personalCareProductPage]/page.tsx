@@ -42,32 +42,6 @@ const comparisonRows = [
   { label: "Breathability", zuvara: "Airflow layer", ordinary: "Limited" },
 ];
 
-const personalTechnicalDetailImages: Record<string, string[]> = {
-  "period-panties": [
-    "/PRODUCTS/personal/period%20panties/tech1.jpg",
-    "/PRODUCTS/personal/period%20panties/tech2.jpg",
-    "/PRODUCTS/personal/period%20panties/tech3.jpg",
-    "/PRODUCTS/personal/period%20panties/tech4.jpg",
-  ],
-  "sanitary-pads": [
-    "/PRODUCTS/personal/sanitary%20pads/tech1.jpg",
-    "/PRODUCTS/personal/sanitary%20pads/tech2.jpg",
-    "/PRODUCTS/personal/sanitary%20pads/tech3.jpg",
-    "/PRODUCTS/personal/sanitary%20pads/tech4.jpg",
-  ],
-};
-
-const personalSizeGuideImageOverrides: Record<string, string[]> = {
-  "period-panties": [
-    "/PRODUCTS/personal/period%20panties/size_m-l.jpg",
-    "/PRODUCTS/personal/period%20panties/size_l-xl.jpg",
-  ],
-  "sanitary-pads": [
-    "/PRODUCTS/personal/sanitary%20pads/tech1.jpg",
-    "/PRODUCTS/personal/sanitary%20pads/tech2.jpg",
-  ],
-};
-
 const personalHeroPackSectionImages: Record<string, string> = {
   "period-panties": "/images/personalCare/period-panties.png",
   "sanitary-pads": "/images/personalCare/sanitary-pad.png",
@@ -128,7 +102,7 @@ export default function Page() {
 
   const mappedProducts = useMemo(() => personalCareProducts, []);
 
-  const product = mappedProducts.find((item) => item.slug === slug);
+  const staticProduct = mappedProducts.find((item) => item.slug === slug);
   const initialIndex = Math.max(
     0,
     mappedProducts.findIndex((item) => item.slug === slug),
@@ -141,13 +115,60 @@ export default function Page() {
   // Dynamic API data
   const [apiProduct, setApiProduct] = useState<BackendProduct | null>(null);
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (!slug) return;
+    setIsLoading(true);
     productService
       .getProductBySlug(slug)
-      .then((data) => setApiProduct(data))
-      .catch(() => setApiProduct(null));
+      .then((data) => {
+        setApiProduct(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setApiProduct(null);
+        setIsLoading(false);
+      });
   }, [slug]);
+
+  // Build product from API if not found in static data
+  const product = useMemo(() => {
+    if (staticProduct) return staticProduct;
+    if (!apiProduct) return staticProduct;
+
+    // Build product from API data
+    return {
+      id: apiProduct.id,
+      slug: apiProduct.slug,
+      name: apiProduct.name,
+      tagline: apiProduct.tagline || "",
+      description: apiProduct.description || "",
+      image: apiProduct.coverImage,
+      productImage: apiProduct.coverImage,
+      heroAvatars: apiProduct.media?.slice(0, 4) || [],
+      variants: (apiProduct.productVariants ?? []).map((v, idx) => ({
+        id: idx + 1,
+        name: v.color || v.size || `Variant ${idx + 1}`,
+        image: v.media?.[0] || apiProduct.coverImage,
+        color: v.color || "",
+        size: v.size || "",
+      })),
+      sizeGuideImages: [],
+      trustImages: {
+        testimonialPrimary: apiProduct.coverImage,
+        testimonialSecondary: apiProduct.coverImage,
+        certificationLeft: apiProduct.coverImage,
+        certificationRight: apiProduct.coverImage,
+      },
+      testimonials: [],
+      certifications: [],
+      features: apiProduct.features?.filter((f) => f.isActive).map((f) => f.title) || [],
+      productCloseView: apiProduct.coverImage,
+      faqs: apiProduct.faqs?.filter((f) => f.isActive) || [],
+    } as PersonalProduct;
+  }, [staticProduct, apiProduct]);
 
   const active =
     mappedProducts.length > 0
@@ -167,14 +188,11 @@ export default function Page() {
     apiProduct?.media && apiProduct.media.length > 0
       ? apiProduct.media
       : [];
-  const technicalDetailImages =
-    personalTechnicalDetailImages[active?.slug ?? ""] ||
-    moodboardImages.slice(0, 4);
+  const technicalDetailImages = moodboardImages.slice(0, 4);
   const sizeGuideImages =
-    personalSizeGuideImageOverrides[active?.slug ?? ""] ||
-    (active?.sizeGuideImages && active.sizeGuideImages.length > 0
+    active?.sizeGuideImages && active.sizeGuideImages.length > 0
       ? active.sizeGuideImages
-      : [active.image]);
+      : [];
   // const whyItMattersImage = active?.whyItMattersImage || active.image;
   const baseTrustImages = active?.trustImages || {
     testimonialPrimary: active.image,
@@ -291,6 +309,36 @@ export default function Page() {
     return () => ctx.revert();
   }, [active?.id, theme.accent]);
 
+  if (isLoading) {
+    return (
+      <main 
+        className="min-h-screen px-4 py-16 lg:px-10"
+        style={{ backgroundColor: theme.pageBg }}
+      >
+        <div className="mx-auto max-w-7xl space-y-12 animate-pulse">
+          {/* Hero skeleton */}
+          <div className="space-y-6">
+            <div className="h-8 w-48 rounded-lg bg-gray-200/60" />
+            <div className="h-12 w-3/4 rounded-lg bg-gray-200/60" />
+            <div className="h-96 w-full rounded-3xl bg-gray-200/60" />
+          </div>
+          
+          {/* Content skeleton */}
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="h-64 rounded-3xl bg-gray-200/60" />
+            <div className="h-64 rounded-3xl bg-gray-200/60" />
+          </div>
+          
+          <div className="space-y-4">
+            <div className="h-6 w-full rounded bg-gray-200/60" />
+            <div className="h-6 w-5/6 rounded bg-gray-200/60" />
+            <div className="h-6 w-4/6 rounded bg-gray-200/60" />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   if (!product || !active) {
     return (
       <main className="min-h-screen grid place-items-center px-6">
@@ -373,7 +421,12 @@ export default function Page() {
         conceptImages={carePromiseImages}
       />
 
-      <PersonalFaqAndCloseViewSection active={active} theme={theme} productId={apiProduct?.id} />
+      <PersonalFaqAndCloseViewSection 
+        active={active} 
+        theme={theme} 
+        productId={apiProduct?.id}
+        faqs={apiProduct?.faqs}
+      />
 
       <button
         type="button"

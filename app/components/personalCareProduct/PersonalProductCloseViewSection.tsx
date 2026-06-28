@@ -37,7 +37,8 @@ export default function PersonalProductCloseViewSection({
       ? highlightImages
       : technicalDetailImages;
 
-  if (!product.productCloseView && resolvedImages.length === 0) return null;
+  // Don't show section if no images available
+  if (resolvedImages.length === 0) return null;
 
   const detailImages = resolvedImages.slice(0, 4);
   const midIndex = Math.ceil(detailImages.length / 2);
