@@ -198,10 +198,10 @@ export default function PersonalTrustFusionSection({
                     className="w-full shrink-0 lg:w-1/2 px-2 md:px-3"
                   >
                     <article
-                      className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                      className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg transition-shadow duration-300 bg-white"
                       style={{
                         borderColor: `${theme.border}88`,
-                        minHeight: "360px",
+                        minHeight: "420px",
                       }}
                     >
                       {/* Header with Badge and Time */}
