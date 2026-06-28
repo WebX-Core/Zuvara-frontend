@@ -245,36 +245,46 @@ export default function Page() {
           productId={apiProduct.id}
         />
 
-        <ProductCloseViewSection
-          product={product}
-          theme={theme}
-          technicalDetailImages={technicalDetailImages}
-          highlightImages={highlightImages.length > 0 ? highlightImages : undefined}
-        />
+        {(highlightImages.length > 0 || technicalDetailImages.length > 0) && (
+          <ProductCloseViewSection
+            product={product}
+            theme={theme}
+            technicalDetailImages={technicalDetailImages}
+            highlightImages={highlightImages.length > 0 ? highlightImages : undefined}
+          />
+        )}
 
-        <ProductVideoSection theme={theme} videoUrl={apiProduct.videoUrl} />
+        {apiProduct.videoUrl && (
+          <ProductVideoSection theme={theme} videoUrl={apiProduct.videoUrl} />
+        )}
 
-        <ComfortDetailsSection
-          theme={theme}
-          moodboardImages={moodboardImages}
-        />
+        {moodboardImages.length > 0 && (
+          <ComfortDetailsSection
+            theme={theme}
+            moodboardImages={moodboardImages}
+          />
+        )}
 
-        <SizeGuideSection
-          theme={theme}
-          variants={product.variants || []}
-          sizeGuideImages={undefined}
-          availableSizes={apiProduct.availableSizes}
-        />
+        {(product.variants && product.variants.length > 0) || (apiProduct.availableSizes && apiProduct.availableSizes.length > 0) ? (
+          <SizeGuideSection
+            theme={theme}
+            variants={product.variants || []}
+            sizeGuideImages={undefined}
+            availableSizes={apiProduct.availableSizes}
+          />
+        ) : null}
 
-        <TrustFusionSection
-          theme={theme}
-          comparisonRows={comparisonRows}
-          images={{
-            comparisonZuvara: comparisonImage,
-            comparisonOrdinary: comparisonImage,
-          }}
-          reviews={apiProduct.reviews}
-        />
+        {apiProduct.reviews && apiProduct.reviews.length > 0 && (
+          <TrustFusionSection
+            theme={theme}
+            comparisonRows={comparisonRows}
+            images={{
+              comparisonZuvara: comparisonImage,
+              comparisonOrdinary: comparisonImage,
+            }}
+            reviews={apiProduct.reviews}
+          />
+        )}
 
         <CarePromiseSection
           theme={theme}
@@ -285,7 +295,7 @@ export default function Page() {
           active={product} 
           theme={theme} 
           productId={apiProduct.id}
-          faqs={apiProduct.faqs}
+          faqs={(apiProduct as any).faqs}
         />
       </div>
 

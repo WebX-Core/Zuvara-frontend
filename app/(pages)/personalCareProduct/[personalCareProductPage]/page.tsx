@@ -387,23 +387,32 @@ export default function Page() {
         backgroundImage={whyItMattersImage}
       /> */}
 
-      <PersonalProductCloseViewSection
-        product={active}
-        theme={theme}
-        technicalDetailImages={technicalDetailImages}
-        highlightImages={
-          (apiProduct?.highlights
-            ?.filter((h) => h.isActive)
-            .flatMap((h) => h.highlightImages) ?? []).length > 0
-            ? apiProduct!.highlights!.filter((h) => h.isActive).flatMap((h) => h.highlightImages)
-            : undefined
-        }
-      />
-      <ProductVideoSection videoUrl={apiProduct?.videoUrl} />
-      <PersonalComfortDetailsSection
-        theme={theme}
-        moodboardImages={moodboardImages}
-      />
+      {(technicalDetailImages.length > 0 || 
+        (apiProduct?.highlights?.filter((h) => h.isActive).flatMap((h) => h.highlightImages) ?? []).length > 0) && (
+        <PersonalProductCloseViewSection
+          product={active}
+          theme={theme}
+          technicalDetailImages={technicalDetailImages}
+          highlightImages={
+            (apiProduct?.highlights
+              ?.filter((h) => h.isActive)
+              .flatMap((h) => h.highlightImages) ?? []).length > 0
+              ? apiProduct!.highlights!.filter((h) => h.isActive).flatMap((h) => h.highlightImages)
+              : undefined
+          }
+        />
+      )}
+      
+      {apiProduct?.videoUrl && (
+        <ProductVideoSection videoUrl={apiProduct.videoUrl} />
+      )}
+      
+      {moodboardImages.length > 0 && (
+        <PersonalComfortDetailsSection
+          theme={theme}
+          moodboardImages={moodboardImages}
+        />
+      )}
 
       {apiProduct?.availableSizes && apiProduct.availableSizes.length > 0 && (
         <PersonalSizeGuideSection
@@ -413,17 +422,21 @@ export default function Page() {
         />
       )}
 
-      <PersonalTrustFusionSection
-        theme={theme}
-        comparisonRows={comparisonRows}
-        images={trustImages}
-        reviews={apiProduct?.reviews}
-      />
+      {apiProduct?.reviews && apiProduct.reviews.length > 0 && (
+        <PersonalTrustFusionSection
+          theme={theme}
+          comparisonRows={comparisonRows}
+          images={trustImages}
+          reviews={apiProduct.reviews}
+        />
+      )}
 
-      <PersonalCarePromiseSection
-        theme={theme}
-        conceptImages={carePromiseImages}
-      />
+      {carePromiseImages.length > 0 && (
+        <PersonalCarePromiseSection
+          theme={theme}
+          conceptImages={carePromiseImages}
+        />
+      )}
 
       <PersonalFaqAndCloseViewSection 
         active={active} 
