@@ -139,11 +139,12 @@ export default function Page() {
     if (!apiProduct) return staticProduct;
 
     // Build product from API data
+    const apiData = apiProduct as any; // Use any to handle optional fields not in type
     return {
       id: apiProduct.id,
       slug: apiProduct.slug,
-      name: apiProduct.name,
-      tagline: apiProduct.tagline || "",
+      name: apiProduct.productName,
+      tagline: apiData.tagline || "",
       description: apiProduct.description || "",
       image: apiProduct.coverImage,
       productImage: apiProduct.coverImage,
@@ -167,10 +168,10 @@ export default function Page() {
       },
       testimonials: [],
       certifications: [],
-      features: apiProduct.features?.filter((f) => f.isActive).map((f) => f.title) || [],
+      features: apiData.features?.filter((f: any) => f.isActive).map((f: any) => f.title) || [],
       productCloseView: apiProduct.coverImage,
-      faqs: apiProduct.faqs?.filter((f) => f.isActive) || [],
-    } as PersonalProduct;
+      faqs: apiData.faqs || [],
+    } as unknown as PersonalProduct;
   }, [staticProduct, apiProduct]);
 
   const active =
@@ -428,7 +429,7 @@ export default function Page() {
         active={active} 
         theme={theme} 
         productId={apiProduct?.id}
-        faqs={apiProduct?.faqs}
+        faqs={(apiProduct as any)?.faqs}
       />
 
       <button
