@@ -101,7 +101,7 @@ export default function PersonalProductHeroSection({
 
   return (
     <motion.section
-      className="relative overflow-hidden h-auto flex flex-col"
+      className="relative overflow-hidden h-auto flex flex-col py-12 md:py-16 lg:py-20"
       animate={isMobile ? undefined : { backgroundColor: theme.pageBg }}
       transition={isMobile ? undefined : { duration: 0.45, ease: "easeOut" }}
       drag={isMobile && enableMobileSwipe ? "x" : false}
@@ -215,32 +215,24 @@ export default function PersonalProductHeroSection({
                 )}
               </div>
 
-              {/* Safety Info */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-start gap-3 p-4 rounded-xl border"
-                style={{
-                  borderColor: `${theme.border}66`,
-                  backgroundColor: `${theme.accent}08`,
-                }}
-              >
-                <Heart
-                  size={20}
-                  style={{ color: theme.accent }}
-                  className="shrink-0 mt-0.5"
-                />
-                <div>
-                  <h4 className="text-sm font-bold text-zinc-800 mb-1">
-                    100% Safe & Gentle
-                  </h4>
-                  <p className="text-xs text-zinc-600">
-                    Dermatologically tested and designed for sensitive skin.
-                    Free from harsh chemicals and fragrances.
-                  </p>
-                </div>
-              </motion.div>
+              {/* Description Box */}
+              {active.description && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="p-4 rounded-xl border"
+                  style={{
+                    borderColor: `${theme.border}66`,
+                    backgroundColor: `${theme.accent}08`,
+                  }}
+                >
+                  <div
+                    className="text-sm text-zinc-700 leading-relaxed prose prose-sm max-w-none [&_p]:mb-0"
+                    dangerouslySetInnerHTML={{ __html: active.description }}
+                  />
+                </motion.div>
+              )}
 
               {/* CTA Buttons */}
               <motion.div

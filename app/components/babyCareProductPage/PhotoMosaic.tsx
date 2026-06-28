@@ -107,35 +107,6 @@ export default function PhotoMosaic({
         >
           Comfort Gallery
         </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={goPrev}
-            disabled={activeIndex === 0}
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-all duration-300 hover:scale-[1.04] disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{
-              borderColor: theme ? `${theme.border}55` : undefined,
-              color: theme ? theme.accent : "#111827",
-            }}
-            aria-label="Previous slide"
-          >
-            <ChevronLeft />
-          </button>
-          <button
-            type="button"
-            onClick={goNext}
-            disabled={activeIndex >= maxIndex}
-            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-all duration-300 hover:scale-[1.04] disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{
-              borderColor: theme ? `${theme.border}55` : undefined,
-              color: theme ? theme.accent : "#111827",
-            }}
-            aria-label="Next slide"
-          >
-            <ChevronRight />
-          </button>
-        </div>
       </div>
 
       <div
