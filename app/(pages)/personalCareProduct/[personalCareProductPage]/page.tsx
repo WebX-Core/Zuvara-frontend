@@ -148,6 +148,9 @@ export default function Page() {
       image: apiProduct.coverImage,
       productImage: apiProduct.coverImage,
       heroAvatars: apiProduct.media?.slice(0, 4) || [],
+      rating: 0,
+      reviews: 0,
+      category: apiProduct.category?.categoryName || "",
       variants: (apiProduct.productVariants ?? []).map((v, idx) => ({
         id: idx + 1,
         name: v.color || v.size || `Variant ${idx + 1}`,
