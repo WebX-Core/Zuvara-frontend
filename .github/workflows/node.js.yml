@@ -1,0 +1,77 @@
+name: Zuvara Frontend CI/CD (VPS)
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: zuvara-frontend
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+            set -e
+
+            echo "🚀 Zuvara Frontend Deployment Started"
+
+            APP_DIR="/var/www/Zuvara-frontend"
+            BRANCH="master"
+            REPO_URL="https://github.com/WebX-Core/Zuvara-frontend.git"
+
+            echo "User: $(whoami)"
+            echo "Branch: $BRANCH"
+
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "📥 Cloning repository..."
+              sudo mkdir -p "$APP_DIR"
+              sudo chown -R "$(whoami):$(whoami)" "$APP_DIR"
+              git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+            fi
+
+            cd "$APP_DIR"
+
+            git fetch origin "$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            git clean -fd
+
+            export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+            export PATH="$HOME/.npm-global/bin:$PATH"
+
+            echo "Node: $(node -v)"
+            echo "NPM: $(npm -v)"
+
+            if ! command -v pnpm >/dev/null 2>&1; then
+              npm install -g pnpm@10.15.0
+            fi
+
+            echo "PNPM: $(pnpm -v)"
+
+            pnpm install --no-frozen-lockfile
+            pnpm build
+
+            if ! command -v pm2 >/dev/null 2>&1; then
+              npm install -g pm2
+            fi
+
+            if pm2 describe zuvara-frontend >/dev/null 2>&1; then
+              pm2 restart zuvara-frontend --update-env --time
+            else
+              pm2 start pnpm --name zuvara-frontend --cwd "$APP_DIR" -- start
+            fi
+
+            pm2 save
+
+            echo "✅ Zuvara Frontend Deployment Successful"
