@@ -4,9 +4,6 @@ import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import {
   ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-  Heart,
   MoveRightIcon,
   Star,
 } from "lucide-react";
@@ -21,6 +18,15 @@ type ThemePreset = {
   sectionTint: string;
 };
 
+type HeroVariant = {
+  id: string;
+  size: string;
+  color: string;
+  price: string;
+  stock: number;
+  media?: string[];
+};
+
 type BabyCareHeroSectionProps = {
   active: Product;
   products: Product[];
@@ -32,6 +38,7 @@ type BabyCareHeroSectionProps = {
   pickHeroPack: (product: Product) => string;
   enableMobileSwipe?: boolean;
   productId?: string;
+  variants?: HeroVariant[];
 };
 
 export default function BabyCareHeroSection({
@@ -43,11 +50,22 @@ export default function BabyCareHeroSection({
   onNext,
   enableMobileSwipe = true,
   productId,
+  variants,
 }: BabyCareHeroSectionProps) {
   void _products;
   const [isMobile, setIsMobile] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
+    null,
+  );
+
+  // Determine which image to show on the left: selected variant's image or default
+  const selectedVariant = variants?.find((v) => v.id === selectedVariantId);
+  const displayImage =
+    selectedVariant?.media && selectedVariant.media.length > 0
+      ? selectedVariant.media[0]
+      : heroPackSrc;
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -75,16 +93,6 @@ export default function BabyCareHeroSection({
       setDirection("right");
       onPrev();
     }
-  };
-
-  const handlePrevClick = () => {
-    setDirection("right");
-    onPrev();
-  };
-
-  const handleNextClick = () => {
-    setDirection("left");
-    onNext();
   };
 
   // Carousel animation variants
@@ -146,7 +154,7 @@ export default function BabyCareHeroSection({
                   <div className="pointer-events-none relative mx-auto h-96 lg:h-[500px] w-full">
                     <AnimatePresence mode="wait">
                       <motion.div
-                        key={active.id + "-pack"}
+                        key={displayImage}
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -154,7 +162,7 @@ export default function BabyCareHeroSection({
                         className="absolute inset-0"
                       >
                         <Image
-                          src={heroPackSrc}
+                          src={displayImage}
                           alt={`${active.name} pack`}
                           fill
                           className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
@@ -241,6 +249,83 @@ export default function BabyCareHeroSection({
                 </motion.div>
               )}
 
+              {/* Product Variants */}
+              {variants && variants.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="space-y-3"
+                >
+                  <span className="block mb-1 text-sm font-semibold text-zinc-700">
+                    Available Variants:
+                  </span>
+                  <div className="flex flex-wrap gap-3">
+                    {variants.map((variant) => {
+                      const isSelected = variant.id === selectedVariantId;
+                      const variantThumb = variant.media?.[0];
+                      return (
+                        <button
+                          type="button"
+                          key={variant.id}
+                          onClick={() =>
+                            setSelectedVariantId(
+                              isSelected ? null : variant.id,
+                            )
+                          }
+                          className="flex items-center gap-3 rounded-xl border bg-white px-3 py-2.5 shadow-sm transition-all duration-200 hover:shadow-md"
+                          style={{
+                            borderColor: isSelected
+                              ? theme.accent
+                              : `${theme.border}66`,
+                            borderWidth: isSelected ? 2 : 1,
+                            boxShadow: isSelected
+                              ? `0 0 0 3px ${theme.accent}22`
+                              : undefined,
+                          }}
+                        >
+                          {/* Variant Image Thumbnail */}
+                          {variantThumb && (
+                            <span className="relative h-12 w-12 overflow-hidden rounded-lg bg-zinc-50 shrink-0">
+                              <Image
+                                src={variantThumb}
+                                alt={`Variant ${variant.size}`}
+                                fill
+                                className="object-cover"
+                                sizes="48px"
+                              />
+                            </span>
+                          )}
+                          <div className="flex flex-col items-start">
+                            <div className="flex items-center gap-1.5">
+                              {variant.color && (
+                                <span
+                                  className="h-3.5 w-3.5 rounded-full border border-zinc-200 shrink-0"
+                                  style={{ backgroundColor: variant.color }}
+                                />
+                              )}
+                              {variant.size && (
+                                <span className="text-sm font-bold text-zinc-800">
+                                  Size {variant.size}
+                                </span>
+                              )}
+                            </div>
+                            {variant.price && (
+                              <span
+                                className="text-sm font-semibold"
+                                style={{ color: theme.accent }}
+                              >
+                                Rs. {Number(variant.price).toLocaleString()}
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -299,7 +384,7 @@ export default function BabyCareHeroSection({
           <div className="relative w-full h-full max-w-md px-8">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
-                key={active.id + "-pack-mobile"}
+                key={displayImage + "-mobile"}
                 custom={direction}
                 variants={carouselVariants}
                 initial="enter"
@@ -312,7 +397,7 @@ export default function BabyCareHeroSection({
                 className="relative w-full h-full"
               >
                 <Image
-                  src={heroPackSrc}
+                  src={displayImage}
                   alt={`${active.name} pack`}
                   fill
                   className="object-contain drop-shadow-2xl"
@@ -382,6 +467,78 @@ export default function BabyCareHeroSection({
                 className="text-xs text-zinc-700 leading-relaxed prose prose-xs max-w-none [&_p]:mb-0"
                 dangerouslySetInnerHTML={{ __html: active.description }}
               />
+            </motion.div>
+          )}
+
+          {/* Product Variants - Mobile */}
+          {variants && variants.length > 0 && (
+            <motion.div
+              key={active.id + "-variants"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.22 }}
+              className="mb-4"
+            >
+              <span className="block mb-2 text-xs font-semibold text-zinc-700">
+                Available Variants:
+              </span>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {variants.map((variant) => {
+                  const isSelected = variant.id === selectedVariantId;
+                  const variantThumb = variant.media?.[0];
+                  return (
+                    <button
+                      type="button"
+                      key={variant.id}
+                      onClick={() =>
+                        setSelectedVariantId(isSelected ? null : variant.id)
+                      }
+                      className="flex items-center gap-2 rounded-lg border bg-white px-2.5 py-1.5 shadow-sm transition-all"
+                      style={{
+                        borderColor: isSelected
+                          ? theme.accent
+                          : `${theme.border}66`,
+                        borderWidth: isSelected ? 2 : 1,
+                      }}
+                    >
+                      {variantThumb && (
+                        <span className="relative h-9 w-9 overflow-hidden rounded-md bg-zinc-50 shrink-0">
+                          <Image
+                            src={variantThumb}
+                            alt={`Variant ${variant.size}`}
+                            fill
+                            className="object-cover"
+                            sizes="36px"
+                          />
+                        </span>
+                      )}
+                      <div className="flex flex-col leading-tight items-start">
+                        <div className="flex items-center gap-1">
+                          {variant.color && (
+                            <span
+                              className="h-3 w-3 rounded-full border border-zinc-200 shrink-0"
+                              style={{ backgroundColor: variant.color }}
+                            />
+                          )}
+                          {variant.size && (
+                            <span className="text-xs font-bold text-zinc-800">
+                              {variant.size}
+                            </span>
+                          )}
+                        </div>
+                        {variant.price && (
+                          <span
+                            className="text-xs font-semibold"
+                            style={{ color: theme.accent }}
+                          >
+                            Rs. {Number(variant.price).toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </motion.div>
           )}
 

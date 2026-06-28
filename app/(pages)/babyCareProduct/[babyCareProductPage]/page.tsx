@@ -243,6 +243,7 @@ export default function Page() {
           onSelectProduct={() => {}}
           pickHeroPack={() => heroPackSrc}
           productId={apiProduct.id}
+          variants={apiProduct.productVariants}
         />
 
         {(highlightImages.length > 0 || technicalDetailImages.length > 0) && (
