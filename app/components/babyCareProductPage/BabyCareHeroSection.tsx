@@ -222,32 +222,24 @@ export default function BabyCareHeroSection({
                 )}
               </div>
 
-              {/* Safety Info */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-start gap-3 p-4 rounded-xl border"
-                style={{
-                  borderColor: `${theme.border}66`,
-                  backgroundColor: `${theme.accent}08`,
-                }}
-              >
-                <Heart
-                  size={20}
-                  style={{ color: theme.accent }}
-                  className="shrink-0 mt-0.5"
-                />
-                <div>
-                  <h4 className="text-sm font-bold text-zinc-800 mb-1">
-                    100% Safe & Chemical-Free
-                  </h4>
-                  <p className="text-xs text-zinc-600">
-                    0% Parabens, Latex, Fragrance, Phthalates, and Chlorine.
-                    Pediatrician tested and approved for sensitive skin.
-                  </p>
-                </div>
-              </motion.div>
+              {/* Description Box */}
+              {active.description && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="p-4 rounded-xl border"
+                  style={{
+                    borderColor: `${theme.border}66`,
+                    backgroundColor: `${theme.accent}08`,
+                  }}
+                >
+                  <div
+                    className="text-sm text-zinc-700 leading-relaxed prose prose-sm max-w-none [&_p]:mb-0"
+                    dangerouslySetInnerHTML={{ __html: active.description }}
+                  />
+                </motion.div>
+              )}
 
               {/* CTA Buttons */}
               <motion.div
@@ -264,39 +256,6 @@ export default function BabyCareHeroSection({
                 >
                   <span>Inquiry Now</span>
                   <MoveRightIcon />
-                </button>
-              </motion.div>
-
-              {/* Navigation */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex items-center gap-3 pt-4 border-t"
-                style={{ borderColor: `${theme.border}44` }}
-              >
-                <span className="text-sm font-medium text-zinc-600">
-                  Browse Products:
-                </span>
-                <button
-                  type="button"
-                  onClick={onPrev}
-                  className="rounded-full border-2 bg-white px-4 py-2 font-medium hover:bg-zinc-50 transition-all duration-300 flex items-center gap-2"
-                  style={{ borderColor: theme.border, color: theme.accent }}
-                  aria-label="Previous product"
-                >
-                  <ChevronLeft size={18} />
-                  <span className="text-sm">Previous</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={onNext}
-                  className="rounded-full border-2 bg-white px-4 py-2 font-medium hover:bg-zinc-50 transition-all duration-300 flex items-center gap-2"
-                  style={{ borderColor: theme.border, color: theme.accent }}
-                  aria-label="Next product"
-                >
-                  <span className="text-sm">Next</span>
-                  <ChevronRight size={18} />
                 </button>
               </motion.div>
             </div>
@@ -406,27 +365,25 @@ export default function BabyCareHeroSection({
             </motion.div>
           )}
 
-          {/* Safety Badge - Compact */}
-          <motion.div
-            key={active.id + "-safety"}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="flex items-center gap-2 p-3 rounded-xl mb-4"
-            style={{
-              backgroundColor: `${theme.accent}08`,
-              borderLeft: `3px solid ${theme.accent}`,
-            }}
-          >
-            <Heart
-              size={16}
-              style={{ color: theme.accent }}
-              className="shrink-0"
-            />
-            <p className="text-xs font-semibold text-zinc-700">
-              100% Safe & Chemical-Free Formula
-            </p>
-          </motion.div>
+          {/* Description Box - Compact */}
+          {active.description && (
+            <motion.div
+              key={active.id + "-description"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="p-3 rounded-xl mb-4"
+              style={{
+                backgroundColor: `${theme.accent}08`,
+                borderLeft: `3px solid ${theme.accent}`,
+              }}
+            >
+              <div
+                className="text-xs text-zinc-700 leading-relaxed prose prose-xs max-w-none [&_p]:mb-0"
+                dangerouslySetInnerHTML={{ __html: active.description }}
+              />
+            </motion.div>
+          )}
 
           {/* CTA Buttons - Full Width */}
           <motion.div
@@ -447,46 +404,7 @@ export default function BabyCareHeroSection({
             </button>
           </motion.div>
 
-          {/* Navigation Dots */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center justify-center gap-2 mt-4"
-          >
-            <button
-              type="button"
-              onClick={handlePrevClick}
-              className="py-2 px-4 rounded-full flex items-center active:scale-90 transition-transform"
-              style={{ backgroundColor: `${theme.accent}15` }}
-              aria-label="Previous product"
-            >
-              <ChevronLeft size={20} style={{ color: theme.accent }} />
-              <span className="text-sm font-medium">Prev</span>
-            </button>
-            <div className="flex gap-1.5">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 rounded-full"
-                  style={{
-                    backgroundColor:
-                      i === 1 ? theme.accent : `${theme.accent}30`,
-                  }}
-                />
-              ))}
-            </div>
-            <button
-              type="button"
-              onClick={handleNextClick}
-              className="py-2 px-4 flex items-center rounded-full active:scale-90 transition-transform"
-              style={{ backgroundColor: `${theme.accent}15` }}
-              aria-label="Next product"
-            >
-              <span className="text-sm font-medium">Next</span>
-              <ChevronRight size={20} style={{ color: theme.accent }} />
-            </button>
-          </motion.div>
+
         </div>
       </div>
 
