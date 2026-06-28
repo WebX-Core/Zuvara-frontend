@@ -13,51 +13,42 @@ type PhotoMosaicProps = {
   theme?: ThemePreset;
 };
 
-const PAGE_SIZE = 4;
+const DESKTOP_VISIBLE = 4; // Show 4 images at once on desktop
+const SLIDE_BY = 1; // Slide by 1 image at a time
 
 export default function PhotoMosaic({
   images,
   className,
   theme,
 }: PhotoMosaicProps) {
-  const [activePage, setActivePage] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const safeImages = images.filter(Boolean);
-  const desktopPages: string[][] = [];
-  const mobilePages = safeImages.map((image) => [image]);
 
-  for (let index = 0; index < safeImages.length; index += PAGE_SIZE) {
-    desktopPages.push(safeImages.slice(index, index + PAGE_SIZE));
-  }
-
-  const pages = isMobile ? mobilePages : desktopPages;
+  const visibleCount = isMobile ? 1 : DESKTOP_VISIBLE;
+  const maxIndex = Math.max(0, safeImages.length - visibleCount);
 
   useEffect(() => {
-    if (pages.length <= 1) return;
+    if (safeImages.length <= visibleCount) return;
 
     const timer = window.setInterval(() => {
-      setActivePage((current) => (current + 1) % pages.length);
+      setActiveIndex((current) => {
+        if (current >= maxIndex) return 0;
+        return current + SLIDE_BY;
+      });
     }, 4500);
 
     return () => window.clearInterval(timer);
-  }, [pages.length]);
-
-  if (!pages.length) {
-    return null;
-  }
-
-  const safeActivePage = activePage % pages.length;
+  }, [safeImages.length, visibleCount, maxIndex]);
 
   const goPrev = () => {
-    setActivePage((current) =>
-      current === 0 ? pages.length - 1 : current - 1,
-    );
+    setActiveIndex((current) => Math.max(0, current - SLIDE_BY));
   };
 
   const goNext = () => {
-    setActivePage((current) => (current + 1) % pages.length);
+    setActiveIndex((current) => Math.min(maxIndex, current + SLIDE_BY));
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -96,12 +87,21 @@ export default function PhotoMosaic({
     goPrev();
   };
 
+  if (safeImages.length === 0) {
+    return null;
+  }
+
+  // Calculate the percentage to shift
+  const cardWidthPercent = 100 / visibleCount;
+  const translatePercent = -(activeIndex * cardWidthPercent);
+
   return (
     <div className={`relative overflow-hidden md:p-0 ${className ?? ""}`}>
-      <div className="mb-5 flex items-center justify-between gap-3 md:mb-6">
+      <div className="mb-5 flex items-start justify-between gap-3 md:mb-6">
         <div
-          className="rounded-full text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs"
+          className="rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] md:text-xs border"
           style={{
+            borderColor: theme ? `${theme.border}55` : undefined,
             color: theme ? theme.accent : "#111827",
           }}
         >
@@ -112,10 +112,10 @@ export default function PhotoMosaic({
           <button
             type="button"
             onClick={goPrev}
-            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            disabled={activeIndex === 0}
+            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-all duration-300 hover:scale-[1.04] disabled:opacity-40 disabled:cursor-not-allowed"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Previous slide"
@@ -125,10 +125,10 @@ export default function PhotoMosaic({
           <button
             type="button"
             onClick={goNext}
-            className="flex h-10 w-10 bg-white items-center justify-center rounded-full border text-sm transition-transform duration-300 hover:scale-[1.04]"
+            disabled={activeIndex >= maxIndex}
+            className="flex h-10 w-10 items-center justify-center rounded-full border text-sm transition-all duration-300 hover:scale-[1.04] disabled:opacity-40 disabled:cursor-not-allowed"
             style={{
               borderColor: theme ? `${theme.border}55` : undefined,
-
               color: theme ? theme.accent : "#111827",
             }}
             aria-label="Next slide"
@@ -144,55 +144,56 @@ export default function PhotoMosaic({
         onTouchEnd={handleTouchEnd}
       >
         <div
-          className="flex h-full transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${safeActivePage * 100}%)` }}
+          className="flex transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(${translatePercent}%)` }}
         >
-          {pages.map((page, pageIndex) => (
-            <div
-              key={`page-${pageIndex}`}
-              className={`grid min-w-full flex-none gap-4 ${isMobile ? "grid-cols-1" : "grid-cols-2 xl:grid-cols-4"}`}
+          {safeImages.map((src, index) => (
+            <article
+              key={`${src}-${index}`}
+              className={`flex-shrink-0 ${isMobile ? "w-full" : "w-1/4"} px-2`}
             >
-              {page.map((src, cardIndex) => (
-                <article
-                  key={`${src}-${cardIndex}`}
-                  className={`group relative overflow-hidden rounded-[1.75rem] border ${isMobile ? "min-h-88" : "min-h-52 md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"}`}
-                  style={{
-                    borderColor: theme ? `${theme.border}44` : undefined,
-                  }}
-                >
-                  <Image
-                    src={src}
-                    alt={`Comfort gallery ${pageIndex * PAGE_SIZE + cardIndex + 1}`}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                </article>
-              ))}
-            </div>
+              <div
+                className={`group relative overflow-hidden rounded-[1.75rem] border ${isMobile ? "min-h-88" : "min-h-52 md:min-h-64 xl:min-h-[calc(70vh-8.5rem)]"}`}
+                style={{
+                  borderColor: theme ? `${theme.border}44` : undefined,
+                  boxShadow: `0 20px 48px ${hexToRgba(theme?.accent ?? "#111827", 0.1)}`,
+                }}
+              >
+                <Image
+                  src={src}
+                  alt={`Comfort gallery ${index + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+              </div>
+            </article>
           ))}
         </div>
       </div>
 
       <div className="mt-5 flex justify-center items-center gap-2 md:mt-6">
-        {pages.map((_, index) => (
-          <button
-            key={`dot-${index}`}
-            type="button"
-            onClick={() => setActivePage(index)}
-            className="h-2.5 rounded-full transition-all duration-300"
-            style={{
-              width: index === safeActivePage ? "2.75rem" : "0.7rem",
-              backgroundColor: theme
-                ? index === safeActivePage
-                  ? theme.accent
-                  : hexToRgba(theme.accent, 0.22)
-                : index === safeActivePage
-                  ? "#111827"
-                  : "rgba(17,24,39,0.22)",
-            }}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+        {Array.from({ length: Math.ceil(safeImages.length / SLIDE_BY) }).map((_, index) => {
+          const isActive = index === Math.floor(activeIndex / SLIDE_BY);
+          return (
+            <button
+              key={`dot-${index}`}
+              type="button"
+              onClick={() => setActiveIndex(Math.min(index * SLIDE_BY, maxIndex))}
+              className="h-2.5 rounded-full transition-all duration-300"
+              style={{
+                width: isActive ? "2.75rem" : "0.7rem",
+                backgroundColor: theme
+                  ? isActive
+                    ? theme.accent
+                    : hexToRgba(theme.accent, 0.22)
+                  : isActive
+                    ? "#111827"
+                    : "rgba(17,24,39,0.22)",
+              }}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          );
+        })}
       </div>
     </div>
   );
