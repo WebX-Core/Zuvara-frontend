@@ -90,7 +90,7 @@ export default function PersonalProductHeroSection({
     }
   };
 
-  // Carousel animation variants
+ 
   const carouselVariants = {
     enter: (direction: "left" | "right" | null) => ({
       opacity: 0,
