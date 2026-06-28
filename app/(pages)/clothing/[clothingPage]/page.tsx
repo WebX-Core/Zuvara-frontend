@@ -37,7 +37,33 @@ const ClothingProductDetailPage = () => {
     if (productSlug) {
       productService
         .getProductBySlug(productSlug)
-        .then((data) => setApiProduct(data))
+        .then((data) => {
+          setApiProduct(data);
+          // If no static product found, build one from API data
+          if (!foundProduct && data) {
+            const dynamicProduct: Product = {
+              id: 0,
+              name: data.productName,
+              slug: data.slug,
+              category: data.category?.categoryName ?? "Clothing",
+              rating: 4.8,
+              reviews: data.reviews?.length ?? 0,
+              image: data.coverImage,
+              description: data.description ?? "",
+              variants: (data.productVariants ?? []).map((v, idx) => ({
+                id: idx + 1,
+                name: v.color || v.size || `Variant ${idx + 1}`,
+                image: v.media?.[0] || data.coverImage,
+                color: v.color || undefined,
+                size: v.size || undefined,
+              })),
+            };
+            setProduct(dynamicProduct);
+            if (dynamicProduct.variants && dynamicProduct.variants.length > 0) {
+              setSelectedVariant(dynamicProduct.variants[0]);
+            }
+          }
+        })
         .catch(() => setApiProduct(null));
     }
   }, [params.clothingPage]);

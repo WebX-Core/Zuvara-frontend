@@ -115,8 +115,8 @@ const categoryIconMap: Record<string, string> = {
 
 const categoryRouteMap: Record<string, string> = {
   "baby-products": "babyCareProduct",
-  "clothing": "clothing",
-  "strollers-rockers": "strollerRockerProduct",
+  "clothing": "babyCareProduct",
+  "strollers-rockers": "babyCareProduct",
 };
 
 const ProductSkeleton = () => (
