@@ -10,12 +10,42 @@ export type AppProduct = BabyProduct | ClothingProduct | StrollerProduct | Perso
 
 export const productService = {
   /**
-   * Fetch all products or filter them by query parameters
+   * Fetch all products or filter them by query parameters.
+   * The backend endpoint is paginated, so when the caller does not request a
+   * specific page we automatically fetch every page and return the full list.
+   * This prevents products (e.g. those under later categories) from being
+   * silently dropped because they fall outside the first page's limit.
    * @param params optional query params
    */
   async getProducts(params?: Record<string, string | number>): Promise<BackendProduct[]> {
     const response = await api.get<ProductListResponse>("/product/get-all", { params });
-    return response.data.data.products;
+    const { products, page, totalPages } = response.data.data;
+
+    // Caller asked for a specific page, or there is only one page → return as-is.
+    if (params?.page || !totalPages || totalPages <= 1) {
+      return products;
+    }
+
+    // Fetch the remaining pages and combine.
+    const allProducts = [...products];
+    const remainingPages = Array.from(
+      { length: totalPages - page },
+      (_, i) => page + i + 1
+    );
+
+    const extraResponses = await Promise.all(
+      remainingPages.map((p) =>
+        api.get<ProductListResponse>("/product/get-all", {
+          params: { ...params, page: p },
+        })
+      )
+    );
+
+    for (const res of extraResponses) {
+      allProducts.push(...res.data.data.products);
+    }
+
+    return allProducts;
   },
 
   /**

@@ -53,7 +53,7 @@ const categoryIconMap: Record<string, string> = {
 void categoryIconMap;
 
 const ProductSkeleton = () => (
-  <div className="w-[calc(50%_-_0.5rem)] sm:w-[calc(50%_-_1rem)] lg:w-[calc(33.333%_-_1.5rem)] max-w-sm flex flex-col gap-5 rounded-4xl animate-pulse">
+  <div className="w-[calc(50%_-_0.75rem)] sm:w-[calc(50%_-_1rem)] lg:w-[calc(25%_-_1.5rem)] max-w-sm flex flex-col gap-5 rounded-4xl animate-pulse">
     <div className="h-64 sm:h-72 lg:h-80 bg-zinc-100 rounded-[2rem] w-full" />
     <div className="flex justify-between items-center px-3 pb-2">
       <div className="h-5 bg-zinc-100 rounded w-2/3" />
