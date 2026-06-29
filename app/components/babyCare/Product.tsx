@@ -121,11 +121,11 @@ const categoryRouteMap: Record<string, string> = {
 };
 
 const ProductSkeleton = () => (
-  <div className="w-full lg:w-[calc(25%_-_0.9375rem)] flex flex-col gap-4 rounded-4xl animate-pulse">
-    <div className="h-40 sm:h-56 bg-zinc-100 rounded-[1.75rem] w-full" />
-    <div className="flex justify-between items-center px-2 pb-4">
+  <div className="w-[calc(50%_-_0.75rem)] sm:w-[calc(50%_-_1rem)] lg:w-[calc(25%_-_1.5rem)] max-w-sm flex flex-col gap-5 rounded-4xl animate-pulse">
+    <div className="h-64 sm:h-72 lg:h-80 bg-zinc-100 rounded-[2rem] w-full" />
+    <div className="flex justify-between items-center px-3 pb-2">
       <div className="h-5 bg-zinc-100 rounded w-2/3" />
-      <div className="h-8 w-8 bg-zinc-100 rounded-full shrink-0" />
+      <div className="h-9 w-9 bg-zinc-100 rounded-full shrink-0" />
     </div>
   </div>
 );
@@ -355,48 +355,48 @@ const Product = ({ showBestSellersOnly = false }: ProductProps) => {
       <Link
         key={product.id}
         href={`/${categoryRouteMap[activeTab] || "babyCareProduct"}/${product.slug}`}
-        className={`group block ${inCarousel ? "w-full" : "w-full lg:w-[calc(25%_-_0.9375rem)]"}`}
+        className={`group block ${inCarousel ? "w-full" : "w-[calc(50%_-_0.75rem)] sm:w-[calc(50%_-_1rem)] lg:w-[calc(25%_-_1.5rem)] max-w-sm"}`}
       >
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.06, duration: 0.45 }}
           viewport={{ once: true }}
-          className="flex h-full flex-col gap-4 rounded-4xl  transition-transform duration-300 group-hover:-translate-y-1"
+          className="flex h-full flex-col gap-5 rounded-4xl  transition-transform duration-300 group-hover:-translate-y-1"
         >
           <div
-            className="relative flex gap-4 h-40 items-center justify-center overflow-hidden rounded-[1.75rem]  py-2 sm:h-56"
+            className="relative flex gap-4 h-64 items-center justify-center overflow-hidden rounded-[2rem] py-4 sm:h-72 lg:h-80"
             style={{ backgroundColor: cardTheme.background }}
           >
             <div
-              className="pointer-events-none absolute inset-x-6 bottom-4 h-9 rounded-full blur-2xl"
+              className="pointer-events-none absolute inset-x-6 bottom-4 h-12 rounded-full blur-2xl"
               style={{ backgroundColor: hexToRgba(cardTheme.foreground, 0.18) }}
             />
             <Image
               src={getCardImage(product)}
               alt={product.name}
               fill
-              className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 40vw, 90vw"
+              className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
             />
           </div>
 
-          <div className="flex flex-1 items-center justify-between  px-2 pb-4  ">
+          <div className="flex flex-1 items-center justify-between px-3 pb-2">
             <h3
-              className="max-w-40 text-sm font-semibold leading-snug text-zinc-900 sm:max-w-52 sm:text-base"
+              className="text-base font-semibold leading-snug sm:text-lg"
               style={{ color: cardTheme.foreground }}
             >
               {product.name}
             </h3>
 
             <span
-              className="shrink-0 rounded-full p-2 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
+              className="shrink-0 rounded-full p-2.5 -rotate-45 transition-transform duration-300 group-hover:translate-x-1"
               style={{
                 backgroundColor: cardTheme.chip,
                 color: cardTheme.foreground,
               }}
             >
-              <ArrowRight size={16} />
+              <ArrowRight size={18} />
             </span>
           </div>
         </motion.article>
@@ -498,7 +498,7 @@ const Product = ({ showBestSellersOnly = false }: ProductProps) => {
           )}
 
           {loading ? (
-            <div className="mt-4 mx-auto max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2 pb-10 lg:gap-4">
+            <div className="mt-4 mx-auto max-w-7xl flex flex-wrap justify-center gap-6 pb-10 lg:gap-8">
               {[1, 2, 3, 4].map((n) => (
                 <ProductSkeleton key={n} />
               ))}
@@ -544,7 +544,7 @@ const Product = ({ showBestSellersOnly = false }: ProductProps) => {
                     {featuredProducts.map((product, index) => (
                       <div 
                         key={product.id} 
-                        className="flex-none w-[70%] min-w-[280px] max-w-[320px] sm:w-[45%] sm:min-w-[300px] md:w-[calc(33.333%_-_1rem)] lg:w-[calc(25%_-_1.125rem)] snap-start"
+                        className="flex-none w-[80%] min-w-[280px] max-w-[24rem] sm:w-[calc(50%_-_1rem)] sm:min-w-[300px] lg:w-[calc(25%_-_1.125rem)] snap-start"
                       >
                         {renderProductCard(product, index, true)}
                       </div>
@@ -565,13 +565,13 @@ const Product = ({ showBestSellersOnly = false }: ProductProps) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="mt-4 mx-auto  max-w-7xl grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-2  pb-10 lg:gap-4"
+              className="mt-4 mx-auto max-w-7xl flex flex-wrap justify-center gap-6 pb-10 lg:gap-8"
             >
               {featuredProducts.map((product, index) =>
                 renderProductCard(product, index),
               )}
               {!loading && featuredProducts.length === 0 && (
-                <div className="col-span-full w-full py-12 text-center text-zinc-500 text-sm">
+                <div className="w-full py-12 text-center text-zinc-500 text-sm">
                   No products found in this category.
                 </div>
               )}

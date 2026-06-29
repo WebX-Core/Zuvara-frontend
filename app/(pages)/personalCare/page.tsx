@@ -1,6 +1,6 @@
 import ProductList from "@/app/components/personalCare/ProductList";
 import HeroSection from "@/app/components/personalCare/HeroSection";
-import ProductSection from "@/app/components/personalCare/ProductSection";
+// import ProductSection from "@/app/components/personalCare/ProductSection";
 import WhyChoose from "@/app/components/personalCare/WhyChoose";
 import WhyUsSection from "@/app/components/personalCare/WhyUsSection";
 
@@ -10,7 +10,7 @@ const page = () => {
       <HeroSection />
       <WhyUsSection />
       <WhyChoose />
-      <ProductSection />
+      {/* <ProductSection /> */}
       <ProductList />
     </div>
   );
