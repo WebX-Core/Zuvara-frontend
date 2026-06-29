@@ -65,7 +65,7 @@ const CTA = () => {
 
                   {/* CTA Button */}
                   <Link
-                    href="/product"
+                    href="/babyCareProduct#products"
                     className="flex items-center justify-center gap-2 bg-white text-baby-accent px-6 py-3.5 rounded-full text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-lg hover:shadow-xl w-full"
                   >
                     <span>View Products</span>
@@ -106,7 +106,7 @@ const CTA = () => {
                 className={`${sectionContentSpacing} flex flex-wrap items-center gap-3`}
               >
                 <Link
-                  href="/product"
+                  href="/babyCareProduct#products"
                   className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-white! transition-all duration-300 hover:bg-white hover:text-foreground! hover:shadow-lg sm:text-base"
                 >
                   Shop Premium Diapers

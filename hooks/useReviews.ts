@@ -88,9 +88,9 @@ export const useFeaturedReviews = (): UseReviewsReturn => {
       const response = await reviewService.getAllReviews({ isFeatured: true });
 
       if (response.status === 200 && response.data) {
-        // Filter to only show general reviews (productId is null)
+        // Filter to only show featured, general reviews (isFeatured true & productId is null)
         const generalReviews = response.data.reviews.filter(
-          (review) => review.productId === null
+          (review) => review.isFeatured === true && review.productId === null
         );
         
         setReviews(generalReviews);

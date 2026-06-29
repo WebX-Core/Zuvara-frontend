@@ -20,7 +20,7 @@ export default function Home() {
       />
       <WhyChoose />
       <VideoSection />
-      <Product />
+      <Product showBestSellersOnly={true} />
       <Testimonial />
       <Blog />
       <CTA />

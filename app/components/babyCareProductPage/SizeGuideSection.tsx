@@ -94,7 +94,7 @@ export default function SizeGuideSection({
         </motion.div>
 
         {/* Size Cards Grid */}
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-6">
           {sizes.map((s, idx) => (
             <motion.div
               key={s.id}
@@ -103,7 +103,7 @@ export default function SizeGuideSection({
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative flex flex-col items-center justify-center p-4 md:p-8 rounded-2xl md:rounded-3xl border-2 transition-all duration-300 cursor-pointer"
+              className="group relative flex w-[calc(33.333%_-_0.5rem)] md:w-[calc(25%_-_1.125rem)] flex-col items-center justify-center p-4 md:p-8 rounded-2xl md:rounded-3xl border-2 transition-all duration-300 cursor-pointer"
               style={{
                 borderColor: `${theme.border}88`,
                 backgroundColor: "white",

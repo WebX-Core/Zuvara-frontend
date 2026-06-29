@@ -251,16 +251,6 @@ const ProductList = () => {
                       : "bg-white text-zinc-700 border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
                   }`}
                 >
-                  {categoryIconMap[tab.slug] && (
-                    <div className="relative w-6 h-6 shrink-0">
-                      <Image
-                        src={categoryIconMap[tab.slug]}
-                        alt={tab.categoryName}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  )}
                   <motion.span
                     initial={{ opacity: 0.8 }}
                     animate={{ opacity: 1 }}

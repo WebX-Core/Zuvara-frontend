@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { babyCareProducts } from "@/constants/babyCareProduct";
 import { clothingProducts } from "@/constants/babyClothes";
 import { strollerRockerProducts } from "@/constants/strollerRockerProduct";
@@ -20,6 +20,7 @@ interface AdaptedProduct {
   image: string;
   heroImage: string;
   category: string;
+  isBestSeller?: boolean;
 }
 
 interface DynamicCategory {
@@ -120,7 +121,7 @@ const categoryRouteMap: Record<string, string> = {
 };
 
 const ProductSkeleton = () => (
-  <div className="w-full lg:w-[calc(25%-0.9375rem)] flex flex-col gap-4 rounded-4xl animate-pulse">
+  <div className="w-full lg:w-[calc(25%_-_0.9375rem)] flex flex-col gap-4 rounded-4xl animate-pulse">
     <div className="h-40 sm:h-56 bg-zinc-100 rounded-[1.75rem] w-full" />
     <div className="flex justify-between items-center px-2 pb-4">
       <div className="h-5 bg-zinc-100 rounded w-2/3" />
@@ -137,11 +138,39 @@ const TabsSkeleton = () => (
   </div>
 );
 
-const Product = () => {
+interface ProductProps {
+  showBestSellersOnly?: boolean;
+}
+
+const Product = ({ showBestSellersOnly = false }: ProductProps) => {
   const [categories, setCategories] = useState<DynamicCategory[]>([]);
   const [activeTab, setActiveTab] = useState<string>("");
   const [products, setProducts] = useState<AdaptedProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const scrollCarousel = (direction: "left" | "right") => {
+    if (!carouselRef.current) return;
+    const scrollAmount = carouselRef.current.offsetWidth * 0.8;
+    carouselRef.current.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  // After products load, if the URL hash targets this section, scroll to it.
+  useEffect(() => {
+    if (loading) return;
+    if (typeof window === "undefined") return;
+    if (window.location.hash !== "#products") return;
+
+    const id = window.requestAnimationFrame(() => {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(id);
+  }, [loading]);
 
   useEffect(() => {
     let active = true;
@@ -183,6 +212,7 @@ const Product = () => {
             image: p.coverImage,
             heroImage: p.coverImage,
             category: p.category?.slug || "",
+            isBestSeller: p.isBestSeller || false,
           }));
           setProducts(adapted);
         } else {
@@ -243,8 +273,10 @@ const Product = () => {
     };
   }, []);
 
-  const filteredProducts = products.filter((p) => p.category === activeTab);
-  const featuredProducts = filteredProducts.slice(0, 4);
+  const filteredProducts = showBestSellersOnly
+    ? products.filter((p) => p.isBestSeller)
+    : products.filter((p) => p.category === activeTab);
+  const featuredProducts = filteredProducts.slice(0, 8);
   const shouldShowViewMore = filteredProducts.length > featuredProducts.length;
 
   const collectionHref = `/${categoryRouteMap[activeTab] || "babyCareProduct"}`;
@@ -316,14 +348,14 @@ const Product = () => {
     };
   };
 
-  const renderProductCard = (product: AdaptedProduct, index: number) => {
+  const renderProductCard = (product: AdaptedProduct, index: number, inCarousel = false) => {
     const cardTheme = getCardTheme(product);
 
     return (
       <Link
         key={product.id}
         href={`/${categoryRouteMap[activeTab] || "babyCareProduct"}/${product.slug}`}
-        className="group block w-full lg:w-[calc(25%-0.9375rem)]"
+        className={`group block ${inCarousel ? "w-full" : "w-full lg:w-[calc(25%_-_0.9375rem)]"}`}
       >
         <motion.article
           initial={{ opacity: 0, y: 20 }}
@@ -382,33 +414,54 @@ const Product = () => {
         .category-tabs::-webkit-scrollbar {
           display: none;
         }
+        .scrollbar-hide {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
       `}</style>
       {/* ================= PRODUCT SECTION ================= */}
-      <section className="relative py-8 pb-12 lg:pb-40">
+      <section ref={sectionRef} id="products" className="relative py-8 pb-12 lg:pb-40 scroll-mt-24">
         <div
           className="pointer-events-none absolute -bottom-1 left-1/2 z-20 w-screen -translate-x-1/2 overflow-visible leading-none [&>svg]:block [&>svg]:h-auto [&>svg]:w-screen"
           dangerouslySetInnerHTML={{ __html: productBottomWave.markup }}
         />
         <div className="container mx-auto w-full px-4 sm:px-6 lg:w-[90%] lg:px-6">
-          <div className="mb-2 flex flex-col items-center justify-center leading-8 gap-2 text-center">
-            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold  tracking-tight text-baby-accent">
-              Best selling
-              <span className="ml-2  font-light italic text-baby-accent-soft">
-                baby essentials
-              </span>
+          {/* Title - centered */}
+          <div className="mb-2 flex flex-col items-center justify-center gap-2 text-center">
+            <h2 className="hero-copy mt-6 max-w-4xl text-[clamp(2rem,8vw,3.4rem)] font-semibold tracking-tight text-baby-accent">
+              {showBestSellersOnly ? (
+                <>
+                  Best selling
+                  <span className="ml-2 font-light italic text-baby-accent-soft">
+                    baby essentials
+                  </span>
+                </>
+              ) : (
+                <>
+                  Explore our
+                  <span className="ml-2 font-light italic text-baby-accent-soft">
+                    baby essentials
+                  </span>
+                </>
+              )}
             </h2>
-
             <p className="hero-copy mt-2 max-w-2xl text-sm font-medium leading-relaxed text-zinc-600 md:text-base">
-              Discover our most loved products, trusted by parents for comfort,
-              quality, and everyday care.
+              {showBestSellersOnly
+                ? "Discover our most loved products, trusted by parents for comfort, quality, and everyday care."
+                : "Browse our full range of baby essentials, crafted for comfort, quality, and everyday care."}
             </p>
           </div>
 
-          {/* Tabs */}
-          {loading ? (
-            <TabsSkeleton />
-          ) : (
-            <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center">
+          {/* Category Tabs - Only show if not in best-sellers-only mode */}
+          {!showBestSellersOnly && (
+            <>
+              {loading ? (
+                <TabsSkeleton />
+              ) : (
+                <div className="category-tabs flex gap-3 overflow-x-auto py-4 whitespace-nowrap lg:justify-center">
               {categories.map((tab) => (
                 <button
                   key={tab.id}
@@ -440,6 +493,8 @@ const Product = () => {
                 </button>
               ))}
             </div>
+              )}
+            </>
           )}
 
           {loading ? (
@@ -448,7 +503,63 @@ const Product = () => {
                 <ProductSkeleton key={n} />
               ))}
             </div>
+          ) : showBestSellersOnly ? (
+            // Carousel for best-sellers
+            <div className="mt-6 pb-10">
+              <div className="mx-auto max-w-7xl">
+                {/* Navigation buttons - top right above carousel */}
+                {!loading && featuredProducts.length > 0 && (
+                  <div className="mb-4 flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => scrollCarousel("left")}
+                      className="rounded-full p-3 transition-all duration-300 hover:scale-110 border border-baby-accent/20 hover:border-baby-accent/40"
+                      style={{ backgroundColor: hexToRgba(colors.baby.chip, 0.5) }}
+                      aria-label="Previous products"
+                    >
+                      <ChevronLeft size={20} className="text-baby-accent" />
+                    </button>
+                    <button
+                      onClick={() => scrollCarousel("right")}
+                      className="rounded-full p-3 transition-all duration-300 hover:scale-110 border border-baby-accent/20 hover:border-baby-accent/40"
+                      style={{ backgroundColor: hexToRgba(colors.baby.chip, 0.5) }}
+                      aria-label="Next products"
+                    >
+                      <ChevronRight size={20} className="text-baby-accent" />
+                    </button>
+                  </div>
+                )}
+                <div className="relative">
+                  <motion.div
+                    ref={carouselRef}
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex gap-3 sm:gap-4 lg:gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory py-2"
+                    style={{
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none',
+                    }}
+                  >
+                    {featuredProducts.map((product, index) => (
+                      <div 
+                        key={product.id} 
+                        className="flex-none w-[70%] min-w-[280px] max-w-[320px] sm:w-[45%] sm:min-w-[300px] md:w-[calc(33.333%_-_1rem)] lg:w-[calc(25%_-_1.125rem)] snap-start"
+                      >
+                        {renderProductCard(product, index, true)}
+                      </div>
+                    ))}
+                    {!loading && featuredProducts.length === 0 && (
+                      <div className="w-full py-12 text-center text-zinc-500 text-sm">
+                        No best-seller products found.
+                      </div>
+                    )}
+                  </motion.div>
+                </div>
+              </div>
+            </div>
           ) : (
+            // Grid for category tabs view
             <motion.div
               key={activeTab}
               initial={{ opacity: 0, y: 10 }}
@@ -467,7 +578,7 @@ const Product = () => {
             </motion.div>
           )}
 
-          {!loading && shouldShowViewMore ? (
+          {!loading && shouldShowViewMore && !showBestSellersOnly ? (
             <div className="flex justify-center">
               <Link
                 href={collectionHref}

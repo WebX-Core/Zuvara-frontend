@@ -200,7 +200,7 @@ export default function TrustFusionSection({
                     className="w-full shrink-0 lg:w-1/2 px-2 md:px-3"
                   >
                     <article
-                      className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
+                      className="flex h-full flex-col rounded-2xl md:rounded-3xl border-2 p-5 md:p-8  transition-all duration-300 bg-white"
                       style={{
                         borderColor: `${theme.border}88`,
                         minHeight: "360px",
@@ -287,7 +287,7 @@ export default function TrustFusionSection({
               <button
                 type="button"
                 onClick={goPrev}
-                className="flex h-12 w-12 items-center justify-center rounded-full border-2 shadow-lg active:scale-95 transition-transform"
+                className="flex h-12 w-12 items-center justify-center rounded-full border-2  active:scale-95 transition-transform"
                 style={{
                   borderColor: theme.accent,
                   backgroundColor: "white",
