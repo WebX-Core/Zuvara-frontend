@@ -391,14 +391,12 @@ export default function Home() {
                         Explore Baby Products
                       </button>
                     </Link>
-                    <Link href="/babyCareProduct">
-                      <button
-                        onClick={() => setIsDistributorModalOpen(true)}
-                        className="rounded-full w-full sm:w-fit outline-1 outline-baby-accent px-6 py-2.5 text-sm font-medium text-baby-accent transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base"
-                      >
-                        Become a Distributor
-                      </button>
-                    </Link>
+                    <button
+                      onClick={() => setIsDistributorModalOpen(true)}
+                      className="rounded-full w-full sm:w-fit outline-1 outline-baby-accent px-6 py-2.5 text-sm font-medium text-baby-accent transition duration-300 hover:scale-105 hover:shadow-xl lg:px-8 lg:py-3 lg:text-base"
+                    >
+                      Become a Distributor
+                    </button>
                   </div>
                 </div>
               </div>
